@@ -19,7 +19,7 @@ abstract class MySQLRepository
         $query = "SELECT * FROM $table WHERE $where";
         $stmt = MySQL::$instance->prepare($query);
         $stmt->execute($params);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function get_by_id($id): array
@@ -29,7 +29,7 @@ abstract class MySQLRepository
         $query = "SELECT * FROM $table WHERE $key = :$key";
         $stmt = MySQL::$instance->prepare($query);
         $stmt->execute(array(":$key" => $id));
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function add(array $entity): int

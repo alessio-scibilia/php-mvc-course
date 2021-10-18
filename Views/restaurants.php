@@ -1,10 +1,19 @@
 <?php
+    $restaurant = (array)$view_model->restaurant;
 ?>
 <html>
+    <head>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+        <link rel="stylesheet" type="text/css" href="/css/style.css">
+        <link rel="stylesheet" type="text/css" href="/css/override.css">
+        <link rel="stylesheet" type="text/css" href="/css/owl.carousel.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/owl.theme.default.css">
+    </head>
     <body>
         <table>
             <caption>ristorante:</caption>
-            <?php foreach ($view_model->restaurant as $field => $value) { ?>
+            <?php foreach ($restaurant as $field => $value) { ?>
             <tr>
                 <td><?php echo $field; ?></td>
                 <td>
@@ -21,9 +30,9 @@
                     <th></th>
                 </tr>
             </thead>
-            <?php foreach ($view_model->restaurants as $restaurant) { ?>
+            <?php foreach ($view_model->restaurants as &$restaurant) { ?>
                 <tr>
-                    <td><?php echo $restaurant->name; ?></td>
+                    <td><?php echo $restaurant->nome; ?></td>
                     <td><?php echo $restaurant->email; ?></td>
                     <td><?php echo $restaurant->telefono; ?></td>
                 </tr>

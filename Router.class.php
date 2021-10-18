@@ -9,10 +9,30 @@ class Router
         $uri = $_SERVER['REQUEST_URI'];
         $path = parse_url($uri, PHP_URL_PATH);
 
-        // Extract controller:
+        // Extract parameters:
         $pieces = explode('/', $path);
-        $controller_name = join('', array_map('ucfirst', $pieces)) . 'Controller';
-        $controller_path = "/Controllers/$controller_name.class.php";
+        $n = count($pieces);
+        $param = 'default';
+        $params = array_merge($_REQUEST, $_COOKIE);
+        $controls = array();
+        for ($i = 0; $i < $n; $i++)
+        {
+            $piece = $pieces[$i];
+            if ($piece == '') continue;
+            if (preg_match('/^\d+$/', $piece) === 1)
+            {
+                $params[$param] = intval($piece);
+                $param = 'default';
+            }
+            else
+            {
+                $controls[] = $piece;
+                $param = $piece;
+            }
+        }
+
+        $controller_name = join('', array_map('ucfirst', $controls)) . 'Controller';
+        $controller_path = "Controllers/$controller_name.class.php";
 
         if (!is_file($controller_path))
         {
@@ -29,8 +49,8 @@ class Router
         }
 
         // Callable
-        return function() use($controller, $action) {
-          return $controller->{$action}($_REQUEST);
+        return function() use($controller, $action, $params) {
+          return $controller->{$action}($params);
         };
     }
 }

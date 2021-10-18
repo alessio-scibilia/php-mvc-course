@@ -4,8 +4,8 @@ require_once 'ViewModels/AbstractTemplateViewModel.class.php';
 
 class RestaurantsViewModel extends AbstractTemplateViewModel
 {
-    protected $restaurant;
-    protected $restaurants;
+    public $restaurant;
+    public $restaurants;
 
     public function __construct(array &$restaurants, Restaurant &$restaurant)
     {

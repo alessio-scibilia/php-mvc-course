@@ -16,7 +16,7 @@ class RestaurantController
 
     public function http_get(array &$params): HtmlView
     {
-        $id = intval($params['restaurant']);
+        $id = $params['restaurant'];
         $row = $this->repository->get_by_id($id);
         $restaurant = new Restaurant($row);
         $rows = $this->repository->get_related($restaurant->id);

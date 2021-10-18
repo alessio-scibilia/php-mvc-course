@@ -10,9 +10,8 @@ class RestaurantRepository extends MySQLRepository
 
     public function get_related(int $id): array
     {
-        $key = $this->keyName;
-        $where = "related_id = :$key";
-        $params = array($key => $id);
+        $where = "related_id = :related_id";
+        $params = array(":related_id" => $id);
         return $this->get($where, $params);
     }
 }
