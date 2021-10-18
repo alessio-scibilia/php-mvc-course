@@ -6,12 +6,16 @@ class MySQL
 
     public static function create() {
         if (self::$instance === null) {
-            mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-            self::$instance = new mysqli(
-                'localhost',
-                'root',
-                "fW>M'=\Um7RW(d,K->rJfnUg\";k&WFq2qs/<ndhRbB,sg-Xp8+&dCGs&SF~W3#zeU8{fy-gqY{GPn\h?4KaW9:>f[;3,.JftBj]T"
-            );
+            try {
+                self::$instance = new PDO(
+                    "mysql:host=localhost;dbname=wellcoxwelcome",
+                    'root',
+                    'secret1234'
+                );
+                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            } catch (PDOException $e) {
+                echo 'Connection failed: ' . $e->getMessage();
+            }
         }
     }
 }

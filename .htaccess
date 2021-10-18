@@ -1,0 +1,28 @@
+# See:
+# http://www.webforgers.net/mod-rewrite/mod-rewrite-syntax.php
+
+# Block by IP address
+#order allow,deny
+#deny from 123.45.6.7
+#deny from 012.34.5.
+#allow from all
+
+# Turn on the RewriteEngine
+
+RewriteEngine on
+RewriteBase /
+
+# Block some bad site
+RewriteCond %{HTTP_REFERER} badsite\.com [NC]
+RewriteRule .* - [F,L]
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+
+#  Rules
+# RewriteRule "^index\.php|manage/.+$"	"-"			[NC,L,QSA]
+RewriteRule "^favicon\.ico$"		"-"			[NC,L]
+# RewriteRule "^phpinfo$"			"manage/phpinfo.php"	[NC,L]
+# RewriteRule "^apc$"			"manage/apc.php"	[NC,L,QSA]
+RewriteRule "^index\.php$"		"-"			[NC,L]
+RewriteRule "."				"index.php"		[NC,L,QSA]

@@ -12,57 +12,51 @@ abstract class MySQLRepository
         $this->keyName = $keyName;
     }
 
-    protected static function bind_type($value): string
+    protected function get(string $where, array &$params): array
     {
-        switch (true)
-        {
-            case is_string($value): return 's'; // string
-            case is_integer($value): return 'i'; // integer
-            case is_float($value): return 'd'; // double
-            default: return 'b'; // blob
-        }
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "SELECT * FROM $table WHERE $where";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
     }
 
     public function get_by_id($id): array
     {
-        $name = $this->tableName;
-        $query = "SELECT * FROM $name WHERE Id = ?";
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "SELECT * FROM $table WHERE $key = :$key";
         $stmt = MySQL::$instance->prepare($query);
-        $stmt->bind_param(self::bind_type($id), $id);
-        $stmt->execute();
-        $result_set = $stmt->get_result();
-        $stmt->close();
-        return $result_set->fetch_assoc();
+        $stmt->execute(array(":$key" => $id));
+        return $stmt->fetch();
     }
 
     public function add(array $entity): int
     {
-        $name = $this->tableName;
+        $table = $this->tableName;
         unset($entity[$this->keyName]);
         $keys = array_keys($entity);
         $field_list = join(', ', $keys);
-        $placeholder_list = join(', ', str_repeat('?', count($keys)));
-        $query = "INSERT INTO $name ($field_list) VALUES ($placeholder_list)";
+        $placeholder_list = ':' . join(', :', $keys);
+        $query = "INSERT INTO $table ($field_list) VALUES ($placeholder_list)";
         $stmt = MySQL::$instance->prepare($query);
-        foreach ($keys as $key)
+        $params = array();
+        foreach ($entity as $key => $value)
         {
-            $value = $entity[$key];
-            $stmt->bind_param(self::bind_type($value), $value);
+            $params[":$key"] = $value;
         }
-        $stmt->execute();
-        $stmt->close();
-        return $stmt->insert_id;
+        $stmt->execute($params);
+        return MySQL::$instance->lastInsertId();
     }
 
     public function remove_by_id($id): bool
     {
         $table = $this->tableName;
         $key = $this->keyName;
-        $query = "DELETE FROM $table WHERE $key = ?";
+        $query = "DELETE FROM $table WHERE $key = :$key";
         $stmt = MySQL::$instance->prepare($query);
-        $stmt->bind_param(self::bind_type($id), $id);
-        $stmt->execute();
-        $stmt->close();
-        return $stmt->affected_rows == 1;
+        $stmt->execute(array(":$key" => $id));
+        return $stmt->rowCount() == 1;
     }
 }
