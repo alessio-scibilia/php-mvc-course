@@ -25,4 +25,6 @@ RewriteRule "^favicon\.ico$"		"-"			[NC,L]
 # RewriteRule "^phpinfo$"			"manage/phpinfo.php"	[NC,L]
 # RewriteRule "^apc$"			"manage/apc.php"	[NC,L,QSA]
 RewriteRule "^index\.php$"		"-"			[NC,L]
+RewriteRule "^info\.php$"		"-"			[NC,L]
+
 RewriteRule "."				"index.php"		[NC,L,QSA]
