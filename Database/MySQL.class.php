@@ -8,7 +8,7 @@ class MySQL
         if (self::$instance === null) {
             try {
                 self::$instance = new PDO(
-                    "mysql:host=localhost;dbname=wellcoxwelcome",
+                    "mysql:host=localhost;dbname=wellcoxwellcome",
                     'root',
                     'secret1234'
                 );
