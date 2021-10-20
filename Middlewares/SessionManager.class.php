@@ -1,5 +1,5 @@
 <?php
-require_once 'Models/Language.class.php';
+require_once 'Models/Languages.class.php';
 require_once 'Models/User.class.php';
 
 class SessionManager
