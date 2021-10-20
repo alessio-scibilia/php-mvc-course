@@ -7,6 +7,8 @@ class MySQL
     public static function create() {
         if (self::$instance === null) {
             try {
+                $env = getenv('ENV');
+                if (empty($env)) $env = 'prod';
                 self::$instance = new PDO(
                     "mysql:host=localhost;dbname=wellcoxwellcome",
                     'root',
