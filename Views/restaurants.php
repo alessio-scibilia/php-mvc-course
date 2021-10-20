@@ -11,8 +11,6 @@
         <link rel="stylesheet" type="text/css" href="/css/owl.theme.default.css">
     </head>
     <body>
-        <div>getenv(): <?php echo getenv('POENV'); ?></div>
-        <div>apache_getenv(): <?php echo apache_getenv('ENV'); ?></div>
         <table>
             <caption>ristorante:</caption>
             <?php foreach ($restaurant as $field => $value) { ?>
