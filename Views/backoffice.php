@@ -1,6 +1,11 @@
-
 <!DOCTYPE html>
 <html>
+<?php
+    if ($currentPage == 'login')
+        require_once 'Views/backoffice.head.login.php';
+    else
+        require_once 'Views/backoffice.head.common.php';
+?>
 <head>
     <base href="/cp/">
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />

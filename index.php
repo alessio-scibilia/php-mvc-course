@@ -4,9 +4,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 try
 {
-    require_once 'Router.class.php';
+    require_once 'Middlewares/SessionManager.class.php';
+    SessionManager::start();
 
-    session_start();
+    require_once 'Router.class.php';
     $router = new Router();
     $callable = $router->route();
     $view = $callable();
