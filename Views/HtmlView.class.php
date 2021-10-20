@@ -14,7 +14,7 @@ class HtmlView implements IView
         $this->template_path = "Views/$name.php";
     }
 
-    function render(): void
+    function render() /*: void*/
     {
         header('Content-Type: text/html; charset=UTF-8');
         $view_model = $this->view_model;

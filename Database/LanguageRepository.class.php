@@ -5,7 +5,7 @@ class LanguageRepository extends MySQLRepository
 {
     public function __construct()
     {
-        parent::__construct('lingua', 'id');
+        parent::__construct('lingue', 'id');
     }
 
     public function list_all(): array

@@ -15,7 +15,7 @@
                 echo '<div class="alert alert-info alert-login">Password reimpostata con successo, accedi.</div>'; ?>
             <?php if(isset($_GET['reset']) && $_GET['reset'] == false)
                 echo '<div class="alert alert-info alert-login">Non è stato possibile ripristinare la password</div>'; ?>
-            <label for="email" id="labelmail"><?php echo $langs['email'];?></label>
+            <label for="email" id="labelmail"><?php echo $view_model->translations->get('email');?></label>
             <input type="text" class="form-control input-md validate-1 mb5" name="email" id="email" placeholder="mario@rossi.it">
 
             <label for="password"><?php echo $view_model->translations->get('password');?></label>

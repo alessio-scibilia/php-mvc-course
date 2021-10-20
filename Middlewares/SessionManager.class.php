@@ -19,7 +19,7 @@ class SessionManager
 
     public static function get_lang(): int
     {
-        return $_SESSION['lang'];
+        return $_SESSION['lang'] ?? Languages::IT;
     }
 
     public static function set_admin_user(User $user)
@@ -29,7 +29,7 @@ class SessionManager
 
     public static function get_user(): User
     {
-        return $_SESSION['user'];
+        return $_SESSION['user'] ?? new User();
     }
 
     public static function destroy()

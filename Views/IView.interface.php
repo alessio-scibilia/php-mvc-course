@@ -8,5 +8,5 @@ interface IVIew
     /**
      * @return void
      */
-    function render(): void;
+    function render(); /*: void;*/
 }
