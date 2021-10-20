@@ -6,6 +6,7 @@ try
 {
     require_once 'Router.class.php';
 
+    session_start();
     $router = new Router();
     $callable = $router->route();
     $view = $callable();

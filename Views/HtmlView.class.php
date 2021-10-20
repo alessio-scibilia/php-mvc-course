@@ -16,7 +16,7 @@ class HtmlView implements IView
 
     function render(): void
     {
-        header('Content-Type', 'text/html; charset=UTF-8');
+        header('Content-Type: text/html; charset=UTF-8');
         $view_model = $this->view_model;
         require_once $this->template_path;
     }
