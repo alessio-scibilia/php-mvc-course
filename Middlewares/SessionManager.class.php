@@ -8,7 +8,7 @@ class SessionManager
     {
         session_start();
         if (empty($_SESSION['lang'])) {
-            $_SESSION['lang'] = Language::IT;
+            $_SESSION['lang'] = Languages::IT;
         }
     }
 

@@ -2,14 +2,23 @@
 
 class Translations
 {
-    public function __construct(array $row = null)
+    protected $map = array();
+
+    public function __construct(array $rows = null)
     {
-        if ($row != null)
+        if (!empty($rows))
         {
-            foreach ($row as $key => $value)
+            foreach ($rows as &$row)
             {
-                $this->{$key} = $value;
+                $label = $row['etichetta'];
+                $value = $row['valore'];
+                $this->map[$label] = $value;
             }
         }
+    }
+
+    public function get(string $label): string
+    {
+        return $this->map[$label] ?? '';
     }
 }

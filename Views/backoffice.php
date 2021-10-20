@@ -1,44 +1,11 @@
 <!DOCTYPE html>
 <html>
 <?php
-    if ($currentPage == 'login')
+    if ($view_model->template_name == 'login')
         require_once 'Views/backoffice.head.login.php';
     else
         require_once 'Views/backoffice.head.common.php';
 ?>
-<head>
-    <base href="/cp/">
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-
-    <title><?php if($currentPage == 'login') echo $langs['titolo_login']; else echo $langs['titolo_dashboard']; echo ' | '.$langs['nome_sito'];?></title>
-
-    <!-- Css files -->
-    <?php if($currentPage == 'login') { ?>
-        <link rel="stylesheet" href="css/bootstrap.css">
-    <?php } ?>
-
-    <!-- MCpiver library & Tema -->
-    <link rel="stylesheet" href="css/padding.css">
-    <link rel="stylesheet" href="css/margin.css">
-    <link rel="stylesheet" href="css/main.css">
-
-    <?php if($currentPage != 'login') { ?>
-        <link href="./vendor/summernote/summernote.css" rel="stylesheet">
-        <link href="css/bootstrap-select.min.css" rel="stylesheet">
-        <link href="css/style_theme.css" rel="stylesheet">
-        <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
-
-
-
-
-
-    <?php } ?>
-
-    <?php if($currentPage == 'login') echo '<style>body { background: #ebeef6; }</style>'; ?>
-
-</head>
 <body>
 <?php if($currentPage != 'login') { ?>
 <!-- Preloader -->

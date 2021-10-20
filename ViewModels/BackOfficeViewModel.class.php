@@ -1,5 +1,6 @@
 <?php
-require_once 'Models/Language.class.php';
+require_once 'Models/Translations.class.php';
+require_once 'Models/Languages.class.php';
 require_once 'Models/User.class.php';
 require_once 'ViewModels/AbstractTemplateViewModel.class.php';
 
@@ -16,15 +17,28 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
     public $title;
 
     /**
-     * @var Language
+     * @var Languages
      */
-    public $lang;
+    public $languages;
 
-    public function __construct(User &$user, string $title, Language &$lang) {
-        parent::__construct('backoffice');
+    /**
+     * @var Translations
+     */
+    public $translations;
+
+    /**
+     * @param string $template_name
+     * @param User $user
+     * @param string $title
+     * @param Languages $languages
+     * @param translations $translations
+     */
+    public function __construct(string $template_name, User &$user, string $title, Languages &$languages, Translations &$translations) {
+        parent::__construct($template_name);
         $this->user = $user;
         $this->title = $title;
-        $this->lang = $lang;
+        $this->languages = $languages;
+        $this->translations = $translations;
     }
 
 }

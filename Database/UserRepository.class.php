@@ -1,8 +1,7 @@
 <?php
 require_once 'Database/MySQLRepository.class.php';
 
-
-class UserRepository
+class UserRepository extends MySQLRepository
 {
     public function __construct()
     {
