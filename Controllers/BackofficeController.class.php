@@ -35,7 +35,7 @@ class BackofficeController
         $template_name = 'backoffice.login';
 
         $user = SessionManager::get_user();
-        if ($user != null && !empty($user->username))
+        if (!User::is_empty($user))
         {
             $title = $translations->get('titolo_dashboard') . ' | ' . $translations->get('nome_sito');
             $template_name = 'backoffice';

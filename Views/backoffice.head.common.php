@@ -6,12 +6,12 @@
     <title><?php $view_model->title; ?></title>
 
     <!-- MCpiver library & Tema -->
-    <link rel="stylesheet" href="css/padding.css">
-    <link rel="stylesheet" href="css/margin.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="/css/padding.css">
+    <link rel="stylesheet" href="/css/margin.css">
+    <link rel="stylesheet" href="/css/main.css">
 
-    <link href="./vendor/summernote/summernote.css" rel="stylesheet">
-    <link href="css/bootstrap-select.min.css" rel="stylesheet">
-    <link href="css/style_theme.css" rel="stylesheet">
+    <link href="/vendor/summernote/summernote.css" rel="stylesheet">
+    <link href="/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/css/style_theme.css" rel="stylesheet">
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
 </head>

@@ -32,4 +32,13 @@ class User
             }
         }
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public static function is_empty(User &$user): bool
+    {
+        return empty($user->email);
+    }
 }

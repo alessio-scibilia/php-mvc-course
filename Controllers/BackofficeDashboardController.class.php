@@ -22,7 +22,7 @@ class BackofficeDashboardController
     public function http_get(array &$params): IView
     {
         $user = SessionManager::get_user();
-        if ($user == null)
+        if (User::is_empty($user))
         {
             return new HttpRedirectView('/backoffice');
         }
@@ -34,9 +34,9 @@ class BackofficeDashboardController
         $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
 
         $title = $translations->get('titolo_login') . ' | ' . $translations->get('nome_sito');
-        $uri_parts = array_slice(explode('/', $_SERVER["REQUEST_URI"]), 0, 2);
+        $uri_parts = array_slice(explode('/', $_SERVER["REQUEST_URI"]), 0, 3);
         $menu_active_btn = array_pop($uri_parts);
-        $view_model = new BackOfficeViewModel('backoffice.dashboard', $user, $title, $languages, $translations, $menu_active_btn);
+        $view_model = new BackOfficeViewModel('backoffice', $user, $title, $languages, $translations, $menu_active_btn);
         return new HtmlView($view_model);
     }
 }

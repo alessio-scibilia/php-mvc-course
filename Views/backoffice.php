@@ -64,7 +64,7 @@
                                 </a>
                                 <ul aria-expanded="false">
                                     <li><a href="javascript:void()" data-action="hotels" data-params="false" class="open-view-action"><?php echo $view_model->translations->get('tutti_gli_hotel');?></a></li>
-                                    <li><a href="javascript:void()" data-action="hotels" class="open-view-action" data-params="<?php echo $$view_model->translations->get('nuovo_params');?>"><?php echo $view_model->translations->get('nuovo_hotel');?></a></li>
+                                    <li><a href="javascript:void()" data-action="hotels" class="open-view-action" data-params="<?php echo $view_model->translations->get('nuovo_params');?>"><?php echo $view_model->translations->get('nuovo_hotel');?></a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -252,7 +252,7 @@
                             <a class="nav-link nav-modded open-menu" data-menu="<?php echo $view_model->translations->get('link_impostazioni');?>" href="javascript:void()" data-action="<?php echo $view_model->translations->get('link_impostazioni')?>" data-params="false" role="button" data-toggle="dropdown">
                                 <i class="fa fa-user-o fa-user-modded"></i>
                                 <div class="header-info">
-                                    <span>Hey, <strong><?php echo $view_model->user->name;?></strong></span>
+                                    <span>Hey, <strong><?php echo $view_model->user->nome;?></strong></span>
                                     <small><?php echo $view_model->user->level_name;?></small>
                                 </div>
                             </a>
@@ -310,7 +310,7 @@
                 <?php } ?>
                 <?php if($view_model->user->level >= 3 || $view_model->user->level == 0) { ?>
                     <li class="nav-item">
-                        <a class="nav-link open-view-action <?php if($view_model->menu_active_btn == 'profile') echo 'active';?>" data-action="<?php echo $view_model->translations->get('link_mio_hotel');?>" data-params="false" data-title="<?php echo $view_model->user->name.' | '.$view_model->translations->get('nome_sito');?>" data-toggle="tab" href="#profile">
+                        <a class="nav-link open-view-action <?php if($view_model->menu_active_btn == 'profile') echo 'active';?>" data-action="<?php echo $view_model->translations->get('link_mio_hotel');?>" data-params="false" data-title="<?php echo $view_model->user->nome.' | '.$view_model->translations->get('nome_sito');?>" data-toggle="tab" href="#profile">
                             <i class="fa fa-building-o"></i>
                         </a>
                     </li>
@@ -349,6 +349,9 @@
     <!--**********************************
         Content body end
     ***********************************-->
-
-
 </div>
+
+<?php require_once 'Views/backoffice.footer.php'; ?>
+
+</body>
+</html>

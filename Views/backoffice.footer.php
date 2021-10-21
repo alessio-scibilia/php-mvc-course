@@ -1,50 +1,37 @@
-<div class="footer <?php if ($view_model->template_name == 'backoffice.login') echo 'login-footer'; ?>">
-    <div class="lang-select">
-        <?php
-        $lingue = getLangsNa($dbh);
-        for ($i = 0; $i < sizeof($lingue); $i++) {
-            echo '<a href="process/set_lang?lang=' . $lingue[$i]['abbreviazione'] . '"';
-            if ($_SESSION['lang'] == $lingue[$i]['shortcode_lingua']) echo 'class="active-lang"';
-            echo '>' . $lingue[$i]['abbreviazione'] . '</a>';
-        }
-        ?>
+<div class="footer">
+    <?php require_once 'Views/backoffice.language.selector.php'; ?>
+    <div class="copyright">
+        <p>Copyright © 2021</p>
     </div>
-    <?php if ($currentPage != 'login') { ?>
-        <div class="copyright">
-            <p>Copyright © 2021</p>
-        </div>
-    <?php } ?>
 </div>
 
-<script src="js/bootstrap.js"></script>
-<script src="js/popper.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/main.js"></script>
+<?php require_once 'Views/backoffice.footer.js.php'; ?>
 
-<script src="vendor/global/global.min.js"></script>
-<script src="./vendor/chart.js/Chart.bundle.min.js"></script>
-<script src="./js/custom.min.js"></script>
-<script src="./js/deznav-init.js"></script>
+<script src="/vendor/global/global.min.js"></script>
+<script src="/vendor/chart.js/Chart.bundle.min.js"></script>
+<script src="/js/custom.min.js"></script>
+<script src="/js/deznav-init.js"></script>
 
 <!-- Apex Chart -->
-<script src="./vendor/apexchart/apexchart.js"></script>
+<script src="/vendor/apexchart/apexchart.js"></script>
 
 <!-- Chart piety plugin files -->
-<script src="./vendor/peity/jquery.peity.min.js"></script>
+<script src="/vendor/peity/jquery.peity.min.js"></script>
 
 <!-- Chartist -->
-<script src="./vendor/chartist/js/chartist.min.js"></script>
+<script src="/vendor/chartist/js/chartist.min.js"></script>
 
 <!-- Dashboard 1 -->
-<script src="./js/dashboard/dashboard-1.js"></script>
+<script src="/js/dashboard/dashboard-1.js"></script>
 <!-- Svganimation scripts -->
-<script src="./vendor/svganimation/vivus.min.js"></script>
-<script src="./vendor/svganimation/svg.animation.js"></script>
-<script src="js/bootstrap-select.js"></script>
-<script src="js/dashboard-main.js"></script>
+<script src="/vendor/svganimation/vivus.min.js"></script>
+<script src="/vendor/svganimation/svg.animation.js"></script>
+<script src="/js/bootstrap-select.js"></script>
+<script src="/js/dashboard-main.js"></script>
 
 <script type="text/javascript">
 
+    <?php $lingue =  $view_model->languages->list_all(); ?>
 
     jQuery(document).on("click", ".save-servizio", function () {
         var items_service = $(".form-service-container").length;
@@ -70,7 +57,6 @@
             jQuery(".form-service-container").last().attr("class", " form-service-container fsc-" + items_next);
             jQuery(".form-service-container").last().attr("id", "fsc-servizio-" + items_next);
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 0;$i < sizeof($lingue);$i++) {
             ?>
             jQuery(".form-service-container").last().find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
@@ -89,8 +75,6 @@
             <?php } ?>
 
             jQuery(".form-service-container").last().find("#immagine_servizio-" + items_service).attr("id", "immagine_servizio-" + items_next);
-
-
             jQuery(".form-service-container").last().find("#ifps-prws-immagine_servizio-" + items_service).attr("id", "ifps-prws-immagine_servizio-" + items_next);
 
 
@@ -193,7 +177,6 @@
             jQuery(".form-eccellenza-container").last().attr("class", " form-eccellenza-container fsc-" + items_next);
             jQuery(".form-eccellenza-container").last().attr("id", "fsc-eccellenza-" + items_next);
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 0;$i < sizeof($lingue);$i++) {
             ?>
             jQuery(".form-eccellenza-container").last().find("#descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_eccellenza).attr("id", "descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
@@ -348,10 +331,7 @@
                         $('#preview-didascalie').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
                 }
 
-                <?
-                $lingue = getLangsShortcode($dbh);
-                for($i = 0;$i < sizeof($lingue);$i++) {
-                ?>
+                <?php for($i = 0;$i < sizeof($lingue);$i++) { ?>
                 $('.apt-' + n_pictures).append('<textarea id="testo-didascalia-<?php echo $lingue[$i]['shortcode_lingua'];?>-' + n_pictures + '" placeholder="Didascalia <?php echo $lingue[$i]['abbreviazione'];?>"></textarea>');
                 <?php } ?>
 
@@ -609,7 +589,7 @@
 
             var jsonStringParams = JSON.stringify(params);
             var title = "";
-            $.post("functions/api?use=" + toFunction, {parameters: jsonStringParams})
+            $.post("backoffice/api?use=" + toFunction, {parameters: jsonStringParams})
                 .done(function (data) {
                     if (data != 'error') {
                         $(".notification-message").html(successo);
@@ -618,27 +598,27 @@
                         $(".notification-message").fadeIn();
                         if (callback != '' && callback != undefined) {
                             if (callback == 'strutturecat') {
-                                callback = '<?php echo $langs['link_strutture'];?>';
+                                callback = 'facilities';
                                 var params = [];
                                 params[0] = 'strutture';
                                 params[1] = 'categorie';
                                 var jsonStringParams = JSON.stringify(params);
                                 openView(callback, params);
 
-                                window.history.pushState("object or string", title, "/cp/<?php echo $langs['link_strutture'];?>/" + callback);
-                            } else if (callback == '<?php echo $langs['params_lingue'];?>') {
-                                callback = '<?php echo $langs['link_traduzioni'];?>';
+                                window.history.pushState("object or string", title, "/backoffice/" + callback);
+                            } else if (callback == 'languages') {
+                                callback = 'translations';
                                 var params = [];
-                                params[0] = '<?php echo $langs['link_traduzioni'];?>';
-                                params[1] = '<?php echo $langs['params_lingue'];?>';
+                                params[0] = '<?php echo $view_model->translations->get('link_traduzioni');?>';
+                                params[1] = '<?php echo $view_model->translations->get('params_lingue');?>';
                                 var jsonStringParams = JSON.stringify(params);
                                 openView(callback, params);
 
-                                window.history.pushState("object or string", title, "/cp/<?php echo $langs['link_traduzioni'];?>/" + callback);
+                                window.history.pushState("object or string", title, "/backoffice/" + callback);
                             } else {
                                 openView(callback, params);
 
-                                window.history.pushState("object or string", title, "/cp/" + callback);
+                                window.history.pushState("object or string", title, "/backoffice/" + callback);
                             }
                         } else
                             refreshView();
@@ -706,7 +686,7 @@
             var translation = JSON.stringify(new_translation);
             var key = JSON.stringify(translation_key);
             var lingua = JSON.stringify(id_lingua);
-            $.post("functions/api?use=" + toFunction, {
+            $.post("backoffice/api?use=" + toFunction, {
                 parameters: 'traduzioni',
                 id: id,
                 translation: translation,
@@ -754,9 +734,9 @@
         if (params == "false") params = "";
         var title = jQuery(this).attr("data-title");
         if (params != "")
-            window.history.pushState("object or string", title, "/cp/" + action + "/" + params);
+            window.history.pushState("object or string", title, "/backoffice/" + action + "/" + params);
         else
-            window.history.pushState("object or string", title, "/cp/" + action);
+            window.history.pushState("object or string", title, "/backoffice/" + action);
         $(document).prop("title", title);
 
         var val = false;
@@ -797,7 +777,7 @@
 
             params = jQuery(this).val();
             var jsonStringParams = JSON.stringify(params);
-            $.post("functions/api?use=" + toFunction, {parameters: jsonStringParams})
+            $.post("backoffice/api?use=" + toFunction, {parameters: jsonStringParams})
                 .done(function (data) {
                     //refreshView();
                     if (data != 'error') {
@@ -841,7 +821,7 @@
 
             params = jQuery(this).val();
             var jsonStringParams = JSON.stringify(params);
-            $.post("functions/api?use=" + toFunction, {parameters: jsonStringParams})
+            $.post("backoffice/api?use=" + toFunction, {parameters: jsonStringParams})
                 .done(function (data) {
                     //refreshView();
                     if (data != 'error') {
@@ -985,13 +965,10 @@
         var descrizioni_ospiti
             = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizioni_ospiti
             .push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));
-        console.log(descrizioni_ospiti
-        );
         <?php } ?>
 
         var nomi_servizi = [];
@@ -1003,7 +980,6 @@
             abilitato[z] = '';
             descrizioni_servizi[z] = '';
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 1;$i < sizeof($lingue) + 1;$i++) {
             ?>
             nomi_servizi[z] += jQuery("#nome_servizio-<?php echo $i;?>-" + i).val() + '||';
@@ -1012,7 +988,6 @@
             <?php } ?>
             z++;
         }
-        console.log(nomi_servizi);
 
 
         var immagine_servizio = [];
@@ -1081,7 +1056,7 @@
 
         if (is_error == false) {
 
-            $.post("functions/api?use=addHotel", {
+            $.post("backoffice/api?use=addHotel", {
                 nome: nome,
                 email: email,
                 telefono: telefono,
@@ -1093,35 +1068,20 @@
                 utente_abilitato: utente_abilitato,
                 pro: pro,
                 num_services: num_services,
-                descrizioni_ospiti
-        :
-            descrizioni_ospiti, nomi_servizi
-        :
-            nomi_servizi, abilitato
-        :
-            abilitato, descrizioni_servizi
-        :
-            descrizioni_servizi, immagine_servizio
-        :
-            immagine_servizio, lunedi
-        :
-            lunedi, martedi
-        :
-            martedi, mercoledi
-        :
-            mercoledi, giovedi
-        :
-            giovedi, venerdi
-        :
-            venerdi, sabato
-        :
-            sabato, domenica
-        :
-            domenica, immagini_hotel
-        :
-            immagini_hotel, default_image
-        :
-            default_image
+                descrizioni_ospiti: descrizioni_ospiti,
+                nomi_servizi: nomi_servizi,
+                abilitato: abilitato,
+                descrizioni_servizi: descrizioni_servizi,
+                immagine_servizio: immagine_servizio,
+                lunedi: lunedi,
+                martedi: martedi,
+                mercoledi: mercoledi,
+                giovedi: giovedi,
+                venerdi: venerdi,
+                sabato: sabato,
+                domenica: domenica,
+                immagini_hotel: immagini_hotel,
+                default_image: default_image
         })
         .
             done(function (data) {
@@ -1132,9 +1092,9 @@
                     $(".notification-message").removeClass("nm-info");
                     $(".notification-message").addClass("nm-success");
                     $(".notification-message").fadeIn();
-                    callback = '<?php echo $langs['link_hotels'];?>';
+                    callback = link_hotels';
                     var params = [];
-                    params[0] = '<?php echo $langs['link_hotels'];?>';
+                    params[0] = '<?php echo $view_model->translations->get('link_hotels');?>';
                     var jsonStringParams = JSON.stringify(params);
                     openView(callback, params);
                 } else if (data == 'exists') {
@@ -1266,13 +1226,10 @@
         var descrizioni_ospiti
             = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizioni_ospiti
             .push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));
-        console.log(descrizioni_ospiti
-        );
         <?php } ?>
 
         var nomi_servizi = [];
@@ -1284,7 +1241,6 @@
             abilitato[z] = '';
             descrizioni_servizi[z] = '';
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 1;$i < sizeof($lingue) + 1;$i++) {
             ?>
             nomi_servizi[z] += jQuery("#nome_servizio-<?php echo $i;?>-" + i).val() + '||';
@@ -1359,7 +1315,7 @@
         }
         if (is_error == false) {
             jQuery(".error_message").remove();
-            $.post("functions/api?use=updateHotel", {
+            $.post("backoffice/api?use=updateHotel", {
                 nome: nome,
                 email: email,
                 telefono: telefono,
@@ -1483,10 +1439,9 @@
             let id_testo = $(this).next().children().children().attr("id");
             let id_testo_new = id_testo.substr(id_testo.length - 1);
 
-            src = $(this).attr("src");
+            let src = $(this).attr("src");
             immagini_didascalia.push(src);
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 0;$i < sizeof($lingue);$i++) {
             ?>
             testi_didascalia += $("#testo-didascalia-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + id_testo_new).val();
@@ -1501,17 +1456,15 @@
         var descrizioni_normali
             = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizioni_normali.push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));
         <?php } ?>
 
-        <?php if($_SESSION['level'] > 2) { ?>
+        <?php if($view_model->user->level > 2) { ?>
         var descrizione_benefit
             = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizione_benefit.push($('#descrizione-benefit-<?php echo $i;?>').summernote('code'));
@@ -1668,7 +1621,6 @@
             abilitato[z] = '';
             descrizioni_eccellenza[z] = '';
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 1;$i < sizeof($lingue) + 1;$i++) {
             ?>
             nomi_eccellenza[z] += jQuery("#nome-eccellenza-<?php echo $i;?>-" + i).val() + '||';
@@ -1683,10 +1635,9 @@
             immagine_eccellenze.push($("#prws-immagine_eccellenza-" + i).next().attr("src"));
 
         }
-        console.log(immagine_eccellenze);
 
         if (is_error == false) {
-            $.post("functions/api?use=addStruttura", {
+            $.post("backoffice/api?use=addStruttura", {
                 nome: nome,
                 email: email,
                 telefono: telefono,
@@ -1726,9 +1677,9 @@
                     $(".notification-message").removeClass("nm-info");
                     $(".notification-message").addClass("nm-success");
                     $(".notification-message").fadeIn();
-                    callback = '<?php echo $langs['link_strutture'];?>';
+                    callback = 'facilities';
                     var params = [];
-                    params[0] = '<?php echo $langs['link_strutture'];?>';
+                    params[0] = '<?php echo $view_model->translations->get('link_strutture');?>';
                     var jsonStringParams = JSON.stringify(params);
                     openView(callback, params);
                 } else {
@@ -1802,10 +1753,9 @@
             let id_testo = $(this).next().children().children().attr("id");
             let id_testo_new = id_testo.substr(id_testo.length - 1);
 
-            src = $(this).attr("src");
+            let src = $(this).attr("src");
             immagini_didascalia.push(src);
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 0;$i < sizeof($lingue);$i++) {
             ?>
             testi_didascalia += $("#testo-didascalia-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + id_testo_new).val();
@@ -1820,16 +1770,14 @@
         var descrizioni_normali
             = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizioni_normali.push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));
         <?php } ?>
-        <?php if($_SESSION['level'] > 2) { ?>
+        <?php if($view_model->user->level > 2) { ?>
         var descrizione_benefit
             = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizione_benefit.push($('#descrizione-benefit-<?php echo $i;?>').summernote('code'));
@@ -1989,7 +1937,6 @@
             abilitato[z] = '';
             descrizioni_eccellenza[z] = '';
             <?php
-            $lingue = getLangsShortcode($dbh);
             for($i = 1;$i < sizeof($lingue) + 1;$i++) {
             ?>
             nomi_eccellenza[z] += jQuery("#nome-eccellenza-<?php echo $i;?>-" + i).val() + '||';
@@ -2006,7 +1953,7 @@
         }
 
         if (is_error == false) {
-            $.post("functions/api?use=updateStruttura", {
+            $.post("backoffice/api?use=updateStruttura", {
                 nome: nome,
                 email: email,
                 telefono: telefono,
@@ -2078,13 +2025,12 @@
         var failure = jQuery(this).attr("data-failure");
         var descrizione_benefit = [];
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizione_benefit.push($('#descrizione-benefit-<?php echo $i;?>').summernote('code'));
         <?php } ?>
 
-        $.post("functions/api?use=updateConvenzione", {parameters: descrizione_benefit, id_struttura: id_struttura})
+        $.post("backoffice/api?use=updateConvenzione", {parameters: descrizione_benefit, id_struttura: id_struttura})
             .done(function (data) {
                 if (data != 'error') {
                     $(".notification-message").html(successo);
@@ -2157,7 +2103,6 @@
 
         var z = 0;
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizione_benefit.push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));
@@ -2261,7 +2206,7 @@
 
         if (is_error == false) {
 
-            $.post("functions/api?use=addEvento", {
+            $.post("backoffice/api?use=addEvento", {
                 nome: nome,
                 email: email,
                 sito: sito,
@@ -2289,9 +2234,9 @@
                         $(".notification-message").removeClass("nm-error");
                         $(".notification-message").addClass("nm-success");
                         $(".notification-message").fadeIn();
-                        callback = '<?php echo $langs['link_eventi'];?>';
+                        callback = 'events';
                         var params = [];
-                        params[0] = '<?php echo $langs['link_eventi'];?>';
+                        params[0] = '<?php echo $view_model->translations('link_eventi');?>';
                         var jsonStringParams = JSON.stringify(params);
                         openView(callback, params);
                     } else {
@@ -2363,7 +2308,6 @@
 
         var z = 0;
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizione_benefit.push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));
@@ -2463,7 +2407,7 @@
 
         if (is_error == false) {
 
-            $.post("functions/api?use=updateEvento", {
+            $.post("backoffice/api?use=updateEvento", {
                 nome: nome,
                 email: email,
                 sito: sito,
@@ -2517,7 +2461,7 @@
 
 
     function setScriptTable() {
-        $.post("functions/api?use=setScriptTable", {})
+        $.post("backoffice/api?use=setScriptTable", {})
             .done(function (data) {
             })
             .fail(function (xhr, textStatus, errorThrown) {
@@ -2537,7 +2481,6 @@
 
         var z = 0;
         <?php
-        $lingue = getLangsShortcode($dbh);
         for($i = 1;$i < sizeof($lingue) + 1;$i++) {
         ?>
         descrizione_benefit.push($('#descrizione-ospiti-<?php echo $i;?>').summernote('code'));    <?php } ?>
@@ -2547,7 +2490,7 @@
 
         if (is_error == false) {
 
-            $.post("functions/api?use=updateEventoSmall", {
+            $.post("backoffice/api?use=updateEventoSmall", {
                 descrizione_benefit: descrizione_benefit, id_evento: id_evento
             })
                 .done(function (data) {
@@ -2587,7 +2530,7 @@
             var success = jQuery(this).attr("data-success");
             var fail = jQuery(this).attr("data-fail");
             var jsonStringParams = JSON.stringify(params);
-            $.post("functions/api?use=" + toFunction, {parameters: jsonStringParams})
+            $.post("backoffice/api?use=" + toFunction, {parameters: jsonStringParams})
                 .done(function (data) {
 
                     if (data != 'error') {
@@ -2627,7 +2570,7 @@
             var callback = jQuery(this).attr("data-callback");
             var success = jQuery(this).attr("data-success");
             var fail = jQuery(this).attr("data-fail");
-            $.post("functions/api?use=delRelatedStrutturaEvento", {type: type, id: id, id_evento: id_evento})
+            $.post("backoffice/api?use=delRelatedStrutturaEvento", {type: type, id: id, id_evento: id_evento})
                 .done(function (data) {
 
                     if (data != 'error') {
