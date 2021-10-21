@@ -7,7 +7,7 @@
         require_once 'Views/backoffice.head.common.php';
 ?>
 <body>
-<?php if($currentPage != 'login') { ?>
+
 <!-- Preloader -->
 <div id="preloader">
     <div class="sk-three-bounce">
@@ -47,31 +47,31 @@
         <div class="fixed-content-body dz-scroll" id="DZ_W_Fixed_Contant">
             <div class="tab-content" id="menu">
                 <div class="tab-pane chart-sidebar fade" id="dashboard-area" role="tabpanel"></div>
-                <div class="tab-pane fade <?php if($menu_active_btn == 'dashboard') echo 'active show';?>" id="dashboard" role="tabpanel">
+                <div class="tab-pane fade <?php if($view_model->menu_active_btn == 'dashboard') echo 'active show';?>" id="dashboard" role="tabpanel">
                     <ul class="metismenu tab-nav-menu">
-                        <li class="nav-label"><?php echo $langs['dashboard'];?></li>
+                        <li class="nav-label"><?php echo $view_model->translations->get('dashboard');?></li>
                         <p>Accedi ai collegamenti rapidi, visualizza le comunicazioni e le statistiche.</p>
                     </ul>
                 </div>
 
-                <?php if($_SESSION['level'] <= 4) { ?>
-                    <div class="tab-pane fade <?php if(strtolower($menu_active_btn) == strtolower($langs['link_hotels'])) echo 'active show'; else echo $menu_active_btn;?>" id="<?php echo $langs['link_hotels'];?>" role="tabpanel">
+                <?php if($view_model->user->level <= 4) { ?>
+                    <div class="tab-pane fade <?php if(strtolower($view_model->menu_active_btn) == 'hotels') echo 'active show'; else echo $view_model->menu_active_btn;?>" id="hotels" role="tabpanel">
                         <ul class="metismenu tab-nav-menu">
-                            <li class="nav-label"><?php echo $langs['link_hotels'];?></li>
+                            <li class="nav-label"><?php echo $view_model->translations->get('link_hotels');?></li>
                             <li>
                                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
-                                    <?php echo $langs['gestione_hotels'];?>
+                                    <?php echo $view_model->translations->get('gestione_hotels');?>
                                 </a>
                                 <ul aria-expanded="false">
-                                    <li><a href="javascript:void()" data-action="<?php echo $langs['link_hotels'];?>" data-params="false" class="open-view-action"><?php echo $langs['tutti_gli_hotel'];?></a></li>
-                                    <li><a href="javascript:void()" data-action="<?php echo $langs['link_hotels'];?>" class="open-view-action" data-params="<?php echo $langs['nuovo_params'];?>"><?php echo $langs['nuovo_hotel'];?></a></li>
+                                    <li><a href="javascript:void()" data-action="hotels" data-params="false" class="open-view-action"><?php echo $langs['tutti_gli_hotel'];?></a></li>
+                                    <li><a href="javascript:void()" data-action="hotels" class="open-view-action" data-params="<?php echo $$view_model->translations->get('nuovo_params');?>"><?php echo $view_model->translations->get('nuovo_hotel');?></a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 <?php } ?>
 
-                <?php if($_SESSION['level'] == 0) { ?>
+                <?php if($view_model->user->level == 0) { ?>
                     <div class="tab-pane fade" id="role">
                         <ul class="metismenu tab-nav-menu">
                             <li class="nav-label">Cambio ruolo</li>
@@ -91,8 +91,8 @@
                     </div>
                 <?php } ?>
 
-                <?php if($_SESSION['level'] <= 2) { ?>
-                    <div class="tab-pane fade <?php if(strtolower($menu_active_btn) == strtolower($langs['amministratori'])) echo 'active show'; else echo $menu_active_btn;?>" id="<?php echo strtolower($langs['amministratori']);?>">
+                <?php if(view_model->user->level <= 2) { ?>
+                    <div class="tab-pane fade <?php if(strtolower($menu_active_btn) == 'administrators') echo 'active show'; else echo $view_model->menu_active_btn;?>" id="<?php echo strtolower($view_model->translations->get('amministratori');?>">
                         <ul class="metismenu tab-nav-menu">
                             <li class="nav-label"><?php echo $langs['amministratori'];?></li>
                             <li>

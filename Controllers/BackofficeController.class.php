@@ -41,7 +41,7 @@ class BackofficeController
             $template_name = 'backoffice';
         }
 
-        $view_model = new BackOfficeViewModel($template_name, $user, $title, $languages, $translations);
+        $view_model = new BackOfficeViewModel($template_name, $user, $title, $languages, $translations, 'dashboard');
         return new HtmlView($view_model);
     }
 }
