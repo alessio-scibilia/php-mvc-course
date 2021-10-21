@@ -1,11 +1,11 @@
 <?php
 require_once 'Database/MySQLRepository.class.php';
 
-class UserRepository extends MySQLRepository
+class HotelRepository extends MySQLRepository
 {
     public function __construct()
     {
-        parent::__construct('users', 'id');
+        parent::__construct('hotel', 'id');
     }
 
     public function get_by_email_password(string $email, string $password)

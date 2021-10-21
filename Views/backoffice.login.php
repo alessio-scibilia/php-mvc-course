@@ -9,7 +9,7 @@
         <img src="images/logo-wellcome-scuro.png" class="logo-login mb25" title="" />
         <!-- <img src="https://picsum.photos/370/100" class="logo-login mb25" name="" title="" /> -->
 
-        <form action="process/login.php" method="POST" class="validate-it-form">
+        <form action="authentication" method="POST" class="validate-it-form">
             <h1 class="title-login"><?php echo $view_model->translations->get('accedi');?></h1>
             <?php if(isset($_GET['reset']) && $_GET['reset'] == true)
                 echo '<div class="alert alert-info alert-login">Password reimpostata con successo, accedi.</div>'; ?>
@@ -24,6 +24,7 @@
             <input type="text" id="digits-code" class="form-control input-md mb5 text-center" style="display: none;" placeholder="XXXXXX">
 
             <input type="hidden" name="type_login" id="type_login" value="0">
+            <?php include 'Views/xdebug.form.php' ?>
 
             <input type="submit" value="Login" class="form-control btn btn-primary mb15 display-ease-in validate-it" id="validate-1">
             <a href="javascript:void()" class="forgot-password"><?php echo $view_model->translations->get('password_dimenticata');?></a>

@@ -22,7 +22,7 @@ class SessionManager
         return $_SESSION['lang'] ?? Languages::IT;
     }
 
-    public static function set_admin_user(User $user)
+    public static function set_user(User $user)
     {
         $_SESSION['user'] = $user;
     }

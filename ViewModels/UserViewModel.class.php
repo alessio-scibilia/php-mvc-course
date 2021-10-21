@@ -11,17 +11,21 @@ class UserViewModel extends AbstractTemplateViewModel
     public $level_name;
 
     /** @var string */
-    public $username;
+    public $name;
 
     /** @var string */
     public $email;
 
-    public function __construct(int $level, string $level_name, string $username, string $email)
+    /**
+     * @param string $template_name
+     * @param User &$user
+     */
+    public function __construct(string $template_name, User &$user)
     {
-        parent::__construct('header.php');
-        $this->level = $level;
-        $this->level_name = $level_name;
-        $this->username = $username;
-        $this->email = $email;
+        parent::__construct($template_name);
+        $this->level = $user->level;
+        $this->level_name = $user->level_name;
+        $this->name = $user->nome;
+        $this->email = $user->email;
     }
 }
