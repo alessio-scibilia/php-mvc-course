@@ -5,6 +5,9 @@ class HttpRedirectView implements IView
 {
     protected $redirect_url;
 
+    /**
+     * @param $redirect_url
+     */
     public function __construct($redirect_url)
     {
         $this->redirect_url = $redirect_url;

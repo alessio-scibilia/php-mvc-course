@@ -40,6 +40,17 @@ class Languages
         return $this->map[$id] ?? array();
     }
 
+    public function get_by_field(string $field, $value)
+    {
+        $values = array_values($this->map);
+        $filter = function ($element) use($field, $value) {
+            return $element[$field] === $value;
+        };
+        $result = array_filter($values, $filter);
+        $result = array_values($result);
+        return array_pop($result);
+    }
+
     public function get_selected(): array
     {
         return $this->get($this->selected);
