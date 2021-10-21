@@ -23,6 +23,24 @@ class AuthenticationController
      * @param array $params
      * @return HttpRedirectView
      */
+    public function http_get(array &$params): HttpRedirectView
+    {
+        $request = $params['request'];
+        switch ($request)
+        {
+            case 'logout':
+                SessionManager::destroy();
+                return new HttpRedirectView('/backoffice');
+
+            default:
+                return new HttpRedirectView('/backoffice/dashboard');
+        }
+    }
+
+    /**
+     * @param array $params
+     * @return HttpRedirectView
+     */
     public function http_post(array &$params): HttpRedirectView
     {
         $email = $params['email'];
