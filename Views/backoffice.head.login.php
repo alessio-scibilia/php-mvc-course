@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/css/padding.css">
     <link rel="stylesheet" href="/css/margin.css">
     <link rel="stylesheet" href="/css/backoffice-main.css">
-    <link rel="stylesheet" href="/css/style_theme.css">
+    <link rel="stylesheet" href="/css/style_theme_login.css">
 
     <style>body {
             background: #ebeef6;

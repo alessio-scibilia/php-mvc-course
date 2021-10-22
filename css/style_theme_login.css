@@ -1,0 +1,17 @@
+footer {
+    padding-left: 17.1875rem;
+    background-color: #ebeef6;
+}
+
+.footer .copyright {
+    padding: 0.9375rem;
+}
+
+.footer .copyright p {
+    text-align: center;
+    margin: 0;
+}
+
+.footer .copyright a {
+    color: #3a7afe;
+}
