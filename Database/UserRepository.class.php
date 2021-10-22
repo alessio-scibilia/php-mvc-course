@@ -24,4 +24,13 @@ class UserRepository extends MySQLRepository
         return array_pop($results);
     }
 
+    /**
+     * @param int $upper_level is included in results
+     */
+    public function filter_by_upper_level(int $upper_level): array
+    {
+        $where = "level <= :upper_level";
+        $params = array(":upper_level" => $upper_level);
+        return $this->get($where, $params);
+    }
 }

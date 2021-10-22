@@ -1,5 +1,69 @@
 <?php $lingue = $view_model->languages->list_all(); ?>
 
+<script>
+
+(function ($) {
+    "use strict"
+    //example 1
+    var table = $('#example').DataTable({
+        "language": {
+            "lengthMenu": "Display _MENU_ records per page",
+            "paginate": {
+                "first": "Primo",
+                "last": "Ulimo",
+                "next": "<?php echo $view_model->translations->get('successiva');?>",
+                "previous": "<?php echo $view_model->translations->get('precedente');?>"
+            },
+            "zeroRecords": "Nessun risultato",
+            "info": "<?php echo $view_model->translations->get('pagina');?> _PAGE_ <?php echo $view_model->translations->get('di');?> _PAGES_",
+            "infoEmpty": "",
+            "emptyTable": "",
+            "thousands": ",",
+            "lengthMenu": "<?php echo $view_model->translations->get('mostra');?> _MENU_ <?php echo $view_model->translations->get('risultati_per_volta');?>",
+            "loadingRecords": "Caricamento...",
+            "processing": "Caricamento...",
+            "search": "<?php echo $view_model->translations->get('cerca');?>: ",
+            "zeroRecords": "Nessuna dato trovato",
+            "aria": {
+                "sortAscending": ": In ordine crescente",
+                "sortDescending": ": In ordine decrescente"
+            }
+        },
+        createdRow: function (row, data, index) {
+            $(row).addClass('selected')
+        }
+    });
+
+    table.on('click', 'tbody tr', function () {
+        var $row = table.row(this).nodes().to$();
+        var hasClass = $row.hasClass('selected');
+        if (hasClass) {
+            $row.removeClass('selected')
+        } else {
+            $row.addClass('selected')
+        }
+    });
+
+    table.rows().every(function () {
+        this.nodes().to$().removeClass('selected')
+    });
+
+})(jQuery);
+
+/* Estensione per leggere dati delle form */
+jQuery.fn.extend({
+    serializeObject: function() {
+        if (this.serializeArray) {
+            return this.serializeArray().reduce(function (obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+        } else {
+            return {};
+        }
+    }
+});
+
 jQuery(document).on("click", ".save-servizio", function () {
     var items_service = $(".form-service-container").length;
     items_next = items_service + 1;
@@ -2562,3 +2626,5 @@ $('.delStrutturaEvento').on("click", function () {
 
     }
 });
+
+</script>
