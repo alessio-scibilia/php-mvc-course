@@ -33,9 +33,9 @@ jQuery(".open-view-action").click(function () {
     if (params == "false") params = "";
     var title = jQuery(this).attr("data-title");
     if (params != "")
-        window.history.pushState("object or string", title, "/cp/" + action + "/" + params);
+        window.history.pushState("object or string", title, "/backoffice/" + action + "?p=" + encodeURIComponent(params));
     else
-        window.history.pushState("object or string", title, "/cp/" + action);
+        window.history.pushState("object or string", title, "/backoffice/" + action);
     $(document).prop("title", title);
 
     openViewParseURL(action, false);

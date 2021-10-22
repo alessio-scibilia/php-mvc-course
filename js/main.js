@@ -216,10 +216,10 @@ jQuery(document).on("click",".open-view-action-inside",function() {    var searc
     var success = jQuery(this).attr("data-success");
     if(params == "false") params = "";
     var title = jQuery(this).attr("data-title");
-    if(params != "") 
-        window.history.pushState("object or string", title,"/cp/"+action+"/"+params);
-    else
-        window.history.pushState("object or string", title,"/cp/"+action);
+    if(params != "")
+		window.history.pushState("object or string", title, "/backoffice/" + action + "?p=" + encodeURIComponent(params));
+	else
+		window.history.pushState("object or string", title, "/backoffice/" + action);
         $(document).prop("title", title);
 
     var val = false;

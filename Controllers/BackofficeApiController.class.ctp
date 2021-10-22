@@ -17,15 +17,16 @@ class BackofficeApiController
     {
         $use = $params['use']; //Funzione da utilizzare
 
-
         //DA IMPLEMENTARE ANCHE LA CHIAVE API? ERA SETTATA SU MAIN.PHP
 
+        /*
         if (isset($_POST['parameters']) && !is_array($_POST['parameters'])) //da aggiornare
             $params = json_decode(stripslashes($_POST['parameters']));
-
+        */
 
         switch ($use) {
 
+            /*
             case 'delRelatedStrutturaEvento':
                 $result = delRelatedStrutturaEvento($dbh, $_POST['type'], $_POST['id'], $_POST['id_evento']);
 
@@ -54,10 +55,9 @@ class BackofficeApiController
 
             case 'delGuest':
                 $result = delGuest($dbh, $params);
-
-            case 'addAdmin':
-                $result = addAdmin($dbh, $params);
-
+            */
+            case 'addAdmin':  return new JsonView($this->add_admin($params));
+            /*
             case 'enableGuest':
                 $result = enableGuest($dbh, $params);
 
@@ -336,38 +336,11 @@ class BackofficeApiController
                     $result = updateTranslation($dbh, $id_lingua, $translation, $key);
                 } else
                     $result = 'error';
+            */
+            default: return new JsonView('error');
         }
-
-        return new JsonView($result);
     }
 
-
-    //
-    function addAdmin($dbh, $params)
-    {
-        $query = "SELECT email FROM users WHERE email = ?";
-        $stmt = $dbh->prepare($query);
-        $stmt->bindParam(1, $params[2], PDO::PARAM_STR);
-        $stmt->execute();
-        if ($stmt->rowCount() > 0) {
-            $result = 'error';
-        } else {
-            $query = "INSERT INTO users (nome,cognome,email,level,password,abilitato) VALUES (?,?,?,?,?,1)";
-            $password = md5($params[4]);
-
-            $stmt = $dbh->prepare($query);
-            $stmt->bindParam(1, $params[0], PDO::PARAM_STR);
-            $stmt->bindParam(2, $params[1], PDO::PARAM_STR);
-            $stmt->bindParam(3, $params[2], PDO::PARAM_STR);
-            $stmt->bindParam(4, $params[3], PDO::PARAM_INT);
-            $stmt->bindParam(5, $password, PDO::PARAM_STR);
-
-            $stmt->execute();
-            $result = 'success';
-        }
-
-        return $result;
-    }
 
     protected function add_admin(array $params): string
     {
@@ -375,11 +348,7 @@ class BackofficeApiController
 
         if ($user == null) {
             $id = $this->user_repository->add($params);
-
-            if ($id === false)
-                return 'error';
-            else
-                return 'success';
+            return ($id === false) ? 'error' : 'success';
         } else {
             return 'error';
         }
