@@ -1,70 +1,37 @@
 jQuery(document).ready(function () {
-    if (document.getElementById("main-wrapper")) {
-        var page = window.location.pathname;
-
-        var splitURL = page.toString().split("/");
-        var parameters = [];
-        var composed = false;
-        for (let i = 0; i < splitURL.length; i++) {
-            if (splitURL[i] == "cp") {
-                var z = 0;
-                for (let y = i + 1; y < splitURL.length; y++) {
-                    parameters[z] = splitURL[y];
-                    z++;
-                }
-                composed = true;
-            }
-
-            if (composed == true)
-                break;
-        }
-
-        openView(parameters[0], parameters, true);
-
+    var main_wrapper = document.getElementById("main-wrapper");
+    if (main_wrapper) {
+        var debug = jQuery(main_wrapper).data('debug');
+        openViewParseURL(window.location.pathname, debug, true);
     }
-
 });
 
-jQuery(".open-view-action").click(function () {
+function navigate() {
     jQuery(".notification-message").fadeOut();
     var action = jQuery(this).attr("data-action");
     var params = jQuery(this).attr("data-params");
-
-    if (params == "false") params = "";
+    var debug = jQuery(this).data("debug");
     var title = jQuery(this).attr("data-title");
-    if (params != "")
-        window.history.pushState("object or string", title, "/backoffice/" + action + "?p=" + encodeURIComponent(params));
-    else
-        window.history.pushState("object or string", title, "/backoffice/" + action);
+
+    var urls = getUrlsFromAction(action, params, debug);
+
+    window.history.pushState({ title, url: urls.url, debug }, title, urls.url);
+
     $(document).prop("title", title);
 
-    openViewParseURL(action, false);
-});
+    openView(urls.api_url, false);
+}
+
+jQuery(".open-view-action").click(navigate);
+
+jQuery(document).on("click",".open-view-action-inside", navigate);
 
 $(window).bind("popstate", function (e) {
     var state = e.originalEvent.state;
     if (state === null) {
-        openViewParseURL("dashboard", true);
+        openView("/dashboard", false,true);
     } else {
-        var page = window.location.pathname;
-
-        var splitURL = page.toString().split("/");
-        var parameters = [];
-        var composed = false;
-        for (let i = 0; i < splitURL.length; i++) {
-            if (splitURL[i] == "cp") {
-                var z = 0;
-                for (let y = i + 1; y < splitURL.length; y++) {
-                    parameters[z] = splitURL[y];
-                    z++;
-                }
-                composed = true;
-            }
-
-            if (composed == true)
-                break;
-        }
-        openViewParseURL(parameters[0], false);
+        openViewParseURL(window.location.pathname, state.debug,false);
     }
 });
 

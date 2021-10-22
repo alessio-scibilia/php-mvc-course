@@ -41,4 +41,18 @@ class User
     {
         return empty($user->email);
     }
+
+    /**
+     * @param array $rows
+     * @return array
+     */
+    public static function users(array &$rows): array
+    {
+        $results = array();
+        foreach ($rows as &$row)
+        {
+            $results[] = new User($row);
+        }
+        return $results;
+    }
 }

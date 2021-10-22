@@ -6,7 +6,7 @@
 			<feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
 		</filter>
 	</defs>
-	<rect x="3" y="4" fill="#000000" opacity="0.3" width="26" height="20" rx="3" ry="3" filter="url(#f1)"/>
+	<rect x="3" y="4" fill="#000000" opacity="0.3" width="26" height="20" rx="3" ry="3" filter="api_url(#f1)"/>
 	<rect x="3" y="3" fill="#FFFFFF" width="26" height="20" rx="3" ry="3"/>
 	<line x1="10" y1="11.5" x2="21" y2="11.5" stroke="#A9A9A9"/>
 	<line x1="10" y1="14.5" x2="21" y2="14.5" stroke="#A9A9A9"/>

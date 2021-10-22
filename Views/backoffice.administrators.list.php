@@ -38,34 +38,34 @@
                                 <?php foreach ($view_model->users as &$user) { ?>
                                     <tr>
                                         <?php if ($view_model->user->level == 0) { ?>
-                                            <td><?php echo $user->id ?></td>
+                                            <td><?php echo $user->id; ?></td>
                                         <?php } ?>
-                                        <td><?php echo $user->nome ?></td>
-                                        <td><?php echo $user->email ?></td>
-                                        <td><?php echo $user->level . ' | ' . $user->level_name ?></td>
+                                        <td><?php echo $user->nome; ?></td>
+                                        <td><?php echo $user->email; ?></td>
+                                        <td><?php echo $user->level . ' | ' . $user->level_name; ?></td>
                                         <td>
                                             <input  type="checkbox"
                                                     class="enable-admin enable"
-                                                    data-success="<?php $view_model->translations->get('modifiche_salvate') ?>"
-                                                    data-fail="<?php $view_model->translations->get('errore_salvataggio') ?>"
+                                                    data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                                    data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
                                                     <?php echo $user->abilitato == 1 ? 'checked="checked"': ''; ?>
                                                     value="<?php echo $user->id ?>">
                                         </td>
                                         <td>
                                             <a href="javascript:void()"
                                                class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
-                                               data-action="<?php $view_model->translations->get('link_amministratori') ?>"
-                                               data-title=""<?php $view_model->translations->get('gestione_amministratori') ?>"
-                                               data-params="<?php $user->id ?>">
+                                               data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
+                                               data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
+                                               data-params="<?php echo $user->id; ?>">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
                                             <a href="javascript:void()"
                                                class="btn btn-danger shadow btn-xs sharp view-action"
                                                data-function="delAdmin"
-                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate') ?>"
-                                               data-failure="<?php echo $view_model->translations->get('errore_salvataggio') ?>"
+                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                               data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
                                                data-stay="true"
-                                               data-params="<?php echo $user->id ?>">
+                                               data-params="<?php echo $user->id; ?>">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>

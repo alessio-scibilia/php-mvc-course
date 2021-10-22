@@ -8,7 +8,7 @@
 		</filter>
 	</defs>
 
-	<rect x="2" y="2" fill="#000000" opacity="0.3" width="16" height="18" rx="3" ry="3" filter="url(#f1)"/>
+	<rect x="2" y="2" fill="#000000" opacity="0.3" width="16" height="18" rx="3" ry="3" filter="api_url(#f1)"/>
 	<rect x="2" y="1" fill="#000000" width="16" height="18" rx="3" ry="3"/>
 	<line x1="8.5" y1="5" x2="8.5" y2="15" stroke="#A9A9A9"/>
 	<line x1="11.5" y1="5" x2="11.5" y2="15" stroke="#A9A9A9"/>

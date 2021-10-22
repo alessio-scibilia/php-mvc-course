@@ -8,7 +8,7 @@
 		</filter>
 	</defs>
 
-	<circle cx="10" cy="11" fill="#000000" opacity="0.3" r="9" filter="url(#f1)"/>
+	<circle cx="10" cy="11" fill="#000000" opacity="0.3" r="9" filter="api_url(#f1)"/>
 	<circle cx="10" cy="10" fill="#000000" r="9"/>
 	<line x1="8.5" y1="5" x2="8.5" y2="15" stroke="#A9A9A9"/>
 	<line x1="11.5" y1="5" x2="11.5" y2="15" stroke="#A9A9A9"/>
