@@ -15,4 +15,13 @@ class UserRepository extends MySQLRepository
         $results = $this->get($where, $params);
         return array_pop($results);
     }
+
+    public function get_by_email(string $email)
+    {
+        $where = "email = :email";
+        $params = array(":email" => $email);
+        $results = $this->get($where, $params);
+        return array_pop($results);
+    }
+
 }

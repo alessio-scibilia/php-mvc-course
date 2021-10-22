@@ -32,7 +32,7 @@ abstract class MySQLRepository
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function add(array $entity): int
+    public function add(array $entity)
     {
         $table = $this->tableName;
         unset($entity[$this->keyName]);
@@ -42,8 +42,7 @@ abstract class MySQLRepository
         $query = "INSERT INTO $table ($field_list) VALUES ($placeholder_list)";
         $stmt = MySQL::$instance->prepare($query);
         $params = array();
-        foreach ($entity as $key => $value)
-        {
+        foreach ($entity as $key => $value) {
             $params[":$key"] = $value;
         }
         $stmt->execute($params);
