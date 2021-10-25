@@ -9,7 +9,7 @@
         <img src="images/logo-wellcome-scuro.png" class="logo-login mb25" title="" />
         <!-- <img src="https://picsum.photos/370/100" class="logo-login mb25" name="" title="" /> -->
 
-        <form action="authentication" method="POST" class="validate-it-form">
+        <form action="/authentication" method="POST" class="validate-it-form">
             <h1 class="title-login"><?php echo $view_model->translations->get('accedi');?></h1>
             <?php if(isset($_GET['reset']) && $_GET['reset'] == true)
                 echo '<div class="alert alert-info alert-login">Password reimpostata con successo, accedi.</div>'; ?>
