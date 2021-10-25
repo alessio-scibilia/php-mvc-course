@@ -89,52 +89,6 @@ function hideEasy(hide_or_display) {
 }
 
 
-function getUrlsFromAction(action, params, debug) {
-	var parts = action.substring(1, action.length).split('/');
-	var url = parts[0];
-	var api_url = action;
-	if (params) {
-		var last = "/" + encodeURIComponent(params);
-		api_url += last;
-		url += last;
-	}
-	if (debug) {
-		api_url += '?XDEBUG_SESSION_START';
-	}
-	url += '#' + parts.slice(1, parts.length).join('-');
-	return { url, api_url };
-}
-
-function openView(url, first_view, search_val) {
-	if (url) {
-		var scroll = $(window).scrollTop();
-		if (search_val) {
-			url += (url.includes('?') ? '&search_val=' : '?search_val=') + encodeURIComponent(search_val);
-		}
-		$.get(url)
-			.done(function(data) {
-				if(scroll > 0) {
-					$('html, body').animate({scrollTop: '0px'}, 300);
-				}
-				$(".content-ajax").html(data);
-				if (!first_view) {
-					$(this).data('requestRunning', false);
-					if (search_val) {
-						jQuery(".dataTables_filter").children().children().val(search_val);
-					}
-				}
-			})
-			.fail(function(xhr, textStatus, errorThrown) {
-				$(".content-ajax").html('<div class="error_message">Errore</div>');
-			});
-	}
-}
-
-function openViewParseURL(url, debug, first_view, search_val) {
-	var urls = getUrlsFromAction(url, false, debug);
-	openView(urls.api_url, first_view, search_val);
-}
-
 function delPreview(id) {
     id = 'prw-'+id;
     jQuery("#ifp-"+id).hide(function() {

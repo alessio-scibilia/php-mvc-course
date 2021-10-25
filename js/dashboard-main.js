@@ -1,27 +1,3 @@
-jQuery(document).ready(function () {
-    var main_wrapper = document.getElementById("main-wrapper");
-    if (main_wrapper) {
-        var debug = jQuery(main_wrapper).data('debug');
-        openViewParseURL(window.location.pathname, debug, true);
-    }
-});
-
-function navigate() {
-    jQuery(".notification-message").fadeOut();
-    var action = jQuery(this).attr("data-action");
-    var params = jQuery(this).attr("data-params");
-    var debug = jQuery(this).data("debug");
-    var title = jQuery(this).attr("data-title");
-
-    var urls = getUrlsFromAction(action, params, debug);
-
-    window.history.pushState({ title, url: urls.url, debug }, title, urls.url);
-
-    $(document).prop("title", title);
-
-    openView(urls.api_url, false);
-}
-
 // jQuery(".open-view-action").click(navigate);
 jQuery(".open-view-action").click(function (e) {
     let url = jQuery(e.target)

@@ -91,9 +91,3 @@
             </div>
         </div>
     </div>
-
-    <script src="./js/custom.min.js"></script>
-
-    <!-- Datatable -->
-    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <?php include 'Views/backoffice.datatable.js.php'; ?>
