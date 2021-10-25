@@ -6,7 +6,7 @@ require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
-require_once 'ViewModels/BackOfficeContentAjaxViewModel.class.php';
+require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';

@@ -530,14 +530,15 @@ else
 
     <!--**********************************
     Content body start
-    ***********************************
+    ***********************************-->
     <div class="content-body">
-        <div class="content-ajax"></div>
+        <div class="content-ajax">
+            <?php require_once "Views/$view_model->content_template_name.php"; ?>
+        </div>
     </div>
-    **********************************
+    <!--**********************************
         Content body end
     ***********************************-->
-    <?php require_once "Views/$view_model->content_template_name.php"; ?>
 </div>
 
 <?php require_once 'Views/backoffice.footer.php'; ?>
