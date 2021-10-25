@@ -22,7 +22,14 @@ function navigate() {
     openView(urls.api_url, false);
 }
 
-jQuery(".open-view-action").click(navigate);
+// jQuery(".open-view-action").click(navigate);
+jQuery(".open-view-action").click(function (e) {
+    let url = jQuery(e.target)
+        .closest('a')
+        .attr('href');
+    window.setTimeout(function () { window.location.assign(url); }, 500);
+    return false;
+})
 
 jQuery(document).on("click",".open-view-action-inside", navigate);
 

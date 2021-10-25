@@ -58,15 +58,16 @@ class BackofficeAdministratorsController
             $rows = $this->user_repository->filter_by_upper_level($user->level);
             $users = User::users($rows);
 
-            $view_model = new BackOfficeContentAjaxViewModel(
-                'backoffice.administrators.list',
+            //                 'd92fgov02dm2jf493fspamwi2d0za201',
+            $view_model = new BackOfficeViewModel(
+                'backoffice',
                 $user,
                 $title,
                 $languages,
                 $translations,
+                $users,
                 'administrators',
-                'd92fgov02dm2jf493fspamwi2d0za201',
-                $users
+                'backoffice.administrators.list'
             );
 
             return new HtmlView($view_model);

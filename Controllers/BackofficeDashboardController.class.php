@@ -36,7 +36,8 @@ class BackofficeDashboardController
         $title = $translations->get('titolo_login') . ' | ' . $translations->get('nome_sito');
         $uri_parts = array_slice(explode('/', $_SERVER["REQUEST_URI"]), 0, 3);
         $menu_active_btn = array_pop($uri_parts);
-        $view_model = new BackOfficeViewModel('backoffice', $user, $title, $languages, $translations, $menu_active_btn);
+        $users = array();
+        $view_model = new BackOfficeViewModel('backoffice', $user, $title, $languages, $translations, $users, $menu_active_btn, 'backoffice.hotels.list');
         return new HtmlView($view_model);
     }
 }
