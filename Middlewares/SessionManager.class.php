@@ -32,6 +32,11 @@ class SessionManager
         return $_SESSION['user'] ?? new User();
     }
 
+    public static function set_user_level(int $level)
+    {
+        return $_SESSION['level'] = $level;
+    }
+
     public static function destroy()
     {
         session_destroy();

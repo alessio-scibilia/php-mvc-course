@@ -20,14 +20,11 @@ class User
      */
     public function __construct(array $row = null)
     {
-        if ($row != null)
-        {
-            foreach ($row as $key => $value)
-            {
+        if ($row != null) {
+            foreach ($row as $key => $value) {
                 $this->{$key} = $value;
             }
-            if (isset($this->level))
-            {
+            if (isset($this->level)) {
                 $this->level_name = Level::name($this->level);
             }
         }
@@ -49,10 +46,11 @@ class User
     public static function users(array &$rows): array
     {
         $results = array();
-        foreach ($rows as &$row)
-        {
+        foreach ($rows as &$row) {
             $results[] = new User($row);
         }
         return $results;
     }
+
+
 }
