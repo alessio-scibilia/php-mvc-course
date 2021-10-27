@@ -2267,7 +2267,7 @@ jQuery("#creaEvento").click(function () {
                     $(".notification-message").fadeIn();
                     callback = 'events';
                     var params = [];
-                    params[0] = '<?php echo $view_model->translations('link_eventi');?>';
+                    params[0] = '<?php echo $view_model->translations->get('link_eventi');?>';
                     var jsonStringParams = JSON.stringify(params);
                     openView(callback, params);
                 } else {
