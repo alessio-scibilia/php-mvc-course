@@ -162,7 +162,7 @@ else
                                 </a>
                                 <ul aria-expanded="false">
                                     <li>
-                                        <a href="javascript:void()"
+                                        <a href="/backoffice/facilities"
                                            class="open-view-action"
                                             <?php include 'Views/xdebug.attribute.php'; ?>
                                            data-action="/backoffice/facilities">
@@ -171,7 +171,7 @@ else
                                     </li>
                                     <?php if ($view_model->user->level <= 3) { ?>
                                         <li>
-                                            <a href="javascript:void()"
+                                            <a href="/backoffice/facilities/new"
                                                class="open-view-action"
                                                 <?php include 'Views/xdebug.attribute.php'; ?>
                                                data-action="/backoffice/facilities/new">
@@ -183,12 +183,12 @@ else
                             </li>
                             <?php if ($view_model->user->level <= 2) { ?>
                                 <li class="mega-menu mega-menu-xl">
-                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                    <a class="has-arrow" href="/backoffice/facilities/categories" aria-expanded="false">
                                         <span class="nav-text"><?php echo $view_model->translations->get('categorie_strutture'); ?></span>
                                     </a>
                                     <ul aria-expanded="false">
                                         <li>
-                                            <a href="javascript:void()"
+                                            <a href="/backoffice/facilities/categories"
                                                class="open-view-action"
                                                 <?php include 'Views/xdebug.attribute.php'; ?>
                                                data-action="/backoffice/facilities/categories">
@@ -216,7 +216,7 @@ else
                         <ul class="metismenu tab-nav-menu">
                             <li class="nav-label">NOME HOTEL</li>
                             <li class="">
-                                <a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                                <a class="ai-icon" href="/backoffice/profile" aria-expanded="false">
                                     <span class="nav-text"><?php echo $view_model->translations->get('informazioni_hotel'); ?></span>
                                 </a>
                             </li>
@@ -230,12 +230,12 @@ else
                     <ul class="metismenu tab-nav-menu">
                         <li class="nav-label"><?php echo $view_model->translations->get('eventi'); ?></li>
                         <li>
-                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <a class="has-arrow" href="/backoffice/events" aria-expanded="false">
                                 <span class="nav-text"><?php echo $view_model->translations->get('gestione_eventi'); ?></span>
                             </a>
                             <ul aria-expanded="false">
                                 <li>
-                                    <a href="javascript:void()"
+                                    <a href="/backoffice/events"
                                        class="open-view-action"
                                        data-action="/backoffice/events"
                                         <?php include 'Views/xdebug.attribute.php'; ?>
@@ -244,7 +244,7 @@ else
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="javascript:void()"
+                                    <a href="/backoffice/events/new"
                                        class="open-view-action"
                                        data-action="/backoffice/events/new"
                                         <?php include 'Views/xdebug.attribute.php'; ?>
@@ -263,11 +263,11 @@ else
                         <ul class="metismenu tab-nav-menu">
                             <li class="nav-label"><?php echo $view_model->translations->get('ospiti'); ?></li>
                             <li>
-                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <a class="has-arrow" href="/backoffice/guets" aria-expanded="false">
                                     <span class="nav-text"><?php echo $view_model->translations->get('gestione_ospiti'); ?></span>
                                 </a>
                                 <ul aria-expanded="false">
-                                    <li><a href="javascript:void()"
+                                    <li><a href="/backoffice/guests"
                                            class="open-view-action"
                                            data-action="/backoffice/guests"
                                             <?php include 'Views/xdebug.attribute.php'; ?>
@@ -275,7 +275,7 @@ else
                                             <?php echo $view_model->translations->get('tutti_ospiti'); ?>
                                         </a>
                                     </li>
-                                    <li><a href="javascript:void()"
+                                    <li><a href="/backoffice/guests/load"
                                            class="open-view-action"
                                            data-action="/backoffice/guests/load"
                                             <?php include 'Views/xdebug.attribute.php'; ?>
@@ -283,7 +283,7 @@ else
                                             <?php echo $view_model->translations->get('carica_ospiti'); ?>
                                         </a>
                                     </li>
-                                    <li><a href="javascript:void()"
+                                    <li><a href="/backoffice/guests/new"
                                            class="open-view-action"
                                            data-action="/backoffice/guests/new"
                                             <?php include 'Views/xdebug.attribute.php'; ?>
@@ -302,7 +302,7 @@ else
                     <ul class="metismenu tab-nav-menu">
                         <li class="nav-label"><?php echo $view_model->translations->get('impostazioni'); ?></li>
                         <li>
-                            <a href="javascript:void()" class="open-view-action" data-action="/backoffice/settings">
+                            <a href="/backoffice/settings" class="open-view-action" data-action="/backoffice/settings">
                                 <?php echo $view_model->translations->get('impostazioni_account'); ?>
                             </a>
                         </li>
@@ -318,19 +318,19 @@ else
                                 <a class="open-view-action"
                                    data-action="/backoffice/translations"
                                     <?php include 'Views/xdebug.attribute.php'; ?>
-                                   href="javascript:void()">
+                                   href="/backoffice/translations">
                                     <?php echo $view_model->translations->get('traduzioni'); ?>
                                 </a>
                             </li>
 
                             <li class="mega-menu mega-menu-xl">
-                                <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <a class="has-arrow" href="/backoffice/translations" aria-expanded="false">
                                     <span class="nav-text"><?php echo $view_model->translations->get('lingue'); ?></span>
                                 </a>
                                 <ul aria-expanded="false">
                                     <li>
                                         <a class="open-view-action"
-                                           href="javascript:void()"
+                                           href="/backoffice/translations/languages"
                                             <?php include 'Views/xdebug.attribute.php'; ?>
                                            data-action="/backoffice/translations/languages">
                                             <?php echo $view_model->translations->get('lingue_create'); ?>
@@ -338,7 +338,7 @@ else
                                     </li>
                                     <li>
                                         <a class="open-view-action"
-                                           href="javascript:void()"
+                                           href="/backoffice/translations/languages/new"
                                             <?php include 'Views/xdebug.attribute.php'; ?>
                                            data-action="/backoffice/translations/languages/new">
                                             <?php echo $view_model->translations->get('crea_nuova_lingua'); ?>
@@ -366,7 +366,7 @@ else
                     <ul class="navbar-nav header-right">
                         <li class="nav-item">
                             <a class="nav-link bell ai-icon open-view-action"
-                               href="javascript:void()"
+                               href="/backoffice/notifications"
                                 <?php include 'Views/xdebug.attribute.php'; ?>
                                data-action="/backoffice/notifications"
                                data-title="<?php echo $view_model->translations->get('notifiche') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
@@ -377,7 +377,7 @@ else
                         <li class="nav-item  header-profile">
                             <a class="nav-link nav-modded open-menu"
                                data-menu="<?php echo $view_model->translations->get('link_impostazioni'); ?>"
-                               href="javascript:void()"
+                               href="/backoffice/settings"
                                 <?php include 'Views/xdebug.attribute.php'; ?>
                                data-action="/backoffice/settings"
                                role="button"
@@ -437,7 +437,7 @@ else
                            data-action="/backoffice/hotels"
                             <?php include 'Views/xdebug.attribute.php'; ?>
                            data-title="<?php echo $view_model->translations->get('titolo_hotel') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
-                           href="#hotels"
+                           href="/backoffice/hotels"
                            id="menu-hotels">
                             <i class="fa fa-building-o"></i>
                         </a>
@@ -450,7 +450,7 @@ else
                             <?php include 'Views/xdebug.attribute.php'; ?>
                            data-title="<?php echo $view_model->translations->get('titolo_strutture') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
                            data-toggle="tab"
-                           href="#facilities">
+                           href="/backoffice/facilities">
                             <i class="fa fa-building"></i>
                         </a>
                     </li>
@@ -462,7 +462,7 @@ else
                             <?php include 'Views/xdebug.attribute.php'; ?>
                            data-action="/backoffice/guests"
                            data-toggle="tab"
-                           href="#guests">
+                           href="/backoffice/guests">
                             <i class="fa fa-users"></i>
                         </a>
                     </li>
@@ -474,7 +474,7 @@ else
                             <?php include 'Views/xdebug.attribute.php'; ?>
                            data-title="<?php echo $view_model->user->nome . ' | ' . $view_model->translations->get('nome_sito'); ?>"
                            data-toggle="tab"
-                           href="#profile">
+                           href="/backoffice/profile">
                             <i class="fa fa-building-o"></i>
                         </a>
                     </li>
@@ -486,7 +486,7 @@ else
                            data-action="/backoffice/events"
                             <?php include 'Views/xdebug.attribute.php'; ?>
                            data-toggle="tab"
-                           href="#menu">
+                           href="/backoffice/events">
                             <i class="fa fa-calendar"></i>
                         </a>
                     </li>
@@ -497,7 +497,7 @@ else
                         <?php include 'Views/xdebug.attribute.php'; ?>
                        data-title="<?php echo $view_model->translations->get('titolo_impostazioni') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
                        data-toggle="tab"
-                       href="#settings"
+                       href="/backoffice/settings"
                        id="menu-settings">
                         <i class="fa fa-gear"></i>
                     </a>
@@ -509,7 +509,7 @@ else
                             <?php include 'Views/xdebug.attribute.php'; ?>
                            data-title="<?php echo $view_model->translations->get('titolo_traduzioni') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
                            data-toggle="tab"
-                           href="#translations">
+                           href="/backoffice/translations">
                             <i class="fa fa-language"></i>
                         </a>
                     </li>
