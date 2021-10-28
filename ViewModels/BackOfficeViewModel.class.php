@@ -29,6 +29,15 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
     /** @var array */
     public $users;
 
+    /** @var array */
+    public $events;
+
+    /** @var array */
+    public $facilities;
+
+    /** @var array */
+    public $hotels;
+
     /** @var string */
     public $menu_active_btn;
 
@@ -36,22 +45,17 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
     public $content_template_name;
 
     /**
-     * @param string $template_name
-     * @param User $user
+     * @param string $content_template_name
      * @param string $title
      * @param Languages $languages
-     * @param translations $translations
-     * @param string $menu_active_btn
+     * @param Translations $translations
      */
-    public function __construct(string $template_name, User &$user, string $title, Languages &$languages, Translations &$translations, array &$users, string $menu_active_btn, string $content_template_name) {
-        parent::__construct($template_name);
-        $this->user = $user;
+    public function __construct(string $content_template_name, string $title, Languages &$languages, Translations &$translations) {
+        parent::__construct('backoffice');
+        $this->content_template_name = $content_template_name;
         $this->title = $title;
         $this->languages = $languages;
         $this->translations = $translations;
-        $this->menu_active_btn = $menu_active_btn;
-        $this->users = $users;
-        $this->content_template_name = $content_template_name;
     }
 
 }

@@ -42,19 +42,12 @@ class BackofficeEventsController
             }
 
 
-            $users = array();
+            $events = array(); // TODO: da recuperare dal DB
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel(
-                'backoffice',
-                $user,
-                $title,
-                $languages,
-                $translations,
-                $users,
-                'events',
-                'backoffice.events.list'
-            );
+            $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages,$translations);
+            $view_model->user = $user;
+            $view_model->events = $events;
 
             return new HtmlView($view_model);
         }

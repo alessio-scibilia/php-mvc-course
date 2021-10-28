@@ -42,19 +42,13 @@ class BackofficeFacilitiesController
             }
 
 
-            $users = array();
+            $facilities = array(); // TODO: da recuperare dal DB
 
             //                 'd92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel(
-                'backoffice',
-                $user,
-                $title,
-                $languages,
-                $translations,
-                $users,
-                'facilities',
-                'backoffice.facilities.list'
-            );
+            $view_model = new BackOfficeViewModel('backoffice.facilities.list', $title,$languages,$translations);
+            $view_model->user = $user;
+            $view_model->facilities = $facilities;
+            $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);
         }

@@ -41,8 +41,11 @@ class BackofficeController
             $template_name = 'backoffice';
         }
 
-        $users = array();
-        $view_model = new BackOfficeViewModel($template_name, $user, $title, $languages, $translations, $users,'dashboard', 'backoffice.hotels.list');
+        $view_model = new BackOfficeViewModel('backoffice.dashboard', $title, $languages, $translations);
+        $view_model->template_name = $template_name;
+        $view_model->user = $user;
+        $view_model->menu_active_btn = 'dashboard';
+
         return new HtmlView($view_model);
     }
 }

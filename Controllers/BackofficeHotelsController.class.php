@@ -42,19 +42,13 @@ class BackofficeHotelsController
             }
 
 
-            $users = array();
+            $hotels = array(); // TODO: da leggere da DB
 
             //                 'd92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel(
-                'backoffice',
-                $user,
-                $title,
-                $languages,
-                $translations,
-                $users,
-                'hotels',
-                'backoffice.hotels.list'
-            );
+            $view_model = new BackOfficeViewModel('backoffice.hotels.list', $title,$languages,$translations);
+            $view_model->user = $user;
+            $view_model->hotels = $hotels;
+            $view_model->menu_active_btn = 'hotels';
 
             return new HtmlView($view_model);
         }
