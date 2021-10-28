@@ -59,7 +59,7 @@ class BackofficeAdministratorsController
             $users = User::users($rows);
 
             //                 'd92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.administrators.list', $title, $language, $translations);
+            $view_model = new BackOfficeViewModel('backoffice.administrators.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->users = $users;
             $view_model->menu_active_btn = 'administrators';
