@@ -2,7 +2,7 @@
 require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
-require_once 'Database/FacilityRepository.class.php';
+require_once 'Database/GuestRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
@@ -12,24 +12,24 @@ require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
 
-class BackofficeFacilitiesController
+class BackofficeGuestsNewController
 {
     protected $language_repository;
     protected $translation_repository;
     protected $user_repository;
-    protected $facility_repository;
+    protected $guest_repository;
 
     public function __construct()
     {
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
-        $this->facility_repository = new FacilityRepository();
+        $this->guest_repository = new GuestRepository();
     }
 
     public function http_get(array &$params): IView
     {
-        if (isset($params['facilities'])) {
+        if (isset($params['guests'])) {
             return new Html404();
         } else {
             $languages = new Languages($this->language_repository->list_all());
@@ -37,22 +37,22 @@ class BackofficeFacilitiesController
             $languages->select($id_lingua);
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
-            $title = $translations->get('gestione_strutture') . ' | ' . $translations->get('nome_sito');
+            $title = $translations->get('gestione_ospiti') . ' | ' . $translations->get('nome_sito');
 
             $user = SessionManager::get_user();
             if (User::is_empty($user)) {
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->facility_repository->get_all_facilities();
-            $facilities = Facility::facilities($rows);
-            //$facilities = array(); // TODO: da recuperare dal DB
+            $rows = $this->guest_repository->get_all_guests();
+            $guests = Guest::guests($rows);
+            //$guests = array(); // TODO: da leggere da DB
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.facilities.list', $title, $languages, $translations);
+            $view_model = new BackOfficeViewModel('backoffice.guests.create', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->facilities = $facilities;
-            $view_model->menu_active_btn = 'facilities';
+            $view_model->guests = $guests;
+            $view_model->menu_active_btn = 'guests';
 
             return new HtmlView($view_model);
         }

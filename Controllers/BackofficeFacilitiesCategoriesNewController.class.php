@@ -3,6 +3,7 @@ require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
+require_once 'Database/CategoryRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
@@ -12,7 +13,7 @@ require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
 
-class BackofficeFacilitiesController
+class BackofficeFacilitiesCategoriesNewController
 {
     protected $language_repository;
     protected $translation_repository;
@@ -24,7 +25,7 @@ class BackofficeFacilitiesController
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
-        $this->facility_repository = new FacilityRepository();
+        $this->category_repository = new CategoryRepository();
     }
 
     public function http_get(array &$params): IView
@@ -44,14 +45,14 @@ class BackofficeFacilitiesController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->facility_repository->get_all_facilities();
-            $facilities = Facility::facilities($rows);
+            $rows = $this->category_repository->get_all_categories();
+            $categories = Category::categories($rows);
             //$facilities = array(); // TODO: da recuperare dal DB
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.facilities.list', $title, $languages, $translations);
+            $view_model = new BackOfficeViewModel('backoffice.facilities.categories.create', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->facilities = $facilities;
+            $view_model->categories = $categories;
             $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);
