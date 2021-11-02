@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-between mb15">
             <h1><i class="fa fa-calendar"></i> <?php echo $view_model->translations->get('gestione_eventi'); ?></h1>
-            <a class="btn btn-primary open-view-action-inside mb10" data-toggle="tab" data-title="testasd"
+            <a class="btn btn-primary open-view-action-inside mb10"
+               data-title="<?php echo $view_model->translations->get('gestione_eventi'); ?>"
                data-action="<?php echo $view_model->translations->get('link_eventi'); ?>"
                data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
                href="/backoffice/events/new">

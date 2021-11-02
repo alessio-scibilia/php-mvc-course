@@ -9,11 +9,11 @@
         <?php if ($view_model->user->level <= 2) { ?>
             <div class="col-xs-12 col-sm-6 col-md-4">
 
-                <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab"
+                <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts"
                    data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
                    data-action="<?php echo $view_model->translations->get('amministratori'); ?>"
-                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>" href="javascript:void()"
+                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
+                   href="/backoffice/administrators/new"
                    id="<?php echo strtolower($view_model->translations->get('amministratori')); ?>">
                     <div align="center">
                         <i class="fa fa-user fa-shortcuts"></i>
@@ -24,9 +24,10 @@
             <div class="col-xs-12 col-sm-6 col-md-4">
 
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab" data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?>"
+                   data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?>"
                    data-action="<?php echo strtolower($view_model->translations->get('gestione_amministratori')); ?>"
-                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>" href="javascript:void()"
+                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
+                   href="/backoffice/hotels/new"
                    id="<?php echo $view_model->translations->get('link_hotels'); ?>">
                     <div align="center">
                         <i class="fa fa-building-o fa-shortcuts"></i>
@@ -39,9 +40,10 @@
         <?php if ($view_model->user->level <= 2) { ?>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab" data-title="<?php echo $view_model->translations->get('gestione_strutture'); ?>"
+                   data-title="<?php echo $view_model->translations->get('gestione_strutture'); ?>"
                    data-action="<?php echo strtolower($view_model->translations->get('link_strutture')); ?>"
-                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>" href="javascript:void()">
+                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
+                   href="/backoffice/facilities/new">
                     <div align="center">
                         <i class="fa fa-building fa-shortcuts"></i>
                         <div><?php echo $view_model->translations->get('crea_nuova_struttura'); ?></div>
@@ -50,9 +52,10 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab" data-title="testasd"
+                   data-title="testasd"
                    data-action="<?php echo strtolower($view_model->translations->get('link_eventi')); ?>"
-                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>" href="javascript:void()">
+                   data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
+                   href="/backoffice/events/new">
                     <div align="center">
                         <i class="fa fa-calendar fa-shortcuts"></i>
                         <div><?php echo $view_model->translations->get('crea_evento'); ?></div>
@@ -64,10 +67,10 @@
         <?php if ($view_model->user->level <= 1) { ?>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab" data-title="<?php echo $view_model->translations->get('link_traduzioni'); ?>"
+                   data-title="<?php echo $view_model->translations->get('link_traduzioni'); ?>"
                    data-action="<?php echo strtolower($view_model->translations->get('link_traduzioni')); ?>"
                    data-params="<?php echo $view_model->translations->get('params_nuova_lingua'); ?>"
-                   href="javascript:void()">
+                   href="/backoffice/translations/languages/new">
                     <div align="center">
                         <i class="fa fa-language fa-shortcuts"></i>
                         <div><?php echo $view_model->translations->get('crea_nuova_lingua'); ?></div>
@@ -79,10 +82,10 @@
         <?php if ($view_model->user->level >= 3) { ?>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab" data-title="<?php echo $view_model->translations->get('gestione_ospiti'); ?>"
+                   data-title="<?php echo $view_model->translations->get('gestione_ospiti'); ?>"
                    data-action="<?php echo strtolower($view_model->translations->get('param_ospiti')); ?>"
                    data-params="false"
-                   href="javascript:void()">
+                   href="/backoffice/guests/new">
                     <div align="center">
                         <i class="fa fa-users fa-shortcuts"></i>
                         <div><?php echo $view_model->translations->get('gestione_ospiti'); ?></div>
@@ -91,10 +94,10 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-toggle="tab" data-title="<?php echo $_SESSION['nome']; ?>"
+                   data-title="<?php echo $_SESSION['nome']; ?>"
                    data-action="<?php echo strtolower($view_model->translations->get('link_mio_hotel')); ?>"
                    data-params="false"
-                   href="javascript:void()">
+                   href="/backoffice/profile">
                     <div align="center">
                         <i class="fa fa-building-o fa-shortcuts"></i>
                         <div><?php echo $view_model->translations->get('il_mio_hotel'); ?></div>
@@ -104,10 +107,10 @@
         <?php } ?>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-               data-toggle="tab" data-title="<?php echo $view_model->translations->get('impostazioni_account'); ?>"
+               data-title="<?php echo $view_model->translations->get('impostazioni_account'); ?>"
                data-action="<?php echo strtolower($view_model->translations->get('link_impostazioni')); ?>"
                data-params="false"
-               href="javascript:void()">
+               href="/backoffice/settings">
                 <div align="center">
                     <i class="fa fa-gear fa-shortcuts"></i>
                     <div><?php echo $view_model->translations->get('impostazioni_account'); ?></div>

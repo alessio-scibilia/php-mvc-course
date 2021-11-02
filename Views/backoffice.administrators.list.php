@@ -6,7 +6,6 @@
             </h1>
 
             <a class="btn btn-primary open-view-action-inside mb10"
-               data-toggle="tab"
                data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
                data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
                data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"

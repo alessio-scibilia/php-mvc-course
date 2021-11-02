@@ -4,7 +4,7 @@
 
             <h1><i class="fa fa-building-o"></i> <?php echo $view_model->translations->get('tutti_gli_hotel'); ?></h1>
 
-            <a class="btn btn-primary open-view-action-inside mb10" data-toggle="tab"
+            <a class="btn btn-primary open-view-action-inside mb10"
                data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?> | Wellcome"
                data-action="<?php echo $view_model->translations->get('link_hotels'); ?>"
                data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"

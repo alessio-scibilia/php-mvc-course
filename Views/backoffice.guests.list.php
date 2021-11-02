@@ -4,13 +4,13 @@
 
             <h1><i class="fa fa-users"></i> <?php echo $view_model->translations->get('gestione_ospiti'); ?></h1>
             <div>
-                <a class="btn btn-primary open-view-action-inside mb10" data-toggle="tab" data-title="testasd"
+                <a class="btn btn-primary open-view-action-inside mb10" data-title="testasd"
                    data-action="<?php echo $view_model->translations->get('param_ospiti'); ?>"
                    data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
                    href="/backoffice/guests/new">
                     <i class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_ospiti'); ?>
                 </a>
-                <a class="btn btn-primary open-view-action-inside mb10" data-toggle="tab" data-title="testasd"
+                <a class="btn btn-primary open-view-action-inside mb10" data-title="testasd"
                    data-action="<?php echo $view_model->translations->get('param_ospiti'); ?>"
                    data-params="<?php echo $view_model->translations->get('param_carica'); ?>"
                    href="/backoffice/guests/load">

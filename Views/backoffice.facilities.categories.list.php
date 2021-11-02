@@ -2,11 +2,11 @@
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-between mb15">
             <h1><i class="fa fa-list"></i> <?php echo $view_model->translations->get('categorie_strutture'); ?></h1>
-            <a class="btn btn-primary open-view-action-inside mb10" data-toggle="tab"
+            <a class="btn btn-primary open-view-action-inside mb10"
                data-title="<?php echo $view_model->translations->get('gestione_strutture'); ?>"
                data-action="<?php echo $view_model->translations->get('link_strutture'); ?>"
                data-params="<?php echo $view_model->translations->get('param_nuova_categoria'); ?>"
-               href="#<?php echo $view_model->translations->get('categorie'); ?>">
+               href="/backoffice/facilities/categories/new">
                 <i class="fa fa-plus"></i> <?php echo $view_model->translations->get('nuova_categoria'); ?>
             </a>
         </div>
