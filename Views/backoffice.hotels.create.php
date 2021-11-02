@@ -90,7 +90,7 @@
                                                 class="fa fa-language"></i> Lingua</span></label>
                                 <select id="select-language">
                                     <?php
-                                    $lingue = getLangsShortcode($dbh);
+                                    $lingue = $view_model->languages->list_all();
                                     for ($i = 0; $i < sizeof($lingue); $i++) {
                                         ?>
                                         <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
@@ -151,14 +151,12 @@
                                                     class="fa fa-language"></i> Lingua</span></label>
                                     <select id="select-nome-servizi" data-form-index="1">
                                         <?php
-                                        $lingue = getLangsShortcode($dbh);
                                         for ($i = 0; $i < sizeof($lingue); $i++) {
                                             ?>
                                             <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <?php
-                                    $lingue = getLangsShortcode($dbh);
                                     for ($i = 0; $i < sizeof($lingue); $i++) {
                                         ?>
                                         <input type="text"
@@ -172,7 +170,6 @@
                                                     class="fa fa-language"></i> Lingua</span></label>
                                     <select id="select-language-servizi" data-form-index="1">
                                         <?php
-                                        $lingue = getLangsShortcode($dbh);
                                         for ($i = 0; $i < sizeof($lingue); $i++) {
                                             ?>
                                             <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
