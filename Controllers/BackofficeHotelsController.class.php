@@ -2,10 +2,12 @@
 require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
+require_once 'Database/HotelRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
+require_once 'Models/Hotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -16,12 +18,14 @@ class BackofficeHotelsController
     protected $language_repository;
     protected $translation_repository;
     protected $user_repository;
+    protected $hotel_repository;
 
     public function __construct()
     {
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
+        $this->hotel_repository = new HotelRepository();
     }
 
     public function http_get(array &$params): IView
@@ -41,11 +45,12 @@ class BackofficeHotelsController
                 return new HttpRedirectView('/backoffice');
             }
 
-
-            $hotels = array(); // TODO: da leggere da DB
+            $rows = $this->hotel_repository->get_all_hotels();
+            $hotels = Hotel::hotels($rows);
+            //$hotels = array(); // TODO: da leggere da DB
 
             //                 'd92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.hotels.list', $title,$languages,$translations);
+            $view_model = new BackOfficeViewModel('backoffice.hotels.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->hotels = $hotels;
             $view_model->menu_active_btn = 'hotels';

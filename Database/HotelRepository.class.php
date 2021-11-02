@@ -15,4 +15,11 @@ class HotelRepository extends MySQLRepository
         $results = $this->get($where, $params);
         return array_pop($results);
     }
+
+    public function get_all_hotels(): array
+    {
+        $where = "level != 0";
+        $params = array();
+        return $this->get($where, $params);
+    }
 }

@@ -1,22 +1,22 @@
 <?php
 require_once 'Models/Level.class.php';
 
-class User
+class Hotel
 {
-    /** @var int */
-    public $level;
-
-    /** @var string */
-    public $level_name;
-
     /** @var string */
     public $nome;
-    
-    /** @var string */
-    public $cognome;
 
     /** @var string */
     public $email;
+
+    /** @var string */
+    public $telefono;
+
+    /** @var string */
+    public $indirizzo;
+
+    /** @var int */
+    public $abilitato;
 
     /**
      * @param array|null $row
@@ -27,30 +27,27 @@ class User
             foreach ($row as $key => $value) {
                 $this->{$key} = $value;
             }
-            if (isset($this->level)) {
-                $this->level_name = Level::name($this->level);
-            }
         }
     }
 
     /**
-     * @param User $user
+     * @param Hotel $hotel
      * @return bool
      */
-    public static function is_empty(User &$user): bool
+    public static function is_empty(Hotel &$hotel): bool
     {
-        return empty($user->email);
+        return empty($hotel->email);
     }
 
     /**
      * @param array $rows
      * @return array
      */
-    public static function users(array &$rows): array
+    public static function hotels(array &$rows): array
     {
         $results = array();
         foreach ($rows as &$row) {
-            $results[] = new User($row);
+            $results[] = new Hotel($row);
         }
         return $results;
     }

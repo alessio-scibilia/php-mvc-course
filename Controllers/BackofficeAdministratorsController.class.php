@@ -26,12 +26,9 @@ class BackofficeAdministratorsController
 
     public function http_get(array &$params): IView
     {
-        if (isset($params['administrators']))
-        {
+        if (isset($params['administrators'])) {
             return new Html404();
-        }
-        else
-        {
+        } else {
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
@@ -41,15 +38,12 @@ class BackofficeAdministratorsController
             $title = $translations->get('titolo_login') . ' | ' . $translations->get('nome_sito');
 
             $user = SessionManager::get_user();
-            if (User::is_empty($user))
-            {
+            if (User::is_empty($user)) {
                 return new HttpRedirectView('/backoffice');
             }
-
             // Solo gli utenti con level <= 2 possono accedere a queste pagine "amministratori",
             // Gli altri bisogna mandarli su pagine adeguate tramite redirect
-            if ($user->level > 2)
-            {
+            if ($user->level > 2) {
                 return new HttpRedirectView('/backoffice');
             }
 

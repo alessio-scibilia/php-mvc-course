@@ -12,7 +12,7 @@ require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
 
-class BackofficeFacilitiesController
+class BackofficeFacilitiesNewController
 {
     protected $language_repository;
     protected $translation_repository;
@@ -49,7 +49,7 @@ class BackofficeFacilitiesController
             //$facilities = array(); // TODO: da recuperare dal DB
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.facilities.list', $title, $languages, $translations);
+            $view_model = new BackOfficeViewModel('backoffice.facilities.create', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->facilities = $facilities;
             $view_model->menu_active_btn = 'facilities';

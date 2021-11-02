@@ -196,7 +196,7 @@ else
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void()"
+                                            <a href="/backoffice/facilities/categories/new"
                                                class="open-view-action"
                                                 <?php include 'Views/xdebug.attribute.php'; ?>
                                                data-action="/backoffice/facilities/categories/new">

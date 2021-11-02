@@ -2,6 +2,7 @@
 require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
+require_once 'Database/EventRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
@@ -16,12 +17,14 @@ class BackofficeEventsController
     protected $language_repository;
     protected $translation_repository;
     protected $user_repository;
+    protected $event_repository;
 
     public function __construct()
     {
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
+        $this->event_repository = new EventRepository();
     }
 
     public function http_get(array &$params): IView
@@ -41,13 +44,15 @@ class BackofficeEventsController
                 return new HttpRedirectView('/backoffice');
             }
 
-
-            $events = array(); // TODO: da recuperare dal DB
+            $rows = $this->event_repository->get_all_events();
+            $events = Event::events($rows);
+            //$events = array(); // TODO: da recuperare dal DB
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages,$translations);
+            $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->events = $events;
+            $view_model->menu_active_btn = 'events';
 
             return new HtmlView($view_model);
         }
