@@ -49,6 +49,25 @@ abstract class MySQLRepository
         return MySQL::$instance->lastInsertId();
     }
 
+    public function update(array $entity): bool
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+
+        $params = array();
+        $fields = array();
+        foreach ($entity as $field => $value) {
+            $params[":$field"] = $value;
+            if ($field == $key) continue;
+            $fields[] = "$field = :$field";
+        }
+        $field_list = join(', ', $fields);
+        $query = "UPDATE $table SET $field_list WHERE $key = :$key";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute($params);
+        return $stmt->rowCount() == 1;
+    }
+
     public function remove_by_id($id): bool
     {
         $table = $this->tableName;

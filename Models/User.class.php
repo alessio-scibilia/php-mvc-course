@@ -18,6 +18,9 @@ class User
     /** @var string */
     public $email;
 
+    /** @var int */
+    public $abilitato;
+
     /**
      * @param array|null $row
      */

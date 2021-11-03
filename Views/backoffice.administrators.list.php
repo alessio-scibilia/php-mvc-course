@@ -43,12 +43,16 @@
                                     <td><?php echo $user->email; ?></td>
                                     <td><?php echo $user->level . ' | ' . $user->level_name; ?></td>
                                     <td>
-                                        <input type="checkbox"
-                                               class="enable-admin enable"
-                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                               data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                            <?php echo $user->abilitato == 1 ? 'checked="checked"' : ''; ?>
-                                               value="<?php echo $user->id ?>">
+                                        <form action="/backoffice/administrator/<?php echo $user->id ?>/enable" method="POST" enctype="multipart/form-data">
+                                            <input type="checkbox"
+                                                   class="enable-admin enable"
+                                                   data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                                   data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                                   <?php echo $user->abilitato == 1 ? 'checked="checked"' : ''; ?>
+                                                   name="enabled"
+                                                   value="1"
+                                                   onclick="this.form.submit();">
+                                        </form>
                                     </td>
                                     <td>
                                         <a href="javascript:void()"
