@@ -30,6 +30,10 @@ class Router
                 $param = $piece;
             }
         }
+        if (isset($params['default']))
+        {
+            $controls[] = 'frontoffice';
+        }
 
         $controller_name = join('', array_map('ucfirst', $controls)) . 'Controller';
         $controller_path = "Controllers/$controller_name.class.php";
