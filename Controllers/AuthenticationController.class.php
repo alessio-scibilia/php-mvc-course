@@ -50,20 +50,26 @@ class AuthenticationController
         if ($hotel == null)
         {
             $user = $this->user_repository->get_by_email_password($email, $password);
-            if ($user == null)
+            if ($user != null)
             {
-                return new HttpRedirectView('/backoffice');
-            }
-            else
-            {
-                SessionManager::set_user(new User($user));
-                return new HttpRedirectView('/backoffice/dashboard');
+                $model = new User($user);
+                if ($model->enabled())
+                {
+                    SessionManager::set_user($model);
+                    return new HttpRedirectView('/backoffice/dashboard');
+                }
             }
         }
         else
         {
-            SessionManager::set_user(new User($hotel));
-            return new HttpRedirectView('/backoffice/dashboard');
+            $model = new User($hotel);
+            if ($model->enabled())
+            {
+                SessionManager::set_user($model);
+                return new HttpRedirectView('/backoffice/dashboard');
+            }
         }
+
+        return new HttpRedirectView('/backoffice');
     }
 }

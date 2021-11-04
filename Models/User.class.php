@@ -37,6 +37,14 @@ class User
     }
 
     /**
+     * @return bool
+     */
+    public function enabled(): bool
+    {
+        return $this->abilitato == 1 || $this->abilitato == "1";
+    }
+
+    /**
      * @param User $user
      * @return bool
      */
