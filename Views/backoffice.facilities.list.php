@@ -42,10 +42,11 @@
                                     <?php if ($view_model->user->level == 0) { ?>
                                         <td><?php echo $facility->id; ?></td>
                                     <?php } ?>
-                                    <td><?php echo $facility->nome; ?></td>
+                                    <td><?php echo $facility->nome_struttura; ?></td>
                                     <td><?php echo $facility->email; ?></td>
                                     <td><?php echo $facility->telefono; ?></td>
                                     <td><?php echo $facility->indirizzo_struttura; ?></td>
+                                    <td>TODO</td>
                                     <td>
                                         <input type="checkbox"
                                                class="enable-admin enable"

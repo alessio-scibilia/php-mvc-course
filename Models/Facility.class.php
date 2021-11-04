@@ -3,7 +3,7 @@
 class Facility
 {
     /** @var string */
-    public $nome;
+    public $nome_struttura;
 
     /** @var string */
     public $email;

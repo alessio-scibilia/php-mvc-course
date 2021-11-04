@@ -3,18 +3,18 @@ jQuery(".open-view-action").click(function (e) {
     let url = jQuery(e.target)
         .closest('a')
         .attr('href');
-    window.setTimeout(function () { window.location.assign(url); }, 500);
+    window.setTimeout(function () {
+        window.location.assign(url);
+    }, 500);
     return false;
 })
-
-jQuery(document).on("click",".open-view-action-inside", navigate);
 
 $(window).bind("popstate", function (e) {
     var state = e.originalEvent.state;
     if (state === null) {
-        openView("/dashboard", false,true);
+        openView("/dashboard", false, true);
     } else {
-        openViewParseURL(window.location.pathname, state.debug,false);
+        openViewParseURL(window.location.pathname, state.debug, false);
     }
 });
 
@@ -66,7 +66,7 @@ jQuery(document).on("click", ".view-action", function () {
     }
 });
 
-jQuery(document).on("click", ".open-create-service", function () {
+jQuery(".open-create-service").click(function () {
     jQuery(".form-service-container").fadeIn();
     var val = jQuery("#num_services").val();
     val++;
