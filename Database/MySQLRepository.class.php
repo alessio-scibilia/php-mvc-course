@@ -17,16 +17,11 @@ abstract class MySQLRepository
         $table = $this->tableName;
         $key = $this->keyName;
         $query = "SELECT * FROM $table WHERE $where";
-        $stmt = MySQL::$instance->prepare($query);
-        $stmt->execute($params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->query($query, $params);
     }
 
-    protected function join(string $join, string $where, array &$params): array
+    protected function query(string $query, array &$params): array
     {
-        $table = $this->tableName;
-        $key = $this->keyName;
-        $query = "SELECT x.* FROM $table x $join WHERE $where";
         $stmt = MySQL::$instance->prepare($query);
         $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
