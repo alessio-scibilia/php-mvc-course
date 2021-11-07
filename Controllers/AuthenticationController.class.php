@@ -75,12 +75,13 @@ class AuthenticationController
             $id_hotel = $params['id_hotel'];
             $password = $params['password'];
 
-            $guest = $this->guest_repository->get_by_room_password_hotel($id_hotel, $password, $numero_stanza);
+            $guest = $this->guest_repository->get_by_room_password_hotel($numero_stanza, $password, $id_hotel);
             if ($guest != null) {
                 $model = new User($guest);
                 SessionManager::set_user($model);
-                return new HttpRedirectView('/frontoffice/home');
-            }
+                return new HttpRedirectView('/home');
+            } else
+                return new HttpRedirectView('/' . $id_hotel);
         }
 
         return new HttpRedirectView('/backoffice');

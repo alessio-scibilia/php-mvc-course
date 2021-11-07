@@ -69,8 +69,8 @@
         <?php if ($error == false) { ?>
             <div class="form-login-blurred"></div>
             <div class="form-login">
-                <form action="/authentication" id="form-login" method="POST">
-                    <input type="hidden" name="id_hotel" id="strh" value="556"> <?php //TODO id hotel dinamico ?>
+                <form action="/authentication?id_hotel=<?php echo $view_model->hotel->id;
+                include 'xdebug.querystring.php'; ?>" id="form-login" method="POST">
                     <input type="text" name="numero_stanza" id="num_stanza" class="input-login input-stanza"
                            placeholder="<?php echo $view_model->translations->get('numero_stanza'); ?>">
                     <input type="password" name="password" id="code_stanza" class="input-login"
