@@ -2,7 +2,7 @@
 require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
-require_once 'Database/HotelRepository.class.php';
+require_once 'Database/ProfileRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
@@ -18,12 +18,14 @@ class BackofficeProfileController
     protected $language_repository;
     protected $translation_repository;
     protected $user_repository;
+    protected $profile_repository;
 
     public function __construct()
     {
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
+        $this->profile_repository = new ProfileRepository();
     }
 
     public function http_get(array &$params): IView
@@ -43,7 +45,8 @@ class BackofficeProfileController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $profile = array();
+            $rows = $this->profile_repository->get_hotel_data($user->id);
+            $profile = Profile::profile($rows);
 
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
