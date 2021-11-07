@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
-            <a href="javascript:void()" id="gobacksearch" class="open-view-action-inside back-btn"
+            <a href="/backoffice/facilities/categories" id="gobacksearch" class="open-view-action-inside back-btn"
                data-action="<?php echo $view_model->translations->get('link_strutture'); ?>"
                data-title="<?php echo $view_model->translations->get('gestione_strutture'); ?>"
                data-params="<?php echo $view_model->translations->get('categorie'); ?>"
@@ -20,7 +20,7 @@
                         <input type="hidden" name="image_path" value="" id="img_path" class="validate-1">
 
                         <?php
-                        $lingue = getLangsShortcode($dbh);
+                        $lingue = $view_model->languages->list_all();
                         for ($i = 0; $i < sizeof($lingue); $i++) {
                             ?>
                             <div class="form-group row">

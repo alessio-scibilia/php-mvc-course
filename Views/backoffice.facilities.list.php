@@ -52,7 +52,7 @@
                                                class="enable-admin enable"
                                                data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                                data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                            <?php echo $facility->abilitato == 1 ? 'checked="checked"' : ''; ?>
+                                            <?php echo $facility->abilitata == 1 ? 'checked="checked"' : ''; ?>
                                                value="<?php echo $facility->id ?>">
                                     </td>
                                     <td>

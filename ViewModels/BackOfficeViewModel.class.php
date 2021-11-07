@@ -4,6 +4,7 @@ require_once 'Models/Languages.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Hotel.class.php';
 require_once 'Models/Facility.class.php';
+require_once 'Models/FacilitiesHotels.class.php';
 require_once 'Models/Guest.class.php';
 require_once 'Models/Category.class.php';
 require_once 'Models/Event.class.php';
@@ -46,6 +47,9 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
     /** @var array */
     public $facilities;
 
+    /** @var array */
+    public $facilities_hotels;
+
     /** @var Facility */
     public $facility;
 
@@ -60,6 +64,7 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
 
     /** @var Hotel */
     public $hotel;
+    
 
     /** @var Event */
     public $event;

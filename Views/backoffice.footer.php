@@ -7,8 +7,6 @@
 
 <?php require_once 'Views/backoffice.footer.js.php'; ?>
 
-<script src="/vendor/global/global.min.js"></script>
-<script src="/vendor/chart.js/Chart.bundle.min.js"></script>
 <script src="/js/deznav-init.js"></script>
 
 <!-- Apex Chart -->
@@ -26,6 +24,8 @@
 <script src="/vendor/svganimation/vivus.min.js"></script>
 <script src="/vendor/svganimation/svg.animation.js"></script>
 <script src="/js/dashboard-main.js"></script>
+<script src="/js/bootstrap-select.js"></script>
+
 <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6DoJBgy3wuk3dCVUlQL3YbJUDtebSvhc&callback=initMap"
         async

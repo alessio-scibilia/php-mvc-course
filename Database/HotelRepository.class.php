@@ -22,4 +22,17 @@ class HotelRepository extends MySQLRepository
         $params = array();
         return $this->get($where, $params);
     }
+
+    public function get_hotels_list_by_user_level(int $level, int $id_user): array
+    {
+        if ($level <= 2) {
+            $where = "TRUE";
+            $params = array();
+        } else {
+            $where = "related_id = :id";
+            $params = array(":id" => $id_user);
+
+        }
+        return $this->get($where, $params);
+    }
 }

@@ -9,7 +9,7 @@
                data-action="<?php echo $view_model->translations->get('link_hotels'); ?>"
                data-params="<?php echo $view_model->translations->get('nuovo_params'); ?>"
                href="/backoffice/hotels/new">
-                <i class="fa fa-plus"></i><?php echo $view_model->translations->get('crea_nuovo_hotel'); ?>
+                <i class="fa fa-plus"></i> <?php echo $view_model->translations->get('crea_nuovo_hotel'); ?>
             </a>
         </div>
         <div class="col-12">

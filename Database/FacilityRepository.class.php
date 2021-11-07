@@ -22,4 +22,11 @@ class FacilityRepository extends MySQLRepository
         $params = array();
         return $this->get($where, $params);
     }
+
+    public function get_facilities_by_hotel(int $id_hotel): array
+    {
+        $where = "TRUE";
+        $params = array();
+        return $this->get($where, $params);
+    }
 }

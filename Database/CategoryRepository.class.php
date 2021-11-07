@@ -22,4 +22,11 @@ class CategoryRepository extends MySQLRepository
         $params = array();
         return $this->get($where, $params);
     }
+
+    public function get_all_enabled_categories(): array
+    {
+        $where = "abilitata = 1";
+        $params = array();
+        return $this->get($where, $params);
+    }
 }

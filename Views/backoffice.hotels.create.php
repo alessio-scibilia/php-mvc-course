@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
-            <a href="javascript:void()" id="gobacksearch" class="open-view-action-inside back-btn"
+            <a href="/backoffice/hotels" id="gobacksearch" class="open-view-action-inside back-btn"
                data-action="<?php echo $view_model->translations->get('link_hotels'); ?>"
                data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?> | Wellcome"
                data-params="false"

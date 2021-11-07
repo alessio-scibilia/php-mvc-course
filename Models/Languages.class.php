@@ -9,6 +9,8 @@ class Languages
     const EN = 2;
     const DE = 3;
 
+    public $abilitata;
+
     protected $map = array();
 
     protected $selected;
@@ -18,10 +20,8 @@ class Languages
      */
     public function __construct(array $rows = null)
     {
-        if (!empty($rows))
-        {
-            foreach ($rows as &$row)
-            {
+        if (!empty($rows)) {
+            foreach ($rows as &$row) {
                 $id = '' . $row['id'];
                 $this->map[$id] = $row;
             }
@@ -43,7 +43,7 @@ class Languages
     public function get_by_field(string $field, $value)
     {
         $values = array_values($this->map);
-        $filter = function ($element) use($field, $value) {
+        $filter = function ($element) use ($field, $value) {
             return $element[$field] === $value;
         };
         $result = array_filter($values, $filter);

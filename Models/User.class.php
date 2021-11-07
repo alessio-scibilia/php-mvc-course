@@ -11,7 +11,7 @@ class User
 
     /** @var string */
     public $nome;
-    
+
     /** @var string */
     public $cognome;
 
@@ -20,6 +20,12 @@ class User
 
     /** @var int */
     public $abilitato;
+
+    /** @var int */
+    public $hotel_associato;
+
+    /** @var int */
+    public $id;
 
     /**
      * @param array|null $row

@@ -22,4 +22,11 @@ class GuestRepository extends MySQLRepository
         $params = array();
         return $this->get($where, $params);
     }
+
+    public function get_by_room_password_hotel(string $numero_stanza, string $password, int $id_hotel): array
+    {
+        $where = "hotel_associato = :id_hotel AND password = :password AND numero_stanza = :numero_stanza";
+        $params = array(":id_hotel" => $id_hotel, ":password" => md5($password), ":numero_stanza" => $numero_stanza);
+        return $this->get($where, $params);
+    }
 }

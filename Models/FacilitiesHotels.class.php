@@ -1,21 +1,16 @@
 <?php
+require_once 'Models/Level.class.php';
 
-class Facility
+class FacilitiesHotels
 {
-    /** @var string */
-    public $nome_struttura;
-
-    /** @var string */
-    public $email;
-
-    /** @var string */
-    public $telefono;
-
-    /** @var string */
-    public $indirizzo_struttura;
+    /** @var int */
+    public $id_hotel;
 
     /** @var int */
-    public $abilitata;
+    public $id_struttura;
+
+    /** @var int */
+    public $convenzionato;
 
     /**
      * @param array|null $row
@@ -30,23 +25,23 @@ class Facility
     }
 
     /**
-     * @param Facility $facility
+     * @param FacilitiesHotels $facilities_hotels
      * @return bool
      */
-    public static function is_empty(Facility &$facility): bool
+    public static function is_empty(FacilitiesHotels &$facilities_hotels): bool
     {
-        return empty($facility->email);
+        return empty($facilities_hotels->convenzionato);
     }
 
     /**
      * @param array $rows
      * @return array
      */
-    public static function facilities(array &$rows): array
+    public static function facilities_hotels(array &$rows): array
     {
         $results = array();
         foreach ($rows as &$row) {
-            $results[] = new Facility($row);
+            $results[] = new Hotel($row);
         }
         return $results;
     }
