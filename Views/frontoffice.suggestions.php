@@ -1,5 +1,5 @@
 <div class="content-two-container" <?php if ($tab == 'sugg' || $tab == 'suggestions') echo 'style="display:block;"'; else if ($tab != false && $tab != 'sugg' && $tab != 'suggestions') echo 'style="display:none;"'; ?>>
-    <h2 class="title-in-blue"><?php echo $langs['selezionati_per_voi']; ?></h2>
+    <h2 class="title-in-blue"><?php echo $view_model->translations->get('selezionati_per_voi'); ?></h2>
     <div class="center-self">
         <?php
         /*
