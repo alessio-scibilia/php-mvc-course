@@ -52,7 +52,6 @@ class BackofficeAdministratorsController
             $rows = $this->user_repository->filter_by_upper_level($user->level);
             $users = User::users($rows);
 
-            //                 'd92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.administrators.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->users = $users;

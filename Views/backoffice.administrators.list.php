@@ -43,12 +43,13 @@
                                     <td><?php echo $user->email; ?></td>
                                     <td><?php echo $user->level . ' | ' . $user->level_name; ?></td>
                                     <td>
-                                        <form action="/backoffice/administrator/<?php echo $user->id ?>/enable" method="POST" enctype="multipart/form-data">
+                                        <form action="/backoffice/administrator/<?php echo $user->id ?>/enable"
+                                              method="POST" enctype="multipart/form-data">
                                             <input type="checkbox"
                                                    class="enable-admin enable"
                                                    data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                                    data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                                   <?php echo $user->abilitato == 1 ? 'checked="checked"' : ''; ?>
+                                                <?php echo $user->abilitato == 1 ? 'checked="checked"' : ''; ?>
                                                    name="enabled"
                                                    value="1"
                                                    onclick="this.form.submit();">
@@ -62,15 +63,13 @@
                                            data-params="<?php echo $user->id; ?>">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="javascript:void()"
-                                           class="btn btn-danger shadow btn-xs sharp view-action"
-                                           data-function="delAdmin"
-                                           data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                           data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                           data-stay="true"
-                                           data-params="<?php echo $user->id; ?>">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form action="/backoffice/administrator/<?php echo $user->id ?>/delete"
+                                              method="POST" enctype="multipart/form-data">
+                                            <a href="javascript:void()"
+                                               class="btn btn-danger shadow btn-xs sharp"
+                                               onclick="this.closest('form').submit();return false;">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
                                     </td>
                                 </tr>
                             <?php } ?>

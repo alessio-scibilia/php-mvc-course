@@ -102,16 +102,16 @@
                                     //TODO sistemare link immagini
                                     ?>
                                     <div class="route-div"><input type="radio" name="tipo_viaggio" class="tipo_viaggio"
-                                                                  value="1"><img src="images/walking.svg"
+                                                                  value="1"><img src="/images/walking.svg"
                                                                                  class="svg-route"/><span
                                                 for="tipo_viaggio" class="route-span">A piedi</span></div>
                                     <div class="route-div"><input type="radio" name="tipo_viaggio"
                                                                   class="tipo_viaggio"
-                                                                  value="2"><img src="images/car.svg"
+                                                                  value="2"><img src="/images/car.svg"
                                                                                  class="svg-route"/><span
                                                 for="tipo_viaggio" class="route-span">In auto</span></div>
                                     <div class="route-div"><input type="radio" name="tipo_viaggio" class="tipo_viaggio"
-                                                                  value="3"><img src="images/mezzi.svg"
+                                                                  value="3"><img src="/images/mezzi.svg"
                                                                                  class="svg-route"/><span
                                                 for="tipo_viaggio" class="route-span">Trasporti pubblici</span></div>
                                 </div>
