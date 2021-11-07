@@ -22,6 +22,16 @@ abstract class MySQLRepository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    protected function join(string $join, string $where, array &$params): array
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "SELECT x.* FROM $table x $join WHERE $where";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function get_by_id($id): array
     {
         $table = $this->tableName;
