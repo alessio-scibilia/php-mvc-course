@@ -25,15 +25,21 @@ class EventRepository extends MySQLRepository
 
     public function get_events_by_hotel(int $id_hotel): array
     {
-        $joins = array
+        $lines = array
         (
-            'INNER JOIN strutture_eventi se ON se.id_evento = x.id',
-            'RIGHT OUTER JOIN hotel h ON h.id = se.id_hotel',
-            'RIGHT OUTER JOIN strutture_hotel sh ON sh.id_struttura = se.id_struttura AND sh.id_hotel = h.id',
+            'SELECT e.*',
+            'FROM eventi e',
+            'INNER JOIN strutture_eventi se ON se.id_evento = e.id',
+            'INNER JOIN strutture_hotel sh ON sh.id_struttura = se.id_struttura',
+            'WHERE sh.id_hotel = :id_hotel',
+            'UNION',
+            'SELECT e.*',
+            'FROM eventi e',
+            'INNER JOIN strutture_eventi se ON se.id_evento = e.id',
+            'WHERE se.id_hotel = :id_hotel'
         );
-        $join = join("\r\n", $joins);
-        $where = "h.id = :id_hotel";
+        $query = join("\r\n", $lines);
         $params = array(':id_hotel', $id_hotel);
-        return $this->join($join, $where, $params);
+        return $this->query($query, $params);
     }
 }
