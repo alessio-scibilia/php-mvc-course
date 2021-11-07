@@ -2,6 +2,7 @@
 require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
+require_once 'Database/HotelRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
@@ -12,7 +13,7 @@ require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
 
-class BackofficeGuestsController
+class BackofficeProfileController
 {
     protected $language_repository;
     protected $translation_repository;
@@ -43,6 +44,7 @@ class BackofficeGuestsController
             }
 
             $profile = array();
+
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.profile', $title, $languages, $translations);

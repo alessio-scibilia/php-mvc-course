@@ -16,9 +16,11 @@
             <div class="request-container">
                 <div class="mh">
                     <h3 class="title-in-blue-prenota mt60"
-                        id="giorno-prenota"><?php echo $langs['quando_vorresti_andare']; ?></h3>
-                    <a href="#" class="day-item day-item-real" id="oggi"><?php echo $langs['oggi']; ?></a>
-                    <a href="#" class="day-item day-item-real" id="domani"><?php echo $langs['domani']; ?></a>
+                        id="giorno-prenota"><?php echo $view_model->translations->get('quando_vorresti_andare'); ?></h3>
+                    <a href="#" class="day-item day-item-real"
+                       id="oggi"><?php echo $view_model->translations->get('oggi'); ?></a>
+                    <a href="#" class="day-item day-item-real"
+                       id="domani"><?php echo $view_model->translations->get('domani'); ?></a>
                     <a href="#" id="open-calendario" name="Calendar" class="day-item">
                         <input type="text" class="datepicker this-dp">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -27,7 +29,8 @@
                     </a>
                 </div>
                 <div>
-                    <h3 class="title-in-blue-prenota mt60" id="ora-prenota"><?php echo $langs['a_che_ora']; ?></h3>
+                    <h3 class="title-in-blue-prenota mt60"
+                        id="ora-prenota"><?php echo $view_model->translations->get('a_che_ora'); ?></h3>
                     <select class="number-prenota hour-prenota">
                         <option>00</option>
                         <option>01</option>
@@ -67,7 +70,7 @@
                 </div>
                 <div>
                     <h3 class="title-in-blue-prenota mt60"
-                        id="quanti-prenota"><?php echo $langs['quanti_siete']; ?></h3>
+                        id="quanti-prenota"><?php echo $view_model->translations->get('quanti_siete'); ?></h3>
                     <a href="#" class="day-item item-users">1</a>
                     <a href="#" class="day-item item-users">2</a>
                     <a href="#" class="day-item item-users">3</a>
@@ -78,12 +81,13 @@
                 <input type="submit" class="confirm-prenota" value="CONFERMA">
             </div>
             <div class="confirm-container">
-                <?php echo $langs['verificare_disponibilita']; ?>
+                <?php echo $view_model->translations->get('verificare_disponibilita'); ?>
                 <div class="accetto-container">
                     <input type="Checkbox" name="accetto" id="accetto">
                     <label> <?php echo $langs['accetto']; ?></label>
                 </div>
-                <input type="submit" class="send-prenota" value="<?php echo $langs['invia_richiesta']; ?>">
+                <input type="submit" class="send-prenota"
+                       value="<<?php echo $view_model->translations->get('invia_richiesta'); ?>">
             </div>
         </div>
     </div>

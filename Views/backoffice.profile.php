@@ -1,17 +1,17 @@
 <?php if ($view_model->user->level == 0) echo '<div class="alert alert-warning"><b>MESSAGGIO VISIBILE SOLO AGLI SVILUPPATORI</b>: questa pagina (profilo hotel) non è modificabile quando loggato con un utente dev, nemmeno cambiando il livello utente dalla funzione speciale per i dev.</div>'; ?>
-<input type="hidden" id="hotel_id" value="<?php echo $_SESSION['id_user']; ?>">
+<input type="hidden" id="hotel_id" value="<?php echo $view_model->user->id; ?>">
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
-            <h1><i class="fa fa-building-o"></i> <?php echo $this_hotel['nome']; ?></h1>
+            <h1><i class="fa fa-building-o"></i> <?php //echo $this_hotel['nome']; ?></h1>
         </div>
         <div class="col-xl-12 col-lg-12">
-            <a href="https://wellcox.cluster031.hosting.ovh.net/index.php?strh=<?php echo $this_hotel['id']; ?>&on_test=true"
+            <a href="https://wellcox.cluster031.hosting.ovh.net/index.php?strh=<?php //echo $this_hotel['id']; ?>&on_test=true"
                class="btn btn-info" target="_blank"><i class="fa fa-eye"></i> Vedi come ospite</a><br/><br/>
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title"><i
-                                class="fa fa-info-circle"></i> <?php echo $view_model->translations->get('dati_hotelk'); ?>
+                                class="fa fa-info-circle"></i> <?php echo $view_model->translations->get('dati_hotel'); ?>
                     </h4>
                 </div>
                 <div class="card-body">

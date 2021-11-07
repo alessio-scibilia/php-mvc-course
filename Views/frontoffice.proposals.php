@@ -2,7 +2,7 @@
         class="content-three-container" <?php if ($tab == 'prop') echo 'style="display:block;"'; else if ($tab != false && $tab != 'prop') echo 'style="display:none;"'; ?>>
     <div class="eventi-container">
         <div class="title-eventi">
-            <h2 class="title-in-blue title-padded"><?php echo $langs['eventi_in_corso']; ?></h2>
+            <h2 class="title-in-blue title-padded"><?php echo $view_model->translations->get('evnti_in_corso'); ?></h2>
             <div>
                 <a class="arrow-car arrow-car-prev">
                     <svg xmlns="http://www.w3.org/2000/svg" class="customPrevBtn" width="53.606" height="53.606"
