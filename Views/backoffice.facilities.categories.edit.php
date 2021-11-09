@@ -2,8 +2,6 @@
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
             <a href="javascript:void()" id="gobacksearch" class="open-view-action-inside back-btn"
-               data-action="<?php echo $langs['link_strutture']; ?>"
-               data-title="<?php echo $langs['gestione_strutture']; ?>" data-params="<?php echo $langs['categorie']; ?>"
                data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
                         class="fa fa-angle-left"></i> <?php echo $langs['lista_categorie']; ?> /</a>
             <h1><i class="fa fa-list"></i> <?php echo $view_model->translations->get('modifica_categoria'); ?></h1>
@@ -24,7 +22,7 @@
                             ?>
                             <div class="form-group row">
 
-                                <label class="col-sm-3 col-form-label"><?php echo $langs['nome']; ?><?php echo $lingue[$x]['abbreviazione']; ?></label>
+                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome'); ?><?php echo $lingue[$x]['abbreviazione']; ?></label>
                                 <div class="col-sm-9">
 
 
@@ -47,7 +45,6 @@
                                 <label class="custom-file-label"><?php echo $view_model->translations->get('scegli_immagine'); ?></label>
                             </div>
                         </div>
-
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <div class="input-group col-md-12" id="preview-img-container">
