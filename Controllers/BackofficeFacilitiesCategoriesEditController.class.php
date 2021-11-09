@@ -36,7 +36,7 @@ class BackofficeFacilitiesCategoriesEditController
             $languages->select($id_lingua);
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
-            $title = $translations->get('gwstione_categprie') . ' | ' . $translations->get('nome_sito');
+            $title = $translations->get('gestione_categorie') . ' | ' . $translations->get('nome_sito');
 
             $id = intval($params['categories']);
             $categories = $this->category_repository->get_by_id($id);
