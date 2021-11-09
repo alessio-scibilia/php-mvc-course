@@ -10,7 +10,7 @@
                    href="/backoffice/guests/new">
                     <i class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_ospiti'); ?>
                 </a>
-                <a class="btn btn-primary open-view-action-inside mb10" data-title="testasd"
+                <a class="btn btn-primary open-view-action-inside mb10"
                    data-action="<?php echo $view_model->translations->get('param_ospiti'); ?>"
                    data-params="<?php echo $view_model->translations->get('param_carica'); ?>"
                    href="/backoffice/guests/load">
@@ -48,12 +48,16 @@
                                     <td><?php echo $guest->email; ?></td>
                                     <td><?php echo $guest->telefono; ?></td>
                                     <td>
-                                        <input type="checkbox"
-                                               class="enable-admin enable"
-                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                               data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                            <?php echo $guest->abilitato == 1 ? 'checked="checked"' : ''; ?>
-                                               value="<?php echo $guest->id ?>">
+                                        <form action="/backoffice/guest/<?php echo $guest->id ?>/enable"
+                                              method="POST" enctype="multipart/form-data">
+                                            <input type="checkbox"
+                                                   data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                                   data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                                <?php echo $guest->abilitato == 1 ? 'checked="checked"' : ''; ?>
+                                                   name="enabled"
+                                                   value="1"
+                                                   onclick="this.closest('form').submit(); return false;">
+                                        </form>
                                     </td>
                                     <td>
                                         <a href="javascript:void()"
@@ -63,15 +67,14 @@
                                            data-params="<?php echo $guest->id; ?>">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="javascript:void()"
-                                           class="btn btn-danger shadow btn-xs sharp view-action"
-                                           data-function="delAdmin"
-                                           data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                           data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                           data-stay="true"
-                                           data-params="<?php echo $guest->id; ?>">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
+                                        <form action="/backoffice/guest/<?php echo $guest->id; ?>/delete"
+                                              method="POST" enctype="multipart/form-data">
+                                            <a href="javascript:void()"
+                                               class="btn btn-danger shadow btn-xs sharp"
+                                               onclick="this.closest('form').submit();return false;">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php } ?>

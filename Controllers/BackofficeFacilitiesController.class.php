@@ -44,7 +44,7 @@ class BackofficeFacilitiesController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->facility_repository->get_all_facilities();
+            $rows = $this->facility_repository->get_all_facilities($id_lingua);
             $facilities = Facility::facilities($rows);
             //$facilities = array(); // TODO: da recuperare dal DB
 

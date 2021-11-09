@@ -94,7 +94,7 @@
             </div>
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <a class="open-view-action-inside dashboard-shortcut mb10 d-flex justify-content-center align-items-center shortcuts "
-                   data-title="<?php echo $_SESSION['nome']; ?>"
+                   data-title="<?php echo $view_model->user->nome; ?>"
                    data-action="<?php echo strtolower($view_model->translations->get('link_mio_hotel')); ?>"
                    data-params="false"
                    href="/backoffice/profile">

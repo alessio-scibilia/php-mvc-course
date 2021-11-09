@@ -16,10 +16,10 @@ class FacilityRepository extends MySQLRepository
         return array_pop($results);
     }
 
-    public function get_all_facilities(): array
+    public function get_all_facilities(int $shortcode_lingua): array
     {
-        $where = "TRUE";
-        $params = array();
+        $where = "shortcode_lingua = :shortcode_lingua";
+        $params = array("shortcode_lingua" => $shortcode_lingua);
         return $this->get($where, $params);
     }
 

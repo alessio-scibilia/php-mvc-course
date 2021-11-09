@@ -43,33 +43,34 @@
                                     <td><?php echo $user->email; ?></td>
                                     <td><?php echo $user->level . ' | ' . $user->level_name; ?></td>
                                     <td>
+
                                         <form action="/backoffice/administrator/<?php echo $user->id ?>/enable"
                                               method="POST" enctype="multipart/form-data">
                                             <input type="checkbox"
-                                                   class="enable-admin enable"
                                                    data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                                    data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
                                                 <?php echo $user->abilitato == 1 ? 'checked="checked"' : ''; ?>
                                                    name="enabled"
                                                    value="1"
-                                                   onclick="this.form.submit();">
+                                                   onclick="this.closest('form').submit(); return false;">
                                         </form>
                                     </td>
                                     <td>
-                                        <a href="javascript:void()"
+                                        <a href="/backoffice/administrators/<?php echo $user->id; ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
                                            data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
                                            data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
                                            data-params="<?php echo $user->id; ?>">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <form action="/backoffice/administrator/<?php echo $user->id ?>/delete"
+                                        <form action="/backoffice/administrator/<?php echo $user->id; ?>/delete"
                                               method="POST" enctype="multipart/form-data">
                                             <a href="javascript:void()"
                                                class="btn btn-danger shadow btn-xs sharp"
                                                onclick="this.closest('form').submit();return false;">
                                                 <i class="fa fa-trash"></i>
                                             </a>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php } ?>

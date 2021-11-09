@@ -3,24 +3,25 @@ require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
-require_once 'Database/CategoryRepository.class.php';
+require_once 'Database/ServiceRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
+require_once 'Models/Profile.class.php';
+require_once 'Models/Hotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
 
-class BackofficeFacilitiesNewController
+class BackofficeHotelsEditController
 {
     protected $language_repository;
     protected $translation_repository;
     protected $user_repository;
-    protected $facility_repository;
     protected $hotel_repository;
-    protected $category_repository;
+    protected $service_repository;
 
     public function __construct()
     {
@@ -28,45 +29,48 @@ class BackofficeFacilitiesNewController
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
         $this->hotel_repository = new HotelRepository();
-        $this->category_repository = new CategoryRepository();
+        $this->service_repository = new ServiceRepository();
     }
 
     public function http_get(array &$params): IView
     {
-        if (isset($params['facilities'])) {
-            return new Html404();
-        } else {
+        if (isset($params['hotels'])) {
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
-            $title = $translations->get('gestione_strutture') . ' | ' . $translations->get('nome_sito');
+            $title = $translations->get('gestione_ospiti') . ' | ' . $translations->get('nome_sito');
 
             $user = SessionManager::get_user();
             if (User::is_empty($user)) {
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->category_repository->get_all_enabled_categories($id_lingua);
-            $categories = Category::categories($rows);
+            $id = intval($params['hotels']);
+            $rows = $this->hotel_repository->get_profile($id_lingua, $id);
+            $profile = Hotel::hotels($rows);
 
-            if ($user->level > 2)
-                $rows = $this->hotel_repository->get_hotels_list_by_user_level(3, $user->id, $id_lingua); //Vede solo il proprio hotel
-            else
-                $rows = $this->hotel_repository->get_hotels_list_by_user_level(2, 0, $id_lingua); //Vede tutti gli hotel essendo un admin
-
-            $related_hotels = Hotel::hotels($rows); //se l'utente è hotel/hotel pro avremo il suo id per la funzione successiva
+            $servizi = array();
+            $i = 0;
+            $lingue = $this->language_repository->list_all();
+            foreach ($lingue as $lingua) {
+                $rows = $this->service_repository->get_services_by_hotel($id, $lingua['shortcode_lingua']);
+                $servizi[$i] = Service::services($rows);
+                $i++;
+            }
 
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.facilities.create', $title, $languages, $translations);
+            $view_model = new BackOfficeViewModel('backoffice.hotels.edit', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->categories = $categories;
-            $view_model->related_hotels = $related_hotels;
-            $view_model->menu_active_btn = 'facilities';
+            $view_model->profile = $profile;
+            $view_model->services = $servizi;
+            $view_model->menu_active_btn = 'hotels';
 
             return new HtmlView($view_model);
         }
+
+        return new HttpRedirectView('/backoffice/hotels');
     }
 }

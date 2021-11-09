@@ -45,7 +45,7 @@ class BackofficeHotelsController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->hotel_repository->get_all_hotels();
+            $rows = $this->hotel_repository->get_all_hotels($id_lingua);
             $hotels = Hotel::hotels($rows);
             //$hotels = array(); // TODO: da leggere da DB
 

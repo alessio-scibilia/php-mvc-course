@@ -502,22 +502,55 @@
                 </div>
             </div>
         </div>
-
         <div class="col-xl-12 col-lg-12">
-            <div class="form-group col-md-12">
-                <div align="left">
-                    <input type="button" class="btn btn-success"
-                           data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                           data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                           id="createStruttura" value="<?php echo $view_model->translations->get('crea_struttura'); ?>">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><?php echo $view_model->translations->get('sec_esplorato_per_voi'); ?></h4>
                 </div>
-                <br/><br/>
+                <div class="card-body">
+                    <div class="basic-form">
+
+                        <div class="form-didascalia-container dds-1" id="fsc-didascalia-1">
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><?php echo $view_model->translations->get('immagini_didascalia'); ?></span>
+                                        </div>
+                                        <div class="custom-file">
+                                            <input type="file" multiple="multiple" class="custom-file-input"
+                                                   id="immagini_form_didascalie">
+                                            <label class="custom-file-label"><?php echo $view_model->translations->get('scegli_immagini'); ?></label>
+                                        </div>
+                                    </div>
+                                    <div class="input-group col-md-12" id="preview-img-container">
+                                        <div id="preview-didascalie"></div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <div class="col-xl-12 col-lg-12">
+                <div class="form-group col-md-12">
+                    <div align="left">
+                        <input type="button" class="btn btn-success"
+                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                               data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                               id="createStruttura"
+                               value="<?php echo $view_model->translations->get('crea_struttura'); ?>">
+                    </div>
+                    <br/><br/>
+                </div>
+            </div>
+
         </div>
 
     </div>
-
-</div>
 </div>
 
 

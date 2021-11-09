@@ -23,10 +23,10 @@ class CategoryRepository extends MySQLRepository
         return $this->get($where, $params);
     }
 
-    public function get_all_enabled_categories(): array
+    public function get_all_enabled_categories(int $shortcode_lingua): array
     {
-        $where = "abilitata = 1";
-        $params = array();
+        $where = "abilitata = 1 AND shortcode_lingua = :shortcode_lingua";
+        $params = array(":shortcode_lingua" => $shortcode_lingua);
         return $this->get($where, $params);
     }
 }

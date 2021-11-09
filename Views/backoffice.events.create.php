@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
-            <a href="backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"
+            <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"
                data-action="<?php echo $view_model->translations->get('link_eventi'); ?>" data-title="roror"
                data-params="false"
                data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
@@ -25,20 +25,20 @@
                                     <option selected disabled>Seleziona...</option>
                                     <optgroup label="<?php echo $view_model->translations->get('hotels'); ?>">
                                         <?php
-                                        $elenco_strutture_hotel = getStruttureHotel($dbh);
-
-                                        if ($elenco_strutture_hotel != 'error') {
-                                            for ($g = 0; $g < sizeof($elenco_strutture_hotel); $g++) {
-                                                echo '<option value="1-' . $elenco_strutture_hotel[$g]['related_id'] . '" data-tokens ="' . $elenco_strutture_hotel[$g]['nome'] . ' ' . $elenco_strutture_hotel[$g]['email'] . ' ' . $elenco_strutture_hotel[$g]['indirizzo'] . '">' . $elenco_strutture_hotel[$g]['nome'] . '</option>';
+                                        $elenco_hotel = $view_model->related_hotels;
+                                        if (sizeof($elenco_hotel) > 0) {
+                                            foreach ($elenco_hotel as $hotel) {
+                                                echo '<option value="1-' . $hotel->related_id . '" data-tokens ="' . $hotel->nome . ' ' . $hotel->email . ' ' . $hotel->indirizzo . '">' . $hotel->nome . '</option>';
                                             }
                                         } ?>
                                     </optgroup>
-                                    <optgroup label="<?php echo $langs['strutture']; ?>">
+                                    <optgroup label="<?php echo $view_model->translations->get('struttura'); ?>">
                                         <?php
-                                        $elenco_strutture = getElencoStrutture($dbh);
-                                        if ($elenco_strutture != 'error') {
-                                            for ($g = 0; $g < sizeof($elenco_strutture); $g++) {
-                                                echo '<option value="2-' . $elenco_strutture[$g]['id'] . '" data-tokens ="' . $elenco_strutture[$g]['nome'] . ' ' . $elenco_strutture[$g]['email'] . ' ' . $elenco_strutture[$g]['indirizzo'] . '">' . $elenco_strutture[$g]['nome'] . '</option>';
+                                        $elenco_strutture_hotel = $view_model->related_facilities;
+
+                                        if (sizeof($elenco_strutture_hotel) > 0) {
+                                            foreach ($elenco_strutture_hotel as $struttura) {
+                                                echo '<option value="2-' . $struttura->id . '" data-tokens ="' . $struttura->nome_struttura . ' ' . $struttura->email . ' ' . $struttura->indirizzo_struttura . '">' . $struttura->nome_struttura . '</option>';
                                             }
                                         } else echo '<option>Nessuna struttura registrata<option>'; ?>
                                     </optgroup>
@@ -106,7 +106,7 @@
                         <div class="form-row">
                             <div class="input-group col-md-12">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text"><?php echo $view_model->translations->get('immagini_evento'); ?></span>
+                                    <span class="input-group-text"><?php echo $view_model->translations->get('immagine_evento'); ?></span>
                                 </div>
                                 <div class="custom-file">
                                     <input type="file" class="custom-file-input" id="immagini_evento">
@@ -135,7 +135,7 @@
                                                     class="fa fa-language"></i> Lingua</span></label>
                                     <select id="select-language-desc-evento">
                                         <?php
-                                        $lingue = getLangsShortcode($dbh);
+                                        $lingue = $view_model->languages->list_all();
                                         for ($i = 0; $i < sizeof($lingue); $i++) {
                                             ?>
                                             <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
@@ -143,7 +143,6 @@
                                     </select>
                                     <?php
                                     for ($i = 0; $i < sizeof($lingue); $i++) {
-                                        $eventInfo = getEventInfo($dbh, $params[1], $lingue[$i]['shortcode_lingua']);
                                         ?>
                                         <div class="descrizione_evento"
                                              id="descrizione_evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
@@ -196,7 +195,6 @@
                                                     class="fa fa-language"></i> Lingua</span></label>
                                     <select id="select-language">
                                         <?php
-                                        $lingue = getLangsShortcode($dbh);
                                         for ($i = 0; $i < sizeof($lingue); $i++) {
                                             ?>
                                             <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>

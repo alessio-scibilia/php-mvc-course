@@ -1,7 +1,7 @@
 <?php
 require_once 'Models/Level.class.php';
 
-class FacilitiesHotels
+class FacilityHotel
 {
     /** @var int */
     public $id_hotel;
@@ -28,7 +28,7 @@ class FacilitiesHotels
      * @param FacilitiesHotels $facilities_hotels
      * @return bool
      */
-    public static function is_empty(FacilitiesHotels &$facilities_hotels): bool
+    public static function is_empty(FacilityHotel &$facilities_hotels): bool
     {
         return empty($facilities_hotels->convenzionato);
     }

@@ -1,37 +1,49 @@
 <?php
 require_once 'Models/Level.class.php';
 
-class Profile
+class Service
 {
-    /** @var string */
-    public $nome;
+    /** @var int */
+    public $id;
 
-    /** @var string */
-    public $email;
-
-    /** @var string */
-    public $telefono;
-
-    /** @var string */
-    public $indirizzo;
-
-    /** @var string */
-    public $sito_web;
-
-    /** @var string */
-    public $immagini_secondarie;
-
-    /** @var string */
-    public $descrizione_ospiti;
+    /** @var int */
+    public $hotel_associato;
 
     /** @var int */
     public $abilitato;
 
-    /** @var int */
-    public $latitudine;
+    /** @var string */
+    public $titolo;
+
+    /** @var string */
+    public $descrizione;
+
+    /** @var string */
+    public $lunedi;
+
+    /** @var string */
+    public $martedi;
+
+    /** @var string */
+    public $mercoledi;
+
+    /** @var string */
+    public $giovedi;
+
+    /** @var string */
+    public $venerdi;
+
+    /** @var string */
+    public $sabato;
+
+    /** @var string */
+    public $domenica;
+
+    /** @var string */
+    public $immagine;
 
     /** @var int */
-    public $longitudine;
+    public $convenzionato;
 
     /**
      * @param array|null $row
@@ -46,23 +58,23 @@ class Profile
     }
 
     /**
-     * @param Profile $profile
+     * @param Service $service
      * @return bool
      */
-    public static function is_empty(Profile &$profile): bool
+    public static function is_empty(Service &$service): bool
     {
-        return empty($profile->email);
+        return empty($service->convenzionato);
     }
 
     /**
      * @param array $rows
      * @return array
      */
-    public static function profile(array &$rows): array
+    public static function services(array &$rows): array
     {
         $results = array();
         foreach ($rows as &$row) {
-            $results[] = new Profile($row);
+            $results[] = new Service($row);
         }
         return $results;
     }

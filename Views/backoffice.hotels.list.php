@@ -52,7 +52,7 @@
                                                value="<?php echo $hotel->id ?>">
                                     </td>
                                     <td>
-                                        <a href="javascript:void()"
+                                        <a href="/backoffice/hotels/<?php echo $hotel->id; ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
                                            data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
                                            data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
