@@ -30,11 +30,6 @@ class BackofficeFacilitiesCategoriesEditController
         if (isset($params['categories'])) {
             $user = SessionManager::get_user();
 
-            // Solo gli utenti con level <= 2 possono accedere a queste pagine "amministratori",
-            // Gli altri bisogna mandarli su pagine adeguate tramite redirect
-            if (User::is_empty($user) || $user->level > 2) {
-                return new HttpRedirectView('/backoffice');
-            }
 
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
