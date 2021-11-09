@@ -15,13 +15,14 @@ class BackofficeFacilitiesCategoriesEditController
     protected $user_repository;
     protected $language_repository;
     protected $translation_repository;
-    protected $categoy_repository;
+    protected $category_repository;
 
     public function __construct()
     {
         $this->user_repository = new UserRepository();
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
+        $this->category_repository = new TranslationRepository();
     }
 
     public function http_get(array &$params): IView
@@ -43,7 +44,7 @@ class BackofficeFacilitiesCategoriesEditController
             $title = $translations->get('gwstione_categprie') . ' | ' . $translations->get('nome_sito');
 
             $id = intval($params['categories']);
-            $administrator = $this->category_repository->get_by_id($id);
+            $categories = $this->category_repository->get_by_id($id);
 
             $view_model = new BackOfficeViewModel('backoffice.facilities.categories.edit', $title, $languages, $translations);
             $view_model->user = $user;
