@@ -89,8 +89,9 @@ class BackofficeEventsController
                 'ora_inizio_evento',
                 'ora_fine_evento',
             );
-            if ($params['recupera_struttura'] == '1') {
-                $event_fields += array
+            if ($params['recupera_struttura'] == '1')
+            {
+                $event_fields_main = array
                 (
                     'nome_struttura',
                     'email',
@@ -100,6 +101,7 @@ class BackofficeEventsController
                     'latitudine',
                     'longitudine'
                 );
+                $event_fields = array_merge($event_fields, $event_fields_main);
             }
 
             $id_evento = intval($params['events']);
@@ -165,16 +167,19 @@ class BackofficeEventsController
                     foreach ($params['descrizione_evento'] as $abbreviation => $descrizione_evento)
                     {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
-                        $facility_event = array
-                        (
-                            'id_evento' => $id_evento,
-                            'shortcode_lingua' => $language['shortcode_lingua'],
-                            'testo_convenzione' => $params['recupera_convenzione'] == '1' ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
-                            'descrizione_evento' => $descrizione_evento,
-                            'id_hotel' => $id_hotel,
-                            'id_struttura' => $id_struttura
-                        );
-                        $this->facility_event_repository->add($facility_event);
+                        if (!empty($language))
+                        {
+                            $facility_event = array
+                            (
+                                'id_evento' => $id_evento,
+                                'shortcode_lingua' => $language['shortcode_lingua'],
+                                'testo_convenzione' => $params['recupera_convenzione'] == '1' ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
+                                'descrizione_evento' => $descrizione_evento,
+                                'id_hotel' => $id_hotel,
+                                'id_struttura' => $id_struttura
+                            );
+                            $this->facility_event_repository->add($facility_event);
+                        }
                     }
                 }
             }

@@ -19,6 +19,7 @@ class FacilityHotelRepository extends MySQLRepository
     {
         $where = "id_struttura = :id_struttura";
         $params = array(":id_struttura" => $id_struttura);
-        return $this->get($where, $params);
+        $results = $this->get($where, $params);
+        return array_pop($results);
     }
 }
