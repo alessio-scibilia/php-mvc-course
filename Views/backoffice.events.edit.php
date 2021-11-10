@@ -96,7 +96,8 @@
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                                <input type="text" name="sito" class="form-control validate-1" id="sito"
+                                                <input type="text" name="sito_web" class="form-control validate-1"
+                                                       id="sito"
                                                        placeholder="www.hotelsuperlondon.co.uk"
                                                        value="<?php echo $event->sito_web; ?>">
                                             </div>
