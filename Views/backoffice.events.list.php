@@ -32,6 +32,7 @@
                                 <th><?php echo $view_model->translations->get('abilita'); ?></th>
                                 <th><?php echo $view_model->translations->get('azioni'); ?></th>
                             </tr>
+
                             </thead>
                             <tbody>
                             <?php foreach ($view_model->events as &$event) { ?>
@@ -50,7 +51,7 @@
                                             <input type="checkbox"
                                                    data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                                    data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                                <?php echo $event->abilitata == 1 ? 'checked="checked"' : ''; ?>
+                                                <?php echo $event->abilitato == 1 ? 'checked="checked"' : ''; ?>
                                                    name="enabled"
                                                    value="1"
                                                    onclick="this.closest('form').submit(); return false;">

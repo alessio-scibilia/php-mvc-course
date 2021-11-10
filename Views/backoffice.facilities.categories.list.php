@@ -39,34 +39,30 @@
                                     <td><?php echo $category->nome; ?></td>
                                     <td><?php echo $category->immagine; ?></td>
                                     <td>
-                                        <input type="checkbox"
-                                               class="enable-admin enable"
-                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                               data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                            <?php echo $category->abilitata == 1 ? 'checked="checked"' : ''; ?>
-                                               value="<?php echo $category->id ?>">
+                                        <form action="/backoffice/facilities/category/<?php echo $category->related_id ?>/enable"
+                                              method="POST" enctype="multipart/form-data">
+                                            <input type="checkbox"
+                                                   data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                                   data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                                <?php echo $category->abilitata == 1 ? 'checked="checked"' : ''; ?>
+                                                   name="enabled"
+                                                   value="1"
+                                                   onclick="this.closest('form').submit(); return false;">
+                                        </form>
                                     </td>
                                     <td>
-                                        <a href="javascript:void()"
+                                        <a href="/backoffice/facilities/categories/<?php echo $category->related_id ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
-                                           data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
-                                           data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
-                                           data-params="<?php echo $category->id; ?>">
+                                           data-params="<?php echo $category->related_id; ?>">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="javascript:void()"
-                                           class="btn btn-danger shadow btn-xs sharp view-action"
-                                           data-function="delAdmin"
-                                           data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                           data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                           data-stay="true"
-                                           data-params="<?php echo $category->id; ?>">
+                                        <a href="/backoffice/facilities/category/<?php echo $category->related_id; ?>/delete"
+                                           class="btn btn-danger shadow btn-xs sharp view-action">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
                             <?php } ?>
-
 
                             </tbody>
                             <tfoot>
