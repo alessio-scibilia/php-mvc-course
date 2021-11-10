@@ -9,6 +9,7 @@ require_once 'Models/User.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
+require_once 'Views/HttpRedirectView.class.php';
 
 class BackofficeController
 {
@@ -35,6 +36,12 @@ class BackofficeController
         $template_name = 'backoffice.login';
 
         $user = SessionManager::get_user();
+
+        if (User::is_guest($user))
+        {
+            SessionManager::destroy();
+        }
+
         if (!User::is_empty($user))
         {
             $title = $translations->get('titolo_dashboard') . ' | ' . $translations->get('nome_sito');

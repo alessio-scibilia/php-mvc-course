@@ -60,6 +60,15 @@ class User
     }
 
     /**
+     * @param User $user
+     * @return bool
+     */
+    public static function is_guest(User &$user): bool
+    {
+        return isset($user->level);
+    }
+
+    /**
      * @param array $rows
      * @return array
      */
