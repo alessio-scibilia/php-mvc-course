@@ -22,7 +22,7 @@ class FacilityEventRepository extends MySQLRepository
         return $this->get($where, $params);
     }
 
-    public function get_related_by_event_id(int $id_evento, int $id_lingua): array
+    public function get_related_by_event_id_and_language_id(int $id_evento, int $id_lingua): array
     {
         $table = $this->tableName;
         $query = join("\r\n", array(
@@ -48,7 +48,25 @@ class FacilityEventRepository extends MySQLRepository
         return $this->query($query, $params);
     }
 
-    public function get_related_by_event_id_and_hotel_id(int $id_evento, int $id_hotel, int $id_lingua): array
+    public function get_related_by_event_id(int $id_evento): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT *",
+            "FROM $table",
+            "WHERE id_evento = :id_evento",
+            "  AND id_struttura IS NULL",
+            "UNION",
+            "SELECT *",
+            "FROM $table",
+            "WHERE id_evento = :id_evento",
+            "  AND id_struttura IS NOT NULL"
+        ));
+        $params = array(":id_evento" => $id_evento);
+        return $this->query($query, $params);
+    }
+
+    public function get_related_by_event_id_and_hotel_id_and_language_id(int $id_evento, int $id_hotel, int $id_lingua): array
     {
         $table = $this->tableName;
         $query = join("\r\n", array(
@@ -73,6 +91,26 @@ class FacilityEventRepository extends MySQLRepository
             "  AND se.shortcode_lingua = :id_lingua",
         ));
         $params = array(":id_evento" => $id_evento, "id_hotel" => $id_hotel, ":id_lingua" => $id_lingua);
+        return $this->query($query, $params);
+    }
+
+    public function get_related_by_event_id_and_hotel_id(int $id_evento, int $id_hotel): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT *",
+            "FROM $table",
+            "WHERE id_evento = :id_evento",
+            "  AND id_hotel = :id_hotel",
+            "  AND id_struttura IS NULL",
+            "UNION",
+            "SELECT *",
+            "FROM $table",
+            "WHERE id_evento = :id_evento",
+            "  AND id_hotel = :id_hotel",
+            "  AND id_struttura IS NOT NULL"
+        ));
+        $params = array(":id_evento" => $id_evento, "id_hotel" => $id_hotel);
         return $this->query($query, $params);
     }
 

@@ -193,19 +193,21 @@
                                                     <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
                                                 <?php } ?>
                                             </select>
-                                            <?php
-                                            for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                ?>
+
+                                            <?php foreach ($view_model->languages->list_all() as &$language) { ?>
+                                                <?php $filter = function ($f) use ($language) { return $f->shortcode_lingua == $language['shortcode_lingua']; }; ?>
+                                                <?php $results = array_filter($view_model->all_languages_facility_events, $filter); ?>
+                                                <?php $facility_event = array_pop($results); ?>
+                                                <?php $is_selected = ($facility_event->shortcode_lingua ?? '') == $view_model->language['shortcode_lingua']; ?>
                                                 <div class="descrizione_evento"
-                                                     id="descrizione_evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
-                                                    <textarea class="summernote summ-<?php echo $i; ?>"
-                                                              name="descrizione_evento[<?php echo $lingue[$i]['abbreviazione']; ?>]"
-                                                              id="descrizione-evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-                                                        TODO DESCRIZIONE EVENTO
+                                                     id="descrizione_evento-<?php echo $language['shortcode_lingua']; ?>" <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
+                                                    <textarea class="summernote summ-<?php echo $language['id']; ?>"
+                                                              name="descrizione_evento[<?php echo $language['abbreviazione']; ?>]"
+                                                              id="descrizione-evento-<?php echo $language['shortcode_lingua']; ?>">
+                                                        <?php echo $facility_event->descrizione_evento ?? ''; ?>
                                                     </textarea>
                                                 </div>
-                                                <?php
-                                            } ?>
+                                            <?php } ?>
                                         </div>
 
 
