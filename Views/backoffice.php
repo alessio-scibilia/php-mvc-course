@@ -100,8 +100,9 @@ else
                                         <?php $selected = $view_model->user->level == $i; ?>
                                         <li>
                                             <a <?php if ($selected) echo 'style="color: #3a7afe; cursor: default"'; ?>
-                                                    onclick="<?php echo $selected ? "return false;":"window.location.assign($(this).attr('href') + '&return_url=' + encodeURIComponent(window.location.pathname)); return true;"; ?>"
-                                                    href="/backoffice/administrators/level/<?php echo $i; include 'Views/xdebug.querystring.first.php' ?>"><?php echo Level::name($i); ?></a>
+                                                    onclick="<?php echo $selected ? "return false;" : "window.location.assign($(this).attr('href') + '&return_url=' + encodeURIComponent(window.location.pathname)); return true;"; ?>"
+                                                    href="/backoffice/administrators/level/<?php echo $i;
+                                                    include 'Views/xdebug.querystring.first.php' ?>"><?php echo Level::name($i); ?></a>
                                         </li>
                                     <?php } ?>
                                 </ul>
@@ -352,7 +353,12 @@ else
             <nav class="navbar navbar-expand">
                 <div class="collapse navbar-collapse justify-content-between">
                     <div class="header-left">
-                        <div class="notification-message"></div>
+                        <?php /* if () {
+                            if ($params['result'] == 1)
+                                echo '<div class="notification-message nm-success">' . $view_model->translations->get('modifiche_salvate') . '</div>';
+                            else
+                                echo '<div class="notification-message nm-error">' . $view_model->translations->get('errore_salvataggio') . '</div>';
+                        } */ ?>
                     </div>
 
                     <ul class="navbar-nav header-right">
