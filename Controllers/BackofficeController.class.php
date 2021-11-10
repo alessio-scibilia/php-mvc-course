@@ -41,7 +41,8 @@ class BackofficeController
         {
             SessionManager::destroy();
         }
-        else if (!User::is_empty($user))
+
+        if (!User::is_empty($user))
         {
             $title = $translations->get('titolo_dashboard') . ' | ' . $translations->get('nome_sito');
             $template_name = 'backoffice';

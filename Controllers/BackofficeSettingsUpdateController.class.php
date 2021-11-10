@@ -1,5 +1,6 @@
 <?php
 require_once 'Database/UserRepository.class.php';
+require_once 'Database/HotelRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Hotel.class.php';
@@ -26,19 +27,27 @@ class BackofficeSettingsUpdateController
         } else {
 
             $user = SessionManager::get_user();
+            if (User::is_empty($user)) {
+                return new HttpRedirectView('/backoffice');
+            }
 
             if (isset($params['nome']) && isset($params['cognome']) && isset($params['email'])) {
 
                 $id = intval($params['id']);
-                $user = $this->user_repository->get_by_id($id);
-                $user['nome'] = $params['nome'];
-                $user['cognome'] = $params['cognome'];
-                $user['email'] = $params['email'];
+                $row = $this->user_repository->get_by_id($id);
+                $row['nome'] = $params['nome'];
+                $row['cognome'] = $params['cognome'];
+                $row['email'] = $params['email'];
 
                 if ($user->level < 2)
-                    $result = $this->user_repository->update($user);
+                    $result = $this->user_repository->update($row);
                 else
-                    $result = $this->hotel_repository->update($user);
+                    $result = $this->hotel_repository->update($row);
+
+                if ($result) {
+                    $user = new User($row);
+                    SessionManager::set_user($user);
+                }
 
                 return new HttpRedirectView('/backoffice/settings?' . $result);
             }

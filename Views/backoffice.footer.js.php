@@ -1,6 +1,6 @@
+<script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/popper.js"></script>
-<script src="/js/jquery.min.js"></script>
 <script src="/vendor/global/global.min.js"></script>
 <script src="/vendor/chart.js/Chart.bundle.min.js"></script>
 
@@ -16,5 +16,6 @@
 
 
 <?php include 'Views/backoffice.datatable.js.php'; ?>
+<?php include 'Views/backoffice.upload.images.js.php'; ?>
 
 

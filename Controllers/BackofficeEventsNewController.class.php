@@ -22,6 +22,7 @@ class BackofficeEventsNewController
     protected $user_repository;
     protected $event_repository;
     protected $facility_repository;
+    protected $hotel_repository;
     protected $facilities_hotels_repository;
 
     public function __construct()
