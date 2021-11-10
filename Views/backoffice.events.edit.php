@@ -309,8 +309,8 @@
                                                      id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
 
                                                     <textarea class="summernote summ-<?php echo $i; ?>"
-                                                         name="descrizione_ospiti[<?php echo $lingue[$i]['abbreviazione']; ?>]"
-                                                         id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
+                                                              name="descrizione_ospiti[<?php echo $lingue[$i]['abbreviazione']; ?>]"
+                                                              id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
                                                     </textarea>
                                                 </div>
                                             <?php } ?>

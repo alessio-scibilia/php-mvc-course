@@ -56,30 +56,35 @@
                 <div class="card-header">
                     <h4 class="card-title"><?php echo $view_model->translations->get('modifica_password'); ?></h4>
                 </div>
-                <div class="card-body">
-                    <div class="basic-form">
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nuova_password'); ?></label>
-                            <div class="col-sm-9">
-                                <input type="password" autocomplete="off" class="form-control validate-2" id="password"
-                                       placeholder="!()$(òsI!">
+                <form action="/backoffice/settings/password/update" method="post" enctype="multipart/form">
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nuova_password'); ?></label>
+                                <div class="col-sm-9">
+                                    <input type="password" name="password" autocomplete="off"
+                                           class="form-control validate-2"
+                                           id="password"
+                                           placeholder="!()$(òsI!">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('conferma_nuova_password'); ?></label>
-                            <div class="col-sm-9">
-                                <input autocomplete="off" type="password" class="form-control validate-2" id="password"
-                                       placeholder="!()$(òsI!">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('conferma_nuova_password'); ?></label>
+                                <div class="col-sm-9">
+                                    <input autocomplete="off" type="password" class="form-control validate-2"
+                                           id="password"
+                                           placeholder="!()$(òsI!">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <input type="submit" class="btn btn-success validate-it" id="validate-2"
-                                       value="<?php echo $view_model->translations->get('salva'); ?>">
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <input type="submit" class="btn btn-success validate-it" id="validate-2"
+                                           value="<?php echo $view_model->translations->get('salva'); ?>">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
