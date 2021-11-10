@@ -237,7 +237,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label><?php echo $view_model->translations->get('ora_fine_evento'); ?></label>
-                                            <input type="time" class="form-control validate-1" name="data_fine_evento"
+                                            <input type="time" class="form-control validate-1" name="ora_fine_evento"
                                                    id="ora_fine"
                                                    value="<?php echo $event->ora_fine_evento; ?>">
                                         </div>
@@ -272,11 +272,11 @@
                                                 <div class="descrizione_ospiti"
                                                      id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
 
-                                                    <div name="descrizione_ospiti[]"
-                                                         class="summernote summ-<?php echo $i; ?>"
-                                                         id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-                                                        <div></div>
-                                                    </div>
+                                                    <textarea class="summernote summ-<?php echo $i; ?>"
+                                                              name="descrizione_ospiti['<?php echo $lingue[$i]['abbreviazione']; ?>']"
+                                                              id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
+
+                                                    </textarea>
                                                 </div>
                                             <?php } ?>
                                         </div>
