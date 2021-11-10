@@ -6,7 +6,7 @@ class Router
     public function route(): callable
     {
         // Merge all params
-        $params = array_merge($_REQUEST, $_COOKIE, $_FILES);
+        $params = array_merge($_REQUEST, $_COOKIE, $_SERVER, $_FILES);
 
         // Extract path:
         $uri = $_SERVER['REQUEST_URI'];
