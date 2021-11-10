@@ -44,28 +44,24 @@
                                     <td><?php echo $hotel->telefono; ?></td>
                                     <td><?php echo $hotel->indirizzo; ?></td>
                                     <td>
-                                        <input type="checkbox"
-                                               class="enable-admin enable"
-                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                               data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                            <?php echo $hotel->abilitato == 1 ? 'checked="checked"' : ''; ?>
-                                               value="<?php echo $hotel->id ?>">
+                                        <form action="/backoffice/hotel/<?php echo $hotel->related_id ?>/enable"
+                                              method="POST" enctype="multipart/form-data">
+                                            <input type="checkbox"
+                                                   data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                                   data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                                <?php echo $hotel->abilitato == 1 ? 'checked="checked"' : ''; ?>
+                                                   name="enabled"
+                                                   value="1"
+                                                   onclick="this.closest('form').submit(); return false;">
+                                        </form>
                                     </td>
                                     <td>
-                                        <a href="/backoffice/hotels/<?php echo $hotel->id; ?>/edit"
-                                           class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
-                                           data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
-                                           data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
-                                           data-params="<?php echo $hotel->id; ?>">
+                                        <a href="/backoffice/hotels/<?php echo $hotel->related_id; ?>/edit"
+                                           class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="javascript:void()"
-                                           class="btn btn-danger shadow btn-xs sharp view-action"
-                                           data-function="delAdmin"
-                                           data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                           data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                           data-stay="true"
-                                           data-params="<?php echo $hotel->id; ?>">
+                                        <a href="/backoffice/hotel/<?php echo $hotel->related_id; ?>/delete"
+                                           class="btn btn-danger shadow btn-xs sharp view-action">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>

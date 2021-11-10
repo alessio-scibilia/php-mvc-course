@@ -53,22 +53,16 @@
                                                value="<?php echo $event->id ?>">
                                     </td>
                                     <td>
-                                        <a href="javascript:void()"
-                                           class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
-                                           data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
-                                           data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
-                                           data-params="<?php echo $event->id; ?>">
+                                    <td>
+                                        <a href="/backoffice/events/<?php echo $event->id; ?>/edit"
+                                           class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside">
                                             <i class="fa fa-pencil"></i>
                                         </a>
-                                        <a href="javascript:void()"
-                                           class="btn btn-danger shadow btn-xs sharp view-action"
-                                           data-function="delAdmin"
-                                           data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                           data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                           data-stay="true"
-                                           data-params="<?php echo $event->id; ?>">
+                                        <a href="/backoffice/event/<?php echo $event->id; ?>/delete"
+                                           class="btn btn-danger shadow btn-xs sharp view-action">
                                             <i class="fa fa-trash"></i>
                                         </a>
+                                    </td>
                                     </td>
                                 </tr>
                             <?php } ?>

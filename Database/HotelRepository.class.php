@@ -43,4 +43,21 @@ class HotelRepository extends MySQLRepository
         $params = array(":shortcode_lingua" => $shortcode_lingua, ":related_id" => $id_user);
         return $this->get($where, $params);
     }
+
+    public function delete_hotel(int $related_id): bool
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "DELETE FROM $table WHERE $key = :$key";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute(array(":$key" => $related_id));
+        return $stmt->rowCount() == 1;
+    }
+
+    public function get_hotel_all_langs(int $related_id): array
+    {
+        $where = "related_id = :related_id";
+        $params = array(":related_id" => $related_id);
+        return $this->get($where, $params);
+    }
 }
