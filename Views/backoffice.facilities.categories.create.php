@@ -19,13 +19,14 @@
                     <div class="basic-form">
                         <input type="hidden" name="image_path" value="" id="img_path" class="validate-1">
 
+
                         <?php
                         $lingue = $view_model->languages->list_all();
                         for ($i = 0; $i < sizeof($lingue); $i++) {
                             ?>
                             <div class="form-group row">
 
-                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome'); ?><?php echo $view_model->translations->get('abbreviazione'); ?></label>
+                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome'); ?><?php echo $lingue[$i]['abbreviazione']; ?></label>
                                 <div class="col-sm-9">
 
 

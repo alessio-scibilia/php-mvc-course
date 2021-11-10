@@ -32,6 +32,7 @@
                                 <th><?php echo $view_model->translations->get('abilita'); ?></th>
                                 <th><?php echo $view_model->translations->get('azioni'); ?></th>
                             </tr>
+
                             </thead>
                             <tbody>
                             <?php foreach ($view_model->events as &$event) { ?>

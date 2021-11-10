@@ -37,6 +37,7 @@ class BackofficeGuestsEditController
                 return new HttpRedirectView('/backoffice');
             }
 
+
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
@@ -46,10 +47,11 @@ class BackofficeGuestsEditController
 
             $id = intval($params['guests']);
             $guest = $this->guest_repository->get_by_id($id);
+            $ospite = Guest::guests($guest);
 
             $view_model = new BackOfficeViewModel('backoffice.guests.edit', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->$guest = $guest;
+            $view_model->guest = $ospite;
             $view_model->menu_active_btn = 'guests';
 
             return new HtmlView($view_model);

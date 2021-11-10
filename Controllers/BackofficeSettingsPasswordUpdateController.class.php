@@ -26,6 +26,7 @@ class BackofficeSettingsPasswordUpdateController
             return new Html404();
         } else {
 
+
             $user = SessionManager::get_user();
             if (User::is_empty($user)) {
                 return new HttpRedirectView('/backoffice');

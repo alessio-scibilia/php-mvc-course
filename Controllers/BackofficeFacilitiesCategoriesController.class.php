@@ -45,7 +45,7 @@ class BackofficeFacilitiesCategoriesController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->category_repository->get_all_categories();
+            $rows = $this->category_repository->get_all_categories($id_lingua);
             $categories = Category::categories($rows);
             //$facilities = array(); // TODO: da recuperare dal DB
 

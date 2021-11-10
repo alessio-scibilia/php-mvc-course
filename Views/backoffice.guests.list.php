@@ -59,11 +59,11 @@
                                                    onclick="this.closest('form').submit(); return false;">
                                         </form>
                                     </td>
+
+                                    
                                     <td>
-                                        <a href="javascript:void()"
+                                        <a href="/backoffice/guests/<?php echo $guest->id ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
-                                           data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
-                                           data-title="<?php echo $view_model->translations->get('gestione_amministratori'); ?>"
                                            data-params="<?php echo $guest->id; ?>">
                                             <i class="fa fa-pencil"></i>
                                         </a>

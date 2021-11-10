@@ -30,7 +30,6 @@ class BackofficeFacilitiesCategoriesEditController
         if (isset($params['categories'])) {
             $user = SessionManager::get_user();
 
-
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
@@ -49,6 +48,6 @@ class BackofficeFacilitiesCategoriesEditController
             return new HtmlView($view_model);
         }
 
-        return new HttpRedirectView('/backoffice/administrators');
+        return new HttpRedirectView('/backoffice/facilities/categories');
     }
 }
