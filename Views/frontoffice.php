@@ -9,11 +9,13 @@
 <html>
 <?php
 $tab = 'info'; //TODO gestione tab qui
-if ($view_model->template_name == 'login')
+if ($view_model->template_name == 'frontoffice.login')
     require_once 'Views/frontoffice.head.login.php';
 else
     require_once 'Views/frontoffice.head.common.php';
 ?>
+
+<body>
 <!-- MINI MENU -->
 <div class="container-menu">
     <div class="box box-1">
