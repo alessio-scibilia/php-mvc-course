@@ -64,6 +64,8 @@ class BackofficeEventsEditController
                 $related_facilities = Facility::facilities($rows);
             }
 
+            //$descrizioni_evento = $this->facility_hotel_repository->get_by_event_id($id);
+
             $rows = $this->hotel_repository->get_hotels_list_by_user_level($user->level, $user->id, $id_lingua);
             $related_hotels = Hotel::hotels($rows);
 
