@@ -643,6 +643,7 @@ $(document).on("click", ".arrow-back-cat", function () {
     }
 });
 
+
 $(".arrow-back-prenota-cat").click(function () {
     $(".link-cat-item-container").removeClass("dnmob");
     if (!$(".request-container").is(":visible")) {
