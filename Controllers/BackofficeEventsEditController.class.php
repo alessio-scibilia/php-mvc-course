@@ -4,6 +4,7 @@ require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/EventRepository.class.php';
 require_once 'Database/FacilityHotelRepository.class.php';
+require_once 'Database/FacilityEventRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
@@ -11,6 +12,7 @@ require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Event.class.php';
+require_once 'Models/FacilityEvent.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -25,6 +27,7 @@ class BackofficeEventsEditController
     protected $hotel_repository;
     protected $facility_repository;
     protected $facility_hotel_repository;
+    protected $facility_event_repository;
 
     public function __construct()
     {
@@ -35,6 +38,7 @@ class BackofficeEventsEditController
         $this->facility_repository = new FacilityRepository();
         $this->hotel_repository = new HotelRepository();
         $this->facility_hotel_repository = new FacilityHotelRepository();
+        $this->facility_event_repository = new FacilityEventRepository();
     }
 
     public function http_get(array &$params): IView
@@ -59,9 +63,13 @@ class BackofficeEventsEditController
             if ($user->level > 2) {
                 $rows = $this->facility_hotel_repository->get_facilities_by_hotel($user->id);
                 $related_facilities = FacilitiesHotels::facilities_hotels($rows);
+                $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id($id, $user->id, $id_lingua);
+                $facility_events = FacilityEvent::facility_events($rows);
             } else {
                 $rows = $this->facility_repository->get_all_facilities($id_lingua);
                 $related_facilities = Facility::facilities($rows);
+                $rows = $this->facility_event_repository->get_related_by_event_id($id, $id_lingua);
+                $facility_events = FacilityEvent::facility_events($rows);
             }
 
             //$descrizioni_evento = $this->facility_hotel_repository->get_by_event_id($id);
@@ -75,6 +83,7 @@ class BackofficeEventsEditController
             $view_model->event = $evento;
             $view_model->related_facilities = $related_facilities;
             $view_model->related_hotels = $related_hotels;
+            $view_model->facility_events = $facility_events;
             $view_model->menu_active_btn = 'events';
 
             return new HtmlView($view_model);

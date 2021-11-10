@@ -22,6 +22,60 @@ class FacilityEventRepository extends MySQLRepository
         return $this->get($where, $params);
     }
 
+    public function get_related_by_event_id(int $id_evento, int $id_lingua): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT se.*, h.nome",
+            "FROM $table se",
+            "INNER JOIN hotel h ON",
+            "   h.related_id = se.id_hotel AND",
+            "   h.shortcode_lingua = se.shortcode_lingua AND",
+            "   se.id_struttura IS NULL",
+            "WHERE id_evento = :id_evento",
+            "  AND se.shortcode_lingua = :id_lingua",
+            "UNION",
+            "SELECT se.*, s.nome_struttura AS nome",
+            "FROM $table se",
+            "INNER JOIN strutture s ON",
+            "   s.related_id = se.id_struttura AND",
+            "   s.shortcode_lingua = se.shortcode_lingua AND",
+            "   se.id_struttura IS NOT NULL",
+            "WHERE id_evento = :id_evento",
+            "  AND se.shortcode_lingua = :id_lingua",
+        ));
+        $params = array(":id_evento" => $id_evento, ":id_lingua" => $id_lingua);
+        return $this->query($query, $params);
+    }
+
+    public function get_related_by_event_id_and_hotel_id(int $id_evento, int $id_hotel, int $id_lingua): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT se.*, h.nome",
+            "FROM $table se",
+            "INNER JOIN hotel h ON",
+            "   h.related_id = se.id_hotel AND",
+            "   h.shortcode_lingua = se.shortcode_lingua AND",
+            "   se.id_struttura IS NULL",
+            "WHERE id_evento = :id_evento",
+            "  AND se.id_hotel = :id_hotel",
+            "  AND se.shortcode_lingua = :id_lingua",
+            "UNION",
+            "SELECT se.*, h.nome_struttura AS nome",
+            "FROM $table se",
+            "INNER JOIN strutture s ON",
+            "   s.related_id = se.id_struttura AND",
+            "   s.shortcode_lingua = se.shortcode_lingua AND",
+            "   se.id_struttura IS NOT NULL",
+            "WHERE id_evento = :id_evento",
+            "  AND se.id_hotel = :id_hotel",
+            "  AND se.shortcode_lingua = :id_lingua",
+        ));
+        $params = array(":id_evento" => $id_evento, "id_hotel" => $id_hotel, ":id_lingua" => $id_lingua);
+        return $this->query($query, $params);
+    }
+
     public function remove_by_event_id(int $id_evento): bool
     {
         $table = $this->tableName;

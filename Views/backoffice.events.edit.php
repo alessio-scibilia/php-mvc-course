@@ -56,24 +56,18 @@
                                                 </optgroup>
                                             </select>
                                         </div>
+
                                         <div id="relatedCat" class="form-group col-md-12">
-                                            <?php
-                                            //TODO
-                                            /*
-                                            $query = "SELECT * FROM strutture_eventi WHERE id_evento = ? AND shortcode_lingua = ?";
-                                            $stmt = $dbh->prepare($query);
-                                            $stmt->bindParam(1, $eventInfo['id'], PDO::PARAM_INT);
-                                            $stmt->bindParam(2, $_SESSION['lang'], PDO::PARAM_INT);
-                                            $stmt->execute();
-                                            if ($stmt->rowCount() > 0) {
-                                                while ($dati = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                                    $struttura_collegata = explode("-", $dati['id_struttura']);
-                                                    $struttura_info = getStrutturaInfo($dbh, $struttura_collegata[0], $struttura_collegata[1]);
-                                                    echo '<a href="javascript:void()" class="tagit2 relCat relatedCat-' . $struttura_collegata[0] . '-' . $struttura_collegata[1] . '" id="' . $struttura_collegata[0] . '-' . $struttura_collegata[1] . '" onclick="removeRelatedCat(\'' . $struttura_collegata[0] . '-' . $struttura_collegata[1] . '\')">' . $struttura_info['nome'] . '<i class="fa fa-close"></i></a>';
-                                                }
-                                            } */
-                                            ?>
+                                            <?php foreach ($view_model->facility_events as &$facility_event) { ?>
+                                            <?php $id = isset($facility_event->id_struttura) ? '2-'.$facility_event->id_struttura : '1-'.$facility_event->id_hotel; ?>
+                                                <a href="javascript:void()"
+                                                   class="tagit2 relCat relatedCat-<?php echo $id; ?>"
+                                                   id="<?php echo $id; ?>"
+                                                   onclick="removeRelatedCat('<?php echo $id; ?>')"><?php echo $facility_event->nome; ?> <i class="fa fa-close"></i></a>
+                                                <input type="hidden" name="related_item[]" value="<?php echo $id; ?>" class="cat-<?php echo $id; ?>">
+                                            <?php } ?>
                                         </div>
+
                                         <div class="form-group col-md-6">
                                             <input type="checkbox" name="recupera_struttura" id="recupera"
                                                    value="1" <?php if ($event->recupera_struttura == 1) echo 'checked="checked"'; ?>> <?php echo $view_model->translations->get('recupera_da_struttura'); ?>

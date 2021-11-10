@@ -148,38 +148,38 @@ class BackofficeEventsController
                         break;
                 }
             }
-            if ($this->event_repository->update($event))
+
+            $this->event_repository->update($event);
+
+            foreach ($params['related_item'] as $related_item)
             {
-                foreach ($params['related_item'] as $related_item)
+                list($type, $id_item) = explode('-', $related_item);
+                if ($type == '1')
                 {
-                    list($type, $id_item) = explode('-', $related_item);
-                    if ($type == '1')
+                    $id_hotel = $id_item;
+                    $id_struttura = null;
+                }
+                else
+                {
+                    $id_struttura = $id_item;
+                    $facility_hotel = $this->facility_hotel_repository->get_by_facility_id($id_struttura);
+                    $id_hotel = $facility_hotel['id_hotel'];
+                }
+                foreach ($params['descrizione_evento'] as $abbreviation => $descrizione_evento)
+                {
+                    $language = $languages->get_by_field('abbreviazione', $abbreviation);
+                    if (!empty($language))
                     {
-                        $id_hotel = $id_item;
-                        $id_struttura = null;
-                    }
-                    else
-                    {
-                        $id_struttura = $id_item;
-                        $facility_hotel = $this->facility_hotel_repository->get_by_facility_id($id_struttura);
-                        $id_hotel = $facility_hotel['id_hotel'];
-                    }
-                    foreach ($params['descrizione_evento'] as $abbreviation => $descrizione_evento)
-                    {
-                        $language = $languages->get_by_field('abbreviazione', $abbreviation);
-                        if (!empty($language))
-                        {
-                            $facility_event = array
-                            (
-                                'id_evento' => $id_evento,
-                                'shortcode_lingua' => $language['shortcode_lingua'],
-                                'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
-                                'descrizione_evento' => $descrizione_evento,
-                                'id_hotel' => $id_hotel,
-                                'id_struttura' => $id_struttura
-                            );
-                            $this->facility_event_repository->add($facility_event);
-                        }
+                        $facility_event = array
+                        (
+                            'id_evento' => $id_evento,
+                            'shortcode_lingua' => $language['shortcode_lingua'],
+                            'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
+                            'descrizione_evento' => $descrizione_evento,
+                            'id_hotel' => $id_hotel,
+                            'id_struttura' => $id_struttura
+                        );
+                        $this->facility_event_repository->add($facility_event);
                     }
                 }
             }

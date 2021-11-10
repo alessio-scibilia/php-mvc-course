@@ -1,14 +1,27 @@
 <?php
-class FacilityHotel
+
+class FacilityEvent
 {
+    /** @var int */
+    public $id;
+
+    /** @var int */
+    public $id_evento;
+
+    /** @var int */
+    public $shortcode_lingua;
+
+    /** @var string */
+    public $testo_convenzione;
+
+    /** @var string */
+    public $descrizione_evento;
+
     /** @var int */
     public $id_hotel;
 
     /** @var int */
     public $id_struttura;
-
-    /** @var int */
-    public $convenzionato;
 
     /**
      * @param array|null $row
@@ -23,23 +36,14 @@ class FacilityHotel
     }
 
     /**
-     * @param FacilitiesHotels $facilities_hotels
-     * @return bool
-     */
-    public static function is_empty(FacilityHotel &$facilities_hotels): bool
-    {
-        return empty($facilities_hotels->convenzionato);
-    }
-
-    /**
      * @param array $rows
      * @return array
      */
-    public static function facilities_hotels(array &$rows): array
+    public static function facility_events(array &$rows): array
     {
         $results = array();
         foreach ($rows as &$row) {
-            $results[] = new Hotel($row);
+            $results[] = new FacilityEvent($row);
         }
         return $results;
     }
