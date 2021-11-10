@@ -1,5 +1,5 @@
-<script src="/js/jquery.min.js"></script>
 <script src="/js/bootstrap.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script src="/js/popper.js"></script>
 <script src="/vendor/global/global.min.js"></script>
 <script src="/vendor/chart.js/Chart.bundle.min.js"></script>
