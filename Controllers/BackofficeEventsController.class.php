@@ -89,7 +89,7 @@ class BackofficeEventsController
                 'ora_inizio_evento',
                 'ora_fine_evento',
             );
-            if ($params['recupera_struttura'] == '1')
+            if (isset($params['recupera_struttura']))
             {
                 $event_fields_main = array
                 (
@@ -173,7 +173,7 @@ class BackofficeEventsController
                             (
                                 'id_evento' => $id_evento,
                                 'shortcode_lingua' => $language['shortcode_lingua'],
-                                'testo_convenzione' => $params['recupera_convenzione'] == '1' ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
+                                'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
                                 'descrizione_evento' => $descrizione_evento,
                                 'id_hotel' => $id_hotel,
                                 'id_struttura' => $id_struttura
