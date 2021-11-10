@@ -8,43 +8,46 @@
                 <div class="card-header">
                     <h4 class="card-title"><?php echo $view_model->translations->get('modifica_tuoi_dati'); ?></h4>
                 </div>
-                <div class="card-body">
-                    <div class="basic-form">
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome'); ?></label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control validate-1" id="nome" placeholder="Mario"
-                                       value="<?php echo $view_model->user->nome; ?>">
-                            </div>
-                        </div>
-                        <?php if ($view_model->user->level <= 2) { ?>
+                <form action="/backoffice/settings/update" method="post" enctype="multipart/form">
+                    <div class="card-body">
+                        <div class="basic-form">
                             <div class="form-group row">
-                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('cognome'); ?></label>
+                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome'); ?></label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control validate-1" id="cognome" placeholder="Rossi"
-                                           value="<?php echo $view_model->user->cognome; ?>">
+                                    <input type="text" name="nome" class="form-control validate-1" id="nome"
+                                           placeholder="Mario"
+                                           value="<?php echo $view_model->user->nome; ?>">
                                 </div>
                             </div>
-                        <?php } ?>
-                        <div class="form-group row">
-                            <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('email'); ?></label>
-                            <div class="col-sm-9">
-                                <input type="email" class="form-control validate-1" id="email"
-                                       placeholder="mario@rossi.it"
-                                       value="<?php echo $view_model->translations->get('email'); ?>">
+                            <?php if ($view_model->user->level <= 2) { ?>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('cognome'); ?></label>
+                                    <div class="col-sm-9">
+                                        <input type="text" name="cognome" class="form-control validate-1" id="cognome"
+                                               placeholder="Rossi"
+                                               value="<?php echo $view_model->user->cognome; ?>">
+                                    </div>
+                                </div>
+                            <?php } ?>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('email'); ?></label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control validate-1" name="email" id="email"
+                                           placeholder="mario@rossi.it"
+                                           value="<?php echo $view_model->translations->get('email'); ?>">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <button type="button"
-                                        data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                        data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                        class="btn btn-success validate-it" id="validate-1"
-                                        data-function="updateCurrentUserInfo"><?php echo $view_model->translations->get('salva'); ?></button>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <input type="submit"
+                                           class="btn btn-success "
+                                           id="validate-1"
+                                           value="<?php echo $view_model->translations->get('salva'); ?>">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
@@ -71,10 +74,8 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-sm-10">
-                                <button type="button" class="btn btn-success validate-it" id="validate-2"
-                                        data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                        data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                        data-function="updateCurrentUserPassword"><?php echo $view_model->translations->get('salva'); ?></button>
+                                <input type="submit" class="btn btn-success validate-it" id="validate-2"
+                                       value="<?php echo $view_model->translations->get('salva'); ?>">
                             </div>
                         </div>
                     </div>

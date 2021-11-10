@@ -1371,23 +1371,5 @@ function openOrariFull(id) {
     $(".orariFullContainer-" + id).toggleClass("dn");
 }
 
-$(".submit-login").click(function (e) {
-    e.preventDefault();
-    var numero_stanza = $("#num_stanza").val();
-    var code_stanza = $("#code_stanza").val();
-    var strh = $("#strh").val();
-
-    $.post("process/check_login.php", {num_stanza: numero_stanza, code_stanza: code_stanza, strh: strh})
-        .done(function (data) {
-            if (data == "ok") {
-                $("#form-login").submit();
-            } else {
-                $(".alert-container").fadeIn();
-            }
-        })
-        .fail(function (xhr, textStatus, errorThrown) {
-            alert("Connection error");
-        });
-});
 
 
