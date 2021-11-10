@@ -3,7 +3,7 @@ require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/EventRepository.class.php';
-require_once 'Database/FacilitiesHotelsRepository.class.php';
+require_once 'Database/FacilityHotelRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
@@ -23,7 +23,7 @@ class BackofficeEventsNewController
     protected $event_repository;
     protected $facility_repository;
     protected $hotel_repository;
-    protected $facilities_hotels_repository;
+    protected $facility_hotel_repository;
 
     public function __construct()
     {
@@ -33,7 +33,7 @@ class BackofficeEventsNewController
         $this->event_repository = new EventRepository();
         $this->facility_repository = new FacilityRepository();
         $this->hotel_repository = new HotelRepository();
-        $this->facilities_hotels_repository = new FacilityHotel();
+        $this->facilities_hotels_repository = new FacilityHotelRepository();
 
     }
 

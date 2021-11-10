@@ -1,7 +1,7 @@
 <?php
 require_once 'Database/MySQLRepository.class.php';
 
-class FacilitiesHotels extends MySQLRepository
+class FacilityHotelRepository extends MySQLRepository
 {
     public function __construct()
     {
@@ -12,6 +12,13 @@ class FacilitiesHotels extends MySQLRepository
     {
         $where = "id_hotel = :id_hotel";
         $params = array(":id_hotel" => $id_hotel);
+        return $this->get($where, $params);
+    }
+
+    public function get_by_facility_id(int $id_struttura): array
+    {
+        $where = "id_struttura = :id_struttura";
+        $params = array(":id_struttura" => $id_struttura);
         return $this->get($where, $params);
     }
 }
