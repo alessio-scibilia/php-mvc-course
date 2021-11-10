@@ -39,22 +39,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php /*
-                            if ($lista_traduzioni != 'error') {
-                                foreach ($lista_traduzioni as $key => $value) {
-                                    if (strpos($key, 'param_') !== false || strpos($key, 'link_') !== false || strpos($key, 'nuovo_params') !== false || strpos($key, 'abbreviazione') !== false || strpos($key, 'shortcode_lingua') !== false || strpos($key, 'id_lingua') !== false || strpos($key, 'id') !== false || strpos($key, 'lingua_abilitata') !== false)
-                                        echo '<tr style="background-color:#ff6e6e !important;color:#fff;border-radius:3px;">';
-                                    else
-                                        echo '<tr>';
-                                    echo '<td><div class="key-translation-' . $key . '">' . $key . '</div></td>';
-                                    echo '<td><div class="value-translation-' . $key . '">' . htmlspecialchars($value) . '</div></td>';
-                                    echo '<td>
-                                                           <a href="javascript:void()" class="btn btn-primary shadow btn-xs sharp mr-1 open-edit-translation" data-success="' . $langs['modifiche_salvate'] . '" data-fail="' . $langs['errore_salvataggio'] . '" id="translation-' . $key . '"><i class="fa fa-pencil"></i></a>
-                                                        </td>';
-                                }
-                            }
-    */
-                            ?>
+
+                            <?php foreach ($view_model->translations->items as $item) { ?>
+                                <tr<?php if (Translations::reserved($item['etichetta'])) echo ' style="background-color:#ff6e6e !important;color:#fff;border-radius:3px;"' ?>>
+                                    <td>
+                                        <div class="key-translation-<?php echo $item['etichetta']; ?>"><?php echo $item['etichetta']; ?></div>
+                                    </td>
+                                    <td>
+                                        <div class="value-translation-<?php echo $item['etichetta']; ?>"><?php echo htmlspecialchars($item['valore']); ?></div>
+                                    </td>
+                                    <td>
+                                        <form action="/backoffice/translations/<?php echo $item['id']; ?>" method="POST">
+                                            <input type="hidden" name="etichetta" value="" />
+                                            <button type="button" class="btn btn-primary shadow btn-xs sharp mr-1" data-target="<?php echo $item['etichetta']; ?>" onclick="onClickForEdit(this)">
+                                                <i class="fa fa-pencil"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+
                             </tbody>
                             <tfoot>
                             <tr>
@@ -64,6 +68,23 @@
                             </tr>
                             </tfoot>
                         </table>
+                        <script language="javascript">
+                            var onClickForEdit = function(elem) {
+                                let $button = $(elem);
+                                let $i = $button.children();
+                                let $target = $('.value-translation-' + $button.data('target'));
+                                if ($i.hasClass('fa-pencil')) {
+                                    $target.html('<input type="text" value="' + $target.text() + '">');
+                                    $button.removeClass('btn-primary').addClass('btn-success');
+                                    $i.removeClass('fa-pencil').addClass('fa-check');
+                                } else {
+                                    let $input = $target.children();
+                                    let $hidden = $button.prev();
+                                    $hidden.val($input.val());
+                                    $button.get(0).form.submit();
+                                }
+                            }
+                        </script>
                     </div>
                 </div>
             </div>
