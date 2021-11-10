@@ -65,7 +65,7 @@ class User
      */
     public static function is_guest(User &$user): bool
     {
-        return isset($user->level);
+        return !isset($user->level);
     }
 
     /**
