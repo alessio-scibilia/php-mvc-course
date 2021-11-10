@@ -34,7 +34,7 @@
                                 <div class="col-sm-9">
                                     <input type="email" class="form-control validate-1" name="email" id="email"
                                            placeholder="mario@rossi.it"
-                                           value="<?php echo $view_model->translations->get('email'); ?>">
+                                           value="<?php echo $view_model->user->email; ?>">
                                 </div>
                             </div>
                             <div class="form-group row">

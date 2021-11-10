@@ -26,16 +26,16 @@
                                 <div class="col-sm-9">
 
 
-                                    <input value="<?php echo //$cat_trad['nome'];?>" type="text"
+                                    <input value="<?php //echo $cat_trad['nome'];?>" type="text"
                                            class="nome_cat form-control validate-1"
                                            id="nome_<?php //echo $lingue[$x]['shortcode_lingua'];?>"
                                            placeholder="Sport">
                                 </div>
                             </div>
                         <?php } ?>
-                        <input type="hidden" name="image_path" value="<?php echo //$cat_trad['immagine'];?>"
+                        <input type="hidden" name="image_path" value="<?php //echo //$cat_trad['immagine'];?>"
                                id="img_path" class="validate-1">
-                        <input type="hidden" id="id_cat" value="<?php echo //$cat_trad['related_id'];?>"
+                        <input type="hidden" id="id_cat" value="<?php //echo $cat_trad['related_id'];?>"
                                class="validate-1">
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('immagine_categoria'); ?></label>
