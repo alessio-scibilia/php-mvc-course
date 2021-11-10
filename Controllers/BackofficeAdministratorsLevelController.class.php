@@ -5,7 +5,7 @@ require_once 'Models/User.class.php';
 require_once 'Models/Level.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 
-class AdministratorsLevelController
+class BackofficeAdministratorsLevelController
 {
     public function __construct()
     {

@@ -97,8 +97,8 @@ else
                                 </a>
                                 <ul aria-expanded="true">
                                     <li>
-                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + window.location.pathname); return false;"
-                                           href="process/change_role?set=0<?php include 'Views/xdebug.querystring.php' ?>">Developer
+                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + encodeURIComponent(window.location.pathname)); return true;"
+                                           href="/backoffice/administrators/level?request=0<?php include 'Views/xdebug.querystring.php' ?>">Developer
                                             (God user)</a></li>
                                     <li>
                                         <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + window.location.pathname); return false;"

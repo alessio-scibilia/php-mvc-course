@@ -45,11 +45,11 @@ class BackofficeGuestsEditController
             $title = $translations->get('gestione_ospiti') . ' | ' . $translations->get('nome_sito');
 
             $id = intval($params['guests']);
-            $administrator = $this->guest_repository->get_by_id($id);
+            $guest = $this->guest_repository->get_by_id($id);
 
             $view_model = new BackOfficeViewModel('backoffice.guests.edit', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->admin = $administrator;
+            $view_model->$guest = $guest;
             $view_model->menu_active_btn = 'guests';
 
             return new HtmlView($view_model);

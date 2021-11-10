@@ -60,7 +60,7 @@
                                         </form>
                                     </td>
                                     <td>
-                                        <a href="/backoffice/facilities/<?php echo $facility->related_id ?>/enable"
+                                        <a href="/backoffice/facilities/<?php echo $facil   ity->related_id ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
                                            data-params="<?php echo $facility->related_id; ?>">
                                             <i class="fa fa-pencil"></i>
