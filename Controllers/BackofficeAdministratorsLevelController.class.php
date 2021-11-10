@@ -24,9 +24,9 @@ class BackofficeAdministratorsLevelController
             return new HttpRedirectView('/backoffice');
         }
 
-        $request = $params['request'];
-        $user->level = intval($request);
-        $user->level_name = Level::name($request);
+        $level = $params['level'];
+        $user->level = intval($level);
+        $user->level_name = Level::name($level);
         SessionManager::set_user($user);
 
         return new HttpRedirectView($return_url);

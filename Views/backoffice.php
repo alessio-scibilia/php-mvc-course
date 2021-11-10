@@ -96,22 +96,14 @@ else
                                     <span class="nav-text">Passa a:</span>
                                 </a>
                                 <ul aria-expanded="true">
-                                    <li>
-                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + encodeURIComponent(window.location.pathname)); return true;"
-                                           href="/backoffice/administrators/level?request=0<?php include 'Views/xdebug.querystring.php' ?>">Developer
-                                            (God user)</a></li>
-                                    <li>
-                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + window.location.pathname); return false;"
-                                           href="process/change_role?set=1">Superadmin user</a></li>
-                                    <li>
-                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + window.location.pathname); return false;"
-                                           href="process/change_role?set=2">Admin user</a></li>
-                                    <li>
-                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + window.location.pathname); return false;"
-                                           href="process/change_role?set=3">Hotel Pro user</a></li>
-                                    <li>
-                                        <a onclick="window.location.assign($(this).attr('href') + '&return_url=' + window.location.pathname); return false;"
-                                           href="process/change_role?set=4">Hotel user</a></li>
+                                    <?php for ($i = 0; $i < 5; $i++) { ?>
+                                        <?php $selected = $view_model->user->level == $i; ?>
+                                        <li>
+                                            <a <?php if ($selected) echo 'style="color: #3a7afe; cursor: default"'; ?>
+                                                    onclick="<?php echo $selected ? "return false;":"window.location.assign($(this).attr('href') + '&return_url=' + encodeURIComponent(window.location.pathname)); return true;"; ?>"
+                                                    href="/backoffice/administrators/level/<?php echo $i; include 'Views/xdebug.querystring.first.php' ?>"><?php echo Level::name($i); ?></a>
+                                        </li>
+                                    <?php } ?>
                                 </ul>
                             </li>
                         </ul>
