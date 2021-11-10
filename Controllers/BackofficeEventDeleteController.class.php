@@ -8,8 +8,8 @@ require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
-
-class BackofficeAdministratorDeleteController
+ 
+class BackofficeEventDeleteController
 {
     protected $user_repository;
     protected $event_repository;
@@ -17,6 +17,7 @@ class BackofficeAdministratorDeleteController
     public function __construct()
     {
         $this->user_repository = new UserRepository();
+        $this->event_repository = new EventRepository();
     }
 
     public function http_post(array &$params): IView
