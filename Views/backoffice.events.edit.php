@@ -205,9 +205,8 @@
                                                 <div class="descrizione_evento"
                                                      id="descrizione_evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
                                                     <textarea class="summernote summ-<?php echo $i; ?>"
-                                                              name="descrizione_evento['<?php echo $lingue[$i]['abbreviazione']; ?>']"
+                                                              name="descrizione_evento[<?php echo $lingue[$i]['abbreviazione']; ?>]"
                                                               id="descrizione-evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-
                                                         TODO DESCRIZIONE EVENTO
                                                     </textarea>
                                                 </div>
@@ -274,9 +273,8 @@
                                                      id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
 
                                                     <textarea class="summernote summ-<?php echo $i; ?>"
-                                                              name="descrizione_ospiti['<?php echo $lingue[$i]['abbreviazione']; ?>']"
+                                                              name="descrizione_ospiti[<?php echo $lingue[$i]['abbreviazione']; ?>]"
                                                               id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-
                                                     </textarea>
                                                 </div>
                                             <?php } ?>
@@ -310,10 +308,10 @@
                                                 <div name="descrizione_ospiti[]" class="descrizione_ospiti"
                                                      id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
 
-                                                    <div class="summernote summ-<?php echo $i; ?>"
+                                                    <textarea class="summernote summ-<?php echo $i; ?>"
+                                                         name="descrizione_ospiti[<?php echo $lingue[$i]['abbreviazione']; ?>]"
                                                          id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-                                                        <div></div>
-                                                    </div>
+                                                    </textarea>
                                                 </div>
                                             <?php } ?>
                                         </div>
