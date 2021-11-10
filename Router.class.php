@@ -5,15 +5,18 @@ class Router
 {
     public function route(): callable
     {
+        // Merge all params
+        $params = array_merge($_REQUEST, $_COOKIE);
+
         // Extract path:
         $uri = $_SERVER['REQUEST_URI'];
         $path = parse_url($uri, PHP_URL_PATH);
+        $params['fragment'] = parse_url($uri, PHP_URL_FRAGMENT);
 
         // Extract parameters:
         $pieces = explode('/', $path);
         $n = count($pieces);
         $param = 'default';
-        $params = array_merge($_REQUEST, $_COOKIE);
         $controls = array();
         for ($i = 0; $i < $n; $i++)
         {
