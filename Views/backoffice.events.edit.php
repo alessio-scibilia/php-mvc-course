@@ -2,7 +2,8 @@
     <div class="row">
         <?php
         foreach ($view_model->event as $event) { ?>
-            <form action="/backoffice/events/<?php echo $event->id; ?>" method="POST"
+            <form action="/backoffice/events/<?php echo $event->id;
+            include 'Views/xdebug.querystring.first.php'; ?>" method="POST"
                   enctype="multipart/form-data">
                 <div class="col-12 d-flex align-items-center justify-content-start mb15">
                     <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
@@ -164,7 +165,7 @@
                                                                   onclick="delPreview(1)">
                                                                 <i class="fa fa-close"></i>
                                                             </span>
-                                                    <img class="img-form-preview-item img-hotel"
+                                                    <img class="img-form-preview-item img_evento"
                                                          src="<?php echo $event->img_evento; ?>"
                                                          height="200px">
                                                 </div>
@@ -200,13 +201,14 @@
                                             <?php
                                             for ($i = 0; $i < sizeof($lingue); $i++) {
                                                 ?>
-                                                <div name="descrizione_evento[]" class="descrizione_evento"
+                                                <div class="descrizione_evento"
                                                      id="descrizione_evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
-                                                    <div class="summernote summ-<?php echo $i; ?>"
-                                                         id="descrizione-evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
+                                                    <textarea class="summernote summ-<?php echo $i; ?>"
+                                                              name="descrizione_evento['<?php echo $lingue[$i]['abbreviazione']; ?>']"
+                                                              id="descrizione-evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
 
                                                         TODO DESCRIZIONE EVENTO
-                                                    </div>
+                                                    </textarea>
                                                 </div>
                                                 <?php
                                             } ?>
@@ -267,10 +269,11 @@
                                             <?php
                                             for ($i = 0; $i < sizeof($lingue); $i++) {
                                                 ?>
-                                                <div name="descrizione_ospiti[]" class="descrizione_ospiti"
+                                                <div class="descrizione_ospiti"
                                                      id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
 
-                                                    <div class="summernote summ-<?php echo $i; ?>"
+                                                    <div name="descrizione_ospiti[]"
+                                                         class="summernote summ-<?php echo $i; ?>"
                                                          id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
                                                         <div></div>
                                                     </div>

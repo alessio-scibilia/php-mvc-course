@@ -269,19 +269,21 @@ jQuery(document).on("changed.bs.select", ".selectpicker", function (e, clickedIn
     var val = $(this).val();
     var nome = $(".selectpicker :selected").text();
     $("#relatedHotels").append('<a href="javascript:void()" class="tagit2 relHot isRelatedToShow-' + val + '" onclick="removeRelatedHotel(' + val + ')" id="' + val + '">' + nome + ' <i class="fa fa-close"></i></a>');
-    $("#relatedHotels").append('<input type="hidden" value="' + val + '" class="isRelatedTo-' + val + '">');
+    $("#relatedHotels").append('<input type="hidden" name="hotel_associati[]" value="' + val + '" class="isRelatedTo-' + val + '">');
 });
+
 jQuery(document).on("changed.bs.select", ".selectpicker1", function (e, clickedIndex, isSelected, previousValue) {
     var val = $(this).val();
     var nome = $(".selectpicker1 :selected").text();
     $("#relatedCat").append('<a href="javascript:void()" class="tagit2 relCat relatedCat-' + val + '" id="' + val + '" onclick="removeRelatedCat(' + val + ')">' + nome + ' <i class="fa fa-close"></i></a>');
-    $("#relatedCat").append('<input type="hidden" value="' + val + '" class="cat-' + val + '">');
+    $("#relatedCat").append('<input type="hidden" name="strutture_associate[]" value="' + val + '" class="cat-' + val + '">');
 });
+
 jQuery(document).on("changed.bs.select", ".selectpicker3", function (e, clickedIndex, isSelected, previousValue) {
     var val = $(this).val();
     var nome = $(".selectpicker3 :selected").text();
     $("#relatedCat").append('<a href="javascript:void()" class="tagit2 relCat relatedCat-' + val + '" id="' + val + '" onclick="removeRelatedCat(\'' + val + '\')">' + nome + '<i class="fa fa-close"></i></a>');
-    $("#relatedCat").append('<input type="hidden" value="' + val + '" class="cat-' + val + '">');
+    $("#relatedCat").append('<input type="hidden" name="related_item[]" value="' + val + '" class="cat-' + val + '">');
 });
 
 

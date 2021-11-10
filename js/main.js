@@ -62,6 +62,12 @@ $(document).click(function (event) {
 
 jQuery(".validate-it").click(function (e) {
         e.preventDefault;
+
+        jQuery(".error_message").remove(); //rimuove tutti gli errori già visualizzati
+        jQuery(".related_item-hidden").remove();
+        jQuery(".img_hidden").remove();
+
+
         if (jQuery("#recupera").length && jQuery("#recupera").is(":checked"))
             var recupera = 1;
         else
@@ -79,12 +85,13 @@ jQuery(".validate-it").click(function (e) {
         if (jQuery(".relCat").length) {
             $(".relCat").each(function () {
                 strutture_associate[t] = $(this).attr("id");
+
                 t++;
             });
         }
 
         if (jQuery("#nome_struttura").length)
-            var nome = jQuery("#nome_struttura").val();
+            var nome_struttura = jQuery("#nome_struttura").val();
 
         if (jQuery("#nome_evento").length)
             var nome_evento = jQuery("#nome_evento").val();
@@ -119,10 +126,18 @@ jQuery(".validate-it").click(function (e) {
         if (jQuery("#ora_fine").length)
             var ora_fine = jQuery("#ora_fine").val();
 
-        if (jQuery(".img_hotel").length)
-            var img_evento = jQuery(".img-hotel").attr("src");
+        if (jQuery(".img_evento").length) {
+            var img_evento = jQuery(".img_evento").attr("src");
+            $(jQuery("#preview").append('<input type="hidden" name="img_evento" class="img_hidden" value="' + img_evento + '">'));
+        }
+
+
+        $(".summernote").each(function () {
+            $(this).val($(this).code());
+        });
 
         var is_error = false;
+
 
         jQuery(".error_message").remove(); //rimuove tutti gli errori già visualizzati
 
@@ -181,11 +196,11 @@ jQuery(".validate-it").click(function (e) {
             }
 
 
-            if (nome.length < 1) {
+            if (nome_struttura.length < 1) {
                 error_message = "- Inserire un nome per la struttura";
                 is_error = true;
 
-                jQuery("#nome").after('<div class="error_message">' + error_message + '</div>');
+                jQuery("#nome_struttura").after('<div class="error_message">' + error_message + '</div>');
             }
 
             if (telefono.length < 9) {

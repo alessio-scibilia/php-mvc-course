@@ -11,6 +11,7 @@ require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
+require_once 'Views/JsonView.class.php';
 
 class BackofficeEventsController
 {
@@ -56,5 +57,19 @@ class BackofficeEventsController
 
             return new HtmlView($view_model);
         }
+    }
+
+    public function http_post(array &$params): IView
+    {
+        if (!isset($params['events']))
+            return new Html404();
+
+        else {
+            $id_evento = intval($params['events']);
+            
+
+        }
+
+        return new JsonView($params);
     }
 }

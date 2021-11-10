@@ -24,7 +24,7 @@
     var src = response[0];
 
     $("#preview").html("");
-    $('#preview').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item img-hotel" src="' + src + '" height="200px"></div>');
+    $('#preview').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item img_evento" src="' + src + '" height="200px"></div>');
 
     $(".notification-message").fadeOut();
 }
