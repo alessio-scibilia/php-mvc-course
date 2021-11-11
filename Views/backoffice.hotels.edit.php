@@ -81,7 +81,7 @@
                                        name="latitudine"
                                        value="<?php echo $view_model->profile->latitudine; ?>"
                                        id="latitudine"
-                                       class="form-control" placeholder="33,40393">
+                                       class="form-control" placeholder="33.40393">
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('longitudine'); ?></label>
@@ -348,8 +348,8 @@
                                     <div class="form-group col-md-3">
                                         <label><?php echo $view_model->translations->get('abilitato'); ?></label>
                                         <select name="servizio_abilitato[<?php echo $r; ?>]" class="form-control is-abilitato" id="abilitato-<?php echo $r; ?>">
-                                            <option value="1" <?php if ($hotelLang->abilitato == 0) echo 'selected';?>><?php echo $view_model->translations->get('si'); ?></option>
-                                            <option value="0" <?php if ($hotelLang->abilitato == 1) echo 'selected';?>><?php echo $view_model->translations->get('no'); ?></option>
+                                            <option value="1" <?php if ($hotelLang->abilitato == 1) echo 'selected';?>><?php echo $view_model->translations->get('si'); ?></option>
+                                            <option value="0" <?php if ($hotelLang->abilitato == 0) echo 'selected';?>><?php echo $view_model->translations->get('no'); ?></option>
                                         </select>
                                     </div>
 
