@@ -48,8 +48,8 @@ class BackofficeHotelsEditController
             }
 
             $id = intval($params['hotels']);
-            $rows = $this->hotel_repository->get_profile($id_lingua, $id);
-            $profile = Hotel::hotels($rows);
+            $row = $this->hotel_repository->get_profile($id_lingua, $id);
+            $profile = new Hotel($row);
 
             $servizi = array();
             $i = 0;
@@ -60,11 +60,15 @@ class BackofficeHotelsEditController
                 $i++;
             }
 
+            $rows = $this->hotel_repository->get_translations($profile->related_id);
+            $hotel_translations = Hotel::hotels($rows);
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.hotels.edit', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->profile = $profile;
+            $view_model->language = $languages->get($id_lingua);
+            $view_model->hotel_translations = $hotel_translations;
             $view_model->services = $servizi;
             $view_model->menu_active_btn = 'hotels';
 

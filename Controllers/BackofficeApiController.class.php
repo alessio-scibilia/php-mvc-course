@@ -15,7 +15,7 @@ class BackofficeApiController
 
     public function http_get(array &$params): JsonView
     {
-        $use = $params['use']; //Funzione da utilizzare
+        $use = $params['use']; //Funzione da utilizzare 
 
         //DA IMPLEMENTARE ANCHE LA CHIAVE API? ERA SETTATA SU MAIN.PHP
 
