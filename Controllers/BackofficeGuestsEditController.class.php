@@ -6,6 +6,7 @@ require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/User.class.php';
+require_once 'Models/Guest.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -31,13 +32,6 @@ class BackofficeGuestsEditController
         if (isset($params['guests'])) {
             $user = SessionManager::get_user();
 
-            // Solo gli utenti con level <= 2 possono accedere a queste pagine "amministratori",
-            // Gli altri bisogna mandarli su pagine adeguate tramite redirect
-            if (User::is_empty($user) || $user->level > 2) {
-                return new HttpRedirectView('/backoffice');
-            }
-
-
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
@@ -47,11 +41,10 @@ class BackofficeGuestsEditController
 
             $id = intval($params['guests']);
             $guest = $this->guest_repository->get_by_id($id);
-            $ospite = Guest::guests($guest);
 
             $view_model = new BackOfficeViewModel('backoffice.guests.edit', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->guest = $ospite;
+            $view_model->ospite = $guest;
             $view_model->menu_active_btn = 'guests';
 
             return new HtmlView($view_model);

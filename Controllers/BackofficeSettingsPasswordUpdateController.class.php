@@ -26,7 +26,6 @@ class BackofficeSettingsPasswordUpdateController
             return new Html404();
         } else {
 
-
             $user = SessionManager::get_user();
             if (User::is_empty($user)) {
                 return new HttpRedirectView('/backoffice');
@@ -43,7 +42,6 @@ class BackofficeSettingsPasswordUpdateController
                 $user = $this->hotel_repository->get_by_email_password($user->email, $user->password);
                 $user['password'] = md5($params['password'];
                 $result = $this->hotel_repository->update($user);
-
             }
 
             return new HttpRedirectView('/backoffice/settings?' . $result);

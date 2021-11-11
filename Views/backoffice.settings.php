@@ -72,13 +72,13 @@
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('conferma_nuova_password'); ?></label>
                                 <div class="col-sm-9">
                                     <input autocomplete="off" type="password" class="form-control validate-2"
-                                           id="password"
+                                           id="conferma_password"
                                            placeholder="!()$(òsI!">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="submit" class="btn btn-success validate-it" id="validate-2"
+                                    <input type="submit" class="btn btn-success validate-it"
                                            value="<?php echo $view_model->translations->get('salva'); ?>">
                                 </div>
                             </div>
@@ -87,6 +87,5 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>

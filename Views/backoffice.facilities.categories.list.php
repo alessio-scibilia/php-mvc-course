@@ -39,7 +39,7 @@
                                     <td><?php echo $category->nome; ?></td>
                                     <td><?php echo $category->immagine; ?></td>
                                     <td>
-                                        <form action="/backoffice/facilities/category/<?php echo $category->related_id ?>/enable"
+                                        <form action="/backoffice/facilities/category/<?php echo $category->related_id ?>/enable?XDEBUG_SESSION_START"
                                               method="POST" enctype="multipart/form-data">
                                             <input type="checkbox"
                                                    data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
@@ -63,7 +63,6 @@
                                     </td>
                                 </tr>
                             <?php } ?>
-
                             </tbody>
                             <tfoot>
                             <tr>

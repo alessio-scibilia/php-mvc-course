@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
-            <a href="javascript:void()" id="gobacksearch" class="open-view-action-inside back-btn"
+            <a href="/backoffice/facilities/categories" id="gobacksearch" class="open-view-action-inside back-btn"
                data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
                         class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('lista_categorie'); ?> /</a>
             <h1><i class="fa fa-list"></i> <?php echo $view_model->translations->get('modifica_categoria'); ?></h1>
@@ -14,7 +14,6 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-
                         <?php
                         $lingue = $view_model->languages->list_all();
                         for ($x = 0; $x < sizeof($lingue); $x++) {

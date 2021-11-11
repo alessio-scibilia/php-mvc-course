@@ -18,7 +18,7 @@ class BackofficeFacilitiesCategoriesNewController
     protected $language_repository;
     protected $translation_repository;
     protected $user_repository;
-    protected $facility_repository;
+    protected $category_repository;
 
     public function __construct()
     {
@@ -45,14 +45,8 @@ class BackofficeFacilitiesCategoriesNewController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->category_repository->get_all_categories();
-            $categories = Category::categories($rows);
-            //$facilities = array(); // TODO: da recuperare dal DB
-
-            //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.facilities.categories.create', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->categories = $categories;
             $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);

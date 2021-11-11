@@ -33,7 +33,7 @@ class CategoryRepository extends MySQLRepository
 
     public function get_category_all_langs(int $related_id): array
     {
-        $where = "related_id = :related_id AND abilitata = 1";
+        $where = "related_id = :related_id";
         $params = array(":related_id" => $related_id);
         return $this->get($where, $params);
     }
@@ -47,5 +47,4 @@ class CategoryRepository extends MySQLRepository
         $stmt->execute(array(":$key" => $related_id));
         return $stmt->rowCount() == 1;
     }
-
 }

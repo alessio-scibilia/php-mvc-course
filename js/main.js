@@ -66,7 +66,7 @@ jQuery(".validate-it").click(function (e) {
         jQuery(".error_message").remove(); //rimuove tutti gli errori già visualizzati
         jQuery(".related_item-hidden").remove();
         jQuery(".img_hidden").remove();
-
+        var is_error = false;
 
         if (jQuery("#recupera").length && jQuery("#recupera").is(":checked"))
             var recupera = 1;
@@ -93,8 +93,15 @@ jQuery(".validate-it").click(function (e) {
         if (jQuery("#nome_struttura").length)
             var nome_struttura = jQuery("#nome_struttura").val();
 
-        if (jQuery("#nome_evento").length)
+        if (jQuery("#nome_evento").length) {
             var nome_evento = jQuery("#nome_evento").val();
+            if (nome_evento.length < 1) {
+                error_message = "- Inserire un nome per l'evento";
+                is_error = true;
+
+                jQuery("#nome_evento").after('<div class="error_message">' + error_message + '</div>');
+            }
+        }
 
         if (jQuery("#email").length)
             var email = jQuery("#email").val();
@@ -114,17 +121,43 @@ jQuery(".validate-it").click(function (e) {
         if (jQuery("#longitudine").length)
             var longitudine = jQuery("#longitudine").val();
 
-        if (jQuery("#data_inizio").length)
+        if (jQuery("#data_inizio").length) {
             var data_inizio = jQuery("#data_inizio").val();
+            if (data_inizio == "" || data_inizio == undefined) {
+                error_message = "- Inserire una data";
+                is_error = true;
+                jQuery("#data_inizio").after('<div class="error_message">' + error_message + '</div>');
+            }
+        }
 
-        if (jQuery("#ora_inizio").length)
+        if (jQuery("#ora_inizio").length) {
             var ora_inizio = jQuery("#ora_inizio").val();
+            if (ora_inizio == "" || ora_inizio == undefined) {
+                error_message = "- Inserire un' ora";
+                is_error = true;
 
-        if (jQuery("#data_fine").length)
+                jQuery("#ora_inizio").after('<div class="error_message">' + error_message + '</div>');
+            }
+        }
+
+        if (jQuery("#data_fine").length) {
             var data_fine = jQuery("#data_fine").val();
+            if (data_fine == "" || data_fine == undefined) {
+                error_message = "- Inserire una data";
+                is_error = true;
+                jQuery("#data_fine").after('<div class="error_message">' + error_message + '</div>');
+            }
+        }
 
-        if (jQuery("#ora_fine").length)
+        if (jQuery("#ora_fine").length) {
             var ora_fine = jQuery("#ora_fine").val();
+            if (ora_fine == "" || ora_fine == undefined) {
+                error_message = "- Inserire un' ora";
+                is_error = true;
+
+                jQuery("#ora_fine").after('<div class="error_message">' + error_message + '</div>');
+            }
+        }
 
         if (jQuery(".img_evento").length) {
             var img_evento = jQuery(".img_evento").attr("src");
@@ -132,49 +165,19 @@ jQuery(".validate-it").click(function (e) {
         }
 
 
+        if (jQuery("#password").length)
+            var password = $("#password").val();
+
+        if (jQuery("#password").length)
+            var password1 = $("#conferma_password").val();
+
+
         $(".summernote").each(function () {
             $(this).val($(this).code());
         });
 
-        var is_error = false;
 
-
-        jQuery(".error_message").remove(); //rimuove tutti gli errori già visualizzati
-
-        if (data_inizio == "" || data_inizio == undefined) {
-            error_message = "- Inserire una data";
-            is_error = true;
-            jQuery("#data_inizio").after('<div class="error_message">' + error_message + '</div>');
-        }
-
-        if (ora_inizio == "" || ora_inizio == undefined) {
-            error_message = "- Inserire un' ora";
-            is_error = true;
-
-            jQuery("#ora_inizio").after('<div class="error_message">' + error_message + '</div>');
-        }
-
-        if (data_fine == "" || data_fine == undefined) {
-            error_message = "- Inserire una data";
-            is_error = true;
-            jQuery("#data_fine").after('<div class="error_message">' + error_message + '</div>');
-        }
-
-        if (ora_fine == "" || ora_fine == undefined) {
-            error_message = "- Inserire un' ora";
-            is_error = true;
-
-            jQuery("#ora_fine").after('<div class="error_message">' + error_message + '</div>');
-        }
-
-        if (nome_evento.length < 1) {
-            error_message = "- Inserire un nome per l'evento";
-            is_error = true;
-
-            jQuery("#nome_evento").after('<div class="error_message">' + error_message + '</div>');
-        }
-
-        if (recupera != 1) {
+        if (jQuery("#recupera").length && !jQuery("#recupera").not(":checked")) {
             //Validazione email, se non passata mettere is_error = true
             if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
                 if (email != '') {
@@ -185,7 +188,6 @@ jQuery(".validate-it").click(function (e) {
                 }
             }
 
-
             if (!/^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/.test(sito)) {
                 if (sito != '') {
                     error_message = "<p>- Inserire un indirizzo web valido</p>";
@@ -194,7 +196,6 @@ jQuery(".validate-it").click(function (e) {
                     jQuery("#sito").after('<div class="error_message">' + error_message + '</div>');
                 }
             }
-
 
             if (nome_struttura.length < 1) {
                 error_message = "- Inserire un nome per la struttura";
@@ -232,7 +233,24 @@ jQuery(".validate-it").click(function (e) {
 
                 jQuery("#longitudine").after('<div class="error_message">' + error_message + '</div>');
             }
+
+
+            if (password.length < 8) {
+                error_message = "- La password deve contenere almeno 8 caratteri";
+                is_error = true;
+
+                jQuery("#password1").after('<div class="error_message">' + error_message + '</div>');
+            }
+
+
+            if (password != password1) {
+                error_message = "- Le due password non corrispondono";
+                is_error = true;
+
+                jQuery("#conferma_password").after('<div class="error_message">' + error_message + '</div>');
+            }
         }
+
 
         if (is_error == false) {
             alert();

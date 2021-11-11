@@ -202,8 +202,7 @@ else
                         </ul>
                     </div>
                 <?php } ?>
-
-                <?php if ($view_model->user->level >= 3 || $view_model->user->level == 0) { ?>
+                <?php if ($view_model->user->level >= 3) { ?>
                     <div class="tab-pane fade <?php if (strtolower($view_model->menu_active_btn) == 'profile') echo 'active show'; else echo $view_model->menu_active_btn; ?>"
                          id="profile">
                         <ul class="metismenu tab-nav-menu">
