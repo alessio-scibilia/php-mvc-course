@@ -44,9 +44,8 @@ function delPreviewEccellenza(id) {
 
 function delPreviewServizi(id) {
     id = 'prws-' + id;
-    jQuery("#ifps-" + id).hide(function () {
-        jQuery("#ifps-" + id).remove();
-    });
+    jQuery("#ifps-" + id).children().empty();
+
 }
 
 

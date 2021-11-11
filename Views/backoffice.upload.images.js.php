@@ -7,15 +7,20 @@
     if($(this).attr("id") == 'immagini_evento')
     var totalfiles = document.getElementById('immagini_evento').files.length;
 
-    else if($(this).attr("id") == 'immagini_form')
+    else if($(this).attr("id") == 'immagini_form') {
     var totalfiles = document.getElementById('immagini_form').files.length;
-
-    else if($(this).hasClass("immagine_servizio"))
-    var totalfiles = 1;
-
     for (var index = 0; index < totalfiles; index++) {
     form_data.append("immagini_form[]", document.getElementById('immagini_form').files[index]);
 }
+}
+
+    else if($(this).hasClass("immagine_servizio")) {
+    var totalfiles = this.files.length;
+    for (var index = 0; index < totalfiles; index++) {
+    form_data.append("immagini_form[]", this.files[index]);
+}
+}
+
 
     $(".notification-message").html("Caricamento immagini in corso....");
     $(".notification-message").addClass("nm-info");
@@ -47,9 +52,10 @@
 }
 } else if($(self).hasClass("immagine_servizio")) {
     var src = response[0];
-    var $target = $(self).closest(".preview_servizio");
+    var $target = $(self).next().find(".preview_servizio");
+    var id = $target.parent().parent().parent().prev().attr("id");
     $(self).html("");
-    $target.append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item img_evento" src="' + src + '" height="200px"></div>');
+    $target.append('<div class="img-form-preview "><span class="delete-preview" id="prws-'+id+'" onclick="delPreviewServizi(\''+id+'\')"><i class="fa fa-close"></i></span><img class="img-form-preview-item" src="'+src+'" height="200px"></div>');
 
 }
     $(".notification-message").fadeOut();
