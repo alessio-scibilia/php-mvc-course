@@ -146,11 +146,10 @@
                                         ?>
                                         <div class="descrizione_evento"
                                              id="descrizione_evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
-                                            <div class="summernote summ-<?php echo $i; ?>"
-                                                 id="descrizione-evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-
-
-                                            </div>
+                                                    <textarea class="summernote summ-<?php echo $lingue[$i]['id']; ?>"
+                                                              name="descrizione_evento[<?php echo $lingue[$i]['abbreviazione']; ?>]"
+                                                              id="descrizione-evento-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
+                                                    </textarea>
                                         </div>
                                     <?php } ?>
 
@@ -205,15 +204,14 @@
                                         ?>
                                         <div class="descrizione_ospiti"
                                              id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
+                                                    <textarea class="summernote summ-<?php echo $lingue[$i]['id']; ?>"
+                                                              name="descrizione_ospiti[<?php echo $lingue[$i]['abbreviazione']; ?>]"
+                                                              id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
 
-                                            <div class="summernote summ-<?php echo $i; ?>"
-                                                 id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-                                                <div></div>
-                                            </div>
+                                                    </textarea>
                                         </div>
                                     <?php } ?>
-
-
+                                    
                                 </div>
 
 
@@ -225,11 +223,10 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="form-group col-md-12">
                     <div align="left">
-                        <input type="button" class="btn btn-success"
+                        <input type="button" class="btn btn-success validate-it"
                                data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                data-callback="<?php echo $view_model->translations->get('link_eventi'); ?>"
                                data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                               id="creaEvento"
                                value="<?php echo $view_model->translations->get('crea_evento'); ?>">
                     </div>
                     <br/><br/>
