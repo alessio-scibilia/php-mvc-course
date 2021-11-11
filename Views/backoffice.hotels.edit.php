@@ -1,4 +1,4 @@
-<form action="/backoffice/hotels/<?php echo $view_model->user->id; ?>/edit" method="POST" enctype="multipart/form-data">
+<form action="/backoffice/hotels/<?php echo $view_model->profile->id; ?>/edit" method="POST" enctype="multipart/form-data">
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
@@ -27,13 +27,13 @@
                                 <label><?php echo $view_model->translations->get('nome_hotel'); ?></label>
                                 <input type="text"
                                        name="nome"
-                                       value="<?php $view_model->profile->nome; ?>"
+                                       value="<?php echo $view_model->profile->nome; ?>"
                                        id="nome"
                                        class="form-control validate-hotel" placeholder="London Hotel">
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('email'); ?></label>
-                                <input value="<?php $view_model->profile->email; ?>"
+                                <input value="<?php echo $view_model->profile->email; ?>"
                                        name="email"
                                        type="text"
                                        id="email"
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                <input value="<?php $view_model->profile->sito_web; ?>"
+                                <input value="<?php echo $view_model->profile->sito_web; ?>"
                                        type="text"
                                        name="sito_web"
                                        class="form-control validate-hotel"
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('telefono'); ?></label>
-                                <input value="<?php $view_model->profile->telefono; ?>"
+                                <input value="<?php echo $view_model->profile->telefono; ?>"
                                        type="text"
                                        name="telefono"
                                        class="form-control validate-hotel"
@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                                <input value="<?php $view_model->profile->indirizzo; ?>"
+                                <input value="<?php echo $view_model->profile->indirizzo; ?>"
                                        type="text"
                                        name="indirizzo"
                                        class="form-control validate-hotel"
@@ -79,7 +79,7 @@
                                 <label><?php echo $view_model->translations->get('latitudine'); ?></label>
                                 <input type="text"
                                        name="latitudine"
-                                       value="<?php $view_model->profile->latitudine; ?>"
+                                       value="<?php echo $view_model->profile->latitudine; ?>"
                                        id="latitudine"
                                        class="form-control" placeholder="33,40393">
                             </div>
@@ -87,7 +87,7 @@
                                 <label><?php echo $view_model->translations->get('longitudine'); ?></label>
                                 <input type="text"
                                        name="longitudine"
-                                       value="<?php $view_model->profile->longitudine; ?>"
+                                       value="<?php echo $view_model->profile->longitudine; ?>"
                                        id="longitudine"
                                        class="form-control" placeholder="8.343445">
                             </div>
@@ -368,7 +368,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="form-group col-md-12">
                 <div align="left">
-                    <input type="button" class="btn btn-success"
+                    <input type="submit" class="btn btn-success validate-it"
                            value="<?php echo $view_model->translations->get('salva'); ?>">
                 </div>
                 <hr/>

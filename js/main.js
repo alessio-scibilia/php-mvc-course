@@ -288,7 +288,7 @@ jQuery(".validate-it").click(function (e) {
 
 
     if (is_error == false) {
-        alert();
+        console.log('validation PASSED', e);
     } else {
         $(".notification-message").html("Alcuni campi non sono compilati in modo corretto");
         $(".notification-message").removeClass("nm-error");
