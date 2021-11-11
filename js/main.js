@@ -182,8 +182,28 @@ jQuery(".validate-it").click(function (e) {
     }
 
     if (jQuery(".img_evento").length) {
-        var img_evento = jQuery(".img_evento").attr("src");
+        var img_evento = jQuery(".img-hotel").attr("src");
         $(jQuery("#preview").append('<input type="hidden" name="img_evento" class="img_hidden" value="' + img_evento + '">'));
+    }
+
+    if (jQuery(".img-hotel").length) {
+        jQuery(".img-hotel").each(function () {
+            let img_hotel = jQuery(this).attr("src");
+            $("#preview").append('<input type="hidden" name="img_hotel[]" class="img_hidden" value="' + img_hotel + '">');
+        });
+    }
+
+    if (jQuery(".img-servizio").length) {
+        jQuery(".img-servizio").each(function () {
+            let img_servizio = jQuery(this).attr("src");
+            let num_servizio = jQuery(this).data("numero-servizio");
+            $(this).append('<input type="hidden" name="img_servizio[' + num_servizio + ']" class="img_hidden" value="' + img_servizio + '">');
+        });
+    }
+
+    if (jQuery(".img-hotel").length) {
+        var img_hotel = jQuery(".img-hotel").attr("src");
+        $(jQuery("#preview").append('<input type="hidden" name="img_hotel[]" class="img_hidden" value="' + img_hotel + '">'));
     }
 
     if (jQuery("#password").length)

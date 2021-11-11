@@ -91,7 +91,7 @@
     for($i = 0;$i < sizeof($lingue);$i++) {
     ?>
     jQuery(".form-service-container").last().find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
-
+    jQuery(".form-service-container").last().find("[name='nome_servizio-" +items_service+ "-<?php echo $lingue[$i]['abbreviazione'];?>").attr("name", "nome_servizio-" + items_next + "<?php echo $lingue[$i]['abbreviazione'];?>-" );
     jQuery(".form-service-container").last().find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
 
     jQuery(".form-service-container").last().find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("nome-servizi-" + items_service);
