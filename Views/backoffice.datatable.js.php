@@ -239,50 +239,6 @@
 }
 });
 
-
-    $('#immagini_form').on("change", function () {
-    var n_pictures = ($(".img-form-preview-item").length) - 1;
-    var form_data = new FormData();
-
-    // Read selected files
-    var totalfiles = document.getElementById('immagini_form').files.length;
-    for (var index = 0; index < totalfiles; index++) {
-    form_data.append("immagini_form[]", document.getElementById('immagini_form').files[index]);
-}
-    $(".notification-message").html("Caricamento immagini in corso....");
-    $(".notification-message").addClass("nm-info");
-    $(".notification-message").fadeIn();
-
-    // AJAX request
-    $.ajax({
-    url: 'process/uploadImages.php',
-    type: 'post',
-    data: form_data,
-    dataType: 'json',
-    contentType: false,
-    processData: false,
-    success: function (response) {
-    let lunghezza = response.length;
-    for (var index = 0; index < response.length; index++) {
-    var src = response[index];
-    n_pictures++;
-    var n_pictures_next = n_pictures + 1;
-    if (jQuery(this).attr("data-function") != 'addCategory')
-    $('#preview').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item img-hotel" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default-image" value="' + n_pictures_next + '"><label class="f15">&nbsp;Immagine principale</label><br></div></div>');
-    else
-    $('#preview').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
-}
-
-    if (lunghezza == 1) {
-    $(".default-image").attr("checked", "checked");
-}
-    $(".notification-message").fadeOut();
-
-}
-});
-
-});
-
     $('#immagini_form_strutture').on("change", function () {
     var n_pictures = ($(".img-form-preview-item").length) - 1;
     var form_data = new FormData();
