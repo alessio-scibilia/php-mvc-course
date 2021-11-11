@@ -191,6 +191,10 @@ jQuery(".validate-it").click(function (e) {
             let img_hotel = jQuery(this).attr("src");
             $("#preview").append('<input type="hidden" name="img_hotel[]" class="img_hidden" value="' + img_hotel + '">');
         });
+    } else {
+        error_message = "- Inserire un' immagine";
+        is_error = true;
+        jQuery("#preview").after('<div class="error_message">' + error_message + '</div>');
     }
 
     if (jQuery(".img-servizio").length) {

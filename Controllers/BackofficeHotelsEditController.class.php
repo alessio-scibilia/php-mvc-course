@@ -98,6 +98,100 @@ class BackofficeHotelsEditController
 
     public function http_post(array &$params): IView
     {
-        return new JsonView($params);
+        if (isset($params['hotels']) &&
+            isset($params['descrizione']) &&
+            isset($params['nome_servizio']) &&
+            isset($params['orario_continuato']) &&
+            isset($params['giorno']) &&
+            isset($params['img_servizio'])
+        )
+        {
+            $multiples = array
+            (
+                'descrizione',
+                'nome_servizio',
+                'orario_continuato',
+                'giorno',
+                'img_servizio'
+            );
+            $n = -1;
+            foreach ($multiples as $multiple) {
+                if ($n == -1) {
+                    $n = count($params[$multiple]);
+                } else {
+                    if ($n != count($params[$multiple])) {
+                        return new HttpRedirectView('/backoffice/hotels');
+                    }
+                }
+            }
+
+            $id = intval($params['hotels']);
+            $languages = new Languages($this->language_repository->list_all());
+            $hotel_fields = array
+            (
+                'nome',
+                'email',
+                'sito_web',
+                'telefono',
+                'indirizzo',
+                'latitudine',
+                'longitudine',
+            );
+            $hotel_translations = $this->hotel_repository->get_by_related_id($id);
+            if (empty($hotel_translations)) {
+                return new HttpRedirectView('/backoffice/hotels');
+            }
+
+            foreach ($hotel_translations as &$hotel_translation) {
+                foreach ($hotel_fields as $hotel_field) {
+                    $hotel_translation[$hotel_field] = $params[$hotel_field];
+                }
+                $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
+                if (!empty($language)) {
+                    $abbreviation = $language['abbreviazione'];
+                    $hotel_translation['descrizione_ospiti'] = $params['descrizione_ospiti'][$abbreviation] ?? $hotel_translation['descrizione_ospiti'];
+                }
+                $hotel_translation['immagini_secondarie'] = join('|', $params['img_hotel']) . '|';
+                $hotel_translation['immagine_principale'] = $params['default_image'];
+                $this->hotel_repository->update($hotel_translation);
+            }
+
+            $related_id = $hotel_translations[0]['related_id'];
+            $this->service_repository->remove_by_hotel($related_id);
+
+            if (!empty($params['nome_servizio']))
+            {
+                $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
+                foreach ($params['nome_servizio'] as $i => $names)
+                {
+                    foreach ($names as $abbreviation => $titolo)
+                    {
+                        $language = $languages->get_by_field('abbreviazione', $abbreviation);
+                        $service = array
+                        (
+                            'hotel_associato' => $related_id,
+                            'titolo' => $titolo,
+                            'descrizione' => $params['descrizione'][$i][$abbreviation],
+                            'immagine' => $params['img_servizio'][$i],
+                            'abilitato' => $params['servizio_abilitato'][$i],
+                            'shortcode_lingua' => $language['shortcode_lingua']
+                        );
+                        foreach ($weekdays as $weekday)
+                        {
+                            $orari = $params['giorno'][$i][$weekday];
+                            $flag = isset($params['orario_continuato'][$i][$weekday]) ? '1' : '0';
+                            $prefix = str_repeat('|', empty($orari) ? 0 : 1);
+                            $content = join('|', $orari);
+                            $suffix = str_repeat('|', 5 - count($orari));
+                            $service[$weekday] = $flag . $prefix . $content . $suffix;
+                        }
+
+                        $service['id'] = $this->service_repository->add($service);
+                    }
+                }
+            }
+        }
+
+        return new HttpRedirectView('/backoffice/hotels');
     }
 }

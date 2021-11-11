@@ -45,6 +45,13 @@ class HotelRepository extends MySQLRepository
         return array_pop($results);
     }
 
+    public function get_by_related_id(int $related_id): array
+    {
+        $where = "related_id = :related_id";
+        $params = array(":related_id" => $related_id);
+        return $this->get($where, $params);
+    }
+
     public function get_translations(int $related_id)
     {
         $table = $this->tableName;

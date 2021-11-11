@@ -14,4 +14,14 @@ class ServiceRepository extends MySQLRepository
         $params = array(":id_hotel" => $id_hotel, ":shortcode_lingua" => $shortcode_lingua);
         return $this->get($where, $params);
     }
+
+    public function remove_by_hotel(int $related_id): bool
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "DELETE FROM $table WHERE hotel_associato = :related_id";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute(array(":related_id" => $related_id));
+        return $stmt->rowCount() > 0;
+    }
 }

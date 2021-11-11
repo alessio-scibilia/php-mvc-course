@@ -147,8 +147,8 @@
                                                 <div class="pt20">
                                                     <input type="radio"
                                                            id="default-image"
-                                                           <?php if ($view_model->profile->immagine_principale == $immagini[$i]) echo 'checked="checked" '; ?>
-                                                           name="default-image"
+                                                           <?php if ($view_model->profile->immagine_principale == $i + 1) echo 'checked="checked" '; ?>
+                                                           name="default_image"
                                                            class="default-image"
                                                            value="<?php echo $i + 1; ?>">
                                                     <label>Immagine principale</label>
@@ -196,7 +196,9 @@
                             <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>" id="fsc-servizio-<?php echo $r; ?>">
                                 <div class="form-row">
                                     <div class="col-12">
-                                        <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5></div>
+                                        <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5>
+                                    </div>
+
                                     <div class="form-group col-md-4">
                                         <label><?php echo $view_model->translations->get('nome_servizio'); ?>
                                             :<span> | <i
@@ -222,7 +224,6 @@
                                                            value="<?php echo $servizio->titolo; ?>"
                                                            class="form-control nome_hotel validate-hotel nome_servizi nome-servizi-<?php echo $r; ?>"
                                                            name="nome_servizio[<?php echo $r; ?>][<?php echo $lingue[$i]['abbreviazione']; ?>]"
-                                                           id="nome_servizio-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
                                                            <?php if ($i > 0) echo 'style="display:none;"'; ?>
                                                            placeholder="Es: Check in">
                                                     <?php
@@ -231,6 +232,7 @@
                                             }
                                         } ?>
                                     </div>
+
                                     <div class="form-group col-md-5">
                                         <label><?php echo $view_model->translations->get('descrizione'); ?><span> | <i
                                                         class="fa fa-language"></i> Lingua</span></label>
@@ -248,7 +250,6 @@
                                                 if ($k == $c) {
                                                     ?>
                                                     <textarea
-                                                            id="descrizione-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
                                                             name="descrizione[<?php echo $r; ?>][<?php echo $lingue[$i]['abbreviazione']; ?>]"
                                                             class="form-control descrizione_servizi descrizione_servizi-<?php echo $r; ?> validate-hotel"
                                                             <?php if ($i > 0) echo 'style="display:none;"'; ?>>
@@ -260,11 +261,13 @@
                                             }
                                         } ?>
                                     </div>
+
                                     <div class="form-group col-md-3">
                                         <label><?php echo $view_model->translations->get('immagine_servizio'); ?></label>
                                         <input type="file"
                                                class="form-control immagine_servizio validate-hotel"
                                                id="immagine_servizio-<?php echo $r; ?>">
+
                                         <div class="input-group col-md-12" id="preview-img-container">
 
                                             <div id="preview-immagine_servizio-<?php echo $r; ?>">
@@ -274,8 +277,9 @@
                                                             id="prws-immagine_servizio-<?php echo $r; ?>"
                                                             onclick="delPreviewServizi('immagine_servizio-<?php echo $r; ?>')"><i
                                                                 class="fa fa-close"></i></span><img
-                                                            class="img-form-preview-item"
+                                                            class="img-form-preview-item img-servizio"
                                                             src="<?php echo $hotelLang->immagine; ?>"
+                                                            data-numero-servizio="<?php echo $r; ?>"
                                                             height="200px">
                                                     <div class="default-image-cont"></div>
                                                 </div>
@@ -307,8 +311,8 @@
                                                     <div class="time-title"><?php echo $view_model->translations->get($weekday); ?>
                                                         <span> | <input
                                                                     type="checkbox"
-                                                                    name="edit-orario-continuato[<?php echo $r; ?>][<?php echo $weekday; ?>]"
-                                                                    class="edit-orario-continuato" <?php if ($orari[$weekday][0] == 1) echo 'checked="checked"'; ?>
+                                                                    name="orario_continuato[<?php echo $r; ?>][<?php echo $weekday; ?>]"
+                                                                    class="orario-continuato" <?php if ($orari[$weekday][0] == 1) echo 'checked="checked"'; ?>
                                                                     value="1"> Orario continuato </span>
                                                     </div>
                                                     <div class="input-time-container">
@@ -316,7 +320,7 @@
                                                         <span class="time-span">
                                                             <?php echo $view_model->translations->get($intervals[$i]); ?> <input
                                                                     type="time"
-                                                                    name="edit-giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
+                                                                    name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
                                                                     value="<?php echo $orari[$weekday][$i + 1]; ?>"
                                                                     class="validate-hotel">
                                                         </span>
@@ -328,7 +332,7 @@
                                                             <?php echo $view_model->translations->get($intervals[$i]); ?> <input
                                                                 <?php if ($orari[$weekday][0] == 1) echo 'disabled'; ?>
                                                                 type="time"
-                                                                name="edit-giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
+                                                                name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
                                                                 class="validate-hotel"
                                                                 value="<?php echo $orari[$weekday][$i + 1]; ?>">
                                                         </span>
@@ -343,9 +347,9 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-3">
                                         <label><?php echo $view_model->translations->get('abilitato'); ?></label>
-                                        <select class="form-control is-abilitato" id="abilitato-<?php echo $r; ?>">
-                                            <option value="1"><?php echo $view_model->translations->get('si'); ?></option>
-                                            <option value="0"><?php echo $view_model->translations->get('no'); ?></option>
+                                        <select name="servizio_abilitato[<?php echo $r; ?>]" class="form-control is-abilitato" id="abilitato-<?php echo $r; ?>">
+                                            <option value="1" <?php if ($hotelLang->abilitato == 0) echo 'selected';?>><?php echo $view_model->translations->get('si'); ?></option>
+                                            <option value="0" <?php if ($hotelLang->abilitato == 1) echo 'selected';?>><?php echo $view_model->translations->get('no'); ?></option>
                                         </select>
                                     </div>
 
