@@ -40,8 +40,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-10">
                                     <input type="submit"
-                                           class="btn btn-success "
-                                           id="validate-1"
+                                           class="btn btn-success validate-it"
                                            value="<?php echo $view_model->translations->get('salva'); ?>">
                                 </div>
                             </div>
@@ -64,7 +63,7 @@
                                 <div class="col-sm-9">
                                     <input type="password" name="password" autocomplete="off"
                                            class="form-control validate-2"
-                                           id="password"
+                                           id="password_small"
                                            placeholder="!()$(òsI!">
                                 </div>
                             </div>
@@ -72,13 +71,13 @@
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('conferma_nuova_password'); ?></label>
                                 <div class="col-sm-9">
                                     <input autocomplete="off" type="password" class="form-control validate-2"
-                                           id="conferma_password"
+                                           id="conferma_password_small"
                                            placeholder="!()$(òsI!">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-10">
-                                    <input type="submit" class="btn btn-success validate-it"
+                                    <input type="submit" class="btn btn-success validate-it-small"
                                            value="<?php echo $view_model->translations->get('salva'); ?>">
                                 </div>
                             </div>
