@@ -229,6 +229,7 @@
                                                                value="<?php echo $servizio->titolo; ?>"
                                                                class="form-control nome_hotel validate-hotel nome_servizi nome-servizi-<?php echo $r; ?>"
                                                                name="nome_servizio[<?php echo $r; ?>][<?php echo $lingue[$i]['abbreviazione']; ?>]"
+                                                               id="nome_servizio-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
                                                             <?php if ($i > 0) echo 'style="display:none;"'; ?>
                                                                placeholder="Es: Check in">
                                                         <?php
@@ -256,6 +257,7 @@
                                                         ?>
                                                         <textarea
                                                                 name="descrizione[<?php echo $r; ?>][<?php echo $lingue[$i]['abbreviazione']; ?>]"
+                                                                id="descrizione-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
                                                                 class="form-control descrizione_servizi descrizione_servizi-<?php echo $r; ?> validate-hotel"
                                                             <?php if ($i > 0) echo 'style="display:none;"'; ?>>
                                                         <?php echo $servizio->descrizione ?? ''; ?>
