@@ -31,6 +31,6 @@ admin-dev/export/
 admin-dev/import/
 download/
 /img/*
-upload/
+uploads/
 *.ini
 .idea/*
