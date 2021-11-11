@@ -51,13 +51,30 @@ class BackofficeHotelsEditController
             $row = $this->hotel_repository->get_profile($id_lingua, $id);
             $profile = new Hotel($row);
 
-            $servizi = array();
-            $i = 0;
+            $services = array();
             $lingue = $this->language_repository->list_all();
-            foreach ($lingue as $lingua) {
+            $default_hours = '0|||||';
+            $default_service = array
+            (
+                'lunedi' => $default_hours,
+                'martedi' => $default_hours,
+                'mercoledi' => $default_hours,
+                'giovedi' => $default_hours,
+                'venerdi' => $default_hours,
+                'sabato' => $default_hours,
+                'domenica' => $default_hours,
+            );
+            foreach ($lingue as $lingua)
+            {
                 $rows = $this->service_repository->get_services_by_hotel($id, $lingua['shortcode_lingua']);
-                $servizi[$i] = Service::services($rows);
-                $i++;
+                if (empty($rows))
+                {
+                    $services[] = array(new Service($default_service));
+                }
+                else
+                {
+                    $services[] = Service::services($rows);
+                }
             }
 
             $rows = $this->hotel_repository->get_translations($profile->related_id);
@@ -69,7 +86,7 @@ class BackofficeHotelsEditController
             $view_model->profile = $profile;
             $view_model->language = $languages->get($id_lingua);
             $view_model->hotel_translations = $hotel_translations;
-            $view_model->services = $servizi;
+            $view_model->services = $services;
             $view_model->menu_active_btn = 'hotels';
 
             return new HtmlView($view_model);
