@@ -94,8 +94,8 @@ jQuery(document).on("click", ".open-create-eccellenza", function () {
 
 jQuery(document).on("click", "#calcGPS", function () {
     var indirizzo = jQuery("#indirizzo").val();
-    indirizzo = JSON.stringify(indirizzo);
-    $.post("/backoffice/geolocate?XDEBUG_SESSION_START", {parameters: indirizzo})
+    // indirizzo = JSON.stringify(indirizzo);
+    $.post("/backoffice/geolocate?XDEBUG_SESSION_START", { indirizzo })
         .done(function (data) {
             if (data != 'error') {
                 var latlon = data.split(',');

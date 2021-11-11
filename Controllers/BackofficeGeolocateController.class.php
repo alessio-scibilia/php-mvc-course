@@ -28,30 +28,23 @@ class BackofficeGeolocateController
         $coordinate = 'error';
         while ($found == false) {
             $tentativi++;
-            $response = file_get_contents($endpoint[$endpoint_to_use]["url_first"] . $regione_formattata . '+' . $provincia_formattata . '+' . $citta_paese_formattati . '+' . $indirizzo_formattato . '+' . $civico_formattato, false, $context);
-            //echo $endpoint[$endpoint_to_use]["url_first"].$regione_formattata.'+'.$provincia_formattata.'+'.$citta_paese_formattati.'+'.$indirizzo_formattato.'+'.$civico_formattato;
+            $response = file_get_contents($endpoint[$endpoint_to_use]["url_first"] . $indirizzo_formattato, false, $context);
 
-
-            $last_block_after = 0;
             if (!json_decode($response, TRUE)) {
-                if ($tentativi == 100) {
-                    $tentativi = 0;
+                if ($tentativi == 4) {
+                    return new JsonView($coordinate);
                 }
-                if ($endpoint_to_use == 3)
+                if ($endpoint_to_use >= count($endpoint))
                     $endpoint_to_use = 0;
                 else
                     $endpoint_to_use++;
 
             } else {
-                $end = microtime(TRUE);
-                //if (empty(array_filter($resp))) {return false;}else{
                 $resp = json_decode($response, true);
 
                 $coordinate = $resp[0]['lat'] . ',' . $resp[0]['lon'];
                 $found = true;
             }
-            //echo "<br>Found: ".$found_sum." coordinates in ".($end - $start)." seconds";
-
         }
 
         return new JsonView($coordinate);
