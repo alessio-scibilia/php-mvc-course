@@ -41,7 +41,17 @@ class HotelRepository extends MySQLRepository
     {
         $where = "shortcode_lingua = :shortcode_lingua AND related_id = :related_id";
         $params = array(":shortcode_lingua" => $shortcode_lingua, ":related_id" => $id_user);
-        return $this->get($where, $params);
+        $results = $this->get($where, $params);
+        return array_pop($results);
+    }
+
+    public function get_translations(int $related_id)
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "SELECT $key, related_id, shortcode_lingua, nome, descrizione_ospiti FROM $table WHERE related_id = :related_id";
+        $params = array(":related_id" => $related_id);
+        return $this->query($query, $params);
     }
 
     public function delete_hotel(int $related_id): bool

@@ -1,168 +1,160 @@
 <input type="hidden" id="hotel_id" value="<?php echo $view_model->user->id; ?>">
 <div class="container-fluid">
     <div class="row">
-        <?php
-        foreach ($view_model->profile as $hotel) {
-            ?>
-            <div class="col-12 d-flex align-items-center justify-content-start mb15">
-                <a href="/backoffice/hotels" id="gobacksearch" class="open-view-action-inside back-btn"
-                   data-action="<?php echo $view_model->translations->get('link_hotels'); ?>"
-                   data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?> | Wellcome"
-                   data-params="false"
-                   data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
-                            class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_hotels'); ?>
-                    /</a>
-                <h1><i class="fa fa-building-o"></i> <?php echo $hotel->nome; ?></h1>
-            </div>
-            <div class="col-xl-12 col-lg-12">
-                <a href="https://wellcox.cluster031.hosting.ovh.net/index.php?strh=<?php echo $hotel->id; ?>&on_test=true"
-                   class="btn btn-info" target="_blank"><i class="fa fa-eye"></i> Vedi come ospite</a><br/><br/>
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"><i
-                                    class="fa fa-info-circle"></i> <?php echo $view_model->translations->get('dati_hotel'); ?>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="basic-form">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('nome_hotel'); ?></label>
-                                    <input type="text"
-                                           value="<?php if ($hotel != false) echo $hotel->nome; ?>"
-                                           id="nome"
-                                           class="form-control validate-hotel" placeholder="London Hotel">
+        <div class="col-12 d-flex align-items-center justify-content-start mb15">
+            <a href="/backoffice/hotels" id="gobacksearch" class="open-view-action-inside back-btn"
+               data-action="<?php echo $view_model->translations->get('link_hotels'); ?>"
+               data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?> | Wellcome"
+               data-params="false"
+               data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
+                        class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_hotels'); ?>
+                /</a>
+            <h1><i class="fa fa-building-o"></i> <?php echo $view_model->profile->nome; ?></h1>
+        </div>
+        <div class="col-xl-12 col-lg-12">
+            <a href="/<?php echo $view_model->profile->id; ?>"
+               class="btn btn-info" target="_blank"><i class="fa fa-eye"></i> Vedi come ospite</a><br/><br/>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title"><i
+                                class="fa fa-info-circle"></i> <?php echo $view_model->translations->get('dati_hotel'); ?>
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label><?php echo $view_model->translations->get('nome_hotel'); ?></label>
+                                <input type="text"
+                                       value="<?php $view_model->profile->nome; ?>"
+                                       id="nome"
+                                       class="form-control validate-hotel" placeholder="London Hotel">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo $view_model->translations->get('email'); ?></label>
+                                <input value="<?php $view_model->profile->email;; ?>"
+                                       type="text" id="email"
+                                       class="form-control validate-hotel" placeholder="mario@rossi.it">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo $view_model->translations->get('sito_web'); ?></label>
+                                <input value="<?php $view_model->profile->sito_web; ?>"
+                                       type="text"
+                                       class="form-control validate-hotel" id="sito"
+                                       placeholder="www.hotelsuperlondon.co.uk">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo $view_model->translations->get('telefono'); ?></label>
+                                <input value="<?php $view_model->profile->telefono; ?>"
+                                       type="text"
+                                       class="form-control validate-hotel" id="telefono" placeholder="020483039">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
+                                <input value="<?php $view_model->profile->indirizzo; ?>"
+                                       type="text"
+                                       class="form-control validate-hotel" id="indirizzo"
+                                       placeholder="Via 20 Settembre, Milano (MI)">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary mt5" id="calcGPS" type="button"><i
+                                                class="fa fa-map-marker"></i> <?php echo $view_model->translations->get('calcola_coordinate'); ?>
+                                    </button>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('email'); ?></label>
-                                    <input value="<?php if ($hotel != false) echo $hotel->email;; ?>"
-                                           type="text" id="email"
-                                           class="form-control validate-hotel" placeholder="mario@rossi.it">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                    <input value="<?php if ($hotel != false) echo $hotel->sito_web; ?>"
-                                           type="text"
-                                           class="form-control validate-hotel" id="sito"
-                                           placeholder="www.hotelsuperlondon.co.uk">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('telefono'); ?></label>
-                                    <input value="<?php if ($hotel != false) echo $hotel->telefono; ?>"
-                                           type="text"
-                                           class="form-control validate-hotel" id="telefono" placeholder="020483039">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                                    <input value="<?php if ($hotel != false) echo $hotel->indirizzo; ?>"
-                                           type="text"
-                                           class="form-control validate-hotel" id="indirizzo"
-                                           placeholder="Via 20 Settembre, Milano (MI)">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary mt5" id="calcGPS" type="button"><i
-                                                    class="fa fa-map-marker"></i> <?php echo $view_model->translations->get('calcola_coordinate'); ?>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <div id="map" style="height: 260px;width: 100%;"></div>
-                                    <div id="hidden-maps"></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('latitudine'); ?></label>
-                                    <input type="text"
-                                           value="<?php if ($hotel != false) echo $hotel->latitudine; ?>"
-                                           id="latitudine"
-                                           class="form-control" placeholder="33,40393">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('longitudine'); ?></label>
-                                    <input type="text"
-                                           value="<?php if ($hotel != false) echo $hotel->longitudine; ?>"
-                                           id="longitudine"
-                                           class="form-control" placeholder="8.343445">
-                                </div>
-                                <div class="form-group col-md-12">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div id="map" style="height: 260px;width: 100%;"></div>
+                                <div id="hidden-maps"></div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo $view_model->translations->get('latitudine'); ?></label>
+                                <input type="text"
+                                       value="<?php $view_model->profile->latitudine; ?>"
+                                       id="latitudine"
+                                       class="form-control" placeholder="33,40393">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label><?php echo $view_model->translations->get('longitudine'); ?></label>
+                                <input type="text"
+                                       value="<?php $view_model->profile->longitudine; ?>"
+                                       id="longitudine"
+                                       class="form-control" placeholder="8.343445">
+                            </div>
+                            <div class="form-group col-md-12">
 
-                                    <label><?php echo $view_model->translations->get('descrizione_ospiti'); ?>
-                                        <span> | <i
-                                                    class="fa fa-language"></i> Lingua</span></label>
-                                    <select id="select-language">
-                                        <?php
-                                        $lingue = $view_model->languages->list_all();
-                                        for ($i = 0; $i < sizeof($lingue); $i++) {
-                                            ?>
-                                            <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                        <?php } ?>
-                                    </select>
+                                <label><?php echo $view_model->translations->get('descrizione_ospiti'); ?>
+                                    <span> | <i
+                                                class="fa fa-language"></i> Lingua</span></label>
+                                <select id="select-language">
                                     <?php
+                                    $lingue = $view_model->languages->list_all();
                                     for ($i = 0; $i < sizeof($lingue); $i++) {
-
-                                        //$hotelLang = getDatiHotelLang($dbh, $this_hotel['email'], $lingue[$i]['shortcode_lingua']);
-
                                         ?>
-                                        <div class="descrizione_ospiti"
-                                             id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
+                                        <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
+                                    <?php } ?>
+                                </select>
 
-                                            <div class="summernote summ-<?php echo $i; ?>"
-                                                 id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>">
-                                                <?php
-                                                // $hotelLangNew = getHotelLang($dbh, $this_hotel['email'], $lingue[$i]['shortcode_lingua']); ?>
-                                                <?php //echo $hotelLangNew['descrizione_ospiti']; ?>
-                                                <div></div>
+                                <?php foreach ($view_model->languages->list_all() as &$language) { ?>
+                                    <?php $filter = function ($f) use ($language) { return $f->shortcode_lingua == $language['shortcode_lingua']; }; ?>
+                                    <?php $results = array_filter($view_model->hotel_translations, $filter); ?>
+                                    <?php $hotel_translation = array_pop($results); ?>
+                                    <?php $is_selected = ($hotel_translation->shortcode_lingua ?? '') == $view_model->language['shortcode_lingua']; ?>
+                                    <div class="descrizione_ospiti"
+                                         id="descrizione_ospiti-<?php echo $language['shortcode_lingua']; ?>" <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
+                                                <textarea class="summernote summ-<?php echo $language['id']; ?>"
+                                                          name="descrizione_ospiti[<?php echo $language['abbreviazione']; ?>]"
+                                                          id="descrizione-ospiti-<?php echo $language['shortcode_lingua']; ?>">
+                                                    <?php echo $hotel_translation->descrizione_ospiti ?? ''; ?>
+                                                </textarea>
+                                    </div>
+                                <?php } ?>
+
+                            </div>
+                            <div class="input-group col-md-12">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><?php echo $view_model->translations->get('immagini_hotel'); ?></span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" multiple="multiple" class="custom-file-input"
+                                           id="immagini_form">
+                                    <label class="custom-file-label"><?php echo $view_model->translations->get('scegli_immagini'); ?></label>
+                                </div>
+                            </div>
+                            <div class="input-group col-md-12" id="preview-img-container">
+                                <div id="preview">
+                                    <?php
+                                    $immagini = array();
+                                    if ($view_model->user->level > 2)
+                                        $immagini = explode("|", $hotel->immagini_secondarie);
+
+
+                                    for ($i = 0; $i < sizeof($immagini) - 1; $i++) { ?>
+                                        <div class="img-form-preview" id="ifp-prw-<?php echo $i + 1; ?>"><span
+                                                    class="delete-preview" id="prw-<?php echo $i + 1; ?>"
+                                                    onclick="delPreview(<?php echo $i + 1; ?>)"><i
+                                                        class="fa fa-close"></i></span><img
+                                                    class="img-form-preview-item img-hotel"
+                                                    src="<?php echo $immagini[$i]; ?>" height="200px">
+                                            <div class="default-image-cont">
+                                                <div class="pt20"><input type="radio"
+                                                                         id="default-image" <?php if ($hotel->immagine_principale == $immagini[$i]) echo 'checked="checked" ';
+
+                                                    ?>
+                                                                         name="default-image"
+                                                                         class="default-image" <?php if ($hotel->immagine_principale == $i + 1) echo 'checked="checked" '; ?>
+                                                                         value="<?php echo $i + 1; ?>"><label>Immagine
+                                                        principale</label><br></div>
                                             </div>
                                         </div>
                                     <?php } ?>
 
-
                                 </div>
-                                <div class="input-group col-md-12">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><?php echo $view_model->translations->get('immagini_hotel'); ?></span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" multiple="multiple" class="custom-file-input"
-                                               id="immagini_form">
-                                        <label class="custom-file-label"><?php echo $view_model->translations->get('scegli_immagini'); ?></label>
-                                    </div>
-                                </div>
-                                <div class="input-group col-md-12" id="preview-img-container">
-                                    <div id="preview">
-                                        <?php
-                                        $immagini = array();
-                                        if ($view_model->user->level > 2)
-                                            $immagini = explode("|", $hotel->immagini_secondarie);
-
-
-                                        for ($i = 0; $i < sizeof($immagini) - 1; $i++) { ?>
-                                            <div class="img-form-preview" id="ifp-prw-<?php echo $i + 1; ?>"><span
-                                                        class="delete-preview" id="prw-<?php echo $i + 1; ?>"
-                                                        onclick="delPreview(<?php echo $i + 1; ?>)"><i
-                                                            class="fa fa-close"></i></span><img
-                                                        class="img-form-preview-item img-hotel"
-                                                        src="<?php echo $immagini[$i]; ?>" height="200px">
-                                                <div class="default-image-cont">
-                                                    <div class="pt20"><input type="radio"
-                                                                             id="default-image" <?php if ($hotel->immagine_principale == $immagini[$i]) echo 'checked="checked" ';
-
-                                                        ?>
-                                                                             name="default-image"
-                                                                             class="default-image" <?php if ($hotel->immagine_principale == $i + 1) echo 'checked="checked" '; ?>
-                                                                             value="<?php echo $i + 1; ?>"><label>Immagine
-                                                            principale</label><br></div>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-
-                                    </div>
-                                </div>
-
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-        <?php } ?>
+        </div>
 
         <div class="col-xl-12 col-lg-12">
             <div class="card">
