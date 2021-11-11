@@ -351,13 +351,19 @@ else
         <div class="header-content">
             <nav class="navbar navbar-expand">
                 <div class="collapse navbar-collapse justify-content-between">
+
                     <div class="header-left">
-                        <?php /* if () {
-                            if ($params['result'] == 1)
-                                echo '<div class="notification-message nm-success">' . $view_model->translations->get('modifiche_salvate') . '</div>';
-                            else
+                        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                            if (!empty($view_model->errors)) {
                                 echo '<div class="notification-message nm-error">' . $view_model->translations->get('errore_salvataggio') . '</div>';
-                        } */ ?>
+                                if ($view_model->user->level == 0) {
+                                    echo '<pre>' . join("\r\n", $view_model->errors) . '</pre>';
+                                }
+                            } else {
+                                echo '<div class="notification-message nm-success">' . $view_model->translations->get('modifiche_salvate') . '</div>';
+                            }
+                        }
+                        ?>
                     </div>
 
                     <ul class="navbar-nav header-right">

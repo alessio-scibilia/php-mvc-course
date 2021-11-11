@@ -89,6 +89,7 @@ class BackofficeHotelsEditController
             $view_model->hotel_translations = $hotel_translations;
             $view_model->services = $services;
             $view_model->menu_active_btn = 'hotels';
+            $view_model->errors = $params['errors'] ?? array();
 
             return new HtmlView($view_model);
         }
@@ -120,7 +121,8 @@ class BackofficeHotelsEditController
                     $n = count($params[$multiple]);
                 } else {
                     if ($n != count($params[$multiple])) {
-                        return new HttpRedirectView('/backoffice/hotels');
+                        $params['errors'][] = "Count of $multiple does not match";
+                        return $this->http_get($params);
                     }
                 }
             }
@@ -139,7 +141,8 @@ class BackofficeHotelsEditController
             );
             $hotel_translations = $this->hotel_repository->get_by_related_id($id);
             if (empty($hotel_translations)) {
-                return new HttpRedirectView('/backoffice/hotels');
+                $params['errors'][] = "No hotel translations found";
+                return $this->http_get($params);
             }
 
             foreach ($hotel_translations as &$hotel_translation) {
@@ -192,6 +195,7 @@ class BackofficeHotelsEditController
             }
         }
 
-        return new HttpRedirectView('/backoffice/hotels');
+        unset($params['errors']);
+        return $this->http_get($params);
     }
 }
