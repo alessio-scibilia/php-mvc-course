@@ -1,4 +1,4 @@
-<input type="hidden" id="hotel_id" value="<?php echo $view_model->user->id; ?>">
+<form action="/backoffice/hotels/<?php echo $view_model->profile->id; ?>/edit" method="POST" enctype="multipart/form-data">
 <div class="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
@@ -27,13 +27,13 @@
                                 <label><?php echo $view_model->translations->get('nome_hotel'); ?></label>
                                 <input type="text"
                                        name="nome"
-                                       value="<?php $view_model->profile->nome; ?>"
+                                       value="<?php echo $view_model->profile->nome; ?>"
                                        id="nome"
                                        class="form-control validate-hotel" placeholder="London Hotel">
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('email'); ?></label>
-                                <input value="<?php $view_model->profile->email; ?>"
+                                <input value="<?php echo $view_model->profile->email; ?>"
                                        name="email"
                                        type="text"
                                        id="email"
@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                <input value="<?php $view_model->profile->sito_web; ?>"
+                                <input value="<?php echo $view_model->profile->sito_web; ?>"
                                        type="text"
                                        name="sito_web"
                                        class="form-control validate-hotel"
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('telefono'); ?></label>
-                                <input value="<?php $view_model->profile->telefono; ?>"
+                                <input value="<?php echo $view_model->profile->telefono; ?>"
                                        type="text"
                                        name="telefono"
                                        class="form-control validate-hotel"
@@ -59,7 +59,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                                <input value="<?php $view_model->profile->indirizzo; ?>"
+                                <input value="<?php echo $view_model->profile->indirizzo; ?>"
                                        type="text"
                                        name="indirizzo"
                                        class="form-control validate-hotel"
@@ -79,7 +79,7 @@
                                 <label><?php echo $view_model->translations->get('latitudine'); ?></label>
                                 <input type="text"
                                        name="latitudine"
-                                       value="<?php $view_model->profile->latitudine; ?>"
+                                       value="<?php echo $view_model->profile->latitudine; ?>"
                                        id="latitudine"
                                        class="form-control" placeholder="33,40393">
                             </div>
@@ -87,7 +87,7 @@
                                 <label><?php echo $view_model->translations->get('longitudine'); ?></label>
                                 <input type="text"
                                        name="longitudine"
-                                       value="<?php $view_model->profile->longitudine; ?>"
+                                       value="<?php echo $view_model->profile->longitudine; ?>"
                                        id="longitudine"
                                        class="form-control" placeholder="8.343445">
                             </div>
@@ -134,7 +134,7 @@
                             <div class="input-group col-md-12" id="preview-img-container">
                                 <div id="preview">
                                     <?php
-                                    $immagini = explode("|", $hotel->immagini_secondarie);
+                                    $immagini = explode("|", $view_model->profile->immagini_secondarie);
 
                                     for ($i = 0; $i < sizeof($immagini) - 1; $i++) { ?>
                                         <div class="img-form-preview" id="ifp-prw-<?php echo $i + 1; ?>"><span
@@ -147,7 +147,7 @@
                                                 <div class="pt20">
                                                     <input type="radio"
                                                            id="default-image"
-                                                           <?php if ($hotel->immagine_principale == $immagini[$i]) echo 'checked="checked" '; ?>
+                                                           <?php if ($view_model->profile->immagine_principale == $immagini[$i]) echo 'checked="checked" '; ?>
                                                            name="default-image"
                                                            class="default-image"
                                                            value="<?php echo $i + 1; ?>">
@@ -187,13 +187,13 @@
                         $r = 1;
                         $c = 0;
                         $hotelLang = $view_model->services[0][0];
+                        $size = sizeof($view_model->services[0]);
                         for ($r = 1;
-                             $r <= sizeof($view_model->services[0]);
+                             $r <= $size;
                              $r++) {
                             $c = $r - 1;
                             ?>
-                            <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>"
-                                 id="fsc-servizio-<?php echo $r; ?>">
+                            <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>" id="fsc-servizio-<?php echo $r; ?>">
                                 <div class="form-row">
                                     <div class="col-12">
                                         <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5></div>
@@ -281,9 +281,9 @@
                                                 </div>
                                             </div>
 
-
                                         </div>
                                     </div>
+
                                     <div class="form-group col-md-12">
                                         <label><?php echo $view_model->translations->get('orari'); ?></label>
                                         <br/>
@@ -361,355 +361,6 @@
                                 </div>
                             </div>
                         <?php } ?>
-
-                        <?php if ($r == 1) {
-                            ?>
-                            <div class="form-service-container fsc-1" id="fsc-servizio-1">
-                                <div class="form-row">
-                                    <div class="col-12">
-                                        <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5></div>
-                                    <div class="form-group col-md-4">
-                                        <label><?php echo $view_model->translations->get('nome_servizio'); ?>
-                                            :<span> | <i
-                                                        class="fa fa-language"></i> Lingua</span></label>
-                                        <select id="select-nome-servizi" data-form-index="1">
-                                            <?php
-                                            $lingue = $view_model->languages->list_all();
-                                            for ($i = 0;
-                                                 $i < sizeof($lingue);
-                                                 $i++) {
-                                                ?>
-                                                <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <?php
-                                        for ($i = 0;
-                                             $i < sizeof($lingue);
-                                             $i++) {
-                                            ?>
-                                            <input type="text"
-                                                   class="form-control nome_hotel validate-hotel nome_servizi"
-                                                   id="nome_servizio-<?php echo $lingue[$i]['shortcode_lingua']; ?>-1" <?php if ($i > 0) echo 'style="display:none;"'; ?>
-                                                   placeholder="Es: Check in">
-                                        <?php } ?>
-                                    </div>
-                                    <div class="form-group col-md-5">
-                                        <label><?php echo $view_model->translations->get('descrizione'); ?><span> | <i
-                                                        class="fa fa-language"></i> Lingua</span></label>
-                                        <select id="select-language-servizi" data-form-index="1">
-                                            <?php
-                                            for ($i = 0;
-                                                 $i < sizeof($lingue);
-                                                 $i++) {
-                                                ?>
-                                                <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <?php
-                                        for ($i = 0;
-                                             $i < sizeof($lingue);
-                                             $i++) {
-                                            ?>
-                                            <textarea id="descrizione-<?php echo $lingue[$i]['shortcode_lingua']; ?>-1"
-                                                      class="form-control descrizione_servizi validate-hotel" <?php if ($i > 0) echo 'style="display:none;"'; ?>></textarea>
-                                        <?php } ?>
-                                    </div>
-
-                                    <div class="form-group col-md-3">
-                                        <label><?php echo $view_model->translations->get('immagine_servizio'); ?></label>
-                                        <input type="file" class="form-control immagine_servizio validate-hotel"
-                                               id="immagine_servizio-1">
-                                        <div class="input-group col-md-12" id="preview-img-container">
-                                            <div id="preview-immagine_servizio-1"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <label><?php echo $view_model->translations->get('orari'); ?></label>
-                                        <br/>
-                                        <div class="time-container" style="display: inline-block;">
-
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('lunedi'); ?>
-                                                    <span> | <input
-                                                                type="checkbox" class="orario-continuato" value="1"
-                                                                id="orario-continuato-1-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-lun-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-lun-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-lun-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-lun-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="time-container" style="display: inline-block;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('martedi'); ?>
-                                                    <span> | <input
-                                                                type="checkbox" class="orario-continuato" value="1"
-                                                                id="orario-continuato-2-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-mar-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-mar-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-mar-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-mar-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="time-container" style="display: inline-block;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('mercoledi'); ?>
-                                                    <span> | <input type="checkbox" class="orario-continuato" value="1"
-                                                                    id="orario-continuato-3-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-mer-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-mer-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-mer-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-mer-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="time-container" style="display: inline-block;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('giovedi'); ?>
-                                                    <span> | <input
-                                                                type="checkbox" class="orario-continuato" value="1"
-                                                                id="orario-continuato-4-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-gio-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-gio-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-gio-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-gio-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="time-container" style="display: inline-block;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('venerdi'); ?>
-                                                    <span> | <input
-                                                                type="checkbox" class="orario-continuato" value="1"
-                                                                id="orario-continuato-5-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-ven-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-ven-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-ven-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-ven-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="time-container" style="display: inline-block;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('sabato'); ?>
-                                                    <span> | <input
-                                                                type="checkbox" class="orario-continuato" value="1"
-                                                                id="orario-continuato-6-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-sab-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-sab-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-sab-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-sab-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="time-container" style="display: inline-block;">
-                                            <div class="d-flex align-items-center justify-content-between">
-                                                <div class="time-title"><?php echo $view_model->translations->get('domenica'); ?>
-                                                    <span> | <input
-                                                                type="checkbox" class="orario-continuato" value="1"
-                                                                id="orario-continuato-7-1"> Orario continuato </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="0-dom-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="1-dom-1">
-                                                            </span>
-                                                </div>
-                                                <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $view_model->translations->get('dalle'); ?> <input
-                                                                        type="time"
-                                                                        class="validate-hotel"
-                                                                        id="2-dom-1">
-                                                            </span>
-                                                    <span class="time-span">
-                                                                <?php echo $view_model->translations->get('alle'); ?> <input
-                                                                type="time"
-                                                                class="validate-hotel"
-                                                                id="3-dom-1">
-                                                            </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label><?php echo $view_model->translations->get('abilitato'); ?></label>
-                                        <select class="form-control is-abilitato" id="abilitato-1">
-                                            <option value="1"><?php echo $view_model->translations->get('si'); ?></option>
-                                            <option value="0"><?php echo $view_model->translations->get('no'); ?></option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <input type="button" class="btn btn-danger annulla-servizio" id="servizio-1"
-                                               value="Elimina servizio">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <hr/>
-                                        <input type="button" class="btn btn-success save-servizio"
-                                               value="Aggiungi un altro servizio">
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
                     </div>
                 </div>
             </div>
@@ -717,7 +368,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="form-group col-md-12">
                 <div align="left">
-                    <input type="button" class="btn btn-success"
+                    <input type="submit" class="btn btn-success validate-it"
                            value="<?php echo $view_model->translations->get('salva'); ?>">
                 </div>
                 <hr/>
@@ -726,3 +377,4 @@
         </div>
     </div>
 </div>
+</form>
