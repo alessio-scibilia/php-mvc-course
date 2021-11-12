@@ -36,8 +36,43 @@ class BackofficeTranslationsController
 
         $view_model = new BackOfficeViewModel('backoffice.translations.list', $title, $languages, $translations);
         $view_model->user = $user;
+        $view_model->errors = $params['errors'] ?? array();
         $view_model->menu_active_btn = 'translations';
 
         return new HtmlView($view_model);
+    }
+
+    public function http_post(array &$params): IView
+    {
+        $user = SessionManager::get_user();
+        if (User::is_empty($user)) {
+            return new HttpRedirectView('/backoffice');
+        }
+
+        $mandatories = array('translations', 'valore');
+        foreach ($mandatories as $mandatory)
+        {
+            if (!isset($params[$mandatory]))
+            {
+                $params['errors'][] = "Missing mandatory param '$mandatory'";
+            }
+        }
+
+        if (empty($params['errors']))
+        {
+            $id = intval($params['translations']);
+            $row = $this->translation_repository->get_by_id($id);
+            if (empty($row))
+            {
+                $params['errors'][] = "Missing translation whose id = $id";
+            }
+            else
+            {
+                $row['valore'] = $params['valore'];
+                $this->translation_repository->update($row);
+            }
+        }
+
+        return $this->http_get($params);
     }
 }

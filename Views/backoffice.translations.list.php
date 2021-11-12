@@ -50,7 +50,7 @@
                                     </td>
                                     <td>
                                         <form action="/backoffice/translations/<?php echo $item['id']; ?>" method="POST">
-                                            <input type="hidden" name="etichetta" value="" />
+                                            <input type="hidden" name="valore" value="" />
                                             <button type="button" class="btn btn-primary shadow btn-xs sharp mr-1" data-target="<?php echo $item['etichetta']; ?>" onclick="onClickForEdit(this)">
                                                 <i class="fa fa-pencil"></i>
                                             </button>
