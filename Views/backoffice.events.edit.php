@@ -72,8 +72,8 @@
                                             <input type="checkbox" name="recupera_struttura" id="recupera"
                                                    value="1" <?php if ($event->recupera_struttura == 1) echo 'checked="checked"'; ?>> <?php echo $view_model->translations->get('recupera_da_struttura'); ?>
                                         </div>
-                                        <div class="row"
-                                             id="dati_struttura_evento" <?php if ($event->recupera_struttura == 1) echo 'style="display:none;"'; ?>>
+
+                                        <div class="row" id="dati_struttura_evento" <?php if ($event->recupera_struttura == 1) echo 'style="display:none;"'; ?>>
                                             <div class="form-group col-md-6">
                                                 <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
                                                 <input type="text" id="nome_struttura" name="nome_struttura"
@@ -102,8 +102,8 @@
                                                        placeholder="+393386854971"
                                                        value="<?php echo $event->telefono; ?>">
                                             </div>
-                                            <?php $model = $event; include 'Views/backoffice.geolocator.php'; ?>
 
+                                            <?php $model = $event; include 'Views/backoffice.geolocator.php'; ?>
                                         </div>
 
                                     </div>
@@ -200,33 +200,12 @@
                                         </div>
 
                                         <div id="rec-conv" class="form-group col-md-12">
-
-                                            <label><?php echo $view_model->translations->get('descrizione_ospiti'); ?>
-                                                <span> | <i
-                                                            class="fa fa-language"></i> Lingua</span></label>
-                                            <select id="select-language">
-                                                <?php
-                                                for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                    ?>
-                                                    <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                                <?php } ?>
-                                            </select>
-
-                                            <?php foreach ($view_model->languages->list_all() as &$language) { ?>
-                                                <?php $filter = function ($f) use ($language) { return $f->shortcode_lingua == $language['shortcode_lingua']; }; ?>
-                                                <?php $results = array_filter($view_model->all_languages_facility_events, $filter); ?>
-                                                <?php $facility_event = array_pop($results); ?>
-                                                <?php $is_selected = ($facility_event->shortcode_lingua ?? '') == $view_model->language['shortcode_lingua']; ?>
-                                                <div class="descrizione_ospiti"
-                                                     id="descrizione_ospiti-<?php echo $language['shortcode_lingua']; ?>" <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
-                                                    <textarea class="summernote summ-<?php echo $language['id']; ?>"
-                                                              name="descrizione_ospiti[<?php echo $language['abbreviazione']; ?>]"
-                                                              id="descrizione-ospiti-<?php echo $language['shortcode_lingua']; ?>">
-                                                        <?php echo $facility_event->testo_convenzione ?? ''; ?>
-                                                    </textarea>
-                                                </div>
-                                            <?php } ?>
-
+                                            <?php
+                                                $label = 'descrizione_ospiti';
+                                                $field = 'testo_convenzione';
+                                                $items = $view_model->all_languages_facility_events;
+                                                include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -240,33 +219,12 @@
                                         </div>
 
                                         <div id="rec-conv" class="form-group col-md-12">
-
-                                            <label><?php echo $view_model->translations->get('descrizione_ospiti'); ?>
-                                                <span> | <i
-                                                            class="fa fa-language"></i> Lingua</span></label>
-                                            <select id="select-language">
-                                                <?php
-                                                for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                    ?>
-                                                    <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                                <?php } ?>
-                                            </select>
-
-                                            <?php foreach ($view_model->languages->list_all() as &$language) { ?>
-                                                <?php $filter = function ($f) use ($language) { return $f->shortcode_lingua == $language['shortcode_lingua']; }; ?>
-                                                <?php $results = array_filter($view_model->all_languages_facility_events, $filter); ?>
-                                                <?php $facility_event = array_pop($results); ?>
-                                                <?php $is_selected = ($facility_event->shortcode_lingua ?? '') == $view_model->language['shortcode_lingua']; ?>
-                                                <div class="descrizione_ospiti"
-                                                     id="descrizione_ospiti-<?php echo $language['shortcode_lingua']; ?>" <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
-                                                    <textarea class="summernote summ-<?php echo $language['id']; ?>"
-                                                              name="descrizione_ospiti[<?php echo $language['abbreviazione']; ?>]"
-                                                              id="descrizione-ospiti-<?php echo $language['shortcode_lingua']; ?>">
-                                                        <?php echo $facility_event->testo_convenzione ?? ''; ?>
-                                                    </textarea>
-                                                </div>
-                                            <?php } ?>
-
+                                            <?php
+                                            $label = 'descrizione_ospiti';
+                                            $field = 'testo_convenzione';
+                                            $items = $view_model->all_languages_facility_events;
+                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
