@@ -49,10 +49,6 @@ class BackofficeGuestUpdateController
 
             $result = $this->guest_repository->update($row);
 
-            if ($result) {
-                $user = new User($row);
-                SessionManager::set_user($user);
-            }
 
             return new HttpRedirectView('/backoffice/guests/' . $id . '/edit');
 
