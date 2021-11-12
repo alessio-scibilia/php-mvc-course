@@ -98,6 +98,30 @@
                 $(this).attr("name", next);
             });
 
+            // class and id end with /-\d+$/
+            $last.find("[id]").each(function() {
+                let id = $(this).attr("id");
+                let regex = /^(.+)(-\d+)$/;
+                let replacer = `$1-${items_next}`;
+                let next = id.replace(regex, replacer);
+                $(this).attr("id", next);
+            });
+            $last.find("[class]").filter(function() {
+                let classes = $(this).attr("class").split(' ');
+                let regex = /^([^-]{4,}-)+\d+$/;
+                let matches = classes.filter(function (c) { return c.match(regex); } );
+                return matches.length > 0;
+            })
+            .each(function() {
+                let classes = $(this).attr("class").split(' ');
+                let regex = /^(.+)(-\d+)$/;
+                let replacer = `$1-${items_next}`;
+                let new_classes = classes.map(function(c) { return c.replace(regex, replacer); });
+                let next = new_classes.join(' ');
+                $(this).attr("class", next);
+            });
+
+
             <?php
             for($i = 0;$i < sizeof($lingue);$i++) {
             ?>
