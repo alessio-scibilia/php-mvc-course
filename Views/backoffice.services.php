@@ -135,23 +135,6 @@
             </div>
             <div class="form-row">
 
-                <div class="form-group col-md-3">
-                    <div class="form-check">
-                        <input type="hidden"
-                               name="servizio_abilitato[<?php echo $r; ?>]"
-                               value="0">
-                        <input class="form-check-input"
-                               type="checkbox"
-                               name="servizio_abilitato[<?php echo $r; ?>]"
-                               value="1"
-                               id="servizio_abilitato[<?php echo $r; ?>]"
-                            <?php if ($principal->abilitato == 1) echo 'checked'; ?>>
-                        <label class="form-check-label"
-                               for="servizio_abilitato[<?php echo $r; ?>]">
-                            <?php echo $view_model->translations->get('abilitato'); ?>
-                        </label>
-                    </div>
-                </div>
                 <?php
                     $label = 'abilitato';
                     $field = "servizio_abilitato[$r]";
