@@ -287,7 +287,7 @@ jQuery(".validate-it").click(function (e) {
         }
 
         if (jQuery("#password").length) {
-            if (password.length < 8) {
+            if (password.length < 8 && jQuery("#conferma_password-type-2").length == 0) {
                 error_message = "- La password deve contenere almeno 8 caratteri";
                 is_error = true;
 
