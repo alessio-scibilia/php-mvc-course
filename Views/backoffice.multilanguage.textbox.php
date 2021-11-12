@@ -1,6 +1,7 @@
 <?php
     $type = $type ?? 'richtextbox';
     $label = $label ?? 'descrizione';
+    $placeholder = $placeholder ?? '';
     $field = $field ?? $label;
     $field_prefix = $field_prefix ?? $field;
     $class_name = str_replace('[', '-', str_replace(']', '', $field_prefix));
@@ -43,7 +44,7 @@
                        value="<?php echo $model->{$field} ?? ''; ?>"
                        class="form-control validate-input"
                        name="<?php echo $field_prefix; ?>[<?php echo $language['abbreviazione']; ?>]"
-                       placeholder="Es: Check in">
+                       placeholder="<?php echo $placeholder; ?>">
         <?php
                 break;
 
