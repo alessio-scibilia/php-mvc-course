@@ -50,10 +50,14 @@
                                        class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside">
                                         <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a href="/backoffice/translations/language/<?php echo $lista_lingue[$i]['id'] ?>/delete"
-                                       class="btn btn-danger shadow btn-xs sharp view-action">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                                    <form action="/backoffice/translations/language/<?php echo $lista_lingue[$i]['id']; ?>/delete"
+                                          method="POST" enctype="multipart/form-data">
+                                        <a href="javascript:void()"
+                                           class="btn btn-danger shadow btn-xs sharp"
+                                           onclick="this.closest('form').submit();return false;">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </form>
                                 </td>
                                 <?php
 

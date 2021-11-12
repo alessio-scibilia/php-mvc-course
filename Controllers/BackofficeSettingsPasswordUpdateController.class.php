@@ -35,12 +35,12 @@ class BackofficeSettingsPasswordUpdateController
 
             if ($user->level <= 2) {
                 $user = $this->user_repository->get_by_id($id);
-                $user['password'] = md5($params['password'];
+                $user['password'] = md5($params['password']);
                 $result = $this->user_repository->update($user);
 
             } else {
                 $user = $this->hotel_repository->get_by_email_password($user->email, $user->password);
-                $user['password'] = md5($params['password'];
+                $user['password'] = md5($params['password']);
                 $result = $this->hotel_repository->update($user);
             }
 
