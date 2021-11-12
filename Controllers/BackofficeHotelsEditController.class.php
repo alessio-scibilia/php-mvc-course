@@ -65,18 +65,20 @@ class BackofficeHotelsEditController
                 'sabato' => $default_hours,
                 'domenica' => $default_hours,
             );
-            foreach ($lingue as $lingua)
+            $rows = $this->service_repository->get_services_by_hotel($id);
+            if (empty($rows))
             {
-                $rows = $this->service_repository->get_services_by_hotel($id, $lingua['shortcode_lingua']);
-                if (empty($rows))
-                {
-                    $services[] = array(new Service($default_service));
-                }
-                else
-                {
-                    $services[] = Service::services($rows);
-                }
+                $rows = array
+                (
+                    array
+                    (
+                        'posizione' => 1,
+                        'shortcode_lingua' => $id_lingua
+                    )
+                );
             }
+            $instances = $languages->list_all();
+            $services = Service::grouped_services($rows, $instances);
 
             $rows = $this->hotel_repository->get_translations($profile->related_id);
             $hotel_translations = Hotel::hotels($rows);

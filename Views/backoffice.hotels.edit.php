@@ -92,38 +92,15 @@
                                            id="longitudine"
                                            class="form-control" placeholder="8.343445">
                                 </div>
+
                                 <div class="form-group col-md-12">
-
-                                    <label><?php echo $view_model->translations->get('descrizione_ospiti'); ?>
-                                        <span> | <i
-                                                    class="fa fa-language"></i> Lingua</span></label>
-                                    <select id="select-language">
-                                        <?php
-                                        $lingue = $view_model->languages->list_all();
-                                        for ($i = 0; $i < sizeof($lingue); $i++) {
-                                            ?>
-                                            <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                        <?php } ?>
-                                    </select>
-
-                                    <?php foreach ($view_model->languages->list_all() as &$language) { ?>
-                                        <?php $filter = function ($f) use ($language) {
-                                            return $f->shortcode_lingua == $language['shortcode_lingua'];
-                                        }; ?>
-                                        <?php $results = array_filter($view_model->hotel_translations, $filter); ?>
-                                        <?php $hotel_translation = array_pop($results); ?>
-                                        <?php $is_selected = ($hotel_translation->shortcode_lingua ?? '') == $view_model->language['shortcode_lingua']; ?>
-                                        <div class="descrizione_ospiti"
-                                             id="descrizione_ospiti-<?php echo $language['shortcode_lingua']; ?>" <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
-                                                <textarea class="summernote summ-<?php echo $language['id']; ?>"
-                                                          name="descrizione_ospiti[<?php echo $language['abbreviazione']; ?>]"
-                                                          id="descrizione-ospiti-<?php echo $language['shortcode_lingua']; ?>">
-                                                    <?php echo $hotel_translation->descrizione_ospiti ?? ''; ?>
-                                                </textarea>
-                                        </div>
-                                    <?php } ?>
-
+                                    <?php
+                                        $label = 'descrizione_ospiti';
+                                        $items = $view_model->hotel_translations;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                    ?>
                                 </div>
+
                                 <div class="input-group col-md-12">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><?php echo $view_model->translations->get('immagini_hotel'); ?></span>
@@ -181,21 +158,19 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <input type="hidden" id="num_services"
-                                           value="<?php echo sizeof($view_model->services[0]); ?>">
+                                           value="<?php echo sizeof($view_model->services); ?>">
                                     <a href="javascript:void()" class="open-create-service save-servizio btn btn-primary"><i
                                                 class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_servizio'); ?>
                                     </a>
                                 </div>
                             </div>
                             <?php
-                            $r = 1;
-                            $c = 0;
-                            $hotelLang = $view_model->services[0][0];
-                            $size = sizeof($view_model->services[0]);
-                            for ($r = 1;
-                                 $r <= $size;
-                                 $r++) {
+                            $r = 0;
+                            foreach ($view_model->services as &$service) {
+                                $r++;
                                 $c = $r - 1;
+                                //$group = array_values($service);
+                                $principal = $service[$view_model->language['shortcode_lingua']];
                                 ?>
                                 <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>"
                                      id="fsc-servizio-<?php echo $r; ?>">
@@ -205,68 +180,26 @@
                                         </div>
 
                                         <div class="form-group col-md-4">
-                                            <label><?php echo $view_model->translations->get('nome_servizio'); ?>
-                                                :<span> | <i
-                                                            class="fa fa-language"></i> Lingua</span></label>
-                                            <select id="select-nome-servizi-<?php echo $r; ?>">
-                                                <?php
-                                                $lingue = $view_model->languages->list_all();
-                                                for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                    ?>
-                                                    <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                                <?php } ?>
-                                            </select>
                                             <?php
-                                            for ($i = 0;
-                                                 $i < sizeof($lingue);
-                                                 $i++) {
-                                                //$hotelLang = getDatiServizi($dbh, $this_hotel['id'], $lingue[$i]['shortcode_lingua']);
-                                                $k = 0;
-                                                foreach ($view_model->services[$i] as $servizio) {
-                                                    if ($k == $c) {
-                                                        ?>
-                                                        <input type="text"
-                                                               value="<?php echo $servizio->titolo; ?>"
-                                                               class="form-control nome_hotel validate-hotel nome_servizi nome-servizi-<?php echo $r; ?>"
-                                                               name="nome_servizio[<?php echo $r; ?>][<?php echo $lingue[$i]['abbreviazione']; ?>]"
-                                                               id="nome_servizio-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
-                                                            <?php if ($i > 0) echo 'style="display:none;"'; ?>
-                                                               placeholder="Es: Check in">
-                                                        <?php
-                                                    }
-                                                    $k++;
-                                                }
-                                            } ?>
+                                                $type = 'input';
+                                                $label = 'nome_servizio';
+                                                $field = 'titolo';
+                                                $field_prefix = "nome_servizio[$r]";
+                                                //$items = array_merge(...$group);
+                                                $items = array_values($service);
+                                                include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
                                         </div>
 
                                         <div class="form-group col-md-5">
-                                            <label><?php echo $view_model->translations->get('descrizione'); ?><span> | <i
-                                                            class="fa fa-language"></i> Lingua</span></label>
-                                            <select id="select-language-servizi" data-form-index="<?php echo $r; ?>">
-                                                <?php
-                                                for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                    ?>
-                                                    <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                            <?php for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                //$hotelLang = getDatiServizi($dbh, $this_hotel['id'], $lingue[$i]['shortcode_lingua']);
-                                                $k = 0;
-                                                foreach ($view_model->services[$i] as $servizio) {
-                                                    if ($k == $c) {
-                                                        ?>
-                                                        <textarea
-                                                                name="descrizione[<?php echo $r; ?>][<?php echo $lingue[$i]['abbreviazione']; ?>]"
-                                                                id="descrizione-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
-                                                                class="form-control descrizione_servizi descrizione_servizi-<?php echo $r; ?> validate-hotel"
-                                                            <?php if ($i > 0) echo 'style="display:none;"'; ?>>
-                                                        <?php echo $servizio->descrizione ?? ''; ?>
-                                                    </textarea>
-                                                        <?php
-                                                    }
-                                                    $k++;
-                                                }
-                                            } ?>
+                                            <?php
+                                                $label = 'descrizione';
+                                                $field = 'descrizione';
+                                                $field_prefix = "descrizione[$r]";
+                                                //$items = array_merge(...$group);
+                                                $items = array_values($service);
+                                                include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
                                         </div>
 
                                         <div class="form-group col-md-3">
@@ -287,7 +220,7 @@
                                                                 onclick="delPreviewServizi()"><i
                                                                     class="fa fa-close"></i></span><img
                                                                     class="img-form-preview-item img-servizio"
-                                                                    src="<?php echo $hotelLang->immagine; ?>"
+                                                                    src="<?php echo $principal->immagine; ?>"
                                                                     data-numero-servizio="<?php echo $r; ?>"
                                                                     height="200px">
                                                             <div class="default-image-cont"></div>
@@ -303,13 +236,13 @@
                                             <br/>
                                             <?php
 
-                                            $orari['lunedi'] = explode("|", $hotelLang->lunedi);
-                                            $orari['martedi'] = explode("|", $hotelLang->martedi);
-                                            $orari['mercoledi'] = explode("|", $hotelLang->mercoledi);
-                                            $orari['giovedi'] = explode("|", $hotelLang->giovedi);
-                                            $orari['venerdi'] = explode("|", $hotelLang->venerdi);
-                                            $orari['sabato'] = explode("|", $hotelLang->sabato);
-                                            $orari['domenica'] = explode("|", $hotelLang->domenica);
+                                            $orari['lunedi'] = explode("|", $principal->lunedi);
+                                            $orari['martedi'] = explode("|", $principal->martedi);
+                                            $orari['mercoledi'] = explode("|", $principal->mercoledi);
+                                            $orari['giovedi'] = explode("|", $principal->giovedi);
+                                            $orari['venerdi'] = explode("|", $principal->venerdi);
+                                            $orari['sabato'] = explode("|", $principal->sabato);
+                                            $orari['domenica'] = explode("|", $principal->domenica);
 
                                             ?>
 
@@ -359,8 +292,8 @@
                                             <label><?php echo $view_model->translations->get('abilitato'); ?></label>
                                             <select name="servizio_abilitato[<?php echo $r; ?>]"
                                                     class="form-control is-abilitato" id="abilitato-<?php echo $r; ?>">
-                                                <option value="1" <?php if ($hotelLang->abilitato == 1) echo 'selected'; ?>><?php echo $view_model->translations->get('si'); ?></option>
-                                                <option value="0" <?php if ($hotelLang->abilitato == 0) echo 'selected'; ?>><?php echo $view_model->translations->get('no'); ?></option>
+                                                <option value="1" <?php if ($principal->abilitato == 1) echo 'selected'; ?>><?php echo $view_model->translations->get('si'); ?></option>
+                                                <option value="0" <?php if ($principal->abilitato == 0) echo 'selected'; ?>><?php echo $view_model->translations->get('no'); ?></option>
                                             </select>
                                         </div>
 

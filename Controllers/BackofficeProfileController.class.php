@@ -49,30 +49,23 @@ class BackofficeProfileController
                 return new HttpRedirectView('/backoffice');
             }
 
+            $profile = false;
+            $services = false;
+
             if ($user->level > 2) {
                 $rows = $this->hotel_repository->get_profile($id_lingua, $user->id);
                 $profile = Hotel::hotels($rows);
 
 
-                $servizi = array();
-                $i = 0;
-                $lingue = $this->language_repository->list_all();
-                foreach ($lingue as $lingua) {
-                    $rows = $this->service_repository->get_services_by_hotel($user->id, $lingua['shortcode_lingua']);
-                    $servizi[$i] = Service::services($rows);
-                    $i++;
-                }
-
-            } else {
-                $profile = false;
-                $servizi = false;
+                $rows = $this->service_repository->get_services_by_hotel($user->id);
+                $services = Service::grouped_services($rows, $languages->list_all());
             }
 
             //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.profile', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->profile = $profile;
-            $view_model->services = $servizi;
+            $view_model->services = $services;
             $view_model->menu_active_btn = 'profile';
 
             return new HtmlView($view_model);
