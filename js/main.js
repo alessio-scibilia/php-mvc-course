@@ -190,10 +190,6 @@ jQuery(".validate-it").click(function (e) {
             let img_hotel = jQuery(this).attr("src");
             $("#preview").append('<input type="hidden" name="img_hotel[]" class="img_hidden" value="' + img_hotel + '">');
         });
-    } else {
-        error_message = "- Inserire un' immagine";
-        is_error = true;
-        jQuery("#preview").after('<div class="error_message">' + error_message + '</div>');
     }
 
     if (jQuery(".img-servizio").length) {
@@ -300,11 +296,23 @@ jQuery(".validate-it").click(function (e) {
         }
 
         if (jQuery("#password").length) {
-            if (password != password1) {
-                error_message = "- Le due password non corrispondono";
-                is_error = true;
+            if (jQuery("#conferma_password-type-2").length == 0) {
+                if (password != password1) {
+                    error_message = "- Le due password non corrispondono";
+                    is_error = true;
 
-                jQuery("#conferma_password").after('<div class="error_message">' + error_message + '</div>');
+                    jQuery("#conferma_password").after('<div class="error_message">' + error_message + '</div>');
+                }
+            }
+        }
+
+        if (jQuery("#conferma_password-type-2").length) {
+            //Validazione password
+            let password_type_2 = jQuery('#conferma_password-type-2').val();
+            if (jQuery('#password').val() != password_type_2) {
+                error_message = "- Le password non corrispondono";
+                is_error = true;
+                jQuery("#conferma_password-type-2").after('<div class="error_message">' + error_message + '</div>');
             }
         }
     }
@@ -334,31 +342,29 @@ jQuery(".validate-it-small").click(function (e) {
     var is_error = false;
 
     if (jQuery("#password_small").length)
-        var password = $("#password").val();
+        var password = $("#password_small").val();
 
     if (jQuery("#password_small").length)
-        var password1 = $("#conferma_password").val();
+        var password1 = $("#conferma_password_small").val();
 
-    if (jQuery("#password").length) {
+    if (jQuery("#password_small").length) {
         if (password.length < 8) {
             error_message = "- La password deve contenere almeno 8 caratteri";
             is_error = true;
-
-            jQuery("#password").after('<div class="error_message">' + error_message + '</div>');
+            jQuery("#password_small").after('<div class="error_message">' + error_message + '</div>');
         }
     }
 
-    if (jQuery("#password").length) {
+    if (jQuery("#password_small").length) {
         if (password != password1) {
             error_message = "- Le due password non corrispondono";
             is_error = true;
-
-            jQuery("#conferma_password").after('<div class="error_message">' + error_message + '</div>');
+            jQuery("#conferma_password_small").after('<div class="error_message">' + error_message + '</div>');
         }
     }
 
     if (is_error == false) {
-        alert();
+        console.log('validation PASSED', e);
     } else {
         $(".notification-message").html("Alcuni campi non sono compilati in modo corretto");
         $(".notification-message").removeClass("nm-error");
