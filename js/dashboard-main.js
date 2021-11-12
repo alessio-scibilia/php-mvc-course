@@ -296,14 +296,11 @@ jQuery(document).on("click", "#recupera_convenzione", function () {
 });
 
 jQuery(document).on("click", ".orario-continuato", function () {
+    $targets = $(this).parent().parent().next().next().children().children();
     if ($(this).is(":checked")) {
-        $(this).parent().parent().next().next().children().children().attr("disabled", "disabled");
-    } else
-        $(this).parent().parent().next().next().children().children().removeAttr("disabled");
+        $targets.val('');
+        $targets.prop("disabled", true);
+    } else {
+        $targets.prop("disabled", false);
+    }
 });
-
-
-
-
-
-

@@ -86,7 +86,8 @@
             $('html,body').animate({
                 scrollTop: offset
             }, 'slow');
-    
+
+            // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
             $last.attr("class", " form-service-container fsc-" + items_next);
             $last.attr("id", "fsc-servizio-" + items_next);
 
@@ -121,7 +122,7 @@
                 $(this).attr("class", next);
             });
 
-
+            /**
             <?php
             for($i = 0;$i < sizeof($lingue);$i++) {
             ?>
@@ -163,6 +164,8 @@
                     $last.find(prev_id).attr("id", next_id);
                 }
             }
+
+             **/
         }
     });
 

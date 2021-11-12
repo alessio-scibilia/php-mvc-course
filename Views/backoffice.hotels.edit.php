@@ -208,7 +208,7 @@
                                             <label><?php echo $view_model->translations->get('nome_servizio'); ?>
                                                 :<span> | <i
                                                             class="fa fa-language"></i> Lingua</span></label>
-                                            <select id="select-nome-servizi" data-form-index="<?php echo $r; ?>">
+                                            <select id="select-nome-servizi-<?php echo $r; ?>">
                                                 <?php
                                                 $lingue = $view_model->languages->list_all();
                                                 for ($i = 0; $i < sizeof($lingue); $i++) {
