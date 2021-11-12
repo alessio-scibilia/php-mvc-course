@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/padding.css">
     <link rel="stylesheet" href="/css/margin.css">
     <link rel="stylesheet" href="/css/backoffice-main.css">
+    <link rel="stylesheet" href="/css/multilanguage.textbox.css">
 
     <link href="/vendor/summernote/summernote.css" rel="stylesheet">
     <link href="/css/bootstrap-select.min.css" rel="stylesheet">
