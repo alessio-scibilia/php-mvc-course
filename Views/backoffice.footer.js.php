@@ -17,5 +17,4 @@
 
 <?php include 'Views/backoffice.datatable.js.php'; ?>
 <?php include 'Views/backoffice.upload.images.js.php'; ?>
-
-
+<script src="/js/geolocator.js"></script>
