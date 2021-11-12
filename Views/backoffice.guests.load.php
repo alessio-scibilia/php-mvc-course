@@ -10,21 +10,22 @@
                     <h4 class="card-title"><?php echo $view_model->translations->get('seleziona_file'); ?></h4>
                 </div>
                 <div class="card-body">
-                    <div class="basic-form">
-                        <div class="form-group row">
-                            <div class="col-sm-9">
-                                <input type="file" class="form-control" id="file_ospiti">
+                    <form action="/backoffice/guests/upload?XDEBUG_SESSION_START" enctype="multipart/form-data"
+                          method="POST">
+                        <div class="basic-form">
+                            <div class="form-group row">
+                                <div class="col-sm-9">
+                                    <input type="file" name="file_ospiti" class="form-control" id="file_ospiti">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <input type="submit" class="btn btn-success"
+                                           value="<?php echo $view_model->translations->get('carica'); ?>">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-10">
-                                <a href="javascript:void()" class="btn btn-success" id="uploadGuestsDo"
-                                   data-success="<?php echo $view_model->translations->get('ospiti_caricati'); ?>"
-                                   data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                   data-function="uploadGuests"><?php echo $view_model->translations->get('carica'); ?></a>
-                            </div>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -40,11 +41,11 @@
                         <div class="form-group row">
                             <div class="col-sm-12">
                                 <div class="text-center">
-                                    <a download="modello_ospiti.csv" href="modelli/modello_ospiti.csv"
+                                    <a download="/samples/modello_ospiti.csv" href="/samples/modello_ospiti.csv"
                                        class="btn btn-primary" id="" data-function=""><i
                                                 class="fa fa-file-o"></i> <?php echo $view_model->translations->get('scarica_csv'); ?>
                                     </a><br/><br/>
-                                    <a download="modello_ospiti.xls" href="modelli/modello_ospiti.xls"
+                                    <a download="/samples/modello_ospiti.xls" href="/samples/modello_ospiti.xls"
                                        class="btn btn-primary" id="" data-function=""><i
                                                 class="fa fa-file-excel-o"></i> <?php echo $view_model->translations->get('scarica_excel'); ?>
                                     </a>
