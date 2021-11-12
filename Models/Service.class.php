@@ -82,10 +82,10 @@ class Service
         return $results;
     }
 
-
-    private static function create_prototype(int $position, array &$languages)
+    private static function create_samples(int $position, array &$languages)
     {
-        $prototype = array();
+        $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
+        $rows = array();
         foreach ($languages as &$language)
         {
             $row = array
@@ -93,7 +93,22 @@ class Service
                 'shortcode_lingua' => $language['shortcode_lingua'],
                 'posizione' => $position
             );
-            $prototype[$language['shortcode_lingua']] = new Service($row);
+            foreach ($weekdays as $weekday)
+            {
+                $row[$weekday] = '0|||||';
+            }
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+    private static function create_prototype(int $position, array &$languages): array
+    {
+        $prototype = array();
+        $rows = self::create_samples($position, $languages);
+        foreach ($rows as &$row)
+        {
+            $prototype[$row['shortcode_lingua']] = new Service($row);
         }
         return $prototype;
     }
@@ -101,6 +116,10 @@ class Service
     public static function grouped_services(array &$rows, array &$languages): array
     {
         $results = array();
+        if (empty($rows))
+        {
+            $rows = self::create_samples(1, $languages);
+        }
         foreach ($rows as &$row)
         {
             $position = intval($row['posizione']);

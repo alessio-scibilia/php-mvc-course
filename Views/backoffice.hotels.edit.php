@@ -1,4 +1,5 @@
-<form action="/backoffice/hotels/<?php echo $view_model->profile->id; ?>/edit" method="POST"
+<form action="/backoffice/hotels/<?php echo $view_model->profile->id; ?>/edit"
+      method="POST"
       enctype="multipart/form-data">
     <div class="container-fluid">
         <div class="row">
@@ -172,8 +173,8 @@
                                 //$group = array_values($service);
                                 $principal = $service[$view_model->language['shortcode_lingua']];
                                 ?>
-                                <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>"
-                                     id="fsc-servizio-<?php echo $r; ?>">
+                                <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>" id="fsc-servizio-<?php echo $r; ?>">
+                                    <input type="hidden" name="posizione[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
                                     <div class="form-row">
                                         <div class="col-12">
                                             <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5>
@@ -252,11 +253,11 @@
                                                 <div class="time-container" style="display: inline-block;">
                                                     <div class="d-flex align-items-center justify-content-between">
                                                         <div class="time-title"><?php echo $view_model->translations->get($weekday); ?>
-                                                            <span> | <input
+                                                            <span> | <input type="hidden" name="orario_continuato[<?php echo $r; ?>][<?php echo $weekday; ?>]" value="0" /><input
                                                                         type="checkbox"
                                                                         name="orario_continuato[<?php echo $r; ?>][<?php echo $weekday; ?>]"
                                                                         class="orario-continuato" <?php if ($orari[$weekday][0] == 1) echo 'checked="checked"'; ?>
-                                                                    value="1"> Orario continuato </span>
+                                                                        value="1"> Orario continuato </span>
                                                         </div>
                                                         <div class="input-time-container">
                                                             <?php for ($i = 0; $i < 2; $i++) { ?>
@@ -288,13 +289,23 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
+
                                         <div class="form-group col-md-3">
-                                            <label><?php echo $view_model->translations->get('abilitato'); ?></label>
-                                            <select name="servizio_abilitato[<?php echo $r; ?>]"
-                                                    class="form-control is-abilitato" id="abilitato-<?php echo $r; ?>">
-                                                <option value="1" <?php if ($principal->abilitato == 1) echo 'selected'; ?>><?php echo $view_model->translations->get('si'); ?></option>
-                                                <option value="0" <?php if ($principal->abilitato == 0) echo 'selected'; ?>><?php echo $view_model->translations->get('no'); ?></option>
-                                            </select>
+                                            <div class="form-check">
+                                                <input type="hidden"
+                                                       name="servizio_abilitato[<?php echo $r; ?>]"
+                                                       value="0">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       name="servizio_abilitato[<?php echo $r; ?>]"
+                                                       value="1"
+                                                       id="servizio_abilitato[<?php echo $r; ?>]"
+                                                    <?php if ($principal->abilitato == 1) echo 'checked'; ?>>
+                                                <label class="form-check-label"
+                                                       for="servizio_abilitato[<?php echo $r; ?>]">
+                                                    <?php echo $view_model->translations->get('abilitato'); ?>
+                                                </label>
+                                            </div>
                                         </div>
 
                                         <div class="form-group col-md-12">

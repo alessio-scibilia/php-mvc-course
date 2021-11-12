@@ -54,29 +54,7 @@ class BackofficeHotelsEditController
 
             $services = array();
             $lingue = $this->language_repository->list_all();
-            $default_hours = '0|||||';
-            $default_service = array
-            (
-                'lunedi' => $default_hours,
-                'martedi' => $default_hours,
-                'mercoledi' => $default_hours,
-                'giovedi' => $default_hours,
-                'venerdi' => $default_hours,
-                'sabato' => $default_hours,
-                'domenica' => $default_hours,
-            );
             $rows = $this->service_repository->get_services_by_hotel($id);
-            if (empty($rows))
-            {
-                $rows = array
-                (
-                    array
-                    (
-                        'posizione' => 1,
-                        'shortcode_lingua' => $id_lingua
-                    )
-                );
-            }
             $instances = $languages->list_all();
             $services = Service::grouped_services($rows, $instances);
 
@@ -179,12 +157,13 @@ class BackofficeHotelsEditController
                             'descrizione' => $params['descrizione'][$i][$abbreviation],
                             'immagine' => $params['img_servizio'][$i],
                             'abilitato' => $params['servizio_abilitato'][$i],
-                            'shortcode_lingua' => $language['shortcode_lingua']
+                            'shortcode_lingua' => $language['shortcode_lingua'],
+                            'posizione' => $params['posizione'][$i]
                         );
                         foreach ($weekdays as $weekday)
                         {
                             $orari = $params['giorno'][$i][$weekday];
-                            $flag = isset($params['orario_continuato'][$i][$weekday]) ? '1' : '0';
+                            $flag = $params['orario_continuato'][$i][$weekday];
                             $prefix = str_repeat('|', empty($orari) ? 0 : 1);
                             $content = join('|', $orari);
                             $suffix = str_repeat('|', 5 - count($orari));
@@ -195,9 +174,13 @@ class BackofficeHotelsEditController
                     }
                 }
             }
+            unset($params['errors']);
+        }
+        else
+        {
+            $params['errors'][] = "Missing mandatory field";
         }
 
-        unset($params['errors']);
         return $this->http_get($params);
     }
 }
