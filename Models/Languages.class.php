@@ -9,6 +9,8 @@ class Languages
     const EN = 2;
     const DE = 3;
 
+    public $abbreviazione;
+
     public $abilitata;
 
     protected $map = array();

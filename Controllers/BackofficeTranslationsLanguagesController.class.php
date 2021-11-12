@@ -26,7 +26,7 @@ class BackofficeTranslationsLanguagesController
             return new HttpRedirectView('/backoffice');
         }
 
-        $languages = new Languages($this->language_repository->list_all());
+        $languages = new Languages($this->language_repository->list_all_including_enabled());
         $id_lingua = SessionManager::get_lang();
         $languages->select($id_lingua);
 
