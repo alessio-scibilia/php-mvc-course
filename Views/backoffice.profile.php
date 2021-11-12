@@ -266,7 +266,7 @@
                                                          id="ifps-prws-immagine_servizio-<?php echo $r; ?>"><span
                                                                 class="delete-preview"
                                                                 id="prws-immagine_servizio-<?php echo $r; ?>"
-                                                                onclick="delPreviewServizi('immagine_servizio-<?php echo $r; ?>')"><i
+                                                                onclick="delPreviewServizi()"><i
                                                                     class="fa fa-close"></i></span><img
                                                                 class="img-form-preview-item"
                                                                 src="<?php echo $hotelLang->immagine; ?>"

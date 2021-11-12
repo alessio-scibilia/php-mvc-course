@@ -182,7 +182,7 @@
                                 <div class="form-group col-md-6">
                                     <input type="hidden" id="num_services"
                                            value="<?php echo sizeof($view_model->services[0]); ?>">
-                                    <a href="javascript:void()" class="open-create-service btn btn-primary"><i
+                                    <a href="javascript:void()" class="open-create-service save-servizio btn btn-primary"><i
                                                 class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_servizio'); ?>
                                     </a>
                                 </div>
@@ -284,7 +284,7 @@
                                                         <span
                                                                 class="delete-preview"
                                                                 id="prws-immagine_servizio-<?php echo $r; ?>"
-                                                                onclick="delPreviewServizi('immagine_servizio-<?php echo $r; ?>')"><i
+                                                                onclick="delPreviewServizi()"><i
                                                                     class="fa fa-close"></i></span><img
                                                                     class="img-form-preview-item img-servizio"
                                                                     src="<?php echo $hotelLang->immagine; ?>"

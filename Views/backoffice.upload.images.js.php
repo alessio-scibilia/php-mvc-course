@@ -55,7 +55,7 @@
     var $target = $(self).next().find(".preview_servizio");
     var id = $target.parent().parent().parent().prev().attr("id");
     $(self).html("");
-    $target.append('<div class="img-form-preview "><span class="delete-preview" id="prws-'+id+'" onclick="delPreviewServizi(\''+id+'\')"><i class="fa fa-close"></i></span><img class="img-form-preview-item" src="'+src+'" height="200px"></div>');
+    $target.append('<div class="img-form-preview "><span class="delete-preview" id="prws-'+id+'" onclick="delPreviewServizi()"><i class="fa fa-close"></i></span><img class="img-form-preview-item" src="'+src+'" height="200px"></div>');
 
 }
     $(".notification-message").fadeOut();

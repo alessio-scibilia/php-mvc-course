@@ -3,367 +3,324 @@
 <script>
 
     (function ($) {
-    "use strict"
-    //example 1
-    var table = $('#example').DataTable({
-    "language": {
-    "lengthMenu": "Display _MENU_ records per page",
-    "paginate": {
-    "first": "Primo",
-    "last": "Ulimo",
-    "next": "<?php echo $view_model->translations->get('successiva');?>",
-    "previous": "<?php echo $view_model->translations->get('precedente');?>"
-},
-    "zeroRecords": "Nessun risultato",
-    "info": "<?php echo $view_model->translations->get('pagina');?> _PAGE_ <?php echo $view_model->translations->get('di');?> _PAGES_",
-    "infoEmpty": "",
-    "emptyTable": "",
-    "thousands": ",",
-    "lengthMenu": "<?php echo $view_model->translations->get('mostra');?> _MENU_ <?php echo $view_model->translations->get('risultati_per_volta');?>",
-    "loadingRecords": "Caricamento...",
-    "processing": "Caricamento...",
-    "search": "<?php echo $view_model->translations->get('cerca');?>: ",
-    "zeroRecords": "Nessuna dato trovato",
-    "aria": {
-    "sortAscending": ": In ordine crescente",
-    "sortDescending": ": In ordine decrescente"
-}
-},
-    createdRow: function (row, data, index) {
-    $(row).addClass('selected')
-}
-});
+        "use strict"
+        //example 1
+        var table = $('#example').DataTable({
+            "language": {
+                "lengthMenu": "Display _MENU_ records per page",
+                "paginate": {
+                    "first": "Primo",
+                    "last": "Ulimo",
+                    "next": "<?php echo $view_model->translations->get('successiva');?>",
+                    "previous": "<?php echo $view_model->translations->get('precedente');?>"
+                },
+                "zeroRecords": "Nessun risultato",
+                "info": "<?php echo $view_model->translations->get('pagina');?> _PAGE_ <?php echo $view_model->translations->get('di');?> _PAGES_",
+                "infoEmpty": "",
+                "emptyTable": "",
+                "thousands": ",",
+                "lengthMenu": "<?php echo $view_model->translations->get('mostra');?> _MENU_ <?php echo $view_model->translations->get('risultati_per_volta');?>",
+                "loadingRecords": "Caricamento...",
+                "processing": "Caricamento...",
+                "search": "<?php echo $view_model->translations->get('cerca');?>: ",
+                "zeroRecords": "Nessuna dato trovato",
+                "aria": {
+                    "sortAscending": ": In ordine crescente",
+                    "sortDescending": ": In ordine decrescente"
+                }
+            },
+            createdRow: function (row, data, index) {
+                $(row).addClass('selected')
+            }
+        });
 
-    table.on('click', 'tbody tr', function () {
-    var $row = table.row(this).nodes().to$();
-    var hasClass = $row.hasClass('selected');
-    if (hasClass) {
-    $row.removeClass('selected')
-} else {
-    $row.addClass('selected')
-}
-});
+        table.on('click', 'tbody tr', function () {
+            var $row = table.row(this).nodes().to$();
+            var hasClass = $row.hasClass('selected');
+            if (hasClass) {
+                $row.removeClass('selected')
+            } else {
+                $row.addClass('selected')
+            }
+        });
 
-    table.rows().every(function () {
-    this.nodes().to$().removeClass('selected')
-});
-
-})(jQuery);
+        table.rows().every(function () {
+            this.nodes().to$().removeClass('selected')
+        });
+    })(jQuery);
 
     /* Estensione per leggere dati delle form */
+    /**
     jQuery.fn.extend({
-    serializeObject: function() {
-    if (this.serializeArray) {
-    return this.serializeArray().reduce(function (obj, item) {
-    obj[item.name] = item.value;
-    return obj;
-}, {});
-} else {
-    return {};
-}
-}
-});
+        serializeObject: function() {
+            if (this.serializeArray) {
+                return this.serializeArray().reduce(function (obj, item) {
+                    obj[item.name] = item.value;
+                    return obj;
+                }, {});
+            } else {
+                return {};
+            }
+        }
+    });
+    **/
 
     jQuery(document).on("click", ".save-servizio", function () {
-    var items_service = $(".form-service-container").length;
-    items_next = items_service + 1;
-    jQuery("#num_services").val(items_next);
-    var form = jQuery(".form-service-container").last().clone();
-    jQuery(".form-service-container").last().after(form);
-    if (items_service >= 0) {
-    jQuery(".form-service-container").last().find("#abilitato-" + items_service).attr("id", "abilitato-" + items_next);
-    jQuery(".form-service-container").last().find("#servizio-" + items_service).attr("id", "servizio-" + items_next);
-    jQuery(".form-service-container").last().find("#select-language-servizi").attr("data-form-index", items_next);
-    jQuery(".form-service-container").last().find("#annulla-servizio-" + items_service).attr("id", "annulla-servizio-" + items_next);
-    jQuery(".form-service-container").last().attr("id", "servizio-" + items_next);
+        var items_service = $(".form-service-container").length;
+        var items_next = items_service + 1;
+        jQuery("#num_services").val(items_next);
+        let $last = jQuery(".form-service-container").last();
+        var form = $last.clone();
+        $last.after(form);
+        if (items_service >= 0) {
+            $last.find("#abilitato-" + items_service).attr("id", "abilitato-" + items_next);
+            $last.find("#servizio-" + items_service).attr("id", "servizio-" + items_next);
+            $last.find("#select-language-servizi").attr("data-form-index", items_next);
+            $last.find("#annulla-servizio-" + items_service).attr("id", "annulla-servizio-" + items_next);
+            $last.attr("id", "servizio-" + items_next);
+        
+            jQuery(".form-service-container").fadeIn();
+        
+            var offset = jQuery("#servizio-" + items_next).offset().top;
+            offset = offset - 100;
+            $('html,body').animate({
+                scrollTop: offset
+            }, 'slow');
+    
+            $last.attr("class", " form-service-container fsc-" + items_next);
+            $last.attr("id", "fsc-servizio-" + items_next);
 
-    jQuery(".form-service-container").fadeIn();
+            $last.find("[name]").each(function() {
+                let name = $(this).attr("name");
+                let regex = /^([^\d]+)(\d+)(.*)$/;
+                let replacer = `$1${items_next}$3`;
+                let next = name.replace(regex, replacer);
+                $(this).attr("name", next);
+            });
 
-    var offset = jQuery("#servizio-" + items_next).offset().top;
-    offset = offset - 100;
-    $('html,body').animate({
-    scrollTop: offset
-}, 'slow');
+            <?php
+            for($i = 0;$i < sizeof($lingue);$i++) {
+            ?>
+            $last.find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
+            $last.find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
+        
+            $last.find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("nome-servizi-" + items_service);
+        
+            $last.find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("nome-servizi-" + items_next);
+        
+            $last.find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("descrizione_servizi-" + items_service);
+        
+            $last.find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("descrizione_servizi-" + items_next);
+        
+            $last.find("#select-nome-servizi").attr("data-form-index", items_next);
+            <?php } ?>
 
-    jQuery(".form-service-container").last().attr("class", " form-service-container fsc-" + items_next);
-    jQuery(".form-service-container").last().attr("id", "fsc-servizio-" + items_next);
-    <?php
-    for($i = 0;$i < sizeof($lingue);$i++) {
-    ?>
-    jQuery(".form-service-container").last().find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
-    jQuery(".form-service-container").last().find("[name='nome_servizio-" +items_service+ "-<?php echo $lingue[$i]['abbreviazione'];?>").attr("name", "nome_servizio-" + items_next + "<?php echo $lingue[$i]['abbreviazione'];?>-" );
-    jQuery(".form-service-container").last().find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
-
-    jQuery(".form-service-container").last().find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("nome-servizi-" + items_service);
-
-    jQuery(".form-service-container").last().find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("nome-servizi-" + items_next);
-
-    jQuery(".form-service-container").last().find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("descrizione_servizi-" + items_service);
-
-    jQuery(".form-service-container").last().find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("descrizione_servizi-" + items_next);
-
-    jQuery(".form-service-container").last().find("#select-nome-servizi").attr("data-form-index", items_next);
-    <?php } ?>
-
-    jQuery(".form-service-container").last().find("#immagine_servizio-" + items_service).attr("id", "immagine_servizio-" + items_next);
-    jQuery(".form-service-container").last().find("#ifps-prws-immagine_servizio-" + items_service).attr("id", "ifps-prws-immagine_servizio-" + items_next);
+            $last.find("#immagine_servizio-" + items_service).attr("id", "immagine_servizio-" + items_next);
+            $last.find("#ifps-prws-immagine_servizio-" + items_service).attr("id", "ifps-prws-immagine_servizio-" + items_next);
 
 
-    jQuery(".form-service-container").last().find("#prws-immagine_servizio-" + items_service).attr("id", "prws-immagine_servizio-" + items_next);
+            $last.find("#prws-immagine_servizio-" + items_service).attr("id", "prws-immagine_servizio-" + items_next);
 
+            $last.find("#preview-immagine_servizio-" + items_service).attr("id", "preview-immagine_servizio-" + items_next);
 
-    jQuery(".form-service-container").last().find("#prws-immagine_servizio-" + items_next).attr("onclick", "delPreviewServizi('immagine_servizio-" + items_next + "')");
+            $last.find("#orario-continuato-1-" + items_service).attr("id", "orario-continuato-1-" + items_next);
+            $last.find("#orario-continuato-2-" + items_service).attr("id", "orario-continuato-2-" + items_next);
+            $last.find("#orario-continuato-3-" + items_service).attr("id", "orario-continuato-3-" + items_next);
+            $last.find("#orario-continuato-4-" + items_service).attr("id", "orario-continuato-4-" + items_next);
+            $last.find("#orario-continuato-5-" + items_service).attr("id", "orario-continuato-5-" + items_next);
+            $last.find("#orario-continuato-6-" + items_service).attr("id", "orario-continuato-6-" + items_next);
+            $last.find("#orario-continuato-7-" + items_service).attr("id", "orario-continuato-7-" + items_next);
 
-
-    jQuery(".form-service-container").last().find("#preview-immagine_servizio-" + items_service).attr("id", "preview-immagine_servizio-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-lun-" + items_service).attr("id", "0-lun-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-lun-" + items_service).attr("id", "1-lun-" + items_next);
-
-    jQuery(".form-service-container").last().find("#orario-continuato-1-" + items_service).attr("id", "orario-continuato-1-" + items_next);
-    jQuery(".form-service-container").last().find("#orario-continuato-2-" + items_service).attr("id", "orario-continuato-2-" + items_next);
-    jQuery(".form-service-container").last().find("#orario-continuato-3-" + items_service).attr("id", "orario-continuato-3-" + items_next);
-    jQuery(".form-service-container").last().find("#orario-continuato-4-" + items_service).attr("id", "orario-continuato-4-" + items_next);
-    jQuery(".form-service-container").last().find("#orario-continuato-5-" + items_service).attr("id", "orario-continuato-5-" + items_next);
-    jQuery(".form-service-container").last().find("#orario-continuato-6-" + items_service).attr("id", "orario-continuato-6-" + items_next);
-    jQuery(".form-service-container").last().find("#orario-continuato-7-" + items_service).attr("id", "orario-continuato-7-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-lun-" + items_service).attr("id", "2-lun-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-lun-" + items_service).attr("id", "3-lun-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-mar-" + items_service).attr("id", "0-mar-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-mar-" + items_service).attr("id", "1-mar-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-mar-" + items_service).attr("id", "2-mar-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-mar-" + items_service).attr("id", "3-mar-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-mer-" + items_service).attr("id", "0-mer-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-mer-" + items_service).attr("id", "1-mer-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-mer-" + items_service).attr("id", "2-mer-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-mer-" + items_service).attr("id", "3-mer-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-gio-" + items_service).attr("id", "0-gio-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-gio-" + items_service).attr("id", "1-gio-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-gio-" + items_service).attr("id", "2-gio-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-gio-" + items_service).attr("id", "3-gio-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-ven-" + items_service).attr("id", "0-ven-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-ven-" + items_service).attr("id", "1-ven-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-ven-" + items_service).attr("id", "2-ven-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-ven-" + items_service).attr("id", "3-ven-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-sab-" + items_service).attr("id", "0-sab-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-sab-" + items_service).attr("id", "1-sab-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-sab-" + items_service).attr("id", "2-sab-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-sab-" + items_service).attr("id", "3-sab-" + items_next);
-
-    jQuery(".form-service-container").last().find("#0-dom-" + items_service).attr("id", "0-dom-" + items_next);
-
-    jQuery(".form-service-container").last().find("#1-dom-" + items_service).attr("id", "1-dom-" + items_next);
-
-    jQuery(".form-service-container").last().find("#2-dom-" + items_service).attr("id", "2-dom-" + items_next);
-
-    jQuery(".form-service-container").last().find("#3-dom-" + items_service).attr("id", "3-dom-" + items_next);
-}
-});
+            let giorni = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
+            for (let i = 0; i < giorni.length; i++) {
+                for (let j = 0; j < 4; j++) {
+                    let prev_id = `#${j}-${giorni[i]}-${items_service}`;
+                    let next_id = `#${j}-${giorni[i]}-${items_next}`;
+                    $last.find(prev_id).attr("id", next_id);
+                }
+            }
+        }
+    });
 
 
     jQuery(document).on("click", ".save-eccellenza", function () {
-    var items_eccellenza = $(".form-eccellenza-container").length;
-    items_next = items_eccellenza + 1;
-    jQuery("#num_eccellenze").val(items_next);
-    var form = jQuery(".form-eccellenza-container").last().clone();
-    jQuery(".form-eccellenza-container").last().append(form);
-    if (items_eccellenza >= 0) {
-    jQuery(".form-eccellenza-container").last().find("#abilitato-" + items_eccellenza).attr("id", "abilitato-" + items_next);
-    jQuery(".form-eccellenza-container").last().find("#eccellenza-" + items_eccellenza).attr("id", "eccellenza-" + items_next);
-    jQuery(".form-eccellenza-container").last().find("#select-nome-eccellenze").attr("data-form-index", items_next);
-    jQuery(".form-eccellenza-container").last().find("#annulla-eccellenza-" + items_eccellenza).attr("id", "annulla-eccellenza-" + items_next);
-    jQuery(".form-eccellenza-container").last().attr("id", "eccellenza-" + items_next);
+        var items_eccellenza = $(".form-eccellenza-container").length;
+        items_next = items_eccellenza + 1;
+        jQuery("#num_eccellenze").val(items_next);
+        var form = jQuery(".form-eccellenza-container").last().clone();
+        jQuery(".form-eccellenza-container").last().append(form);
+        if (items_eccellenza >= 0) {
+            jQuery(".form-eccellenza-container").last().find("#abilitato-" + items_eccellenza).attr("id", "abilitato-" + items_next);
+            jQuery(".form-eccellenza-container").last().find("#eccellenza-" + items_eccellenza).attr("id", "eccellenza-" + items_next);
+            jQuery(".form-eccellenza-container").last().find("#select-nome-eccellenze").attr("data-form-index", items_next);
+            jQuery(".form-eccellenza-container").last().find("#annulla-eccellenza-" + items_eccellenza).attr("id", "annulla-eccellenza-" + items_next);
+            jQuery(".form-eccellenza-container").last().attr("id", "eccellenza-" + items_next);
 
-    jQuery(".form-eccellenza-container").fadeIn();
+            jQuery(".form-eccellenza-container").fadeIn();
 
-    var offset = jQuery("#eccellenza-" + items_next).offset().top;
-    offset = offset - 100;
-    $('html,body').animate({
-    scrollTop: offset
-}, 'slow');
+            var offset = jQuery("#eccellenza-" + items_next).offset().top;
+            offset = offset - 100;
+            $('html,body').animate({
+                scrollTop: offset
+            }, 'slow');
 
-    jQuery(".form-eccellenza-container").last().attr("class", " form-eccellenza-container fsc-" + items_next);
-    jQuery(".form-eccellenza-container").last().attr("id", "fsc-eccellenza-" + items_next);
-    <?php
-    for($i = 0;$i < sizeof($lingue);$i++) {
-    ?>
-    jQuery(".form-eccellenza-container").last().find("#descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_eccellenza).attr("id", "descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
+            jQuery(".form-eccellenza-container").last().attr("class", " form-eccellenza-container fsc-" + items_next);
+            jQuery(".form-eccellenza-container").last().attr("id", "fsc-eccellenza-" + items_next);
+            <?php
+            for($i = 0;$i < sizeof($lingue);$i++) {
+            ?>
+            jQuery(".form-eccellenza-container").last().find("#descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_eccellenza).attr("id", "descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
 
-    jQuery(".form-eccellenza-container").last().find("#nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_eccellenza).attr("id", "nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
-
-
-    jQuery(".form-eccellenza-container").last().find("#nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("nome_eccellenze-" + items_eccellenza);
-
-    jQuery(".form-eccellenza-container").last().find("#nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("nome_eccellenze-" + items_next);
-
-    jQuery(".form-eccellenza-container").last().find("#select-nome-eccellenze").attr("data-form-index", items_next);
-    <?php } ?>
-
-    jQuery(".form-eccellenza-container").last().find("#immagine_eccellenza-" + items_eccellenza).attr("id", "immagine_eccellenza-" + items_next);
+            jQuery(".form-eccellenza-container").last().find("#nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_eccellenza).attr("id", "nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
 
 
-    jQuery(".form-eccellenza-container").last().find("#ifps-prws-immagine_eccellenza-" + items_eccellenza).attr("id", "ifps-prws-immagine_eccellenza-" + items_next);
+            jQuery(".form-eccellenza-container").last().find("#nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("nome_eccellenze-" + items_eccellenza);
+
+            jQuery(".form-eccellenza-container").last().find("#nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("nome_eccellenze-" + items_next);
+
+            jQuery(".form-eccellenza-container").last().find("#select-nome-eccellenze").attr("data-form-index", items_next);
+            <?php } ?>
+
+            jQuery(".form-eccellenza-container").last().find("#immagine_eccellenza-" + items_eccellenza).attr("id", "immagine_eccellenza-" + items_next);
 
 
-    jQuery(".form-eccellenza-container").last().find("#prws-immagine_eccellenza-" + items_eccellenza).attr("id", "prws-immagine_eccellenza-" + items_next);
+            jQuery(".form-eccellenza-container").last().find("#ifps-prws-immagine_eccellenza-" + items_eccellenza).attr("id", "ifps-prws-immagine_eccellenza-" + items_next);
 
 
-    jQuery(".form-eccellenza-container").last().find("#prws-immagine_eccellenza-" + items_next).attr("onclick", "delPreviewServizi('immagine_eccellenza-" + items_next + "')");
+            jQuery(".form-eccellenza-container").last().find("#prws-immagine_eccellenza-" + items_eccellenza).attr("id", "prws-immagine_eccellenza-" + items_next);
 
 
-    jQuery(".form-eccellenza-container").last().find("#preview-immagine_eccellenza-" + items_eccellenza).attr("id", "preview-immagine_eccellenza-" + items_next);
+            jQuery(".form-eccellenza-container").last().find("#prws-immagine_eccellenza-" + items_next).attr("onclick", "delPreviewServizi('immagine_eccellenza-" + items_next + "')");
 
-}
-});
+
+            jQuery(".form-eccellenza-container").last().find("#preview-immagine_eccellenza-" + items_eccellenza).attr("id", "preview-immagine_eccellenza-" + items_next);
+
+        }
+    });
 
     $('#immagini_form_strutture').on("change", function () {
-    var n_pictures = ($(".img-form-preview-item").length) - 1;
-    var form_data = new FormData();
+        var n_pictures = ($(".img-form-preview-item").length) - 1;
+        var form_data = new FormData();
 
-    // Read selected files
-    var totalfiles = document.getElementById('immagini_form_strutture').files.length;
-    for (var index = 0; index < totalfiles; index++) {
-    form_data.append("immagini_form[]", document.getElementById('immagini_form_strutture').files[index]);
-}
-    $(".notification-message").html("Caricamento immagini in corso....");
-    $(".notification-message").addClass("nm-info");
-    $(".notification-message").fadeIn();
+        // Read selected files
+        var totalfiles = document.getElementById('immagini_form_strutture').files.length;
+        for (var index = 0; index < totalfiles; index++) {
+            form_data.append("immagini_form[]", document.getElementById('immagini_form_strutture').files[index]);
+        }
 
-    // AJAX request
-    $.ajax({
-    url: 'process/uploadImages.php',
-    type: 'post',
-    data: form_data,
-    dataType: 'json',
-    contentType: false,
-    processData: false,
-    success: function (response) {
-    let lunghezza = response.length;
-    for (var index = 0; index < response.length; index++) {
-    var src = response[index];
-    n_pictures++;
-    var n_pictures_next = n_pictures + 1;
-    if (jQuery(this).attr("data-function") != 'addCategory')
-    $('#preview').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item img-hotel" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default-image" value="' + n_pictures_next + '"><label class="f15">&nbsp;Immagine principale</label><br></div></div>');
-    else
-    $('#preview').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
-}
+        $(".notification-message").html("Caricamento immagini in corso....");
+        $(".notification-message").addClass("nm-info");
+        $(".notification-message").fadeIn();
 
-    if (lunghezza == 1) {
-    $(".default-image").attr("checked", "checked");
-}
-    $(".notification-message").fadeOut();
+        // AJAX request
+        $.ajax({
+            url: 'process/uploadImages.php',
+            type: 'post',
+            data: form_data,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                let lunghezza = response.length;
+                for (var index = 0; index < response.length; index++) {
+                    var src = response[index];
+                    n_pictures++;
+                    var n_pictures_next = n_pictures + 1;
+                    if (jQuery(this).attr("data-function") != 'addCategory')
+                        $('#preview').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item img-hotel" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default-image" value="' + n_pictures_next + '"><label class="f15">&nbsp;Immagine principale</label><br></div></div>');
+                    else
+                        $('#preview').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
+                }
 
-}
-});
-
-});
+                if (lunghezza == 1) {
+                    $(".default-image").attr("checked", "checked");
+                }
+                $(".notification-message").fadeOut();
+            }
+        });
+    });
 
 
     $('#immagini_form_didascalie').on("change", function () {
-    var n_pictures = ($(".img-form-preview-item-d.img-didascalia").length) - 1;
-    var form_data = new FormData();
+        var n_pictures = ($(".img-form-preview-item-d.img-didascalia").length) - 1;
+        var form_data = new FormData();
 
-    // Read selected files
-    var totalfiles = document.getElementById('immagini_form_didascalie').files.length;
-    for (var index = 0; index < totalfiles; index++) {
-    form_data.append("immagini_form[]", document.getElementById('immagini_form_didascalie').files[index]);
-}
-    $(".notification-message").html("Caricamento immagini in corso....");
-    $(".notification-message").addClass("nm-info");
-    $(".notification-message").fadeIn();
+        // Read selected files
+        var totalfiles = document.getElementById('immagini_form_didascalie').files.length;
+        for (var index = 0; index < totalfiles; index++) {
+            form_data.append("immagini_form[]", document.getElementById('immagini_form_didascalie').files[index]);
+        }
 
-    // AJAX request
-    $.ajax({
-    url: 'process/uploadImages.php',
-    type: 'post',
-    data: form_data,
-    dataType: 'json',
-    contentType: false,
-    processData: false,
-    success: function (response) {
-    let lunghezza = response.length;
-    for (var index = 0; index < response.length; index++) {
-    var src = response[index];
-    n_pictures++;
-    var n_pictures_next = n_pictures + 1;
-    if (jQuery(this).attr("data-function") != 'addCategory') {
-    $('#preview-didascalie').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item-d img-didascalia" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20 apt-' + n_pictures + '">');
+        $(".notification-message").html("Caricamento immagini in corso....");
+        $(".notification-message").addClass("nm-info");
+        $(".notification-message").fadeIn();
 
+        // AJAX request
+        $.ajax({
+            url: 'process/uploadImages.php',
+            type: 'post',
+            data: form_data,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                let lunghezza = response.length;
+                for (var index = 0; index < response.length; index++) {
+                    var src = response[index];
+                    n_pictures++;
+                    var n_pictures_next = n_pictures + 1;
+                    if (jQuery(this).attr("data-function") != 'addCategory') {
+                        $('#preview-didascalie').append('<div class="img-form-preview" id="ifp-prw-' + n_pictures + '"><span class="delete-preview" id="prw-' + n_pictures + '" onclick="delPreview(' + n_pictures + ')"><i class="fa fa-close"></i></span><img class="img-form-preview-item-d img-didascalia" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20 apt-' + n_pictures + '">');
+                    } else
+                        $('#preview-didascalie').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
+                }
 
-} else
-    $('#preview-didascalie').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
-}
+                <?php for($i = 0;$i < sizeof($lingue);$i++) { ?>
+                $('.apt-' + n_pictures).append('<textarea id="testo-didascalia-<?php echo $lingue[$i]['shortcode_lingua'];?>-' + n_pictures + '" placeholder="Didascalia <?php echo $lingue[$i]['abbreviazione'];?>"></textarea>');
+                <?php } ?>
 
-    <?php for($i = 0;$i < sizeof($lingue);$i++) { ?>
-    $('.apt-' + n_pictures).append('<textarea id="testo-didascalia-<?php echo $lingue[$i]['shortcode_lingua'];?>-' + n_pictures + '" placeholder="Didascalia <?php echo $lingue[$i]['abbreviazione'];?>"></textarea>');
-    <?php } ?>
+                if (lunghezza == 1) {
+                    $(".default-image-didascalie").attr("checked", "checked");
+                }
+                $(".notification-message").fadeOut();
 
-    if (lunghezza == 1) {
-    $(".default-image-didascalie").attr("checked", "checked");
-}
-    $(".notification-message").fadeOut();
+            }
+        });
 
-}
-});
-
-});
+    });
 
     $('#immagini_cat').on("change", function () {
-    var n_pictures = $("img-form-preview-item").length;
-    var form_data = new FormData();
+        var n_pictures = $("img-form-preview-item").length;
+        var form_data = new FormData();
 
-    // Read selected files
-    var totalfiles = document.getElementById('immagini_cat').files.length;
-    for (var index = 0; index < totalfiles; index++) {
-    form_data.append("immagini_form[]", document.getElementById('immagini_cat').files[index]);
-}
+        // Read selected files
+        var totalfiles = document.getElementById('immagini_cat').files.length;
+        for (var index = 0; index < totalfiles; index++) {
+            form_data.append("immagini_form[]", document.getElementById('immagini_cat').files[index]);
+        }
 
-    // AJAX request
-    $.ajax({
-    url: 'process/uploadImages.php',
-    type: 'post',
-    data: form_data,
-    dataType: 'json',
-    contentType: false,
-    processData: false,
-    success: function (response) {
+            // AJAX request
+            $.ajax({
+            url: 'process/uploadImages.php',
+            type: 'post',
+            data: form_data,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
 
-    for (var index = 0; index < response.length; index++) {
-    var src = response[index];
-    n_pictures++;
-    $("#preview").html("");
-    $("#img_path").val(src);
-    $('#preview').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
-}
+            for (var index = 0; index < response.length; index++) {
+            var src = response[index];
+            n_pictures++;
+            $("#preview").html("");
+            $("#img_path").val(src);
+            $('#preview').append('<div class="img-form-preview "><img class="img-form-preview-item" src="' + src + '" height="200px"></div>');
+        }
 
-}
-});
+        }
+        });
 
-});
+    });
 
 
     function refreshView() {
