@@ -8,10 +8,17 @@ class ServiceRepository extends MySQLRepository
         parent::__construct('servizi', 'id');
     }
 
-    public function get_services_by_hotel(int $id_hotel, int $shortcode_lingua): array
+    public function get_services_by_hotel_and_language(int $id_hotel, int $shortcode_lingua): array
     {
         $where = "hotel_associato = :id_hotel AND shortcode_lingua = :shortcode_lingua";
         $params = array(":id_hotel" => $id_hotel, ":shortcode_lingua" => $shortcode_lingua);
+        return $this->get($where, $params);
+    }
+
+    public function get_services_by_hotel(int $id_hotel): array
+    {
+        $where = "hotel_associato = :id_hotel ORDER BY posizione";
+        $params = array(":id_hotel" => $id_hotel);
         return $this->get($where, $params);
     }
 
