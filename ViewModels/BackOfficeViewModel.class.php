@@ -25,6 +25,11 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
     public $title;
 
     /**
+     * @var Public
+     */
+    public $language;
+
+    /**
      * @var Languages
      */
     public $languages;

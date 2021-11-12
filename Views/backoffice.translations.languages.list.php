@@ -18,9 +18,6 @@
                     <div class="table-responsive">
                         <table id="example" class="display" style="min-width: 100%">
                             <thead>
-                            <?php if ($view_model->user->level == 0) { ?>
-                                <th>ID</th>
-                            <?php } ?>
                             <th><?php echo $view_model->translations->get('form_nome_lingua'); ?></th>
                             <th><?php echo $view_model->translations->get('form_abbreviazione_lingua'); ?></th>
                             <th>Shortcode</th>
@@ -31,35 +28,39 @@
                             <?php
                             $lista_lingue = $view_model->languages->list_all();
                             for ($i = 0; $i < sizeof($lista_lingue); $i++) {
-                                if ($view_model->user->level == 0) {
-                                    echo '<tr>';
-                                    echo '<td>' . $lista_lingue[$i]['id'] . '</td>';
-                                    echo '<td>' . $lista_lingue[$i]['nome_lingua'] . '</td>';
-                                    echo '<td>' . $lista_lingue[$i]['abbreviazione'] . '</td>';
-                                    echo '<td>' . $lista_lingue[$i]['shortcode_lingua'] . '</td>';
-                                    if ($lista_lingue[$i]['abilitata'] == 1)
-                                        echo '<td><input type="checkbox"  id="" class="enable-language enable" checked="checked" "></td>';
-                                    else
-                                        echo '<td><input type="checkbox" class="enable-language enable"></td>';
-                                    echo '<td>
-                                                   <a href="javascript:void()"  class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"><i class="fa fa-pencil"></i></a>
-                                                       <a href="javascript:void()" class="btn btn-danger shadow btn-xs sharp view-action" data-function="delLang"><i class="fa fa-trash"></i></a>    
-                                                    </td>';
-                                } else if ($_SESSION['level'] == 1) {
-                                    echo '<tr>';
-                                    echo '<td>' . $lista_lingue[$i]['nome_lingua'] . '</td>';
-                                    echo '<td>' . $lista_lingue[$i]['abbreviazione'] . '</td>';
-                                    echo '<td>' . $lista_lingue[$i]['shortcode_lingua'] . '</td>';
-                                    if ($lista_lingue[$i]['abilitata'] == 1)
-                                        echo '<td><input type="checkbox"  class="enable-language enable" checked="checked" value="' . $lista_lingue[$i]['shortcode_lingua'] . '"></td>';
-                                    else
-                                        echo '<td><input type="checkbox" class="enable-language enable" value="' . $lista_lingue[$i]['shortcode_lingua'] . '"></td>';
-                                    echo '<td>
-                                                       <a href="javascript:void()"  class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside" ><i class="fa fa-pencil"></i></a>
-                                                       <a href="javascript:void()" class="btn btn-danger shadow btn-xs sharp view-action" data-function="delLang"  ><i class="fa fa-trash"></i></a>    
-                                                    </td>';
+                                echo '<tr>';
+                                echo '<td>' . $lista_lingue[$i]['nome_lingua'] . '</td>';
+                                echo '<td>' . $lista_lingue[$i]['abbreviazione'] . '</td>';
+                                echo '<td>' . $lista_lingue[$i]['shortcode_lingua'] . '</td>';
+                                ?>
+                                <td>
+                                    <form action="/backoffice/translations/language/<?php echo $lista_lingue[$i]['id']; ?>/enable"
+                                          method="POST" enctype="multipart/form-data">
+                                        <input type="checkbox"
+                                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                               data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                            <?php echo $lista_lingue[$i]['abilitata'] == 1 ? 'checked="checked"' : ''; ?>
+                                               name="enabled"
+                                               value="1"
+                                               onclick="this.closest('form').submit(); return false;">
+                                    </form>
+                                </td>
+                                <td>
+                                    <a href="/backoffice/translations/language/<?php echo $lista_lingue[$i]['id'] ?>/edit"
+                                       class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                    <form action="/backoffice/translations/language/<?php echo $lista_lingue[$i]['id']; ?>/delete"
+                                          method="POST" enctype="multipart/form-data">
+                                        <a href="javascript:void()"
+                                           class="btn btn-danger shadow btn-xs sharp"
+                                           onclick="this.closest('form').submit();return false;">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </form>
+                                </td>
+                                <?php
 
-                                } else echo 'Errore';
 
                             } ?>
 
@@ -67,9 +68,6 @@
                             </tbody>
                             <tfoot>
                             <tr>
-                                <?php if ($view_model->user->level == 0) { ?>
-                                    <th>ID</th>
-                                <?php } ?>
                                 <th><?php echo $view_model->translations->get('form_nome_lingua'); ?></th>
                                 <th><?php echo $view_model->translations->get('form_abbreviazione_lingua'); ?></th>
                                 <th>Shortcode</th>
