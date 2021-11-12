@@ -2,10 +2,8 @@
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-between mb15">
             <h1><i class="fa fa-language"></i> <?php echo $view_model->translations->get('gestione_lingue'); ?></h1>
-            <a class="btn btn-primary open-view-action-inside mb10" data-toggle="tab" data-title="testasd"
-               data-action="<?php echo $view_model->translations->get('gestione_lingue'); ?>"
-               data-params="<?php echo $view_model->translations->get('params_nuova_lingua'); ?>"
-               href="#<?php echo $view_model->translations->get('link_traduzioni'); ?>">
+            <a class="btn btn-primary open-view-action-inside mb10"
+               href="/backoffice/translations/languages">
                 <i class="fa fa-plus"></i> <?php echo $view_model->translations->get('gestione_lingue'); ?>
             </a>
         </div>
@@ -49,9 +47,12 @@
                                         <div class="value-translation-<?php echo $item['etichetta']; ?>"><?php echo htmlspecialchars($item['valore']); ?></div>
                                     </td>
                                     <td>
-                                        <form action="/backoffice/translations/<?php echo $item['id']; ?>" method="POST">
-                                            <input type="hidden" name="valore" value="" />
-                                            <button type="button" class="btn btn-primary shadow btn-xs sharp mr-1" data-target="<?php echo $item['etichetta']; ?>" onclick="onClickForEdit(this)">
+                                        <form action="/backoffice/translations/<?php echo $item['id']; ?>"
+                                              method="POST">
+                                            <input type="hidden" name="valore" value=""/>
+                                            <button type="button" class="btn btn-primary shadow btn-xs sharp mr-1"
+                                                    data-target="<?php echo $item['etichetta']; ?>"
+                                                    onclick="onClickForEdit(this)">
                                                 <i class="fa fa-pencil"></i>
                                             </button>
                                         </form>
@@ -69,7 +70,7 @@
                             </tfoot>
                         </table>
                         <script language="javascript">
-                            var onClickForEdit = function(elem) {
+                            var onClickForEdit = function (elem) {
                                 let $button = $(elem);
                                 let $i = $button.children();
                                 let $target = $('.value-translation-' + $button.data('target'));
