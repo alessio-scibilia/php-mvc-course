@@ -152,6 +152,12 @@
                         </label>
                     </div>
                 </div>
+                <?php
+                    $label = 'abilitato';
+                    $field = "servizio_abilitato[$r]";
+                    $value = $principal->abilitato;
+                    include 'Views/backoffice.checkbox.php';
+                ?>
 
                 <div class="form-group col-md-12">
                     <input type="button" class="btn btn-danger annulla-servizio"
