@@ -33,6 +33,8 @@ class BackofficeHotelsNewController
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
+            $language = $languages->get($id_lingua);
+
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
             $title = $translations->get('gestione_hotels') . ' | ' . $translations->get('nome_sito');
@@ -47,6 +49,7 @@ class BackofficeHotelsNewController
             //                 'd92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.hotels.create', $title, $languages, $translations);
             $view_model->user = $user;
+            $view_model->language = $language;
             $view_model->hotels = $hotels;
             $view_model->menu_active_btn = 'hotels';
 
