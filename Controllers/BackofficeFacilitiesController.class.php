@@ -3,8 +3,10 @@ require_once 'Database/LanguageRepository.class.php';
 require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
+require_once 'Database/FacilityHotelRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
+require_once 'Models/FacilityHotel.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
@@ -18,6 +20,7 @@ class BackofficeFacilitiesController
     protected $translation_repository;
     protected $user_repository;
     protected $facility_repository;
+    protected $facility_hotel_repository;
 
     public function __construct()
     {
@@ -25,6 +28,7 @@ class BackofficeFacilitiesController
         $this->translation_repository = new TranslationRepository();
         $this->user_repository = new UserRepository();
         $this->facility_repository = new FacilityRepository();
+        $this->facility_hotel_repository = new FacilityHotelRepository();
     }
 
     public function http_get(array &$params): IView
@@ -48,10 +52,16 @@ class BackofficeFacilitiesController
             $facilities = Facility::facilities($rows);
             //$facilities = array(); // TODO: da recuperare dal DB
 
+            foreach ($facilities as $fac) {
+                $hotel = $this->facility_hotel_repository->get_related_by_facility_id_and_language_id($fac->id, $id_lingua);
+                $hotel_associati[$fac->related_id] = Hotel::hotels($hotel);
+            }
+
             //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.facilities.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->facilities = $facilities;
+            $view_model->hotel_associati = $hotel_associati;
             $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);
