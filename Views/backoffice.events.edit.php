@@ -28,7 +28,7 @@
                                     <div class="form-group col-md-6">
                                         <label><?php echo $view_model->translations->get('associa_struttura'); ?>
                                             :</label>
-                                        <select class="selectpicker3" data-live-search="true"
+                                        <select class="selectpicker3" data-live-search="true" data-name="related_item"
                                                 id="strutture_associate">
                                             <option selected disabled>Seleziona...</option>
                                             <optgroup

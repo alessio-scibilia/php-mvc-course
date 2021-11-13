@@ -21,7 +21,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('associa_struttura'); ?>:</label>
-                                <select class="selectpicker3" data-live-search="true" id="strutture_associate">
+                                <select class="selectpicker3" data-live-search="true" id="strutture_associate" data-name="related_item">
                                     <option selected disabled>Seleziona...</option>
                                     <optgroup label="<?php echo $view_model->translations->get('hotels'); ?>">
                                         <?php

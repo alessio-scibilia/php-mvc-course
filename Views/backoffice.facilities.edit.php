@@ -16,13 +16,14 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <div class="form-row">
-                            <?php if ($_SESSION['level'] <= 2) { ?>
+                            <?php if ($view_model->user->level <= 2) { ?>
+
                                 <div class="form-group col-md-6">
-                                    <label><?php echo $langs['hotel_associati']; ?></label>
-                                    <select class="selectpicker" data-live-search="true" id="hotel_associati">
+                                    <label><?php echo $view_model->translations->get('hotel_associati'); ?></label>
+                                    <select class="selectpicker" data-live-search="true" id="hotel_associati" data-name="related_hotels">
                                         <option disabled selected>Seleziona...</option>
                                         <?php
-                                        $hotel_associati = getHotels($dbh);
+                                        $hotel_associati = array();
                                         if ($hotel_associati != 'error') {
                                             for ($g = 0; $g < sizeof($hotel_associati); $g++) {
                                                 echo '<option value="' . $hotel_associati[$g]['id'] . '" data-tokens="' . $hotel_associati[$g]['nome'] . ' ' . $hotel_associati[$g]['email'] . ' ' . $hotel_associati[$g]['indirizzo'] . '">' . $hotel_associati[$g]['nome'] . '</option>';
@@ -32,6 +33,7 @@
                                 </div>
                                 <div id="relatedHotels" class="form-group col-md-6">
                                     <?php
+                                    $hotel_associati_struttura = array();
                                     if ($hotel_associati_struttura != 'error') {
                                         for ($i = 0; $i < sizeof($hotel_associati_struttura); $i++) {
                                             $query_bis = "SELECT * FROM hotel WHERE id = ?";
@@ -50,9 +52,10 @@
                                         <?php }
                                     } ?>
                                 </div>
+
                                 <div class="form-group col-md-6">
-                                    <label><?php echo $langs['categorie_associate']; ?></label>
-                                    <select class="selectpicker1" data-live-search="true" id="hotel_associati">
+                                    <label><?php echo $view_model->translations->get('categorie_associate'); ?></label>
+                                    <select class="selectpicker1" data-live-search="true" id="hotel_associati" data-name="related_categories">
                                         <option disabled selected>Seleziona...</option>
                                         <?php
                                         $categorie = getCategorie($dbh, $_SESSION['lang']);
@@ -85,52 +88,53 @@
                                         <?php }
                                     } ?>
                                 </div>
+
                             <?php } ?>
 
                             <div class="form-group col-md-6">
-                                <label><?php echo $langs['nome_struttura']; ?></label>
+                                <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
                                 <input value="<?php echo $dati_struttura[0]['nome_struttura']; ?>" type="text"
                                        id="nome_struttura" class="form-control validate-1" placeholder="London Hotel">
                             </div>
                             <div class="form-group col-md-6">
-                                <label><?php echo $langs['email']; ?></label>
+                                <label><?php echo $view_model->translations->get('email'); ?></label>
                                 <input value="<?php echo $dati_struttura[0]['email']; ?>" type="text" id="email"
                                        class="form-control validate-1" placeholder="mario@rossi.it">
                             </div>
                             <div class="form-group col-md-6">
-                                <label><?php echo $langs['sito_web']; ?></label>
+                                <label><?php echo $view_model->translations->get('sito_web'); ?></label>
                                 <input value="<?php echo $dati_struttura[0]['sito_web']; ?>" type="text"
                                        class="form-control validate-1" id="sito"
                                        placeholder="www.hotelsuperlondon.co.uk">
                             </div>
                             <div class="form-group col-md-6">
-                                <label><?php echo $langs['telefono']; ?></label>
+                                <label><?php echo $view_model->translations->get('telefono'); ?></label>
                                 <input value="<?php echo $dati_struttura[0]['telefono']; ?>" type="text"
                                        class="form-control validate-1" id="telefono" placeholder="020483039">
                             </div>
                             <div class="form-group col-md-6">
-                                <label><?php echo $langs['abilitato']; ?></label>
+                                <label><?php echo $view_model->translations->get('abilitato'); ?></label>
                                 <select class="form-control" id="abilitato-struttura">
                                     <option value="1" <?php if ($dati_struttura[0]['abilitata'] == 1) echo 'selected="selected"'; ?>><?php echo $langs['si']; ?></option>
                                     <option value="0" <?php if ($dati_struttura[0]['abilitata'] == 0) echo 'selected="selected"'; ?>><?php echo $langs['no']; ?></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-6">
-                                <label><?php echo $langs['indicizza']; ?></label>
+                                <label><?php echo $view_model->translations->get('indicizza'); ?></label>
                                 <select class="form-control" id="indicizza">
                                     <option value="1" <?php if ($dati_struttura[0]['indicizza'] == 1) echo 'selected="selected"'; ?>><?php echo $langs['si']; ?></option>
                                     <option value="0" <?php if ($dati_struttura[0]['indicizza'] == 0) echo 'selected="selected"'; ?>><?php echo $langs['no']; ?></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
-                                <label><?php echo $langs['convenzionato']; ?></label>
+                                <label><?php echo $view_model->translations->get('convenzionato'); ?></label>
                                 <select class="form-control" id="is_convenzionato">
                                     <option value="1" <?php if ($dati_struttura[0]['convenzionato'] == 1) echo 'selected="selected"'; ?>><?php echo $langs['si']; ?></option>
                                     <option value="0" <?php if ($dati_struttura[0]['convenzionato'] == 0) echo 'selected="selected"'; ?>><?php echo $langs['no']; ?></option>
                                 </select>
                             </div>
                             <div class="form-group col-md-12">
-                                <label><?php echo $langs['indirizzo']; ?></label>
+                                <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
                                 <input type="text" class="form-control validate-1" id="indirizzo"
                                        value="<?php echo $dati_struttura[0]['indirizzo_struttura']; ?>"
                                        placeholder="Via 20 Settembre, Milano (MI)">
@@ -154,8 +158,9 @@
                                 <input type="text" value="<?php echo $dati_struttura[0]['longitudine']; ?>"
                                        id="longitudine" class="form-control" placeholder="8,93393">
                             </div>
+
                             <div class="form-group col-md-4">
-                                <label><?php echo $langs['tipo_viaggio']; ?></label>
+                                <label><?php echo $view_model->translations->get('tipo_viaggio'); ?></label>
                                 <div class="route-container">
                                     <div class="route-div"><input
                                                 type="radio" <?php if ($dati_struttura[0]['tipo_viaggio'] == 1) echo 'checked="checked"'; ?>
@@ -177,6 +182,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><?php echo $langs['immagini_struttura']; ?></span>
@@ -209,9 +215,10 @@
                                     <?php } ?>
                                 </div>
                             </div>
+
                             <div class="form-group col-md-12">
 
-                                <label><?php echo $langs['descrizione']; ?><span> | <i class="fa fa-language"></i> Lingua</span></label>
+                                <label><?php echo $view_model->translations->get('descrizione'); ?><span> | <i class="fa fa-language"></i> Lingua</span></label>
                                 <select id="select-language">
                                     <?php
                                     $lingue = getLangsShortcode($dbh);
@@ -231,9 +238,9 @@
                                     </div>
                                 <?php } ?>
 
-
                             </div>
-                            <?php if ($_SESSION['level'] > 2) { ?>
+
+                            <?php if ($view_model->user->level > 2) { ?>
                                 <div class="form-group col-md-12">
 
                                     <label><?php echo $langs['descrizione_benefit']; ?><span> | <i
@@ -259,7 +266,9 @@
 
 
                                 </div>
+
                             <?php } ?>
+
                             <div class="form-group col-md-12">
                                 <label><?php echo $langs['orari']; ?></label>
                                 <br/>
@@ -537,7 +546,7 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"><?php echo $langs['eccellenze']; ?></h4>
+                    <h4 class="card-title"><?php echo $view_model->translations->get('eccellenze'); ?></h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -556,6 +565,7 @@
                                 <div class="form-eccellenza-container fsc-<?php echo $r; ?>"
                                      id="fsc-eccellenza-<?php echo $r; ?>">
                                     <div class="form-row">
+
                                         <div class="col-12">
                                             <h5><?php echo $langs['dati_eccellenza']; ?></h5></div>
                                         <div class="form-group col-md-6">
@@ -604,6 +614,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group col-md-12">
 
                                             <?php
@@ -620,6 +631,7 @@
                                         </div>
 
                                     </div>
+
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
                                             <label><?php echo $langs['abilitato']; ?></label>
@@ -640,7 +652,7 @@
                                         <div class="form-group col-md-12">
                                             <hr/>
                                             <input type="button" class="btn btn-success save-eccellenza"
-                                                   value="<?php echo $langs['aggiungi_eccellenza']; ?>">
+                                                   value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -787,9 +799,9 @@
                 <div class="form-group col-md-12">
                     <div align="left">
                         <input type="button" class="btn btn-success"
-                               data-success="<?php echo $langs['modifiche_salvate']; ?>"
-                               data-failure="<?php echo $langs['errore_salvataggio']; ?>" id="updateStruttura"
-                               value="<?php echo $langs['aggiorna_struttura']; ?>">
+                               data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                               data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>" id="updateStruttura"
+                               value="<?php echo $view_model->translations->get('aggiorna_struttura'); ?>">
                     </div>
                     <br/><br/>
                 </div>
