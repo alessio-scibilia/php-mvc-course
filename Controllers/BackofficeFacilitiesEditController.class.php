@@ -18,7 +18,7 @@ require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
 
-class BackofficeEventsEditController
+class BackofficeFacilitiesEditController
 {
     protected $language_repository;
     protected $translation_repository;
@@ -43,10 +43,11 @@ class BackofficeEventsEditController
 
     public function http_get(array &$params): IView
     {
-        if (isset($params['events'])) {
+        if (isset($params['facilities'])) {
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
+            $language = $languages->get($id_lingua);
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
             $title = $translations->get('gestione_eventi') . ' | ' . $translations->get('nome_sito');
@@ -56,45 +57,20 @@ class BackofficeEventsEditController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $id = intval($params['events']);
-            $row = $this->event_repository->get_event($id);
-            $event = new Event($row);
+            $id = intval($params['facilities']);
+            $rows = $this->facility_repository->get_facility_all_langs($id);
+            $facilities = Facility::facilities($rows);
 
-            if ($user->level > 2) {
-                $rows = $this->facility_hotel_repository->get_facilities_by_hotel($user->id);
-                $related_facilities = FacilitiesHotels::facilities_hotels($rows);
-                $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id_and_language_id($id, $user->id, $id_lingua);
-                $facility_events = FacilityEvent::facility_events($rows);
-                $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id($id, $user->id);
-                $all_languages_facility_events = FacilityEvent::facility_events($rows);
-            } else {
-                $rows = $this->facility_repository->get_all_facilities($id_lingua);
-                $related_facilities = Facility::facilities($rows);
-                $rows = $this->facility_event_repository->get_related_by_event_id_and_language_id($id, $id_lingua);
-                $facility_events = FacilityEvent::facility_events($rows);
-                $rows = $this->facility_event_repository->get_related_by_event_id($id);
-                $all_languages_facility_events = FacilityEvent::facility_events($rows);
-            }
-
-            //$descrizioni_evento = $this->facility_hotel_repository->get_by_event_id($id);
-
-            $rows = $this->hotel_repository->get_hotels_list_by_user_level($user->level, $user->id, $id_lingua);
-            $related_hotels = Hotel::hotels($rows);
-
-            //'d92fgov02dm2jf493fspamwi2d0za201',
-            $view_model = new BackOfficeViewModel('backoffice.events.edit', $title, $languages, $translations);
+            $view_model = new BackOfficeViewModel('backoffice.facilities.edit', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->event = $event;
-            $view_model->related_facilities = $related_facilities;
-            $view_model->related_hotels = $related_hotels;
-            $view_model->facility_events = $facility_events;
-            $view_model->all_languages_facility_events = $all_languages_facility_events;
-            $view_model->language = $languages->get($id_lingua);
-            $view_model->menu_active_btn = 'events';
+            $view_model->language = $language;
+            $view_model->facilities = $facilities; // all available languages
+            $view_model->principal = $facilities[0];
+            $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);
         }
 
-        return new HttpRedirectView('/backoffice/events');
+        return new HttpRedirectView('/backoffice/facilities');
     }
 }

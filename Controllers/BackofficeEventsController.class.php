@@ -54,9 +54,7 @@ class BackofficeEventsController
 
             $rows = $this->event_repository->get_all_events();
             $events = Event::events($rows);
-            //$events = array(); // TODO: da recuperare dal DB
 
-            //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->events = $events;

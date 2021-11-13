@@ -1,5 +1,5 @@
-<input type="hidden" id="id_struttura" value="<?php echo $id_struttura_query; ?>">
-<div class="container-fluid">
+<form action="/backoffice/facilities/<?php  echo $view_model->principal->related_id; ?>/edit" method="post" enctype="multipart/form-data">
+<input ass="container-fluid">
     <div class="row">
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
             <a href="/backoffice/facilities" id="gobacksearch" class="open-view-action-inside back-btn"
@@ -799,3 +799,4 @@
 
     </div>
 </div>
+</form>
