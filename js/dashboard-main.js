@@ -176,30 +176,44 @@ function removeRelatedCat(val) {
     $(".relatedCat-" + val).remove();
 }
 
-jQuery(document).on()("changed.bs.select", ".selectpicker, .selectpicker1, .selectpicker3", function (e, clickedIndex, isSelected, previousValue) {
-    let val = $(this).val();
-    let nome = $(".selectpicker:selected").text();
-    let nome_campo = $(this).data('name');
+jQuery(document).on("changed.bs.select", ".selectpicker, .selectpicker1, .selectpicker3", function (e, clickedIndex, isSelected, previousValue) {
+    let val = jQuery(this).val();
+    let nome_campo = jQuery(this).data('name');
 
     switch (nome_campo) {
-        case '':
+        case 'related_hotels':
             var classe_ancora = 'relHot';
+            var id_append = '#relatedHotels';
             var classe_ancora_2 = 'isRelatedToShow-' + val;
             var onclick_function = 'removeRelatedHotel(' + val + ')';
+            var class_hidden = 'isRelatedTo-' + val;
+            var nome = jQuery(".selectpicker :selected").text();
             break;
-        case '':
-            var classe_ancora = 'relHot';
-            var classe_ancora_2 = 'isRelatedToShow-' + val;
+        case 'related_categories':
+            var classe_ancora = 'relCat';
+            var id_append = '#relatedCat';
+            var classe_ancora_2 = 'relatedCat-' + val;
             var onclick_function = 'removeRelatedHotel(' + val + ')';
+            var class_hidden = 'cat-' + val;
+            var nome = jQuery(".selectpicker1 :selected").text();
+
+
             break;
-        case '':
-            var classe_ancora = 'relHot';
-            var classe_ancora_2 = 'isRelatedToShow-' + val;
-            var onclick_function = 'removeRelatedHotel(' + val + ')';
+        case 'related_item':
+            var classe_ancora = 'relCat';
+            var id_append = '#relatedCat';
+            var classe_ancora_2 = 'relatedCat-' + val;
+            var onclick_function = 'cat(' + val + ')';
+            var class_hidden = 'cat-' + val;
+            var nome = jQuery(".selectpicker3 :selected").text();
             break;
     }
-});
 
+    $(id_append).append('<a href="javascript:void()" class="tagit2 ' + classe_ancora + ' ' + classe_ancora_2 + '" onclick="' + onclick_function + '" id="' + val + '">' + nome + ' <i class="fa fa-close"></i></a>');
+    $(id_append).append('<input type="hidden" name=' + nome_campo + '[]" value="' + val + '" class="' + class_hidden + '">');
+
+});
+/*
 jQuery(document).on("changed.bs.select", ".selectpicker", function (e, clickedIndex, isSelected, previousValue) {
     var val = $(this).val();
     var nome = $(".selectpicker :selected").text();
@@ -220,7 +234,7 @@ jQuery(document).on("changed.bs.select", ".selectpicker3", function (e, clickedI
     $("#relatedCat").append('<a href="javascript:void()" class="tagit2 relCat relatedCat-' + val + '" id="' + val + '" onclick="removeRelatedCat(\'' + val + '\')">' + nome + '<i class="fa fa-close"></i></a>');
     $("#relatedCat").append('<input type="hidden" name="related_item[]" value="' + val + '" class="cat-' + val + '">');
 });
-
+*/
 
 jQuery(document).on("click", "#recupera", function () {
     $("#dati_struttura_evento").fadeToggle();
