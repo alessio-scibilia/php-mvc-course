@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <form action="/backoffice/events/<?php echo $view_model->event->id; include 'Views/xdebug.querystring.first.php'; ?>" method="POST" enctype="multipart/form-data">
+
             <div class="col-12 d-flex align-items-center justify-content-start mb15">
                 <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('indietro'); ?>
@@ -8,6 +9,7 @@
                 <h1><i class="fa fa-calendar"></i> <?php echo $view_model->translations->get('modifica_evento'); ?>
                 </h1>
             </div>
+
             <div class="col-xl-12 col-lg-12">
                 <div class="card">
 
