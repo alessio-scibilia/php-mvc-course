@@ -52,7 +52,8 @@
                 <?php
                     $label = 'immagine_servizio';
                     $button_label = 'immagine_servizio';
-                    $urls = array($principal->immagine);
+                    $field_prefix = "img_servizio[$r]";
+                    $urls = empty($principal->immagine) ? array() : array($principal->immagine);
                     $multiple = false;
                     include 'Views/backoffice.images.uploader.php';
                 ?>
