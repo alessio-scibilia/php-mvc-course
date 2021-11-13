@@ -341,3 +341,7 @@ img.svg-route {
 .input-group-prepend .btn:focus, .input-group-append .btn:focus {
     z-index: 0 !important;
 }
+
+.note-toolbar.panel-heading {
+    background-color: rgb(235, 238, 246) !important;
+}

@@ -33,11 +33,8 @@
         switch ($type) {
             case 'richtextbox': ?>
                 <textarea class="summernote"
-                          name="<?php echo $field_prefix; ?>[<?php echo $language['abbreviazione']; ?>]">
-                    <?php echo $model->{$field} ?? ''; ?>
-                </textarea>
-        <?php
-                break;
+                          name="<?php echo $field_prefix; ?>[<?php echo $language['abbreviazione']; ?>]"><?php echo $model->{$field} ?? ''; ?></textarea>
+        <?php break;
 
             case 'input': ?>
                 <input type="text"
@@ -45,8 +42,14 @@
                        class="form-control validate-input"
                        name="<?php echo $field_prefix; ?>[<?php echo $language['abbreviazione']; ?>]"
                        placeholder="<?php echo $placeholder; ?>">
-        <?php
-                break;
+        <?php break;
+
+            case 'textarea': ?>
+                <textarea
+                       class="form-control validate-input"
+                       name="<?php echo $field_prefix; ?>[<?php echo $language['abbreviazione']; ?>]"
+                       placeholder="<?php echo $placeholder; ?>"><?php echo $model->{$field} ?? ''; ?></textarea>
+        <?php break;
 
             default:
                 echo $model->{$field} ?? '';

@@ -25,26 +25,27 @@
 
                 <div class="form-group col-md-4">
                     <?php
-                    $type = 'input';
-                    $label = 'nome_servizio';
-                    $placeholder = 'Es. Check in';
-                    $field = 'titolo';
-                    $field_prefix = "nome_servizio[$r]";
-                    //$items = array_merge(...$group);
-                    $items = array_values($service);
-                    include 'Views/backoffice.multilanguage.textbox.php';
+                        $type = 'input';
+                        $label = 'nome_servizio';
+                        $placeholder = 'Es. Check in';
+                        $field = 'titolo';
+                        $field_prefix = "nome_servizio[$r]";
+                        //$items = array_merge(...$group);
+                        $items = array_values($service);
+                        include 'Views/backoffice.multilanguage.textbox.php';
                     ?>
                 </div>
 
                 <div class="form-group col-md-5">
                     <?php
-                    $label = 'descrizione';
-                    $placeholder = '';
-                    $field = 'descrizione';
-                    $field_prefix = "descrizione[$r]";
-                    //$items = array_merge(...$group);
-                    $items = array_values($service);
-                    include 'Views/backoffice.multilanguage.textbox.php';
+                        $type = 'textarea';
+                        $label = 'descrizione';
+                        $placeholder = '';
+                        $field = 'descrizione';
+                        $field_prefix = "descrizione[$r]";
+                        //$items = array_merge(...$group);
+                        $items = array_values($service);
+                        include 'Views/backoffice.multilanguage.textbox.php';
                     ?>
                 </div>
 
@@ -107,24 +108,24 @@
                                 <div class="input-time-container">
                                     <?php for ($i = 0; $i < 2; $i++) { ?>
                                         <span class="time-span">
-                                                            <?php echo $view_model->translations->get($intervals[$i]); ?> <input
+                                            <?php echo $view_model->translations->get($intervals[$i]); ?> <input
                                                 type="time"
                                                 name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
                                                 value="<?php echo $orari[$weekday][$i + 1]; ?>"
                                                 class="validate-hotel">
-                                                        </span>
+                                        </span>
                                     <?php } ?>
                                 </div>
                                 <div class="input-time-container">
                                     <?php for ($i = 2; $i < 4; $i++) { ?>
                                         <span class="time-span">
-                                                            <?php echo $view_model->translations->get($intervals[$i]); ?> <input
-                                                                <?php if ($orari[$weekday][0] == 1) echo 'disabled'; ?>
-                                                                type="time"
-                                                                name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
-                                                                class="validate-hotel"
-                                                                value="<?php echo $orari[$weekday][$i + 1]; ?>">
-                                                        </span>
+                                            <?php echo $view_model->translations->get($intervals[$i]); ?> <input
+                                                <?php if ($orari[$weekday][0] == 1) echo 'disabled'; ?>
+                                                type="time"
+                                                name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
+                                                class="validate-hotel"
+                                                value="<?php echo $orari[$weekday][$i + 1]; ?>">
+                                        </span>
                                     <?php } ?>
                                 </div>
                             </div>
