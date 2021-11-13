@@ -240,98 +240,68 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <input type="hidden" id="num_eccellenze"
-                               value="<?php if (getNumEccellenze($dbh, $id_struttura_query) >= 1) echo getNumEccellenze($dbh, $id_struttura_query); else echo '0'; ?>">
+                               value="<?php if ('getNumEccellenze($dbh, $id_struttura_query)' >= 1) echo 'getNumEccellenze($dbh, $id_struttura_query)'; else echo '0'; ?>">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <a href="javascript:void()" class="open-create-eccellenza btn btn-primary"><i
-                                            class="fa fa-plus"></i> <?php echo $langs['aggiungi_eccellenza']; ?></a>
+                                            class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_eccellenza'); ?></a>
                             </div>
                         </div>
                         <?php
-                        if (getNumEccellenze($dbh, $id_struttura_query) >= 1) {
-                            for ($r = 1; $r <= getNumEccellenze($dbh, $id_struttura_query); $r++) {
+
+                        // deve esserci almeno 1 blocco, anche vuoto:
+
+                            for ($r = 1; $r <= 1/*'getNumEccellenze($dbh, $id_struttura_query)'*/; $r++) {
                                 $c = $r - 1; ?>
-                                <div class="form-eccellenza-container fsc-<?php echo $r; ?>"
-                                     id="fsc-eccellenza-<?php echo $r; ?>">
+                                <div class="form-eccellenza-container fsc-<?php echo $r; ?>" id="fsc-eccellenza-<?php echo $r; ?>">
                                     <div class="form-row">
 
                                         <div class="col-12">
-                                            <h5><?php echo $langs['dati_eccellenza']; ?></h5></div>
-                                        <div class="form-group col-md-6">
-                                            <label><?php echo $langs['nome_servizio']; ?>:<span> | <i
-                                                            class="fa fa-language"></i> Lingua</span></label>
-                                            <select id="select-nome-eccellenze" data-form-index="1">
-                                                <?php
-                                                $lingue = getLangsShortcode($dbh);
-                                                for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                    ?>
-                                                    <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                            <?php
-                                            $lingue = getLangsShortcode($dbh);
-                                            for ($i = 0; $i < sizeof($lingue); $i++) {
-
-                                                $strutturaLang = getDatiEccellenze($dbh, $id_struttura_query, $lingue[$i]['shortcode_lingua']);
-                                                ?>
-                                                <input type="text"
-                                                       value="<?php echo $strutturaLang[$r - 1]['titolo']; ?>"
-                                                       class="form-control validate-eccellenza nome-eccellenza nome_eccellenze-<?php echo $r; ?>"
-                                                       id="nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>
-                                                       placeholder="Es: Piatti giapponesi">
-                                            <?php } ?>
-                                        </div>
-
-
-                                        <div class="form-group col-md-6">
-                                            <label><?php echo $langs['immagine_servizio']; ?></label>
-                                            <input type="file" class="form-control immagine_eccellenza validate-hotel"
-                                                   id="immagine_eccellenza-<?php echo $r; ?>">
-                                            <div class="input-group col-md-12" id="preview-img-container">
-                                                <div id="preview-immagine_eccellenza-<?php echo $r; ?>">
-                                                    <div class="img-form-preview"
-                                                         id="ifps-prws-immagine_eccellenza-<?php echo $r; ?>"><span
-                                                                class="delete-preview"
-                                                                id="prws-immagine_eccellenza-<?php echo $r; ?>"
-                                                                onclick="delPreviewEccellenza('immagine_eccellenza-<?php echo $r; ?>')"><i
-                                                                    class="fa fa-close"></i></span><img
-                                                                class="img-form-preview-item"
-                                                                src="<?php echo $strutturaLang[$r - 1]['immagine']; ?>"
-                                                                height="200px">
-                                                        <div class="default-image-cont"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
                                         </div>
 
                                         <div class="form-group col-md-12">
-
                                             <?php
-                                            $lingue = getLangsShortcode($dbh);
-                                            for ($i = 0; $i < sizeof($lingue); $i++) {
+                                                $type = 'input';
+                                                $label = 'nome_servizio';
+                                                $placeholder = 'Es: Piatti giapponesi';
+                                                $field = 'titolo';
+                                                $field_prefix = "nome_eccellenza[$r]";
+                                                $items = array();
+                                                include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
+                                        </div>
 
-                                                $strutturaLang = getDatiEccellenze($dbh, $id_struttura_query, $lingue[$i]['shortcode_lingua']);
+                                        <?php
+                                            $label = $label ?? 'immagine_servizio';
+                                            $button_label = 'immagine_servizio';
+                                            $field_prefix = "img_eccellenza[$r]";
+                                            $urls = array();
+                                            $multiple = false;
+                                            include 'Views/backoffice.images.uploader.php';
+                                        ?>
+
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                                $type = 'richtextbox';
+                                                $label = 'descrizione';
+                                                $field = 'testo';
+                                                $field_prefix = "testo[$r]";
+                                                $items = array();
+                                                include 'Views/backoffice.multilanguage.textbox.php';
                                                 ?>
-                                                <label><?php echo $langs['descrizione'] . ' ' . $lingue[$i]['abbreviazione']; ?></label>
-                                                <div class="summernote"
-                                                     id="descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua']; ?>-<?php echo $r; ?>"
-                                                     class="form-control descrizione_eccellenza validate-eccellenza" <?php if ($i > 0) echo 'style="display:none !important;"'; ?>><?php echo $strutturaLang[$r - 1]['testo']; ?></div>
-                                            <?php } ?>
                                         </div>
 
                                     </div>
 
                                     <div class="form-row">
                                         <div class="form-group col-md-3">
-                                            <label><?php echo $langs['abilitato']; ?></label>
-                                            <select id="abilitato-<?php echo $r; ?>" class="form-control">
-                                                <option value="1" <?php if ($strutturaLang[$r - 1]['abilitato'] == 1) echo 'selected="selected"'; ?>>
-                                                    Si
-                                                </option>
-                                                <option value="0" <?php if ($strutturaLang[$r - 1]['abilitato'] == 0) echo 'selected="selected"'; ?>>
-                                                    No
-                                                </option>
-                                            </select>
+                                            <?php
+                                            $label = 'abilitato';
+                                            $field = "abilitato[$r]";
+                                            $value = 0;
+                                            include 'Views/backoffice.checkbox.php';
+                                            ?>
                                         </div>
 
                                         <div class="form-group col-md-12">
@@ -345,78 +315,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            <?php }
-                        } else { ?>
-
-                            <div class="form-eccellenza-container fsc-1" id="fsc-eccellenza-1" style="display: none;">
-                                <div class="form-row">
-                                    <div class="col-12">
-                                        <h5><?php echo $langs['dati_eccellenza']; ?></h5></div>
-                                    <div class="form-group col-md-6">
-                                        <label><?php echo $langs['nome_servizio']; ?>:<span> | <i
-                                                        class="fa fa-language"></i> Lingua</span></label>
-                                        <select id="select-nome-eccellenze" data-form-index="1">
-                                            <?php
-                                            $lingue = getLangsShortcode($dbh);
-                                            for ($i = 0; $i < sizeof($lingue); $i++) {
-                                                ?>
-                                                <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <?php
-                                        $lingue = getLangsShortcode($dbh);
-                                        for ($i = 0; $i < sizeof($lingue); $i++) {
-                                            ?>
-                                            <input type="text"
-                                                   class="form-control validate-eccellenza nome-eccellenza nome_eccellenze-1"
-                                                   id="nome-eccellenza-<?php echo $lingue[$i]['shortcode_lingua']; ?>-1" <?php if ($i > 0) echo 'style="display:none;"'; ?>
-                                                   placeholder="">
-                                        <?php } ?>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <label><?php echo $langs['immagine_servizio']; ?></label>
-                                        <input type="file" class="form-control immagine_eccellenza validate-hotel"
-                                               id="immagine_eccellenza-1">
-                                        <div class="input-group col-md-12" id="preview-img-container">
-                                            <div id="preview-immagine_eccellenza-1"></div>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    for ($i = 0; $i < sizeof($lingue); $i++) {
-                                        ?>
-                                        <div class="form-group col-md-12">
-                                            <label><?php echo $langs['descrizione'] . ' ' . $lingue[$i]['abbreviazione']; ?></label>
-                                            <div class="summernote"
-                                                 id="descrizione-eccellenza-<?php echo $lingue[$i]['shortcode_lingua']; ?>-1"
-                                                 class="form-control descrizione_eccellenza validate-eccellenza" <?php if ($i > 0) echo 'style="display:none !important;"'; ?>></div>
-                                        </div>
-                                    <?php } ?>
-
-                                </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <label><?php echo $langs['abilitato']; ?></label>
-                                        <select class="form-control" id="abilitato-1">
-                                            <option value="1"><?php echo $langs['si']; ?></option>
-                                            <option value="0"><?php echo $langs['no']; ?></option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <input type="button" class="btn btn-danger annulla-eccellenza" id="eccellenza-1"
-                                               value="Elimina eccellenza">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <hr/>
-                                        <input type="button" class="btn btn-success save-eccellenza"
-                                               value="<?php echo $langs['aggiungi_eccellenza']; ?>">
-                                    </div>
-                                </div>
-                            </div>
-
-                        <?php }
-                        ?>
-
+                            <?php } ?>
                     </div>
                 </div>
             </div>
@@ -424,61 +323,25 @@
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"><?php echo $langs['sec_esplorato_per_voi']; ?></h4>
+                    <h4 class="card-title"><?php echo $view_model->translations->get('sec_esplorato_per_voi'); ?></h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
 
                         <div class="form-didascalia-container dds-1" id="fsc-didascalia-1">
                             <div class="form-row">
-                                <div class="col-12">
-                                    <div class="input-group mb-3">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><?php echo $langs['immagini_didascalia']; ?></span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <input type="file" multiple="multiple" class="custom-file-input"
-                                                   id="immagini_form_didascalie">
-                                            <label class="custom-file-label"><?php echo $langs['scegli_immagini']; ?></label>
-                                        </div>
-                                    </div>
-                                    <div class="input-group col-md-12" id="preview-img-container">
-                                        <div id="preview-didascalie">
-                                            <?php
-                                            $immagini_didascalia = explode("|", $dati_struttura[0]['real_immagini_didascalia']);
-                                            $testi = explode("&&", $dati_struttura[0]['real_path_immagini_didascalia']);
-                                            for ($i = 0; $i < sizeof($immagini_didascalia) - 1; $i++) {
-                                                ?>
-                                                <div class="img-form-preview" id="ifp-prw-<?php echo $i; ?>">
-                                                    <span class="delete-preview" id="prw-<?php echo $i; ?>"
-                                                          onclick="delPreview(<?php echo $i; ?>)"><i
-                                                                class="fa fa-close"></i></span><img
-                                                            class="img-form-preview-item-d img-didascalia"
-                                                            src="<?php echo $immagini_didascalia[$i]; ?>"
-                                                            height="200px">
-                                                    <div class="default-image-cont">
-                                                        <div class="pt20 apt-<?php echo $i; ?>">
-                                                            <?php
-                                                            $lingue = getLangsShortcode($dbh);
-                                                            for ($u = 0; $u < sizeof($lingue); $u++) {
-                                                                $testo = $testi[$i];
-                                                                $testo = explode("||", $testo);
-                                                                $testo = $testo[$u];
-                                                                ?>
-                                                                <textarea
-                                                                        id="testo-didascalia-<?php echo $lingue[$u]['shortcode_lingua']; ?>-<?php echo $i; ?>"
-                                                                        placeholder="Didascalia <?php echo $lingue[$u]['abbreviazione']; ?>"><?php echo $testo; ?></textarea>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
 
-                                        </div>
-                                    </div>
+                                <?php
+                                    $images = explode('|', $view_model->principal->real_immagini_didascalia);
 
+                                    $label = 'immagini_didascalia';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = 'img_didascalia';
+                                    $urls = array_filter($images, function ($img) { return !empty($img); });
+                                    $tips = array(''); // enable tips
+                                    include 'Views/backoffice.images.uploader.php';
+                                ?>
 
-                                </div>
                             </div>
                         </div>
                     </div>

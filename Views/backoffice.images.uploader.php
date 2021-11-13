@@ -3,6 +3,7 @@
     $button_label = $button_label ?? 'scegli_immagini';
     $field_prefix = $field_prefix ?? 'img_url';
     $urls = $urls ?? array();
+    $tips = $tips ?? array();
     $main_url_position = $main_url_position ?? 1;
     $multiple = $multiple ?? true;
     $disabled = !$multiple && count($urls) > 0;
@@ -31,18 +32,22 @@
                     data-name="<?php echo $field_prefix ?>[<?php echo $i + 1; ?>]"
                     src="<?php echo $urls[$i]; ?>" height="200px">
                 <div class="default-image-cont">
-                    <?php if ($multiple) { ?>
                     <div class="pt20">
-                        <input type="radio"
-                               id="default-image"
-                            <?php if ($main_url_position == $i + 1) echo 'checked="checked" '; ?>
-                               name="default_image"
-                               class="default-image"
-                               value="<?php echo $i + 1; ?>">
-                        <label>Immagine principale</label>
-                        <br>
+                        <?php if (!empty($tips)) { ?>
+                            <textarea
+                                    name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>]"
+                                    placeholder="Didascalia <?php echo $label ?>"><?php echo $tips[$i] ?? ''; ?></textarea>
+                        <?php } else if ($multiple) { ?>
+                            <input type="radio"
+                                   id="default-image"
+                                <?php if ($main_url_position == $i + 1) echo 'checked="checked" '; ?>
+                                   name="default_image"
+                                   class="default-image"
+                                   value="<?php echo $i + 1; ?>">
+                            <label>Immagine principale</label>
+                            <br>
+                        <?php } ?>
                     </div>
-                    <?php } ?>
                 </div>
             </div>
         <?php } ?>
