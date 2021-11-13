@@ -66,12 +66,15 @@
     **/
 
     jQuery(document).on("click", ".save-servizio", function () {
-    var items_service = $(".form-service-container").length;
-    var items_next = items_service + 1;
+
+    var items_service = $("#num_services").val();
+    var items_next = parseInt(items_service) + 1;
     jQuery("#num_services").val(items_next);
+
     let $last = jQuery(".form-service-container").last();
     var form = $last.clone();
     $last.after(form);
+
     if (items_service >= 0) {
     $last.find("#abilitato-" + items_service).attr("id", "abilitato-" + items_next);
     $last.find("#servizio-" + items_service).attr("id", "servizio-" + items_next);
@@ -81,11 +84,7 @@
 
     jQuery(".form-service-container").fadeIn();
 
-    var offset = jQuery("#servizio-" + items_next).offset().top;
-    offset = offset - 100;
-    $('html,body').animate({
-    scrollTop: offset
-}, 'slow');
+
 
     // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
     $last.attr("class", " form-service-container fsc-" + items_next);
@@ -121,6 +120,12 @@
     let next = new_classes.join(' ');
     $(this).attr("class", next);
 });
+
+    var offset = jQuery("#servizio-" + items_next).offset().top;
+    offset = offset;
+    $('html,body').animate({
+    scrollTop: offset
+}, 'slow');
 
     /**
      <?php

@@ -2,7 +2,7 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <input type="hidden" id="num_services"
-                   value="<?php if (isset($view_model->services)) echo sizeof($view_model->services); else echo 0; ?>">
+                   value="<?php if (isset($view_model->services)) echo sizeof($view_model->services); else echo 1; ?>">
             <a href="javascript:void()" class="open-create-service save-servizio btn btn-primary"><i
                         class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_servizio'); ?>
             </a>
