@@ -110,63 +110,42 @@
                                            id="conferma_password-type-2"
                                            class="form-control">
                                 </div>
-                                <?php
-                                $label = 'abilitato';
-                                $field = 'abiliato';
-                                include 'Views/backoffice.checkbox.php';
-                                ?>
-                                <?php
-                                $label = 'hotel_pro';
-                                $field = 'level';
-                                include 'Views/backoffice.checkbox.php';
-                                ?>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'descrizione_ospiti';
-                                    $items = $view_model->hotel_translations;
-                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'abilitato';
+                                        $field = 'abilitato';
+                                        include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
 
-                                <div class="input-group col-md-12">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><?php echo $view_model->translations->get('immagini_hotel'); ?></span>
-                                    </div>
-                                    <div class="custom-file">
-                                        <input type="file" multiple="multiple" class="custom-file-input"
-                                               id="immagini_form">
-                                        <label class="custom-file-label"><?php echo $view_model->translations->get('scegli_immagini'); ?></label>
-                                    </div>
+                                <div class="form-group col-md-12">
+                                    <?php
+                                        $label = 'hotel_pro';
+                                        $field = 'level';
+                                        include 'Views/backoffice.checkbox.php';
+                                    ?>
                                 </div>
-                                <div class="input-group col-md-12" id="preview-img-container">
-                                    <div id="preview">
-                                        <?php
-                                        $immagini = explode("|", $view_model->profile->immagini_secondarie);
 
-                                        for ($i = 0; $i < sizeof($immagini) - 1; $i++) { ?>
-                                            <div class="img-form-preview" id="ifp-prw-<?php echo $i + 1; ?>"><span
-                                                        class="delete-preview" id="prw-<?php echo $i + 1; ?>"
-                                                        onclick="delPreview(<?php echo $i + 1; ?>)"><i
-                                                            class="fa fa-close"></i></span><img
-                                                        class="img-form-preview-item img-hotel"
-                                                        src="<?php echo $immagini[$i]; ?>" height="200px">
-                                                <div class="default-image-cont">
-                                                    <div class="pt20">
-                                                        <input type="radio"
-                                                               id="default-image"
-                                                            <?php if ($view_model->profile->immagine_principale == $i + 1) echo 'checked="checked" '; ?>
-                                                               name="default_image"
-                                                               class="default-image"
-                                                               value="<?php echo $i + 1; ?>">
-                                                        <label>Immagine principale</label>
-                                                        <br>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
+                                <div class="form-group col-md-12">
+                                    <?php
+                                        $label = 'descrizione_ospiti';
+                                        $items = $view_model->hotel_translations;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                    ?>
                                 </div>
+
+                                <?php
+                                    $immagini = explode("|", $view_model->profile->immagini_secondarie);
+
+                                    $label = 'immagini_hotel';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = "img_hotel";
+                                    $urls = array_filter($immagini, function($img) { return !empty($img); });
+                                    $multiple = true;
+                                    include 'Views/backoffice.images.uploader.php';
+                                ?>
+
 
                             </div>
                         </div>

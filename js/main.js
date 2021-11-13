@@ -18,36 +18,17 @@ function hideEasy(hide_or_display) {
 }
 
 
-function delPreview(id) {
-    id = 'prw-' + id;
-    jQuery("#ifp-" + id).hide(function () {
-        jQuery("#ifp-" + id).remove();
-        jQuery("#immagini_form").val(null);
+function delPreview(target) {
+    var $target = jQuery(target).parent();
+    var $input = $target.parent()
+        .parent()
+        .prev()
+        .find('input.custom-file-input');
+    $input.prop('disabled', false);
+    $target.hide(function () {
+        $target.remove();
     });
 }
-
-function delPreviewDidascalie(id) {
-    id = 'prw-' + id;
-    jQuery("#ifp-" + id).hide(function () {
-        jQuery("#ifp-" + id).remove();
-        jQuery("#immagini_form").val(null);
-    });
-}
-
-
-function delPreviewEccellenza(id) {
-    id = 'prws-' + id;
-    jQuery("#ifps-" + id).hide(function () {
-        jQuery("#ifps-" + id).remove();
-    });
-}
-
-function delPreviewServizi(id) {
-    id = 'prws-' + id;
-    jQuery("#ifps-" + id).children().empty();
-
-}
-
 
 $(document).click(function (event) {
     var $target = $(event.target);
@@ -180,29 +161,12 @@ jQuery(".validate-it").click(function (e) {
         }
     }
 
-    if (jQuery(".img_evento").length) {
-        var img_evento = jQuery(".img-hotel").attr("src");
-        $(jQuery("#preview").append('<input type="hidden" name="img_evento" class="img_hidden" value="' + img_evento + '">'));
-    }
-
-    if (jQuery(".img-hotel").length) {
-        jQuery(".img-hotel").each(function () {
-            let img_hotel = jQuery(this).attr("src");
-            $("#preview").append('<input type="hidden" name="img_hotel[]" class="img_hidden" value="' + img_hotel + '">');
+    if (jQuery(".img-form-preview-item").length) {
+        jQuery(".img-form-preview-item").each(function () {
+            var url = $(this).attr("src");
+            var name = $(this).data("name");
+            $img.append(`<input type="hidden" name="${name}" class="img_hidden" value="${url}">`);
         });
-    }
-
-    if (jQuery(".img-servizio").length) {
-        jQuery(".img-servizio").each(function () {
-            let img_servizio = jQuery(this).attr("src");
-            let num_servizio = jQuery(this).data("numero-servizio");
-            $(this).append('<input type="hidden" name="img_servizio[' + num_servizio + ']" class="img_hidden" value="' + img_servizio + '">');
-        });
-    }
-
-    if (jQuery(".img-hotel").length) {
-        var img_hotel = jQuery(".img-hotel").attr("src");
-        $(jQuery("#preview").append('<input type="hidden" name="img_hotel[]" class="img_hidden" value="' + img_hotel + '">'));
     }
 
     if (jQuery("#password").length)
