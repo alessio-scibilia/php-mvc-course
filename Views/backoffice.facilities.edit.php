@@ -1,18 +1,17 @@
-<input type="hidden" id="id_struttura" value="<?php echo $id_struttura_query; ?>">
-<div class="container-fluid">
+<form action="/backoffice/facilities/<?php  echo $view_model->principal->related_id; ?>/edit" method="post" enctype="multipart/form-data">
+<input ass="container-fluid">
     <div class="row">
+
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
-            <a href="/backoffice/facilities" id="gobacksearch" class="open-view-action-inside back-btn"
-               data-action="<?php echo $langs['link_strutture']; ?>"
-               data-title="<?php echo $langs['gestione_strutture']; ?>" data-params="false"
-               data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
-                        class="fa fa-angle-left"></i> <?php echo $langs['gestione_strutture']; ?> /</a>
-            <h1><i class="fa fa-building"></i> <?php echo $langs['modifica_struttura']; ?></h1>
+            <a href="/backoffice/facilities" id="gobacksearch" class="open-view-action-inside back-btn"><i
+                        class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_strutture'); ?> /</a>
+            <h1><i class="fa fa-building"></i> <?php echo $view_model->translations->get('modifica_struttura'); ?></h1>
         </div>
+
         <div class="col-xl-12 col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"><?php echo $langs['dati_struttura']; ?></h4>
+                    <h4 class="card-title"><?php echo echo $view_model->translations->get('dati_struttura'); ?></h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -799,3 +798,4 @@
 
     </div>
 </div>
+</form>

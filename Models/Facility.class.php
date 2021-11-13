@@ -17,6 +17,9 @@ class Facility
     /** @var int */
     public $abilitata;
 
+    /** @var int */
+    public $related_id;
+
     /**
      * @param array|null $row
      */
