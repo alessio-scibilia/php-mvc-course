@@ -1,4 +1,4 @@
-<form action="/backoffice/hotels/add"
+<form action="/backoffice/hotels/add?XDEBUG_SESSION_START"
       method="POST"
       enctype="multipart/form-data">
     <div class="container-fluid">

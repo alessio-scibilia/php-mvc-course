@@ -17,6 +17,8 @@ class Languages
 
     protected $selected;
 
+    public $shortcode_lingua;
+
     /**
      * @param array|null $rows
      */

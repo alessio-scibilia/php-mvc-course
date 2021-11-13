@@ -1,5 +1,5 @@
 <?php
-    $model = $model ?? (object)array
+$model = $model ?? (object)array
     (
         'indirizzo' => '',
         'latitudine' => '',
@@ -15,8 +15,8 @@
            placeholder="Via 20 Settembre, Milano (MI)"
            value="<?php echo $model->indirizzo; ?>">
     <div class="input-group-append">
-        <button class="btn btn-primary mt5 calcGPS" type="button"><i
-                class="fa fa-map-marker"></i> <?php echo $view_model->translations->get('calcola_coordinate'); ?>
+        <button class="btn btn-primary mt5 calcGPS" id="calcGPS" type="button"><i
+                    class="fa fa-map-marker"></i> <?php echo $view_model->translations->get('calcola_coordinate'); ?>
         </button>
     </div>
 </div>

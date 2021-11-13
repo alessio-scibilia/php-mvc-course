@@ -42,6 +42,9 @@ class BackOfficeViewModel extends AbstractTemplateViewModel
     /** @var array */
     public $users;
 
+    /** @var int */
+    public $shortcode_lingua;
+
     /** @var array */
     public $hotel_associati;
 
