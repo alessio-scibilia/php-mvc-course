@@ -26,7 +26,7 @@
     <?php $filter = function ($item) use ($language) { return $item->shortcode_lingua == $language['shortcode_lingua']; }; ?>
     <?php $results = array_filter($items, $filter); ?>
     <?php $model = array_pop($results); ?>
-    <?php $is_selected = ($model->shortcode_lingua ?? '') == $view_model->language['shortcode_lingua']; ?>
+    <?php $is_selected = ($model->shortcode_lingua ?? $language['shortcode_lingua']) == $view_model->language['shortcode_lingua']; ?>
     <div class="ml-textbox ml-textbox-<?php echo $class_name; ?> ml-textbox-<?php echo $language['abbreviazione'] ?>"
         <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
         <?php

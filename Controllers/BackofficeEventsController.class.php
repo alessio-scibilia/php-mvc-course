@@ -42,6 +42,7 @@ class BackofficeEventsController
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
+            $language = $languages->get($id_lingua);
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
             $title = $translations->get('gestione_eventi') . ' | ' . $translations->get('nome_sito');
@@ -59,6 +60,7 @@ class BackofficeEventsController
             $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->events = $events;
+            $view_model->language;
             $view_model->menu_active_btn = 'events';
 
             return new HtmlView($view_model);
@@ -143,6 +145,12 @@ class BackofficeEventsController
                         $event[$field] = intval($params[$field]);
                         break;
 
+                    case 'img_evento':
+                        $images = array_values($params[$field]);
+                        $image = array_pop($images);
+                        $event[$field] = $image;
+                        break;
+
                     default:
                         $event[$field] = $params[$field];
                         break;
@@ -174,7 +182,7 @@ class BackofficeEventsController
                         (
                             'id_evento' => $id_evento,
                             'shortcode_lingua' => $language['shortcode_lingua'],
-                            'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['descrizione_ospiti'][$abbreviation] ?? '',
+                            'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['testo_convenzione'][$abbreviation] ?? '',
                             'descrizione_evento' => $descrizione_evento,
                             'id_hotel' => $id_hotel,
                             'id_struttura' => $id_struttura
@@ -185,6 +193,6 @@ class BackofficeEventsController
             }
         }
 
-        return new HttpRedirectView('/backoffice/events');
+        return new HttpRedirectView("/backoffice/events/$id_evento/edit");
     }
 }

@@ -115,28 +115,17 @@
                                     </div>
 
                                     <div class="form-row">
-                                        <div class="input-group col-md-12">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><?php echo $view_model->translations->get('immagine_evento'); ?></span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="immagini_evento">
-                                                <label class="custom-file-label"><?php echo $view_model->translations->get('scegli_immagini'); ?></label>
-                                            </div>
-                                        </div>
-                                        <div class="input-group col-md-12" id="preview-img-container">
-                                            <div id="preview">
-                                                <div class="img-form-preview" id="ifp-prw-1">
-                                                            <span class="delete-preview" id="prw-1"
-                                                                  onclick="delPreview(1)">
-                                                                <i class="fa fa-close"></i>
-                                                            </span>
-                                                    <img class="img-form-preview-item img_evento"
-                                                         src="<?php echo $event->img_evento; ?>"
-                                                         height="200px">
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <?php
+                                            $label = 'immagine_evento';
+                                            $button_label = 'scegli_immagini';
+                                            $field_prefix = "img_evento";
+                                            $urls = empty($event->img_evento) ? array() : array($event->img_evento);
+                                            $multiple = false;
+                                            include 'Views/backoffice.images.uploader.php';
+                                        ?>
+
+
+
                                         <div class="form-group col-md-12">
                                             <label><?php echo $view_model->translations->get('nome_evento'); ?></label>
                                             <input type="text" name="nome_evento" id="nome_evento"
@@ -154,6 +143,7 @@
                                         <div class="form-group col-md-12">
                                             <?php
                                                 $label = 'descrizione_evento';
+                                                $field_prefix = 'descrizione_evento';
                                                 $items = $view_model->all_languages_facility_events;
                                                 include 'Views/backoffice.multilanguage.textbox.php';
                                             ?>
@@ -187,6 +177,7 @@
                                                    value="<?php echo $event->ora_fine_evento; ?>">
                                         </div>
                                     </div>
+
                                     <div class="form-row">
                                         <div class="mt20 col-md-12">
                                             <h4><?php echo $view_model->translations->get('convenzione'); ?></h4>
@@ -203,11 +194,13 @@
                                             <?php
                                                 $label = 'descrizione_ospiti';
                                                 $field = 'testo_convenzione';
+                                                $field_prefix = 'testo_convenzione';
                                                 $items = $view_model->all_languages_facility_events;
                                                 include 'Views/backoffice.multilanguage.textbox.php';
                                             ?>
                                         </div>
                                     </div>
+
                                 </div>
 
                             <?php } else { ?>
@@ -222,6 +215,7 @@
                                             <?php
                                             $label = 'descrizione_ospiti';
                                             $field = 'testo_convenzione';
+                                            $field_prefix = 'testo_convenzione';
                                             $items = $view_model->all_languages_facility_events;
                                             include 'Views/backoffice.multilanguage.textbox.php';
                                             ?>
@@ -236,9 +230,6 @@
                 <div class="col-xl-12 col-lg-12">
                     <div class="form-group col-md-12">
                         <div align="left">
-                            <?php
-                            //TODO gli utenti hotel che hanno solo la convenzione con l'evento ma non lo hanno creato devono poter salvare solo la convenzione
-                            //$eventInfo = getEventInfo($dbh, $params[1], $lingue[$i]['shortcode_lingua']); ?>
                             <input type="submit" class="btn btn-success validate-it"
                                    value="<?php echo $view_model->translations->get('aggiorna_evento'); ?>">
 
