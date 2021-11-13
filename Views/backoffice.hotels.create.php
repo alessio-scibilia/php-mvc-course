@@ -84,6 +84,7 @@
                                     <?php
                                     $label = 'hotel_pro';
                                     $field = 'level';
+                                    $field_prefix = 'level';
                                     include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
@@ -91,6 +92,8 @@
                                 <div class="form-group col-md-12">
                                     <?php
                                     $label = 'descrizione_ospiti';
+                                    $field = 'descrizione_ospiti';
+                                    $field_prefix = 'descrizione_ospiti';
                                     $items = array();
                                     include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>

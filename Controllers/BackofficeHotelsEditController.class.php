@@ -85,8 +85,7 @@ class BackofficeHotelsEditController
             isset($params['orario_continuato']) &&
             isset($params['giorno']) &&
             isset($params['img_servizio'])
-        )
-        {
+        ) {
             $multiples = array
             (
                 'descrizione',
@@ -118,6 +117,9 @@ class BackofficeHotelsEditController
                 'indirizzo',
                 'latitudine',
                 'longitudine',
+                'abilitato',
+                'level',
+                'password',
             );
             $hotel_translations = $this->hotel_repository->get_by_related_id($id);
             if (empty($hotel_translations)) {
@@ -127,7 +129,14 @@ class BackofficeHotelsEditController
 
             foreach ($hotel_translations as &$hotel_translation) {
                 foreach ($hotel_fields as $hotel_field) {
-                    $hotel_translation[$hotel_field] = $params[$hotel_field];
+                    if ($hotel_field == 'password' && empty($params['password']))
+                        continue;
+                    else if ($hotel_field == 'password')
+                        $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
+
+                    else
+                        $hotel_translation[$hotel_field] = $params[$hotel_field];
+
                 }
                 $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
                 if (!empty($language)) {
@@ -142,14 +151,11 @@ class BackofficeHotelsEditController
             $related_id = $hotel_translations[0]['related_id'];
             $this->service_repository->remove_by_hotel($related_id);
 
-            if (!empty($params['nome_servizio']))
-            {
+            if (!empty($params['nome_servizio'])) {
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-                foreach ($params['nome_servizio'] as $i => $names)
-                {
+                foreach ($params['nome_servizio'] as $i => $names) {
                     $images = array_values($params['img_servizio'][$i]);
-                    foreach ($names as $abbreviation => $titolo)
-                    {
+                    foreach ($names as $abbreviation => $titolo) {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                         $service = array
@@ -162,8 +168,7 @@ class BackofficeHotelsEditController
                             'shortcode_lingua' => $language['shortcode_lingua'],
                             'posizione' => $params['posizione'][$i]
                         );
-                        foreach ($weekdays as $weekday)
-                        {
+                        foreach ($weekdays as $weekday) {
                             $orari = $params['giorno'][$i][$weekday];
                             $flag = $params['orario_continuato'][$i][$weekday];
                             $prefix = str_repeat('|', empty($orari) ? 0 : 1);
@@ -177,9 +182,7 @@ class BackofficeHotelsEditController
                 }
             }
             unset($params['errors']);
-        }
-        else
-        {
+        } else {
             $params['errors'][] = "Missing mandatory field";
         }
 
