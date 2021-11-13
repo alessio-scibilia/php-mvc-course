@@ -60,7 +60,7 @@ class BackofficeEventsController
             $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->events = $events;
-            $view_model->language;
+            $view_model->language = $language;
             $view_model->menu_active_btn = 'events';
 
             return new HtmlView($view_model);
