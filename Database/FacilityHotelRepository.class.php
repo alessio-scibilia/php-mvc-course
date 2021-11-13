@@ -22,4 +22,19 @@ class FacilityHotelRepository extends MySQLRepository
         $results = $this->get($where, $params);
         return array_pop($results);
     }
+
+    public function get_related_by_facility_id_and_language_id(int $id_struttura, int $id_lingua): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT sh.id_hotel, h.nome",
+            "FROM $table sh",
+            "INNER JOIN hotel h ON",
+            "   h.related_id = sh.id_hotel AND",
+            "   h.shortcode_lingua = 1",
+            "WHERE id_struttura = :id_struttura",
+        ));
+        $params = array(":id_struttura" => $id_struttura);
+        return $this->query($query, $params);
+    }
 }

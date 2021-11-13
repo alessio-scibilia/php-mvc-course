@@ -18,7 +18,6 @@
                     <h4 class="card-title"><?php echo $view_model->translations->get('lista_strutture'); ?></h4>
                 </div>
                 <div class="card-body">
-
                     <div class="table-responsive">
                         <table id="example" class="display" style="min-width: 100%">
                             <thead>
@@ -47,9 +46,13 @@
                                     <td><?php echo $facility->telefono; ?></td>
                                     <td><?php echo $facility->indirizzo_struttura; ?></td>
                                     <td>
-                                        <a href="/backoffice"
-                                           class="tagit delHot"><?php echo $hotel_associati[$t]['nome']; ?> <i
-                                                    class="fa fa-close"></i></a>
+                                        <?php
+                                        $rel_hotels = $view_model->hotel_associati[$facility->related_id];
+                                        foreach ($rel_hotels as $hotel_associato) { ?>
+                                            <a href="/backoffice/facilities/hotels/set/<?php echo $hotel_associato->id_hotel; ?>"
+                                               class="tagit delHot"><?php echo $hotel_associato->nome; ?> <i
+                                                        class="fa fa-close"></i></a>
+                                        <?php } ?>
 
                                     </td>
                                     <td>
