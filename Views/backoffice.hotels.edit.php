@@ -60,13 +60,14 @@
                                            placeholder="020483039">
                                 </div>
 
-                                <?php $model = $view_model->profile; include 'Views/backoffice.geolocator.php'; ?>
+                                <?php $model = $view_model->profile;
+                                include 'Views/backoffice.geolocator.php'; ?>
 
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('password'); ?></label>
                                     <input type="password"
                                            name="password"
-                                           value="<?php echo $view_model->profile->longitudine; ?>"
+                                           value=""
                                            id="password"
                                            class="form-control">
                                 </div>
@@ -74,44 +75,50 @@
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('conferma_password'); ?></label>
                                     <input type="password"
-                                           value="<?php echo $view_model->profile->longitudine; ?>"
+                                           value=""
                                            id="conferma_password-type-2"
                                            class="form-control">
                                 </div>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                        $label = 'abilitato';
-                                        $field = 'abilitato';
-                                        include 'Views/backoffice.checkbox.php';
+                                    $label = 'abilitato';
+                                    $field = 'abilitato';
+                                    $field_prefix = 'abilitato';
+                                    include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                        $label = 'hotel_pro';
-                                        $field = 'level';
-                                        include 'Views/backoffice.checkbox.php';
+                                    $label = 'hotel_pro';
+                                    $field = 'level';
+                                    $field_prefix = 'level';
+                                    include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                        $label = 'descrizione_ospiti';
-                                        $items = $view_model->hotel_translations;
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                    $label = 'descrizione_ospiti';
+                                    $field = 'descrizione_ospiti';
+                                    $field_prefix = 'descrizione_ospiti';
+                                    $items = $view_model->hotel_translations;
+                                    include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
 
                                 <?php
-                                    $immagini = explode("|", $view_model->profile->immagini_secondarie);
+                                $immagini = explode("|", $view_model->profile->immagini_secondarie);
 
-                                    $label = 'immagini_hotel';
-                                    $button_label = 'scegli_immagini';
-                                    $field_prefix = "img_hotel";
-                                    $urls = array_filter($immagini, function($img) { return !empty($img); });
-                                    $multiple = true;
-                                    include 'Views/backoffice.images.uploader.php';
+                                $label = 'immagini_hotel';
+                                $button_label = 'scegli_immagini';
+                                $field_prefix = "img_hotel";
+                                $urls = array_filter($immagini, function ($img) {
+                                    return !empty($img);
+                                });
+                                $multiple = true;
+                                include 'Views/backoffice.images.uploader.php';
                                 ?>
 
                             </div>
