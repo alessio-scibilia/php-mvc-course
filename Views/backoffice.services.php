@@ -23,7 +23,7 @@
                     <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <?php
                         $type = 'input';
                         $label = 'nome_servizio';
@@ -36,7 +36,7 @@
                     ?>
                 </div>
 
-                <div class="form-group col-md-5">
+                <div class="form-group col-md-6">
                     <?php
                         $type = 'textarea';
                         $label = 'descrizione';
@@ -49,34 +49,13 @@
                     ?>
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label><?php echo $view_model->translations->get('immagine_servizio'); ?></label>
-                    <input type="file"
-                           class="form-control immagine_servizio validate-hotel"
-                           id="immagine_servizio-<?php echo $r; ?>">
-
-                    <div class="input-group col-md-12" id="preview-img-container">
-
-                        <div id="preview-immagine_servizio-<?php echo $r; ?>">
-                            <div class="img-form-preview"
-                                 id="ifps-prws-immagine_servizio-<?php echo $r; ?>">
-                                <div class="preview_servizio">
-                                                        <span
-                                                            class="delete-preview"
-                                                            id="prws-immagine_servizio-<?php echo $r; ?>"
-                                                            onclick="delPreviewServizi()"><i
-                                                                class="fa fa-close"></i></span><img
-                                        class="img-form-preview-item img-servizio"
-                                        src="<?php echo $principal->immagine; ?>"
-                                        data-numero-servizio="<?php echo $r; ?>"
-                                        height="200px">
-                                    <div class="default-image-cont"></div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                <?php
+                    $label = 'immagine_servizio';
+                    $button_label = 'immagine_servizio';
+                    $urls = array($principal->immagine);
+                    $multiple = false;
+                    include 'Views/backoffice.images.uploader.php';
+                ?>
 
                 <div class="form-group col-md-12">
                     <label><?php echo $view_model->translations->get('orari'); ?></label>

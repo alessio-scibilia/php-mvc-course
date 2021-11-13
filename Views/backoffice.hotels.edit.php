@@ -114,7 +114,7 @@
                                 <div class="form-group col-md-12">
                                     <?php
                                         $label = 'abilitato';
-                                        $field = 'abiliato';
+                                        $field = 'abilitato';
                                         include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
@@ -129,9 +129,9 @@
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'descrizione_ospiti';
-                                    $items = $view_model->hotel_translations;
-                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione_ospiti';
+                                        $items = $view_model->hotel_translations;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
 
