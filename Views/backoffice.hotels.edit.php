@@ -110,16 +110,22 @@
                                            id="conferma_password-type-2"
                                            class="form-control">
                                 </div>
-                                <?php
-                                $label = 'abilitato';
-                                $field = 'abiliato';
-                                include 'Views/backoffice.checkbox.php';
-                                ?>
-                                <?php
-                                $label = 'hotel_pro';
-                                $field = 'level';
-                                include 'Views/backoffice.checkbox.php';
-                                ?>
+
+                                <div class="form-group col-md-12">
+                                    <?php
+                                        $label = 'abilitato';
+                                        $field = 'abiliato';
+                                        include 'Views/backoffice.checkbox.php';
+                                    ?>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <?php
+                                        $label = 'hotel_pro';
+                                        $field = 'level';
+                                        include 'Views/backoffice.checkbox.php';
+                                    ?>
+                                </div>
 
                                 <div class="form-group col-md-12">
                                     <?php

@@ -136,22 +136,29 @@
             </div>
             <div class="form-row">
 
-                <?php
-                    $label = 'abilitato';
-                    $field = "servizio_abilitato[$r]";
-                    $value = $principal->abilitato;
-                    include 'Views/backoffice.checkbox.php';
-                ?>
+                <div class="form-group col-md-3">
+                    <?php
+                        $label = 'abilitato';
+                        $field = "servizio_abilitato[$r]";
+                        $value = $principal->abilitato;
+                        include 'Views/backoffice.checkbox.php';
+                    ?>
+                </div>
 
                 <div class="form-group col-md-12">
-                    <input type="button" class="btn btn-danger annulla-servizio"
-                           id="servizio-<?php echo $r; ?>" value="Elimina servizio">
+                    <input type="button"
+                           class="btn btn-danger annulla-servizio"
+                           id="servizio-<?php echo $r; ?>"
+                           value="Elimina servizio">
                 </div>
+
                 <div class="form-group col-md-12">
                     <hr/>
-                    <input type="button" class="btn btn-success save-servizio"
+                    <input type="button"
+                           class="btn btn-success save-servizio"
                            value="Aggiungi un altro servizio">
                 </div>
+
             </div>
         </div>
     <?php } ?>
