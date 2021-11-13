@@ -21,7 +21,6 @@ class BackofficeAdministratorUpdateController
         if (isset($params['administrators'])) {
             return new Html404();
         } else {
-
             $user = SessionManager::get_user();
             // Solo gli utenti con level <= 2 possono accedere a queste pagine "amministratori",
             // Gli altri bisogna mandarli su pagine adeguate tramite redirect

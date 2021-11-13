@@ -176,6 +176,30 @@ function removeRelatedCat(val) {
     $(".relatedCat-" + val).remove();
 }
 
+jQuery(document).on()("changed.bs.select", ".selectpicker, .selectpicker1, .selectpicker3", function (e, clickedIndex, isSelected, previousValue) {
+    let val = $(this).val();
+    let nome = $(".selectpicker:selected").text();
+    let nome_campo = $(this).data('name');
+
+    switch (nome_campo) {
+        case '':
+            var classe_ancora = 'relHot';
+            var classe_ancora_2 = 'isRelatedToShow-' + val;
+            var onclick_function = 'removeRelatedHotel(' + val + ')';
+            break;
+        case '':
+            var classe_ancora = 'relHot';
+            var classe_ancora_2 = 'isRelatedToShow-' + val;
+            var onclick_function = 'removeRelatedHotel(' + val + ')';
+            break;
+        case '':
+            var classe_ancora = 'relHot';
+            var classe_ancora_2 = 'isRelatedToShow-' + val;
+            var onclick_function = 'removeRelatedHotel(' + val + ')';
+            break;
+    }
+});
+
 jQuery(document).on("changed.bs.select", ".selectpicker", function (e, clickedIndex, isSelected, previousValue) {
     var val = $(this).val();
     var nome = $(".selectpicker :selected").text();

@@ -45,6 +45,7 @@ class BackofficeEventsNewController
             $languages = new Languages($this->language_repository->list_all());
             $id_lingua = SessionManager::get_lang();
             $languages->select($id_lingua);
+            $language = $languages->get($id_lingua);
 
             $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
             $title = $translations->get('gestione_eventi') . ' | ' . $translations->get('nome_sito');
@@ -69,6 +70,7 @@ class BackofficeEventsNewController
             $view_model = new BackOfficeViewModel('backoffice.events.create', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->related_facilities = $related_facilities;
+            $view_model->language = $language;
             $view_model->related_hotels = $related_hotels;
             $view_model->menu_active_btn = 'events';
 
