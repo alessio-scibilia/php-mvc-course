@@ -46,7 +46,12 @@
                                     <td><?php echo $facility->email; ?></td>
                                     <td><?php echo $facility->telefono; ?></td>
                                     <td><?php echo $facility->indirizzo_struttura; ?></td>
-                                    <td>TODO</td>
+                                    <td>
+                                        <a href="/backoffice"
+                                           class="tagit delHot"><?php echo $hotel_associati[$t]['nome']; ?> <i
+                                                    class="fa fa-close"></i></a>
+
+                                    </td>
                                     <td>
                                         <form action="/backoffice/facility/<?php echo $facility->related_id ?>/enable"
                                               method="POST" enctype="multipart/form-data">

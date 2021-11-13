@@ -94,11 +94,38 @@
                                            class="form-control" placeholder="8.343445">
                                 </div>
 
+                                <div class="form-group col-md-6">
+                                    <label><?php echo $view_model->translations->get('password'); ?></label>
+                                    <input type="password"
+                                           name="password"
+                                           value="<?php echo $view_model->profile->longitudine; ?>"
+                                           id="password"
+                                           class="form-control">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label><?php echo $view_model->translations->get('conferma_password'); ?></label>
+                                    <input type="password"
+                                           value="<?php echo $view_model->profile->longitudine; ?>"
+                                           id="conferma_password-type-2"
+                                           class="form-control">
+                                </div>
+                                <?php
+                                $label = 'abilitato';
+                                $field = 'abiliato';
+                                include 'Views/backoffice.checkbox.php';
+                                ?>
+                                <?php
+                                $label = 'hotel_pro';
+                                $field = 'level';
+                                include 'Views/backoffice.checkbox.php';
+                                ?>
+
                                 <div class="form-group col-md-12">
                                     <?php
-                                        $label = 'descrizione_ospiti';
-                                        $items = $view_model->hotel_translations;
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                    $label = 'descrizione_ospiti';
+                                    $items = $view_model->hotel_translations;
+                                    include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
 
