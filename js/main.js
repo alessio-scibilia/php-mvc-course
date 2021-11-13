@@ -18,18 +18,6 @@ function hideEasy(hide_or_display) {
 }
 
 
-function delPreview(target) {
-    var $target = jQuery(target).parent();
-    var $input = $target.parent()
-        .parent()
-        .prev()
-        .find('input.custom-file-input');
-    $input.prop('disabled', false);
-    $target.hide(function () {
-        $target.remove();
-    });
-}
-
 $(document).click(function (event) {
     var $target = $(event.target);
     if (!$target.closest('.toConfirm').length) {
@@ -165,7 +153,7 @@ jQuery(".validate-it").click(function (e) {
         jQuery(".img-form-preview-item").each(function () {
             var url = $(this).attr("src");
             var name = $(this).data("name");
-            $img.append(`<input type="hidden" name="${name}" class="img_hidden" value="${url}">`);
+            $(this).append(`<input type="hidden" name="${name}" class="img_hidden" value="${url}">`);
         });
     }
 

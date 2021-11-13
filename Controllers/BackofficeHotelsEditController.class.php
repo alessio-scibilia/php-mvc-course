@@ -147,15 +147,17 @@ class BackofficeHotelsEditController
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
                 foreach ($params['nome_servizio'] as $i => $names)
                 {
+                    $images = array_values($params['img_servizio'][$i]);
                     foreach ($names as $abbreviation => $titolo)
                     {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
+
                         $service = array
                         (
                             'hotel_associato' => $related_id,
                             'titolo' => $titolo,
                             'descrizione' => $params['descrizione'][$i][$abbreviation],
-                            'immagine' => $params['img_servizio'][$i],
+                            'immagine' => $images[0], // only 1 image for services
                             'abilitato' => $params['servizio_abilitato'][$i],
                             'shortcode_lingua' => $language['shortcode_lingua'],
                             'posizione' => $params['posizione'][$i]

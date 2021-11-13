@@ -1,3 +1,16 @@
+
+function delPreview(target) {
+    var $target = jQuery(target).parent();
+    var $input = $target.parent()
+        .parent()
+        .prev()
+        .find('input.custom-file-input');
+    $input.prop('disabled', false);
+    $target.hide(function () {
+        $target.remove();
+    });
+}
+
 $('input.custom-file-input').on("change", function () {
     var $container = $(this).parent().parent().next();
     var $previews = $container.find(".img-form-preview");
@@ -15,8 +28,9 @@ $('input.custom-file-input').on("change", function () {
     $(".notification-message").fadeIn();
 
     // AJAX request
+    var post_url = $(this).data('post-url');
     $.ajax({
-        url: "/backoffice/upload/images?XDEBUG_SESSION_START", // <?php include 'Views/xdebug.querystring.first.php'; ?>
+        url: post_url,
         type: 'post',
         data: form_data,
         dataType: 'json',

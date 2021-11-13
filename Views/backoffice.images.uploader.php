@@ -6,6 +6,7 @@
     $main_url_position = $main_url_position ?? 1;
     $multiple = $multiple ?? true;
     $disabled = !$multiple && count($urls) > 0;
+    $post_url = "/backoffice/upload/images";
 ?>
 <div class="input-group col-md-12">
     <div class="input-group-prepend">
@@ -14,13 +15,14 @@
     <div class="custom-file">
         <input type="file" <?php if ($multiple) echo 'multiple="multiple"'; ?>
                data-name="<?php echo $field_prefix ?>"
+               data-post-url="<?php echo $post_url; include 'Views/xdebug.querystring.first.php'; ?>"
                class="custom-file-input" <?php if ($disabled) echo 'disabled'; ?>>
         <label class="custom-file-label"><?php echo $view_model->translations->get($button_label); ?></label>
     </div>
 </div>
 <div class="input-group col-md-12 mb-3">
     <div class="preview">
-        <?php for ($i = 0; $i < sizeof($urls) - 1; $i++) { ?>
+        <?php for ($i = 0; $i < sizeof($urls); $i++) { ?>
             <div class="img-form-preview">
                 <span
                     class="delete-preview"
