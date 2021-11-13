@@ -4,11 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 d-flex align-items-center justify-content-start mb15">
-                <a href="/backoffice/hotels" id="gobacksearch" class="open-view-action-inside back-btn"
-                   data-action="<?php echo $view_model->translations->get('link_hotels'); ?>"
-                   data-title="<?php echo $view_model->translations->get('gestione_hotels'); ?> | Wellcome"
-                   data-params="false"
-                   data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
+                <a href="/backoffice/hotels" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_hotels'); ?>
                     /</a>
                 <h1><i class="fa fa-building-o"></i> <?php echo $view_model->profile->nome; ?></h1>
@@ -25,6 +21,7 @@
                     <div class="card-body">
                         <div class="basic-form">
                             <div class="form-row">
+
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('nome_hotel'); ?></label>
                                     <input type="text"
@@ -33,6 +30,7 @@
                                            id="nome"
                                            class="form-control validate-hotel" placeholder="London Hotel">
                                 </div>
+
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('email'); ?></label>
                                     <input value="<?php echo $view_model->profile->email; ?>"
@@ -41,6 +39,7 @@
                                            id="email"
                                            class="form-control validate-hotel" placeholder="mario@rossi.it">
                                 </div>
+
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('sito_web'); ?></label>
                                     <input value="<?php echo $view_model->profile->sito_web; ?>"
@@ -50,6 +49,7 @@
                                            id="sito"
                                            placeholder="www.hotelsuperlondon.co.uk">
                                 </div>
+
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('telefono'); ?></label>
                                     <input value="<?php echo $view_model->profile->telefono; ?>"
@@ -59,40 +59,8 @@
                                            id="telefono"
                                            placeholder="020483039">
                                 </div>
-                                <div class="form-group col-md-12">
-                                    <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                                    <input value="<?php echo $view_model->profile->indirizzo; ?>"
-                                           type="text"
-                                           name="indirizzo"
-                                           class="form-control validate-hotel"
-                                           id="indirizzo"
-                                           placeholder="Via 20 Settembre, Milano (MI)">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary mt5" id="calcGPS" type="button"><i
-                                                    class="fa fa-map-marker"></i> <?php echo $view_model->translations->get('calcola_coordinate'); ?>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <div id="map" style="height: 260px;width: 100%;"></div>
-                                    <div id="hidden-maps"></div>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('latitudine'); ?></label>
-                                    <input type="text"
-                                           name="latitudine"
-                                           value="<?php echo $view_model->profile->latitudine; ?>"
-                                           id="latitudine"
-                                           class="form-control" placeholder="33.40393">
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('longitudine'); ?></label>
-                                    <input type="text"
-                                           name="longitudine"
-                                           value="<?php echo $view_model->profile->longitudine; ?>"
-                                           id="longitudine"
-                                           class="form-control" placeholder="8.343445">
-                                </div>
+
+                                <?php $model = $view_model->profile; include 'Views/backoffice.geolocator.php'; ?>
 
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('password'); ?></label>
@@ -145,7 +113,6 @@
                                     $multiple = true;
                                     include 'Views/backoffice.images.uploader.php';
                                 ?>
-
 
                             </div>
                         </div>

@@ -93,89 +93,86 @@
 
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
-                                <input value="<?php echo $dati_struttura[0]['nome_struttura']; ?>" type="text"
-                                       id="nome_struttura" class="form-control validate-1" placeholder="London Hotel">
+                                <input value="<?php echo $view_model->principal->nome_struttura; ?>"
+                                       name="nome_struttura"
+                                       type="text"
+                                       class="form-control validate-1"
+                                       placeholder="London Hotel">
                             </div>
+
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('email'); ?></label>
-                                <input value="<?php echo $dati_struttura[0]['email']; ?>" type="text" id="email"
-                                       class="form-control validate-1" placeholder="mario@rossi.it">
+                                <input value="<?php echo $view_model->principal->email; ?>"
+                                       name="email"
+                                       type="text"
+                                       class="form-control validate-1"
+                                       placeholder="mario@rossi.it">
                             </div>
+
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                <input value="<?php echo $dati_struttura[0]['sito_web']; ?>" type="text"
-                                       class="form-control validate-1" id="sito"
+                                <input value="<?php echo $view_model->principal->sito_web; ?>"
+                                       type="text"
+                                       class="form-control validate-1"
+                                       name="sito_web"
                                        placeholder="www.hotelsuperlondon.co.uk">
                             </div>
+
                             <div class="form-group col-md-6">
                                 <label><?php echo $view_model->translations->get('telefono'); ?></label>
-                                <input value="<?php echo $dati_struttura[0]['telefono']; ?>" type="text"
-                                       class="form-control validate-1" id="telefono" placeholder="020483039">
+                                <input value="<?php echo $view_model->principal->telefono; ?>"
+                                       type="text"
+                                       class="form-control validate-1"
+                                       name="telefono"
+                                       placeholder="020483039">
                             </div>
-                            <div class="form-group col-md-6">
-                                <label><?php echo $view_model->translations->get('abilitato'); ?></label>
-                                <select class="form-control" id="abilitato-struttura">
-                                    <option value="1" <?php if ($dati_struttura[0]['abilitata'] == 1) echo 'selected="selected"'; ?>><?php echo $langs['si']; ?></option>
-                                    <option value="0" <?php if ($dati_struttura[0]['abilitata'] == 0) echo 'selected="selected"'; ?>><?php echo $langs['no']; ?></option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label><?php echo $view_model->translations->get('indicizza'); ?></label>
-                                <select class="form-control" id="indicizza">
-                                    <option value="1" <?php if ($dati_struttura[0]['indicizza'] == 1) echo 'selected="selected"'; ?>><?php echo $langs['si']; ?></option>
-                                    <option value="0" <?php if ($dati_struttura[0]['indicizza'] == 0) echo 'selected="selected"'; ?>><?php echo $langs['no']; ?></option>
-                                </select>
-                            </div>
+
                             <div class="form-group col-md-12">
-                                <label><?php echo $view_model->translations->get('convenzionato'); ?></label>
-                                <select class="form-control" id="is_convenzionato">
-                                    <option value="1" <?php if ($dati_struttura[0]['convenzionato'] == 1) echo 'selected="selected"'; ?>><?php echo $langs['si']; ?></option>
-                                    <option value="0" <?php if ($dati_struttura[0]['convenzionato'] == 0) echo 'selected="selected"'; ?>><?php echo $langs['no']; ?></option>
-                                </select>
+                                <?php
+                                $label = 'abilitato';
+                                $field = 'abilitata';
+                                $value = $view_model->principal->abilitata;
+                                include 'Views/backoffice.checkbox.php';
+                                ?>
                             </div>
+
                             <div class="form-group col-md-12">
-                                <label><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                                <input type="text" class="form-control validate-1" id="indirizzo"
-                                       value="<?php echo $dati_struttura[0]['indirizzo_struttura']; ?>"
-                                       placeholder="Via 20 Settembre, Milano (MI)">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary mt5" id="calcGPS" type="button"><i
-                                                class="fa fa-map-marker"></i> <?php echo $langs['calcola_coordinate']; ?>
-                                    </button>
-                                </div>
+                                <?php
+                                $label = 'indicizza';
+                                $field = 'indicizza';
+                                $value = $view_model->principal->indicizza;
+                                include 'Views/backoffice.checkbox.php';
+                                ?>
                             </div>
+
                             <div class="form-group col-md-12">
-                                <div id="map" style="height: 260px;width: 100%;"></div>
-                                <div id="hidden-maps"></div>
+                                <?php
+                                $label = 'convenzionato';
+                                $field = 'convenzionato';
+                                $value = $view_model->principal->indicizza;
+                                include 'Views/backoffice.checkbox.php';
+                                ?>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label><?php echo $langs['latitudine']; ?></label>
-                                <input type="text" value="<?php echo $dati_struttura[0]['latitudine']; ?>"
-                                       id="latitudine" class="form-control" placeholder="33,430302">
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label><?php echo $langs['longitudine']; ?></label>
-                                <input type="text" value="<?php echo $dati_struttura[0]['longitudine']; ?>"
-                                       id="longitudine" class="form-control" placeholder="8,93393">
-                            </div>
+
+                            <?php $model = $view_model->principal; include 'Views/backoffice.geolocator.php'; ?>
 
                             <div class="form-group col-md-4">
                                 <label><?php echo $view_model->translations->get('tipo_viaggio'); ?></label>
                                 <div class="route-container">
                                     <div class="route-div"><input
-                                                type="radio" <?php if ($dati_struttura[0]['tipo_viaggio'] == 1) echo 'checked="checked"'; ?>
+                                                type="radio" <?php if ($view_model->principal->tipo_viaggio == 1) echo 'checked="checked"'; ?>
                                                 name="tipo_viaggio" class="tipo_viaggio" value="1"><img
                                                 src="../img/walking.svg" class="svg-route"/><span for="tipo_viaggio"
                                                                                                   class="route-span">A piedi</span>
                                     </div>
                                     <div class="route-div"><input
-                                                type="radio" <?php if ($dati_struttura[0]['tipo_viaggio'] == 2) echo 'checked="checked"'; ?>
+                                                type="radio" <?php if ($view_model->principal->tipo_viaggio == 2) echo 'checked="checked"'; ?>
                                                 name="tipo_viaggio" class="tipo_viaggio" value="2"><img
                                                 src="../img/car.svg" class="svg-route"/><span for="tipo_viaggio"
                                                                                               class="route-span">In auto</span>
                                     </div>
                                     <div class="route-div"><input
-                                                type="radio" <?php if ($dati_struttura[0]['tipo_viaggio'] == 3) echo 'checked="checked"'; ?>
+                                                type="radio" <?php if ($view_model->principal->tipo_viaggio == 3) echo 'checked="checked"'; ?>
                                                 name="tipo_viaggio" class="tipo_viaggio" value="3"><img
                                                 src="../img/mezzi.svg" class="svg-route"/><span for="tipo_viaggio"
                                                                                                 class="route-span">Trasporti pubblici</span>
@@ -183,38 +180,18 @@
                                 </div>
                             </div>
 
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><?php echo $langs['immagini_struttura']; ?></span>
-                                </div>
-                                <div class="custom-file">
-                                    <input type="file" multiple="multiple" class="custom-file-input"
-                                           id="immagini_form_strutture">
-                                    <label class="custom-file-label"><?php echo $langs['scegli_immagini']; ?></label>
-                                </div>
-                            </div>
-                            <div class="input-group col-md-12" id="preview-img-container">
-                                <div id="preview">
-                                    <?php
-                                    $immagini = explode("|", $dati_struttura[0]['immagine_didascalia']);
-                                    for ($i = 0; $i < sizeof($immagini) - 1; $i++) {
-                                        ?>
-                                        <div class="img-form-preview" id="ifp-prw-<?php echo $i + 1; ?>"><span
-                                                    class="delete-preview" id="prw-<?php echo $i + 1; ?>"
-                                                    onclick="delPreview(<?php echo $i + 1; ?>)"><i
-                                                        class="fa fa-close"></i></span><img
-                                                    class="img-form-preview-item img-hotel"
-                                                    src="<?php echo $immagini[$i]; ?>" height="200px">
-                                            <div class="pt20"><input type="radio"
-                                                                     class="default-image" <?php if ($dati_struttura[0]['immagine_principale'] - 1 == $i) echo 'checked="checked" ';
+                            <?php
+                                $tips_source = empty($view_model->principal->real_path_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_path_immagini_didascalia);
 
-                                                ?>
-                                                                     name="default-image" value="<?php echo $i + 1; ?>"><label>Immagine
-                                                    principale</label><br></div>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                            </div>
+                                $label = 'immagini_struttura';
+                                $button_label = 'scegli_immagini';
+                                $field_prefix = "img_struttura";
+                                $urls = empty($view_model->principal->immagine_didascalia) ? array() : array($view_model->principal->immagine_didascalia);
+                                $tips = $tips_source;
+                                $multiple = false;
+                                include 'Views/backoffice.images.uploader.php';
+                            ?>
+
 
                             <div class="form-group col-md-12">
 
