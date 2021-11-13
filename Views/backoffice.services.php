@@ -52,72 +52,25 @@
                     </div>
 
                     <?php
-                    $label = 'immagine_servizio';
-                    $button_label = 'immagine_servizio';
-                    $field_prefix = "img_servizio[$r]";
-                    $urls = empty($principal->immagine) ? array() : array($principal->immagine);
-                    $multiple = false;
-                    include 'Views/backoffice.images.uploader.php';
+                        $label = 'immagine_servizio';
+                        $button_label = 'immagine_servizio';
+                        $field_prefix = "img_servizio[$r]";
+                        $urls = empty($principal->immagine) ? array() : array($principal->immagine);
+                        $multiple = false;
+                        include 'Views/backoffice.images.uploader.php';
                     ?>
 
                     <div class="form-group col-md-12">
-                        <label><?php echo $view_model->translations->get('orari'); ?></label>
-                        <br/>
                         <?php
-
-                        $orari['lunedi'] = explode("|", $principal->lunedi);
-                        $orari['martedi'] = explode("|", $principal->martedi);
-                        $orari['mercoledi'] = explode("|", $principal->mercoledi);
-                        $orari['giovedi'] = explode("|", $principal->giovedi);
-                        $orari['venerdi'] = explode("|", $principal->venerdi);
-                        $orari['sabato'] = explode("|", $principal->sabato);
-                        $orari['domenica'] = explode("|", $principal->domenica);
-
+                            $flag_field_prefix ="orario_continuato[$r]";
+                            $day_field_prefix = "giorno[$r]";
+                            $model = $principal;
+                            include 'Views/backoffice.timetable.php';
                         ?>
-
-                        <?php $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica'); ?>
-                        <?php $intervals = array('dalle', 'alle', 'dalle', 'alle'); ?>
-                        <?php foreach ($weekdays as $weekday) { ?>
-                            <div class="time-container" style="display: inline-block;">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="time-title"><?php echo $view_model->translations->get($weekday); ?>
-                                        <span> | <input type="hidden"
-                                                        name="orario_continuato[<?php echo $r; ?>][<?php echo $weekday; ?>]"
-                                                        value="0"/><input
-                                                    type="checkbox"
-                                                    name="orario_continuato[<?php echo $r; ?>][<?php echo $weekday; ?>]"
-                                                    class="orario-continuato" <?php if ($orari[$weekday][0] == 1) echo 'checked="checked"'; ?>
-                                                                            value="1"> Orario continuato </span>
-                                    </div>
-                                    <div class="input-time-container">
-                                        <?php for ($i = 0; $i < 2; $i++) { ?>
-                                            <span class="time-span">
-                                                <?php echo $view_model->translations->get($intervals[$i]); ?> <input
-                                                        type="time"
-                                                        name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
-                                                        value="<?php echo $orari[$weekday][$i + 1]; ?>"
-                                                        class="validate-hotel">
-                                            </span>
-                                        <?php } ?>
-                                    </div>
-                                    <div class="input-time-container">
-                                        <?php for ($i = 2; $i < 4; $i++) { ?>
-                                            <span class="time-span">
-                                                <?php echo $view_model->translations->get($intervals[$i]); ?> <input
-                                                    <?php if ($orari[$weekday][0] == 1) echo 'disabled'; ?>
-                                                    type="time"
-                                                    name="giorno[<?php echo $r; ?>][<?php echo $weekday; ?>][<?php echo $i; ?>]"
-                                                    class="validate-hotel"
-                                                    value="<?php echo $orari[$weekday][$i + 1]; ?>">
-                                            </span>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            </div>
-                        <?php } ?>
-
                     </div>
+
                 </div>
+
                 <div class="form-row">
 
                     <div class="form-group col-md-3">

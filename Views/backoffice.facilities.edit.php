@@ -194,326 +194,38 @@
 
 
                             <div class="form-group col-md-12">
-
-                                <label><?php echo $view_model->translations->get('descrizione'); ?><span> | <i class="fa fa-language"></i> Lingua</span></label>
-                                <select id="select-language">
-                                    <?php
-                                    $lingue = getLangsShortcode($dbh);
-                                    for ($i = 0; $i < sizeof($lingue); $i++) {
-                                        ?>
-                                        <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                    <?php } ?>
-                                </select>
                                 <?php
-                                for ($i = 0; $i < sizeof($lingue); $i++) {
-                                    $descrizioni = getDescrizioniStruttura($dbh, $lingue[$i]['shortcode_lingua'], $dati_struttura[0]['id'], $params[1]);
-                                    ?>
-                                    <div class="descrizione_ospiti"
-                                         id="descrizione_ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
-                                        <div class="summernote"
-                                             id="descrizione-ospiti-<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $descrizioni['descrizione']; ?></div>
-                                    </div>
-                                <?php } ?>
-
+                                    $label = 'descrizione';
+                                    $field = 'descrizione';
+                                    $field_prefix = 'descrizione';
+                                    $items = $view_model->facilities;
+                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                ?>
                             </div>
 
                             <?php if ($view_model->user->level > 2) { ?>
                                 <div class="form-group col-md-12">
-
-                                    <label><?php echo $langs['descrizione_benefit']; ?><span> | <i
-                                                    class="fa fa-language"></i> Lingua</span></label>
-                                    <select id="select-language-benefit">
-                                        <?php
-                                        $lingue = getLangsShortcode($dbh);
-                                        for ($i = 0; $i < sizeof($lingue); $i++) {
-                                            ?>
-                                            <option value="<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $lingue[$i]['nome_lingua']; ?></option>
-                                        <?php } ?>
-                                    </select>
                                     <?php
-                                    for ($i = 0; $i < sizeof($lingue); $i++) {
-                                        $descrizioni = getDescrizioniStruttura($dbh, $lingue[$i]['shortcode_lingua'], $params[1]);
-                                        ?>
-                                        <div class="descrizione_benefit"
-                                             id="descrizione_benefit-<?php echo $lingue[$i]['shortcode_lingua']; ?>" <?php if ($i > 0) echo 'style="display:none;"'; ?>>
-                                            <div class="summernote"
-                                                 id="descrizione-benefit-<?php echo $lingue[$i]['shortcode_lingua']; ?>"><?php echo $descrizioni['descrizione_benefit']; ?></div>
-                                        </div>
-                                    <?php } ?>
-
-
+                                        $label = 'descrizione_benefit';
+                                        $field = 'descrizione_benefit';
+                                        $field_prefix = 'descrizione_benefit';
+                                        $items = $view_model->facilities;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                    ?>
                                 </div>
-
                             <?php } ?>
 
                             <div class="form-group col-md-12">
-                                <label><?php echo $langs['orari']; ?></label>
-                                <br/>
-                                <?php
-                                $orari_lunedi = explode("|", $dati_struttura[0]['orari_lunedi']);
-                                $orari_martedi = explode("|", $dati_struttura[0]['orari_martedi']);
-                                $orari_mercoledi = explode("|", $dati_struttura[0]['orari_mercoledi']);
-                                $orari_giovedi = explode("|", $dati_struttura[0]['orari_giovedi']);
-                                $orari_venerdi = explode("|", $dati_struttura[0]['orari_venerdi']);
-                                $orari_sabato = explode("|", $dati_struttura[0]['orari_sabato']);
-                                $orari_domenica = explode("|", $dati_struttura[0]['orari_domenica']);
-                                ?>
-                                <div class="time-container" style="display: inline-block;">
-
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['lunedi']; ?><span> | <input
-                                                        type="checkbox" <?php if ($orari_lunedi[0] == 1) echo 'checked="checked"'; ?> class="orario-continuato"
-                                                        value="1" id="orario-continuato-1-1"> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      value="<?php echo $orari_lunedi[1]; ?>"
-                                                                                                      class="validate-hotel"
-                                                                                                      id="0-lun-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     class="validate-hotel"
-                                                                                                     value="<?php echo $orari_lunedi[2]; ?>"
-                                                                                                     id="1-lun-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input <?php if ($orari_lunedi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                           value="<?php echo $orari_lunedi[3]; ?>"
-                                                                                                                                                           class="validate-hotel"
-                                                                                                                                                           id="2-lun-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input <?php if ($orari_lunedi[0] == 1) echo 'disabled'; ?>  value="<?php echo $orari_lunedi[4]; ?>"
-                                                                                                                                                           type="time"
-                                                                                                                                                           class="validate-hotel"
-                                                                                                                                                           id="3-lun-1">
-                                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="time-container" style="display: inline-block;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['martedi']; ?><span> | <input
-                                                        type="checkbox" <?php if ($orari_martedi[0] == 1) echo 'checked="checked"'; ?> class="orario-continuato"
-                                                        value="1" id="orario-continuato-2-1"> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      value="<?php echo $orari_martedi[1]; ?>"
-                                                                                                      class="validate-hotel"
-                                                                                                      id="0-mar-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     value="<?php echo $orari_martedi[2]; ?>"
-                                                                                                     class="validate-hotel"
-                                                                                                     id="1-mar-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input <?php if ($orari_martedi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                            value="<?php echo $orari_martedi[3]; ?>"
-                                                                                                                                                            class="validate-hotel"
-                                                                                                                                                            id="2-mar-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input <?php if ($orari_martedi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                           value="<?php echo $orari_martedi[4]; ?>"
-                                                                                                                                                           class="validate-hotel"
-                                                                                                                                                           id="3-mar-1">
-                                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="time-container" style="display: inline-block;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['mercoledi']; ?><span> | <input
-                                                        type="checkbox" <?php if ($orari_mercoledi[0] == 1) echo 'checked="checked"'; ?> class="orario-continuato"
-                                                        value="1" id="orario-continuato-3-1"> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      value="<?php echo $orari_mercoledi[1]; ?>"
-                                                                                                      class="validate-hotel"
-                                                                                                      id="0-mer-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     value="<?php echo $orari_mercoledi[2]; ?>"
-                                                                                                     class="validate-hotel"
-                                                                                                     id="1-mer-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input <?php if ($orari_mercoledi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                              value="<?php echo $orari_mercoledi[3]; ?>"
-                                                                                                                                                              class="validate-hotel"
-                                                                                                                                                              id="2-mer-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input <?php if ($orari_mercoledi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                             value="<?php echo $orari_mercoledi[4]; ?>"
-                                                                                                                                                             class="validate-hotel"
-                                                                                                                                                             id="3-mer-1">
-                                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="time-container" style="display: inline-block;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['giovedi']; ?>
-                                            <span> | <input <?php if ($orari_giovedi[0] == 1) echo 'checked="checked"'; ?> type="checkbox"
-                                                                                                                           class="orario-continuato"
-                                                                                                                           value="1"
-                                                                                                                           id="orario-continuato-4-1"> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      value="<?php echo $orari_giovedi[1]; ?>"
-                                                                                                      class="validate-hotel"
-                                                                                                      id="0-gio-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     value="<?php echo $orari_giovedi[2]; ?>"
-                                                                                                     class="validate-hotel"
-                                                                                                     id="1-gio-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input  <?php if ($orari_giovedi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                             value="<?php echo $orari_giovedi[3]; ?>"
-                                                                                                                                                             class="validate-hotel"
-                                                                                                                                                             id="2-gio-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input  <?php if ($orari_giovedi[0] == 1) echo 'disabled'; ?> value="<?php echo $orari_giovedi[4]; ?>"
-                                                                                                                                                            type="time"
-                                                                                                                                                            class="validate-hotel"
-                                                                                                                                                            id="3-gio-1">
-                                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="time-container" style="display: inline-block;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['venerdi']; ?>
-                                            <span> | <input <?php if ($orari_venerdi[0] == 1) echo 'checked="checked"'; ?> type="checkbox"
-                                                                                                                           class="orario-continuato"
-                                                                                                                           value="1"
-                                                                                                                           id="orario-continuato-5-1"> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      value="<?php echo $orari_venerdi[1]; ?>"
-                                                                                                      class="validate-hotel"
-                                                                                                      id="0-ven-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     class="validate-hotel"
-                                                                                                     value="<?php echo $orari_venerdi[2]; ?>"
-                                                                                                     id="1-ven-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input <?php if ($orari_venerdi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                            class="validate-hotel"
-                                                                                                                                                            value="<?php echo $orari_venerdi[3]; ?>"
-                                                                                                                                                            id="2-ven-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input <?php if ($orari_venerdi[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                           class="validate-hotel"
-                                                                                                                                                           value="<?php echo $orari_venerdi[4]; ?>"
-                                                                                                                                                           id="3-ven-1">
-                                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="time-container" style="display: inline-block;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['sabato']; ?><span> | <input
-                                                        type="checkbox" <?php if ($orari_sabato[0] == 1) echo 'checked="checked"'; ?> class="orario-continuato"
-                                                        value="1" id="orario-continuato-6-1"> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      class="validate-hotel"
-                                                                                                      value="<?php echo $orari_sabato[1]; ?>"
-                                                                                                      id="0-sab-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     class="validate-hotel"
-                                                                                                     value="<?php echo $orari_sabato[2]; ?>"
-                                                                                                     id="1-sab-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input <?php if ($orari_sabato[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                           class="validate-hotel"
-                                                                                                                                                           value="<?php echo $orari_sabato[3]; ?>"
-                                                                                                                                                           id="2-sab-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input <?php if ($orari_sabato[0] == 1) echo 'disabled'; ?> type="time"
-                                                                                                                                                          class="validate-hotel"
-                                                                                                                                                          value="<?php echo $orari_sabato[4]; ?>"
-                                                                                                                                                          id="3-sab-1">
-                                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="time-container" style="display: inline-block;">
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="time-title"><?php echo $langs['domenica']; ?><span> | <input
-                                                        type="checkbox" class="orario-continuato" value="1"
-                                                        id="orario-continuato-7-1" <?php if ($orari_domenica[0] == 1) echo 'checked="checked"'; ?>> Orario continuato </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input type="time"
-                                                                                                      class="validate-hotel"
-                                                                                                      value="<?php echo $orari_domenica[1]; ?>"
-                                                                                                      id="0-dom-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input type="time"
-                                                                                                     class="validate-hotel"
-                                                                                                     value="<?php echo $orari_domenica[2]; ?>"
-                                                                                                     id="1-dom-1">
-                                                            </span>
-                                        </div>
-                                        <div class="input-time-container">
-                                                            <span class="time-span">
-                                                                <?php echo $langs['dalle']; ?> <input
-                                                                        type="time" <?php if ($orari_domenica[0] == 1) echo 'disabled'; ?> class="validate-hotel" <?php if ($orari_domenica[0] == 1) echo 'checked="checked"'; ?> value="<?php echo $orari_domenica[3]; ?>"
-                                                                        id="2-dom-1">
-                                                            </span>
-                                            <span class="time-span">
-                                                                <?php echo $langs['alle']; ?> <input
-                                                        type="time" <?php if ($orari_domenica[0] == 1) echo 'disabled'; ?> class="validate-hotel"
-                                                        value="<?php echo $orari_domenica[4]; ?>" id="3-dom-1">
-                                                            </span>
-                                        </div>
-                                    </div>
+                                <div class="form-group col-md-12">
+                                    <?php
+                                    $flag_field_prefix ="orario_continuato";
+                                    $day_field_prefix = "giorno";
+                                    $model = $view_model->principal;
+                                    include 'Views/backoffice.timetable.php';
+                                    ?>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
