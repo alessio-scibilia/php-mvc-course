@@ -65,16 +65,24 @@ class BackofficeFacilitiesEditController
             $facilities = Facility::facilities($rows);
             $principal = $facilities[0];
 
+            if ($user->level <= 2)
+            {
+                $rows = $this->hotel_repository->get_all_hotels($language['shortcode_lingua']);
+                $hotels = Hotel::hotels($rows);
+
+                $rows = $this->category_repository->get_all_categories($language['shortcode_lingua']);
+                $categories = Category::categories($rows);
+            }
+            else
+            {
+                $hotels = array();
+                $categories = array();
+            }
+
             $rows = $this->facility_hotel_repository->get_related_by_facility_id_and_language_id($principal->related_id, $language['shortcode_lingua']);
             $related_hotels = Hotel::hotels($rows);
 
-            $rows = $this->hotel_repository->get_all_hotels($language['shortcode_lingua']);
-            $hotels = Hotel::hotels($rows);
-
-            $rows = $this->category_repository->get_all_categories($language['shortcode_lingua']);
-            $categories = Category::categories($rows);
-
-            $rows = $this->category_repository->get_by_facility($principal->related_id);
+            $rows = $this->category_repository->get_by_facility($principal->related_id, $language['shortcode_lingua']);
             $related_categories = Category::categories($rows);
 
             $view_model = new BackOfficeViewModel('backoffice.facilities.edit', $title, $languages, $translations);
@@ -83,8 +91,8 @@ class BackofficeFacilitiesEditController
             $view_model->facilities = $facilities; // all available languages
             $view_model->principal = $principal;
             $view_model->hotels = $hotels;
-            $view_model->related_hotels = $related_hotels;
             $view_model->categories = $categories;
+            $view_model->related_hotels = $related_hotels;
             $view_model->related_categories = $related_categories;
 
             $view_model->menu_active_btn = 'facilities';

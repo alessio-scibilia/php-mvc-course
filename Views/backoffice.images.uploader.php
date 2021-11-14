@@ -8,6 +8,8 @@
     $multiple = $multiple ?? true;
     $disabled = !$multiple && count($urls) > 0;
     $post_url = "/backoffice/upload/images";
+    $languages = $view_model->languages->list_all() ?? array();
+    $abbreviations = array_map(function($l) { return $l['abbreviazione']; }, $languages);
 ?>
 <div class="input-group col-md-12">
     <div class="input-group-prepend">
@@ -17,6 +19,9 @@
         <input type="file" <?php if ($multiple) echo 'multiple="multiple"'; ?>
                data-name="<?php echo $field_prefix ?>"
                data-post-url="<?php echo $post_url; include 'Views/xdebug.querystring.first.php'; ?>"
+               data-tips="<?php !empty($tips) ?>"
+               data-languages="<?php echo join('|', $abbreviations) ?>"
+               data-placeholder=""
                class="custom-file-input" <?php if ($disabled) echo 'disabled'; ?>>
         <label class="custom-file-label"><?php echo $view_model->translations->get($button_label); ?></label>
     </div>
@@ -34,9 +39,11 @@
                 <div class="default-image-cont">
                     <div class="pt20">
                         <?php if (!empty($tips)) { ?>
+                            <?php foreach ($abbreviations as $abbreviation) { ?>
                             <textarea
-                                    name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>]"
-                                    placeholder="Didascalia <?php echo $label ?>"><?php echo $tips[$i] ?? ''; ?></textarea>
+                                    name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>][<?php $abbreviation; ?>]"
+                                    placeholder="<?php echo $abbreviation; ?>"><?php echo $tips[$i] ?? ''; ?></textarea>
+                            <?php } ?>
                         <?php } else if ($multiple) { ?>
                             <input type="radio"
                                    id="default-image"

@@ -1,4 +1,4 @@
-<input ass="container-fluid">
+<div class="container-fluid">
 <div class="row">
     <form action="/backoffice/facilities/<?php echo $view_model->principal->related_id; ?>/edit<?php include 'Views/xdebug.querystring.first.php'; ?>"
           method="post" enctype="multipart/form-data">
@@ -160,15 +160,13 @@
                             </div>
 
                             <?php
-                            $tips_source = empty($view_model->principal->real_path_immagini_didascalia) ? array('') : explode('|', $view_model->principal->real_path_immagini_didascalia);
-
-                            $label = 'immagini_struttura';
-                            $button_label = 'scegli_immagini';
-                            $field_prefix = "img_struttura";
-                            $urls = empty($view_model->principal->immagine_didascalia) ? array() : array($view_model->principal->immagine_didascalia);
-                            $tips = $tips_source;
-                            $multiple = false;
-                            include 'Views/backoffice.images.uploader.php';
+                                $label = 'immagini_struttura';
+                                $button_label = 'scegli_immagini';
+                                $field_prefix = "img_struttura";
+                                $urls = empty($view_model->principal->immagine_didascalia) ? array() : array($view_model->principal->immagine_didascalia);
+                                $tips = false;
+                                $multiple = false;
+                                include 'Views/backoffice.images.uploader.php';
                             ?>
 
                             <div class="form-group col-md-12">
@@ -312,16 +310,12 @@
                             <div class="form-row">
 
                                 <?php
-                                $images = explode('|', $view_model->principal->real_immagini_didascalia);
-
-                                $label = 'immagini_didascalia';
-                                $button_label = 'scegli_immagini';
-                                $field_prefix = 'img_didascalia';
-                                $urls = array_filter($images, function ($img) {
-                                    return !empty($img);
-                                });
-                                $tips = array(''); // enable tips
-                                include 'Views/backoffice.images.uploader.php';
+                                    $label = 'immagini_didascalia';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = 'img_didascalia';
+                                    $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
+                                    $tips = empty($view_model->principal->real_path_immagini_didascalia) ? array('') : explode('|', $view_model->principal->real_path_immagini_didascalia);
+                                    include 'Views/backoffice.images.uploader.php';
                                 ?>
 
                             </div>

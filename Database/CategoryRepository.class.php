@@ -16,17 +16,25 @@ class CategoryRepository extends MySQLRepository
         return array_pop($results);
     }
 
-    public function get_by_facility(int $id_struttura)
+    public function get_by_facility(int $id_struttura, int $shortcode_lingua)
     {
-        $where = "related_id = :id_struttura";
-        $params = array(":id_struttura" => $id_struttura);
-        return $this->get($where, $params);
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT cs.*",
+            "FROM $table cs",
+            "INNER JOIN strutture_categorie sc ON",
+            "   cs.related_id = sc.id_categoria AND",
+            "   cs.shortcode_lingua = :shortcode_lingua",
+            "WHERE sc.id_struttura = :id_struttura",
+        ));
+        $params = array(":id_struttura" => $id_struttura, ":shortcode_lingua" => $shortcode_lingua);
+        return $this->query($query, $params);
     }
 
-    public function get_all_categories(int $id_lingua): array
+    public function get_all_categories(int $shortcode_lingua): array
     {
         $where = "shortcode_lingua = :shortcode_lingua";
-        $params = array(":shortcode_lingua" => $id_lingua);
+        $params = array(":shortcode_lingua" => $shortcode_lingua);
         return $this->get($where, $params);
     }
 
