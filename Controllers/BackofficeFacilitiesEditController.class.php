@@ -5,6 +5,7 @@ require_once 'Database/UserRepository.class.php';
 require_once 'Database/EventRepository.class.php';
 require_once 'Database/FacilityHotelRepository.class.php';
 require_once 'Database/FacilityEventRepository.class.php';
+require_once 'Database/FacilityCategoryRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
 require_once 'Database/CategoryRepository.class.php';
@@ -15,6 +16,8 @@ require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Event.class.php';
 require_once 'Models/FacilityEvent.class.php';
+require_once 'Models/FacilityCategory.class.php';
+require_once 'Models/FacilityHotel.class.php';
 require_once 'Models/Excellence.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
@@ -31,6 +34,7 @@ class BackofficeFacilitiesEditController
     protected $facility_repository;
     protected $facility_hotel_repository;
     protected $facility_event_repository;
+    protected $facitity_category_repository;
     protected $category_repository;
     protected $excellence_repository;
 
@@ -44,6 +48,7 @@ class BackofficeFacilitiesEditController
         $this->hotel_repository = new HotelRepository();
         $this->facility_hotel_repository = new FacilityHotelRepository();
         $this->facility_event_repository = new FacilityEventRepository();
+        $this->facility_category_repository = new FacilityCategoryRepository();
         $this->category_repository = new CategoryRepository();
         $this->excellence_repository = new ExcellenceRepository();
     }
@@ -68,6 +73,22 @@ class BackofficeFacilitiesEditController
             $rows = $this->facility_repository->get_facility_all_langs($id);
             $facilities = Facility::facilities($rows);
             $principal = $facilities[0];
+
+            // compute tips from backward-compatibility format
+            $temp_tips = empty($principal->real_path_immagini_didascalia) ? array() : explode('&&', $principal->real_path_immagini_didascalia);
+            $tips = array();
+            $i = 0;
+            foreach ($temp_tips as $temp_tip)
+            {
+                $values = empty($temp_tip) ? array() : explode('||', $temp_tip);
+                $map = array();
+                $j = 0;
+                foreach ($languages->list_all() as $language)
+                {
+                    $map[$language['abbreviazione']] = $values[$j++] ?? '';
+                }
+                $tips[$i++] = $map;
+            }
 
             if ($user->level <= 2)
             {
@@ -103,6 +124,7 @@ class BackofficeFacilitiesEditController
             $view_model->related_hotels = $related_hotels;
             $view_model->related_categories = $related_categories;
             $view_model->related_excellences = $related_excellences;
+            $view_model->tips = $tips;
 
             $view_model->menu_active_btn = 'facilities';
 
@@ -164,9 +186,16 @@ class BackofficeFacilitiesEditController
                 {
                     $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                 }
+
                 $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array());
-                $tips = array_map(function($item) use($abbreviation) { return $item[$abbreviation] ?? ''; }, $params['didascalia_img_didascalia'] ?? array());
-                $facility['real_path_immagini_didascalia'] = join('||', $tips);
+
+                $tips = array();
+                foreach ($params['didascalia_img_didascalia'] ?? array() as $image_tips)
+                {
+                    $tips[] = join('||', $image_tips) . '||';
+                }
+                $tips = empty($tips) ? '' : join('&&', $tips) . '&&';
+                $facility['real_path_immagini_didascalia'] = $tips;
 
                 foreach ($params['orario_continuato'] as $weekday => $flag)
                 {
@@ -180,8 +209,34 @@ class BackofficeFacilitiesEditController
                 $this->facility_repository->update($facility);
             }
 
-            $this->excellence_repository->remove_by_facility($id);
+            // facility hotels
+            $this->facility_hotel_repository->remove_by_facility($id);
+            foreach ($params['related_hotels'] as $id_hotel)
+            {
+                $facility_hotel = array
+                (
+                    'id_struttura' => $id,
+                    'id_hotel' => $id_hotel,
+                    'convenzionato' => $params['convenzionato'],
+                );
+                $facility_hotel['id'] = $this->facility_hotel_repository->add($facility_hotel);
+            }
 
+            // facility categories
+            $this->facility_category_repository->remove_by_facility($id);
+            foreach ($params['related_categories'] as $id_categoria)
+            {
+                $facility_category = array
+                (
+                    'id_struttura' => $id,
+                    'id_categoria' => $id_categoria,
+                    'email_struttura' => $facility['email']
+                );
+                $facility_category['id'] = $this->facility_category_repository->add($facility_category);
+            }
+
+            // excellences
+            $this->excellence_repository->remove_by_facility($id);
             foreach ($params['nome_eccellenza'] as $position => $names)
             {
                 foreach ($names as $abbreviation => $name)

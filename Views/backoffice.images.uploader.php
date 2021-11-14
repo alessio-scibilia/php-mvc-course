@@ -20,7 +20,7 @@
         <input type="file" <?php if ($multiple) echo 'multiple="multiple"'; ?>
                data-name="<?php echo $field_prefix ?>"
                data-post-url="<?php echo $post_url; include 'Views/xdebug.querystring.first.php'; ?>"
-               data-tips="<?php !empty($tips) ?>"
+               data-tips="<?php echo empty($tips) ? "false" : "true" ?>"
                data-languages="<?php echo join('|', $abbreviations) ?>"
                data-placeholders="<?php echo join('|', $names); ?>"
                class="custom-file-input" <?php if ($disabled) echo 'disabled'; ?>>
@@ -42,8 +42,8 @@
                         <?php if (!empty($tips)) { ?>
                             <?php foreach ($abbreviations as $abbreviation) { ?>
                             <textarea
-                                    name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>][<?php $abbreviation; ?>]"
-                                    placeholder="<?php echo $abbreviation; ?>"><?php echo $tips[$i] ?? ''; ?></textarea>
+                                    name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>][<?php echo $abbreviation; ?>]"
+                                    placeholder="<?php echo $abbreviation; ?>"><?php echo $tips[$i][$abbreviation] ?? ''; ?></textarea>
                             <?php } ?>
                         <?php } else if ($multiple) { ?>
                             <input type="radio"
