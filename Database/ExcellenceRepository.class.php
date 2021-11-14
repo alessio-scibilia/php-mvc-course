@@ -10,7 +10,7 @@ class ExcellenceRepository extends MySQLRepository
 
     public function get_by_facility(int $related_id)
     {
-        $where = "struttura_collegata = :related_id";
+        $where = "struttura_collegata = :related_id ORDER BY posizione";
         $params = array(":related_id" => $related_id);
         return $this->get($where, $params);
     }

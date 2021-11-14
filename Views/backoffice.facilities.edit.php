@@ -217,7 +217,7 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <input type="hidden" id="num_eccellenze"
-                               value="<?php echo count($view_model->grouped_excellences); ?>">
+                               value="<?php echo count($view_model->related_excellences); ?>">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <a href="javascript:void()" class="open-create-eccellenza btn btn-primary"><i
@@ -325,10 +325,10 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="form-group col-md-12">
                     <div align="left">
-                        <input type="button" class="btn btn-success"
+                        <input type="submit"
+                               class="btn btn-success validate-it"
                                data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                               id="updateStruttura"
                                value="<?php echo $view_model->translations->get('aggiorna_struttura'); ?>">
                     </div>
                     <br/><br/>

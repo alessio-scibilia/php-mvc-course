@@ -116,6 +116,11 @@ class BackofficeFacilitiesEditController
     {
         if (isset($params['facilities']))
         {
+            $user = SessionManager::get_user();
+            if (User::is_empty($user)) {
+                return new HttpRedirectView('/backoffice');
+            }
+
             $languages = new Languages($this->language_repository->list_all());
 
             $id = intval($params['facilities']);
@@ -155,12 +160,18 @@ class BackofficeFacilitiesEditController
 
                 $facility['immagine_didascalia'] = join('|', $params['img_struttura']);
                 $facility['descrizione'] = $params['descrizione'][$abbreviation];
-                $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
-
-                foreach ($params['orario_continuato'] as $weekday => $orario_continuato)
+                if ($user->level > 2)
                 {
-                    $orari = join('|', $params['giorno'][$weekday]);
-                    $facility['orari_'.$weekday] = "$orario_continuato|$orari|";
+                    $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
+                }
+
+                foreach ($params['orario_continuato'] as $weekday => $flag)
+                {
+                    $orari = $params['giorno'][$weekday];
+                    $prefix = str_repeat('|', empty($orari) ? 0 : 1);
+                    $content = join('|', $orari);
+                    $suffix = str_repeat('|', 5 - count($orari));
+                    $facility['orari_'.$weekday] = $flag . $prefix . $content . $suffix;
                 }
 
                 $this->facility_repository->update($facility);
