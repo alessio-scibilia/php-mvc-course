@@ -8,12 +8,14 @@ require_once 'Database/FacilityEventRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
 require_once 'Database/CategoryRepository.class.php';
+require_once 'Database/ExcellenceRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Event.class.php';
 require_once 'Models/FacilityEvent.class.php';
+require_once 'Models/Excellence.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -30,6 +32,7 @@ class BackofficeFacilitiesEditController
     protected $facility_hotel_repository;
     protected $facility_event_repository;
     protected $category_repository;
+    protected $excellence_repository;
 
     public function __construct()
     {
@@ -42,6 +45,7 @@ class BackofficeFacilitiesEditController
         $this->facility_hotel_repository = new FacilityHotelRepository();
         $this->facility_event_repository = new FacilityEventRepository();
         $this->category_repository = new CategoryRepository();
+        $this->excellence_repository = new ExcellenceRepository();
     }
 
     public function http_get(array &$params): IView
@@ -85,6 +89,10 @@ class BackofficeFacilitiesEditController
             $rows = $this->category_repository->get_by_facility($principal->related_id, $language['shortcode_lingua']);
             $related_categories = Category::categories($rows);
 
+            $rows = $this->excellence_repository->get_by_facility($principal->related_id);
+            $instances = $languages->list_all();
+            $related_excellences = Excellence::grouped_excellences($rows, $instances);
+
             $view_model = new BackOfficeViewModel('backoffice.facilities.edit', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->language = $language;
@@ -94,6 +102,7 @@ class BackofficeFacilitiesEditController
             $view_model->categories = $categories;
             $view_model->related_hotels = $related_hotels;
             $view_model->related_categories = $related_categories;
+            $view_model->related_excellences = $related_excellences;
 
             $view_model->menu_active_btn = 'facilities';
 
@@ -107,6 +116,11 @@ class BackofficeFacilitiesEditController
     {
         if (isset($params['facilities']))
         {
+            $user = SessionManager::get_user();
+            if (User::is_empty($user)) {
+                return new HttpRedirectView('/backoffice');
+            }
+
             $languages = new Languages($this->language_repository->list_all());
 
             $id = intval($params['facilities']);
@@ -146,12 +160,18 @@ class BackofficeFacilitiesEditController
 
                 $facility['immagine_didascalia'] = join('|', $params['img_struttura']);
                 $facility['descrizione'] = $params['descrizione'][$abbreviation];
-                $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
-
-                foreach ($params['orario_continuato'] as $weekday => $orario_continuato)
+                if ($user->level > 2)
                 {
-                    $orari = join('|', $params['giorno'][$weekday]);
-                    $facility['orari_'.$weekday] = "$orario_continuato|$orari|";
+                    $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
+                }
+
+                foreach ($params['orario_continuato'] as $weekday => $flag)
+                {
+                    $orari = $params['giorno'][$weekday];
+                    $prefix = str_repeat('|', empty($orari) ? 0 : 1);
+                    $content = join('|', $orari);
+                    $suffix = str_repeat('|', 5 - count($orari));
+                    $facility['orari_'.$weekday] = $flag . $prefix . $content . $suffix;
                 }
 
                 $this->facility_repository->update($facility);

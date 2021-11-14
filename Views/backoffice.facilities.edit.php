@@ -217,7 +217,7 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <input type="hidden" id="num_eccellenze"
-                               value="<?php if ('getNumEccellenze($dbh, $id_struttura_query)' >= 1) echo 'getNumEccellenze($dbh, $id_struttura_query)'; else echo '0'; ?>">
+                               value="<?php echo count($view_model->related_excellences); ?>">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <a href="javascript:void()" class="open-create-eccellenza btn btn-primary"><i
@@ -226,11 +226,9 @@
                             </div>
                         </div>
                         <?php
-
-                        // deve esserci almeno 1 blocco, anche vuoto:
-
-                        for ($r = 1; $r <= 1/*'getNumEccellenze($dbh, $id_struttura_query)'*/; $r++) {
-                            $c = $r - 1; ?>
+                            foreach ($view_model->related_excellences as $r => $excellences) {
+                                $excellence = $excellences[$view_model->language['shortcode_lingua']];
+                            ?>
                             <div class="form-eccellenza-container fsc-<?php echo $r; ?>"
                                  id="fsc-eccellenza-<?php echo $r; ?>">
                                 <div class="form-row">
@@ -246,7 +244,7 @@
                                             $placeholder = 'Es: Piatti giapponesi';
                                             $field = 'titolo';
                                             $field_prefix = "nome_eccellenza[$r]";
-                                            $items = array();
+                                            $items = $excellences;
                                             include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
@@ -255,7 +253,7 @@
                                         $label = 'immagine_servizio';
                                         $button_label = 'scegli_immagine';
                                         $field_prefix = "img_eccellenza[$r]";
-                                        $urls = array();
+                                        $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
                                         $multiple = false;
                                         include 'Views/backoffice.images.uploader.php';
                                     ?>
@@ -266,7 +264,7 @@
                                             $label = 'descrizione';
                                             $field = 'testo';
                                             $field_prefix = "testo[$r]";
-                                            $items = array();
+                                            $items = $excellences;
                                             include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
@@ -278,7 +276,7 @@
                                         <?php
                                         $label = 'abilitato';
                                         $field = "abilitato[$r]";
-                                        $value = 0;
+                                        $value = $excellence->abilitato;
                                         include 'Views/backoffice.checkbox.php';
                                         ?>
                                     </div>
@@ -327,10 +325,10 @@
             <div class="col-xl-12 col-lg-12">
                 <div class="form-group col-md-12">
                     <div align="left">
-                        <input type="button" class="btn btn-success"
+                        <input type="submit"
+                               class="btn btn-success validate-it"
                                data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
                                data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                               id="updateStruttura"
                                value="<?php echo $view_model->translations->get('aggiorna_struttura'); ?>">
                     </div>
                     <br/><br/>

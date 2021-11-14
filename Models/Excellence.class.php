@@ -1,6 +1,6 @@
 <?php
 
-class Event
+class Excellence
 {
     /** @var  */
     public $id;
@@ -15,31 +15,13 @@ class Event
     public $testo;
 
     /** @var string */
-    public $data_fine_evento;
-
-    /** @var string */
-    public $ora_inizio_evento;
-
-    /** @var string */
-    public $ora_fine_evento;
-
-    /** @var string */
-    public $email;
-
-    /** @var string */
-    public $telefono;
-
-    /** @var string */
-    public $indirizzo;
+    public $immagine;
 
     /** @var int */
     public $abilitato;
 
-    /** @var string */
-    public $sito_web;
-
-    /** @var string */
-    public $nome_struttura;
+    /** @var int */
+    public $shortcode_lingua;
 
     /**
      * @param array|null $row
@@ -54,26 +36,70 @@ class Event
     }
 
     /**
-     * @param Event $event
+     * @param Excellence $event
      * @return bool
      */
-    public static function is_empty(Event &$event): bool
+    public static function is_empty(Excellence &$event): bool
     {
-        return empty($event->email);
+        return empty($event->id);
     }
 
     /**
      * @param array $rows
      * @return array
      */
-    public static function events(array &$rows): array
+    public static function excellences(array &$rows): array
     {
         $results = array();
         foreach ($rows as &$row) {
-            $results[] = new Event($row);
+            $results[] = new Excellence($row);
         }
         return $results;
     }
 
+    private static function create_samples(int $position, array &$languages)
+    {
+        $rows = array();
+        foreach ($languages as &$language)
+        {
+            $row = array
+            (
+                'shortcode_lingua' => $language['shortcode_lingua'],
+                'posizione' => $position
+            );
+            $rows[] = $row;
+        }
+        return $rows;
+    }
+
+    private static function create_prototype(int $position, array &$languages): array
+    {
+        $prototype = array();
+        $rows = self::create_samples($position, $languages);
+        foreach ($rows as &$row)
+        {
+            $prototype[$row['shortcode_lingua']] = new Excellence($row);
+        }
+        return $prototype;
+    }
+
+    public static function grouped_excellences(array &$rows, array &$languages): array
+    {
+        $results = array();
+        if (empty($rows))
+        {
+            $rows = self::create_samples(1, $languages);
+        }
+        foreach ($rows as &$row)
+        {
+            $position = intval($row['posizione']);
+            if (!isset($results[$position]))
+            {
+                $results[$position] = self::create_prototype($position, $languages);
+            }
+            $results[$position][$row['shortcode_lingua']] = new Excellence($row);
+        }
+        return $results;
+    }
 
 }
