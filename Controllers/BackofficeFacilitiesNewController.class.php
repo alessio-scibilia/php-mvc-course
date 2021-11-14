@@ -56,12 +56,25 @@ class BackofficeFacilitiesNewController
             return new HttpRedirectView('/backoffice');
         }
 
-        $default_values = array
-        (
-            'tipo_viaggio' => 2 // car
-        );
-        $facilities = new Facility($default_values);
-        $principal = $facilities;
+        $principal = new Facility();
+        $principal->indirizzo = '';
+        $principal->email = '';
+        $principal->abilitata = 0;
+        $principal->lunedi = '0|||||';
+        $principal->martedi = '0|||||';
+        $principal->mercoledi = '0|||||';
+        $principal->giovedi = '0|||||';
+        $principal->venerdi = '0|||||';
+        $principal->sabato = '0|||||';
+        $principal->domenica = '0|||||';
+        $principal->nome_struttura = '';
+        $principal->telefono = '';
+        $principal->tipo_viaggio = 2; // car
+        $principal->sito_web = '';
+        $principal->indicizza = 0;
+        $principal->convenzionato = 0;
+        $principal->latitudine = '';
+        $principal->longitudine = '';
 
         if ($user->level <= 2) {
             $rows = $this->hotel_repository->get_all_hotels($language['shortcode_lingua']);
@@ -74,10 +87,10 @@ class BackofficeFacilitiesNewController
             $categories = array();
         }
 
-        $view_model = new BackOfficeViewModel('backoffice.facilities.edit', $title, $languages, $translations);
+        $view_model = new BackOfficeViewModel('backoffice.facilities.create', $title, $languages, $translations);
         $view_model->user = $user;
         $view_model->language = $language;
-        $view_model->facilities = $facilities; // all available languages
+        //$view_model->facilities = $facilities; // all available languages
         $view_model->principal = $principal;
         $view_model->hotels = $hotels;
         $view_model->categories = $categories;
