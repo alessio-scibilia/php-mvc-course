@@ -10,7 +10,7 @@ class UserRepository extends MySQLRepository
 
     public function get_by_email_password(string $email, string $password)
     {
-        $where = "email = :email AND password = :password";
+        $where = "email = :email AND password = :password AND abilitato = 1";
         $params = array(":email" => $email, ":password" => md5($password));
         $results = $this->get($where, $params);
         return array_pop($results);
