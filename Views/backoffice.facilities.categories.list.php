@@ -30,6 +30,7 @@
                                 <th><?php echo $view_model->translations->get('azioni'); ?></th>
                             </tr>
                             </thead>
+                            
                             <tbody>
                             <?php foreach ($view_model->categories as &$category) { ?>
                                 <tr>
