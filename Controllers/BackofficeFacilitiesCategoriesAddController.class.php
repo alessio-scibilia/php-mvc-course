@@ -54,7 +54,6 @@ class BackofficeFacilitiesCategoriesAddController
                 $i_lang++;
             }
 
-
             return new HttpRedirectView('/backoffice/facilities/categories');
         }
 

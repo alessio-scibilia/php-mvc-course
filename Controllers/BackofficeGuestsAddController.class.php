@@ -44,7 +44,7 @@ class BackofficeGuestsAddController
                 $id = $this->guest_repository->add($new_user);
                 $result = ($id === false) ? 'error' : 'success';
 
-                return new HttpRedirectView('/backoffice/guests?' . $result);
+                return new HttpRedirectView('/backoffice/guests');
             }
         }
 
