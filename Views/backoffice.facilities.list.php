@@ -49,7 +49,7 @@
                                         <?php
                                         $rel_hotels = $view_model->hotel_associati[$facility->related_id];
                                         foreach ($rel_hotels as $hotel_associato) { ?>
-                                            <a href="/backoffice/facilities/hotels/set/<?php echo $hotel_associato->id_hotel; ?>"
+                                            <a href="/backoffice/facilities/hotels/set?hotel=<?php echo $hotel_associato->id_hotel; ?>&facility=<?php echo $facility->related_id; ?>"
                                                class="tagit delHot"><?php echo $hotel_associato->nome; ?> <i
                                                         class="fa fa-close"></i></a>
                                         <?php } ?>
