@@ -22,71 +22,40 @@
                                         <label><?php echo $view_model->translations->get('hotel_associati'); ?></label>
                                         <select class="selectpicker" data-live-search="true" id="hotel_associati" data-name="related_hotels">
                                             <option disabled selected>Seleziona...</option>
-                                            <?php
-                                            $hotel_associati = array();
-                                            if ($hotel_associati != 'error') {
-                                                for ($g = 0; $g < sizeof($hotel_associati); $g++) {
-                                                    echo '<option value="' . $hotel_associati[$g]['id'] . '" data-tokens="' . $hotel_associati[$g]['nome'] . ' ' . $hotel_associati[$g]['email'] . ' ' . $hotel_associati[$g]['indirizzo'] . '">' . $hotel_associati[$g]['nome'] . '</option>';
-                                                }
-                                            } ?>
+                                            <?php foreach ($view_model->hotels as &$hotel)  { ?>
+                                                <option value="<?php echo $hotel->id; ?>" data-tokens="<?php echo $hotel->nome.' '.$hotel->email.' '.$hotel->indirizzo; ?>"><?php echo $hotel->nome; ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                     <div id="relatedHotels" class="form-group col-md-6">
-                                        <?php
-                                        $hotel_associati_struttura = array();
-                                        if ($hotel_associati_struttura != 'error') {
-                                            for ($i = 0; $i < sizeof($hotel_associati_struttura); $i++) {
-                                                $query_bis = "SELECT * FROM hotel WHERE id = ?";
-                                                $stmt_bis = $dbh->prepare($query_bis);
-                                                $stmt_bis->bindParam(1, $hotel_associati_struttura[$i]['id'], PDO::PARAM_INT);
-                                                $stmt_bis->execute();
-                                                if ($stmt_bis->rowCount() > 0) {
-                                                    $dati = $stmt_bis->fetch(PDO::FETCH_ASSOC);
-
-                                                } ?>
-                                                <a href="javascript:void()"
-                                                   class="tagit2 relHot isRelatedToShow-<?php echo $hotel_associati_struttura[$i]['id']; ?>"
-                                                   onclick="removeRelatedHotel(<?php echo $hotel_associati_struttura[$i]['id']; ?>)"
-                                                   id="<?php echo $hotel_associati_struttura[$i]['id']; ?>"><?php echo $dati['nome']; ?>
-                                                    <i class="fa fa-close"></i></a>
-                                            <?php }
-                                        } ?>
+                                        <?php foreach ($view_model->related_hotels as $related_hotel) { ?>
+                                            <a href="javascript:void()"
+                                               class="tagit2 relHot isRelatedToShow-<?php echo $related_hotel->id_hotel; ?>"
+                                               onclick="removeRelatedHotel(<?php echo $related_hotel->id_hotel; ?>)"
+                                               id="<?php echo $related_hotel->id_hotel; ?>"><?php echo $related_hotel->nome; ?>
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        <?php } ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
                                         <label><?php echo $view_model->translations->get('categorie_associate'); ?></label>
                                         <select class="selectpicker1" data-live-search="true" id="hotel_associati" data-name="related_categories">
                                             <option disabled selected>Seleziona...</option>
-                                            <?php
-                                            $categorie = getCategorie($dbh, $_SESSION['lang']);
-                                            if ($categorie != 'error') {
-                                                for ($g = 0; $g < sizeof($categorie); $g++) {
-                                                    echo '<option value="' . $categorie[$g]['id'] . '" data-tokens="' . $categorie[$g]['nome'] . '">' . $categorie[$g]['nome'] . '</option>';
-                                                }
-                                            } ?>
+                                            <?php foreach ($view_model->categories as &$category) { ?>
+                                                <option value="<?php echo $category->id; ?>" data-tokens="<?php echo $category->nome; ?>"><?php echo $category->nome; ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                     <div id="relatedCat" class="form-group col-md-6">
-                                        <?php
-                                        if ($cat_struttura != 'error') {
-                                            for ($i = 0; $i < sizeof($cat_struttura); $i++) {
-                                                $current_id = $cat_struttura[$i]['id_categoria'];
-                                                $id_current_lang = $current_id + $_SESSION['lang'] - 1;
-                                                $query_bis = "SELECT * FROM categorie_strutture WHERE id = ?";
-                                                $stmt_bis = $dbh->prepare($query_bis);
-                                                $stmt_bis->bindParam(1, $id_current_lang, PDO::PARAM_INT);
-                                                $stmt_bis->execute();
-                                                if ($stmt_bis->rowCount() > 0) {
-                                                    $dati = $stmt_bis->fetch(PDO::FETCH_ASSOC);
-
-                                                } ?>
-                                                <a href="javascript:void()"
-                                                   class="tagit2 relCat relatedCat-<?php echo $cat_struttura[$i]['id_categoria']; ?>"
-                                                   onclick="removeRelatedCat(<?php echo $cat_struttura[$i]['id_categoria']; ?>)"
-                                                   id="<?php echo $cat_struttura[$i]['id_categoria']; ?>"><?php echo $dati['nome']; ?>
-                                                    <i class="fa fa-close"></i></a>
-                                            <?php }
-                                        } ?>
+                                        <?php foreach ($view_model->related_categories as $related_category) { ?>
+                                            <a href="javascript:void()"
+                                               class="tagit2 relHot isRelatedToShow-<?php echo $related_category->related_id; ?>"
+                                               onclick="removeRelatedHotel(<?php echo $related_category->related_id; ?>)"
+                                               id="<?php echo $related_category->related_id; ?>"><?php echo $related_category->nome; ?>
+                                                <i class="fa fa-close"></i>
+                                            </a>
+                                        <?php } ?>
                                     </div>
 
                                 <?php } ?>
@@ -181,7 +150,7 @@
                                 </div>
 
                                 <?php
-                                    $tips_source = empty($view_model->principal->real_path_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_path_immagini_didascalia);
+                                    $tips_source = empty($view_model->principal->real_path_immagini_didascalia) ? array('') : explode('|', $view_model->principal->real_path_immagini_didascalia);
 
                                     $label = 'immagini_struttura';
                                     $button_label = 'scegli_immagini';
@@ -191,7 +160,6 @@
                                     $multiple = false;
                                     include 'Views/backoffice.images.uploader.php';
                                 ?>
-
 
                                 <div class="form-group col-md-12">
                                     <?php
@@ -218,10 +186,10 @@
                                 <div class="form-group col-md-12">
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $flag_field_prefix ="orario_continuato";
-                                        $day_field_prefix = "giorno";
-                                        $model = $view_model->principal;
-                                        include 'Views/backoffice.timetable.php';
+                                            $flag_field_prefix ="orario_continuato";
+                                            $day_field_prefix = "giorno";
+                                            $model = $view_model->principal;
+                                            include 'Views/backoffice.timetable.php';
                                         ?>
                                     </div>
                                 </div>
