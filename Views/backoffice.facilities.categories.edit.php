@@ -15,13 +15,17 @@
                 <div class="card-header">
                     <h4 class="card-title"><?php echo $view_model->translations->get('dati_categoria'); ?></h4>
                 </div>
-                <form action="/backoffice/facilities/categories/<?php echo $view_model->categories['related_id']; ?>/update"
+                <form action="/backoffice/facilities/categories/update"
                       method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="basic-form">
                             <?php
                             $lingue = $view_model->languages->list_all();
-                            foreach ($view_model->categories_all_languages as $category) {
+                            $i = 0;
+                            foreach ($lingue as $category) {
+                                if ($i == 0)
+                                    echo '<input type="hidden" name="id_cat" value="' . $category->related_id . '">';
+                                $i++;
                                 ?>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome') . ' ' . $lingue[$category->shortcode_lingua]['nome_lingua']; ?></label>
