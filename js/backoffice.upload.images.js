@@ -1,4 +1,3 @@
-
 function delPreview(target) {
     var $target = jQuery(target).parent();
     var $input = $target.parent()
@@ -43,13 +42,30 @@ $('input.custom-file-input').on("change", function () {
                     n_pictures++;
                     var n_pictures_next = n_pictures + 1;
                     var name = $(self).data('name') + `[${n_pictures_next}]`;
-                    var html = '<div class="img-form-preview"><span class="delete-preview" onclick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="'+src+'" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default_image" value="'+n_pictures_next+'"><label class="f15">&nbsp;Immagine principale</label><br></div></div>';
+                    var html = '<div class="img-form-preview"><span class="delete-preview" onclick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default_image" value="' + n_pictures_next + '"><label class="f15">&nbsp;Immagine principale</label><br></div></div>';
                     $container.find('.preview').append(html);
                 }
             } else {
                 var src = response[0];
                 var name = $(self).data('name') + '[1]';
-                var html = '<div class="img-form-preview"><span class="delete-preview" onclick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="'+src+'" height="200px"></div>';
+                var tips = $(self).data('tips');
+                var placeholders = $(self).data('placeholders');
+                var languages = $(self).data("languages");
+
+
+                var lingue = languages.split("|");
+                var placeholders = placeholders.split("|");
+
+                if (tips != null && tips != undefined) {
+                    var html = '<div class="img-form-preview"><span class="delete-preview" onclick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="' + src + '" height="200px">';
+                    for (let i = 0; i < lingue.length; i++) {
+                        html += '<textarea name="didascalia_' + name + '[' + lingue[i] + ']" placeholder="' + placeholders[i] + '">';
+                        html += '</textarea>';
+                    }
+                    html += '</div>';
+
+                } else
+                    var html = '<div class="img-form-preview"><span class="delete-preview" onclick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="' + src + '" height="200px"></div>';
                 $preview = $container.find('.preview');
                 $preview.empty();
                 $preview.append(html);
