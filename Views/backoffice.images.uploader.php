@@ -10,6 +10,7 @@
     $post_url = "/backoffice/upload/images";
     $languages = $view_model->languages->list_all() ?? array();
     $abbreviations = array_map(function($l) { return $l['abbreviazione']; }, $languages);
+    $names = array_map(function($l) { return $l['nome_lingua']; }, $languages);
 ?>
 <div class="input-group col-md-12">
     <div class="input-group-prepend">
@@ -21,6 +22,7 @@
                data-post-url="<?php echo $post_url; include 'Views/xdebug.querystring.first.php'; ?>"
                data-tips="<?php !empty($tips) ?>"
                data-languages="<?php echo join('|', $abbreviations) ?>"
+               data-placeholders="<?php echo join('|', $names); ?>"
                class="custom-file-input" <?php if ($disabled) echo 'disabled'; ?>>
         <label class="custom-file-label"><?php echo $view_model->translations->get($button_label); ?></label>
     </div>
