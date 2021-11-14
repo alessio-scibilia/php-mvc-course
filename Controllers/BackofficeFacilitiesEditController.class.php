@@ -164,6 +164,9 @@ class BackofficeFacilitiesEditController
                 {
                     $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                 }
+                $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array());
+                $tips = array_map(function($item) use($abbreviation) { return $item[$abbreviation] ?? ''; }, $params['didascalia_img_didascalia'] ?? array());
+                $facility['real_path_immagini_didascalia'] = join('||', $tips);
 
                 foreach ($params['orario_continuato'] as $weekday => $flag)
                 {
@@ -177,6 +180,28 @@ class BackofficeFacilitiesEditController
                 $this->facility_repository->update($facility);
             }
 
+            $this->excellence_repository->remove_by_facility($id);
+
+            foreach ($params['nome_eccellenza'] as $position => $names)
+            {
+                foreach ($names as $abbreviation => $name)
+                {
+                    $language = $languages->get_by_field('abbreviazione', $abbreviation);
+                    $images = array_values($params['img_eccellenza'][$position] ?? array());
+                    $image = array_pop($images);
+                    $excellence = array
+                    (
+                        'struttura_collegata' => $id,
+                        'titolo' => $name,
+                        'testo' => $params['testo'][$position][$abbreviation] ?? '',
+                        'immagine' => $image,
+                        'shortcode_lingua' => $language['shortcode_lingua'],
+                        'abilitato' => $params['abilitato'][$position] ?? 0,
+                        'posizione' => $position
+                    );
+                    $excellence['id'] = $this->excellence_repository->add($excellence);
+                }
+            }
 
             return $this->http_get($params);
         }
