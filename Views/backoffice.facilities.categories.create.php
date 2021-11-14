@@ -28,7 +28,7 @@
                                         <input type="text" class="nome_cat form-control validate-1 nome_categoria"
                                                id="nome_<?php echo $lingue[$i]['shortcode_lingua']; ?>"
                                                placeholder="Sport"
-                                               name="nome_categoria[<?php echo $lingue[$i]['abbreviazione']; ?>">
+                                               name="nome[<?php echo $lingue[$i]['abbreviazione']; ?>]">
                                     </div>
                                 </div>
                             <?php }
@@ -40,6 +40,12 @@
                             $multiple = false;
                             include 'Views/backoffice.images.uploader.php';
                             ?>
+                            <div class="form-group row">
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary validate-it" id="validate-1"
+                                    ><?php echo $view_model->translations->get('crea_categoria'); ?></button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
