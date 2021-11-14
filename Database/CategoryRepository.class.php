@@ -16,13 +16,19 @@ class CategoryRepository extends MySQLRepository
         return array_pop($results);
     }
 
+    public function get_by_facility(int $id_struttura)
+    {
+        $where = "related_id = :id_struttura";
+        $params = array(":id_struttura" => $id_struttura);
+        return $this->get($where, $params);
+    }
+
     public function get_all_categories(int $id_lingua): array
     {
         $where = "shortcode_lingua = :shortcode_lingua";
         $params = array(":shortcode_lingua" => $id_lingua);
         return $this->get($where, $params);
     }
-
 
     public function get_all_enabled_categories(int $shortcode_lingua): array
     {

@@ -7,6 +7,7 @@ require_once 'Database/FacilityHotelRepository.class.php';
 require_once 'Database/FacilityEventRepository.class.php';
 require_once 'Database/FacilityRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
+require_once 'Database/CategoryRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
@@ -28,6 +29,7 @@ class BackofficeFacilitiesEditController
     protected $facility_repository;
     protected $facility_hotel_repository;
     protected $facility_event_repository;
+    protected $category_repository;
 
     public function __construct()
     {
@@ -39,6 +41,7 @@ class BackofficeFacilitiesEditController
         $this->hotel_repository = new HotelRepository();
         $this->facility_hotel_repository = new FacilityHotelRepository();
         $this->facility_event_repository = new FacilityEventRepository();
+        $this->category_repository = new CategoryRepository();
     }
 
     public function http_get(array &$params): IView
@@ -60,12 +63,30 @@ class BackofficeFacilitiesEditController
             $id = intval($params['facilities']);
             $rows = $this->facility_repository->get_facility_all_langs($id);
             $facilities = Facility::facilities($rows);
+            $principal = $facilities[0];
+
+            $rows = $this->facility_hotel_repository->get_related_by_facility_id_and_language_id($principal->related_id, $language['shortcode_lingua']);
+            $related_hotels = Hotel::hotels($rows);
+
+            $rows = $this->hotel_repository->get_all_hotels($language['shortcode_lingua']);
+            $hotels = Hotel::hotels($rows);
+
+            $rows = $this->category_repository->get_all_categories($language['shortcode_lingua']);
+            $categories = Category::categories($rows);
+
+            $rows = $this->category_repository->get_by_facility($principal->related_id);
+            $related_categories = Category::categories($rows);
 
             $view_model = new BackOfficeViewModel('backoffice.facilities.edit', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->language = $language;
             $view_model->facilities = $facilities; // all available languages
-            $view_model->principal = $facilities[0];
+            $view_model->principal = $principal;
+            $view_model->hotels = $hotels;
+            $view_model->related_hotels = $related_hotels;
+            $view_model->categories = $categories;
+            $view_model->related_categories = $related_categories;
+
             $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);

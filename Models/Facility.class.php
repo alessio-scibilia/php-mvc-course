@@ -28,6 +28,33 @@ class Facility
         if ($row != null) {
             foreach ($row as $key => $value) {
                 $this->{$key} = $value;
+
+                switch ($key) {
+                    case 'indirizzo_struttura':
+                        $this->indirizzo = $value;
+                        break;
+                    case 'orari_lunedi':
+                        $this->lunedi = $value;
+                        break;
+                    case 'orari_martedi':
+                        $this->martedi = $value;
+                        break;
+                    case 'orari_mercoledi':
+                        $this->mercoledi = $value;
+                        break;
+                    case 'orari_giovedi':
+                        $this->giovedi = $value;
+                        break;
+                    case 'orari_venerdi':
+                        $this->venerdi = $value;
+                        break;
+                    case 'orari_sabato':
+                        $this->sabato = $value;
+                        break;
+                    case 'orari_domenica':
+                        $this->domenica = $value;
+                        break;
+                }
             }
         }
     }
