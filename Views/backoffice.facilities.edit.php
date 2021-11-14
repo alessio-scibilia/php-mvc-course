@@ -160,33 +160,34 @@
                             </div>
 
                             <?php
+                                $images = empty($view_model->principal->immagine_didascalia) ? array() : explode('|', $view_model->principal->immagine_didascalia);
                                 $label = 'immagini_struttura';
                                 $button_label = 'scegli_immagini';
                                 $field_prefix = "img_struttura";
-                                $urls = empty($view_model->principal->immagine_didascalia) ? array() : array($view_model->principal->immagine_didascalia);
+                                $urls = array_filter($images, function ($img) { return !empty($img); });
                                 $tips = false;
-                                $multiple = false;
+                                $multiple = true;
                                 include 'Views/backoffice.images.uploader.php';
                             ?>
 
                             <div class="form-group col-md-12">
                                 <?php
-                                $label = 'descrizione';
-                                $field = 'descrizione';
-                                $field_prefix = 'descrizione';
-                                $items = $view_model->facilities;
-                                include 'Views/backoffice.multilanguage.textbox.php';
+                                    $label = 'descrizione';
+                                    $field = 'descrizione';
+                                    $field_prefix = 'descrizione';
+                                    $items = $view_model->facilities;
+                                    include 'Views/backoffice.multilanguage.textbox.php';
                                 ?>
                             </div>
 
                             <?php if ($view_model->user->level > 2) { ?>
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'descrizione_benefit';
-                                    $field = 'descrizione_benefit';
-                                    $field_prefix = 'descrizione_benefit';
-                                    $items = $view_model->facilities;
-                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione_benefit';
+                                        $field = 'descrizione_benefit';
+                                        $field_prefix = 'descrizione_benefit';
+                                        $items = $view_model->facilities;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
                             <?php } ?>
@@ -194,10 +195,10 @@
                             <div class="form-group col-md-12">
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $flag_field_prefix = "orario_continuato";
-                                    $day_field_prefix = "giorno";
-                                    $model = $view_model->principal;
-                                    include 'Views/backoffice.timetable.php';
+                                        $flag_field_prefix = "orario_continuato";
+                                        $day_field_prefix = "giorno";
+                                        $model = $view_model->principal;
+                                        include 'Views/backoffice.timetable.php';
                                     ?>
                                 </div>
                             </div>
@@ -240,33 +241,33 @@
 
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $type = 'input';
-                                        $label = 'nome_servizio';
-                                        $placeholder = 'Es: Piatti giapponesi';
-                                        $field = 'titolo';
-                                        $field_prefix = "nome_eccellenza[$r]";
-                                        $items = array();
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                            $type = 'input';
+                                            $label = 'nome_servizio';
+                                            $placeholder = 'Es: Piatti giapponesi';
+                                            $field = 'titolo';
+                                            $field_prefix = "nome_eccellenza[$r]";
+                                            $items = array();
+                                            include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
 
                                     <?php
-                                    $label = $label ?? 'immagine_servizio';
-                                    $button_label = 'immagine_servizio';
-                                    $field_prefix = "img_eccellenza[$r]";
-                                    $urls = array();
-                                    $multiple = false;
-                                    include 'Views/backoffice.images.uploader.php';
+                                        $label = 'immagine_servizio';
+                                        $button_label = 'scegli_immagine';
+                                        $field_prefix = "img_eccellenza[$r]";
+                                        $urls = array();
+                                        $multiple = false;
+                                        include 'Views/backoffice.images.uploader.php';
                                     ?>
 
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $type = 'richtextbox';
-                                        $label = 'descrizione';
-                                        $field = 'testo';
-                                        $field_prefix = "testo[$r]";
-                                        $items = array();
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                            $type = 'richtextbox';
+                                            $label = 'descrizione';
+                                            $field = 'testo';
+                                            $field_prefix = "testo[$r]";
+                                            $items = array();
+                                            include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
 

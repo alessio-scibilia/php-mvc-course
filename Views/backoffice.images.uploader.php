@@ -21,7 +21,6 @@
                data-post-url="<?php echo $post_url; include 'Views/xdebug.querystring.first.php'; ?>"
                data-tips="<?php !empty($tips) ?>"
                data-languages="<?php echo join('|', $abbreviations) ?>"
-               data-placeholder=""
                class="custom-file-input" <?php if ($disabled) echo 'disabled'; ?>>
         <label class="custom-file-label"><?php echo $view_model->translations->get($button_label); ?></label>
     </div>

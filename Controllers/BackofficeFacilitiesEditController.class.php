@@ -102,4 +102,50 @@ class BackofficeFacilitiesEditController
 
         return new HttpRedirectView('/backoffice/facilities');
     }
+
+    public function http_post(array &$params): IView
+    {
+        if (isset($params['facilities'])) {
+
+            $id = intval($params['facilities']);
+            $facilities = $this->facility_repository->get_facility_all_langs($id);
+            $facility_fields = array
+            (
+                'nome_struttura',
+                'email',
+                'sito_web',
+                'telefono',
+                'abilitata',
+                'indicizza',
+                'convenzionato',
+                'latitudine',
+                'longitudine',
+                'tipo_viaggio',
+            );
+            $facility_fields_remap = array
+            (
+                'indirizzo' => 'indirizzo_struttura',
+                'default_image' => 'immagine_principale',
+            );
+            foreach ($facilities as &$facility)
+            {
+                foreach ($facility_fields as $facility_field)
+                {
+                    $facility[$facility_field] = $params[$facility_field];
+                }
+                foreach ($facility_fields_remap as $post_field => $facility_field)
+                {
+                    $facility[$facility_field] = $params[$post_field];
+                }
+
+
+                $this->facility_repository->update($facility);
+            }
+
+
+            return $this->http_get($params);
+        }
+
+        return new HttpRedirectView('/backoffice/facilities');
+    }
 }
