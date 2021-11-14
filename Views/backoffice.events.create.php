@@ -1,6 +1,7 @@
 <div class="container-fluid">
     <div class="row">
-        <form action="/backoffice/events/add" method="POST" enctype="multipart/form-data">
+        <form action="/backoffice/events/add<?php include 'Views/xdebug.querystring.first.php'; ?>" method="POST"
+              enctype="multipart/form-data">
 
             <div class="col-12 d-flex align-items-center justify-content-start mb15">
                 <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
