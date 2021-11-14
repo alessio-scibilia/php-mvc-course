@@ -118,7 +118,7 @@
                 <div class="form-group col-md-12">
                     <input type="button"
                            class="btn btn-danger annulla-utility"
-                           id="servizio-1"
+                           id="utility-1"
                            value="Elimina utility">
                 </div>
                 <div class="form-group col-md-12">

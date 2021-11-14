@@ -149,7 +149,7 @@ jQuery(document).on("click", ".annulla-servizio", function () {
 
 jQuery(document).on("click", ".annulla-utility", function () {
     var id = jQuery(this).attr("id");
-    if (jQuery("#num_utility").val() > 1) {
+    if (jQuery("#num_utilities").val() > 1) {
         var prec = jQuery("#num_utilities").val();
         var less = prec - 1;
         jQuery("#num_utilities").val(less);
