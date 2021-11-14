@@ -67,4 +67,3 @@ $orari['domenica'] = explode("|", $model->domenica);
         </div>
     </div>
 <?php } ?>
-</div>

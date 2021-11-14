@@ -41,7 +41,7 @@
                        value="<?php echo $model->{$field} ?? ''; ?>"
                        class="form-control validate-input"
                        name="<?php echo $field_prefix; ?>[<?php echo $language['abbreviazione']; ?>]"
-                       placeholder="<?php echo $placeholder; ?>">
+                       placeholder="<?php echo $placeholder; ?>" />
         <?php break;
 
             case 'textarea': ?>
