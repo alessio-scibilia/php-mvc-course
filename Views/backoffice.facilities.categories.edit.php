@@ -15,7 +15,7 @@
                 <div class="card-header">
                     <h4 class="card-title"><?php echo $view_model->translations->get('dati_categoria'); ?></h4>
                 </div>
-                <form action="/backoffice/facilities/categories/<?php echo $view_model->category['related_id']; ?>/update"
+                <form action="/backoffice/facilities/categories/<?php echo $view_model->categories['related_id']; ?>/update"
                       method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="basic-form">

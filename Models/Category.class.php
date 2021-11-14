@@ -81,7 +81,7 @@ class Category
             $rows = self::create_samples(1, $languages);
         }
         foreach ($rows as &$row) {
-            $position = intval($row['posizione']);
+            $position = intval($row['related_id']);
             if (!isset($results[$position])) {
                 $results[$position] = self::create_prototype($position, $languages);
             }
