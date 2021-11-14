@@ -10,10 +10,11 @@ class HotelRepository extends MySQLRepository
 
     public function get_by_email_password(string $email, string $password)
     {
-        $where = "email = :email AND password = :password AND shortcode_lingua = 1";
+        $where = "email = :email AND password = :password AND shortcode_lingua = 1 AND abilitato = 1";
         $params = array(":email" => $email, ":password" => md5($password));
         $results = $this->get($where, $params);
         return array_pop($results);
+        
     }
 
     public function get_all_hotels(int $shortcode_lingua): array

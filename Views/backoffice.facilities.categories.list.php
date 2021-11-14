@@ -16,7 +16,6 @@
                     <h4 class="card-title"><?php echo $view_model->translations->get('lista_categorie'); ?></h4>
                 </div>
                 <div class="card-body">
-
                     <div class="table-responsive">
                         <table id="example" class="display" style="min-width: 100%">
                             <thead>
@@ -30,7 +29,6 @@
                                 <th><?php echo $view_model->translations->get('azioni'); ?></th>
                             </tr>
                             </thead>
-                            
                             <tbody>
                             <?php foreach ($view_model->categories as &$category) { ?>
                                 <tr>
