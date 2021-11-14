@@ -56,7 +56,7 @@ $('input.custom-file-input').on("change", function () {
                 var lingue = languages.split("|");
                 var placeholders = placeholders.split("|");
 
-                if (tips != null && tips != undefined) {
+                if (tips == true) {
                     var html = '<div class="img-form-preview"><span class="delete-preview" onclick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="' + src + '" height="200px">';
                     for (let i = 0; i < lingue.length; i++) {
                         html += '<textarea name="didascalia_' + name + '[' + lingue[i] + ']" placeholder="' + placeholders[i] + '">';
