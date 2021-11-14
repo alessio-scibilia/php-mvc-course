@@ -56,7 +56,11 @@ class BackofficeFacilitiesNewController
             return new HttpRedirectView('/backoffice');
         }
 
-        $facilities = new Facility();
+        $default_values = array
+        (
+            'tipo_viaggio' => 2 // car
+        );
+        $facilities = new Facility($default_values);
         $principal = $facilities;
 
         if ($user->level <= 2) {
@@ -70,13 +74,6 @@ class BackofficeFacilitiesNewController
             $categories = array();
         }
 
-        $rows = $this->facility_hotel_repository->get_related_by_facility_id_and_language_id($principal->related_id, $language['shortcode_lingua']);
-        $related_hotels = Hotel::hotels($rows);
-
-        $rows = $this->category_repository->get_by_facility($principal->related_id, $language['shortcode_lingua']);
-        $related_categories = Category::categories($rows);
-
-
         $view_model = new BackOfficeViewModel('backoffice.facilities.edit', $title, $languages, $translations);
         $view_model->user = $user;
         $view_model->language = $language;
@@ -84,8 +81,9 @@ class BackofficeFacilitiesNewController
         $view_model->principal = $principal;
         $view_model->hotels = $hotels;
         $view_model->categories = $categories;
-        $view_model->related_hotels = $related_hotels;
-        $view_model->related_categories = $related_categories;
+        $view_model->related_hotels = array();
+        $view_model->related_categories = array();
+        $view_model->tips = array();
 
         $view_model->menu_active_btn = 'facilities';
 

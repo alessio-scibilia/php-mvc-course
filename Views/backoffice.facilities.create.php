@@ -1,14 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <form action="/backoffice/facilities/add<?php include 'Views/xdebug.querystring.first.php'; ?>"
+        <form action="/backoffice/facilities/new<?php include 'Views/xdebug.querystring.first.php'; ?>"
               method="post" enctype="multipart/form-data">
 
             <div class="col-12 d-flex align-items-center justify-content-start mb15">
                 <a href="/backoffice/facilities" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_strutture'); ?>
                     /</a>
-                <h1><i class="fa fa-building"></i> <?php echo $view_model->translations->get('modifica_struttura'); ?>
-                </h1>
+                <h1><i class="fa fa-building"></i> <?php echo $view_model->translations->get('modifica_struttura'); ?></h1>
             </div>
 
             <div class="col-xl-12 col-lg-12">
@@ -53,7 +52,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
-                                    <input name="nome_struttura"
+                                    <input value="<?php echo $view_model->principal->nome_struttura; ?>"
+                                           name="nome_struttura"
                                            type="text"
                                            class="form-control validate-1"
                                            placeholder="London Hotel">
@@ -61,7 +61,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('email'); ?></label>
-                                    <input name="email"
+                                    <input value="<?php echo $view_model->principal->email; ?>"
+                                           name="email"
                                            type="text"
                                            class="form-control validate-1"
                                            placeholder="mario@rossi.it">
@@ -69,7 +70,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                    <input type="text"
+                                    <input value="<?php echo $view_model->principal->sito_web; ?>"
+                                           type="text"
                                            class="form-control validate-1"
                                            name="sito_web"
                                            placeholder="www.hotelsuperlondon.co.uk">
@@ -77,7 +79,8 @@
 
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('telefono'); ?></label>
-                                    <input type="text"
+                                    <input value="<?php echo $view_model->principal->telefono; ?>"
+                                           type="text"
                                            class="form-control validate-1"
                                            name="telefono"
                                            placeholder="020483039">
@@ -87,6 +90,7 @@
                                     <?php
                                     $label = 'abilitato';
                                     $field = 'abilitata';
+                                    $value = $view_model->principal->abilitata;
                                     include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
@@ -95,6 +99,7 @@
                                     <?php
                                     $label = 'indicizza';
                                     $field = 'indicizza';
+                                    $value = $view_model->principal->indicizza;
                                     include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
@@ -103,32 +108,33 @@
                                     <?php
                                     $label = 'convenzionato';
                                     $field = 'convenzionato';
+                                    $value = $view_model->principal->convenzionato;
                                     include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
 
-                                <?php
+                                <?php $model = $view_model->principal;
                                 include 'Views/backoffice.geolocator.php'; ?>
 
                                 <div class="form-group col-md-4">
                                     <label><?php echo $view_model->translations->get('tipo_viaggio'); ?></label>
                                     <div class="route-container">
                                         <div class="route-div"><input
-                                                    type="radio"
+                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 1) echo 'checked="checked"'; ?>
                                                     name="tipo_viaggio" class="tipo_viaggio" value="1">
                                             <img src="/images/walking.svg" class="svg-route"/>
                                             <span for="tipo_viaggio"
                                                   class="route-span">A piedi</span>
                                         </div>
                                         <div class="route-div"><input
-                                                    type="radio"
+                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 2) echo 'checked="checked"'; ?>
                                                     name="tipo_viaggio" class="tipo_viaggio" value="2">
                                             <img src="/images/car.svg" class="svg-route"/>
                                             <span for="tipo_viaggio"
                                                   class="route-span">In auto</span>
                                         </div>
                                         <div class="route-div"><input
-                                                    type="radio"
+                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 3) echo 'checked="checked"'; ?>
                                                     name="tipo_viaggio" class="tipo_viaggio" value="3">
                                             <img src="/images/mezzi.svg" class="svg-route"/>
                                             <span for="tipo_viaggio"
@@ -138,36 +144,33 @@
                                 </div>
 
                                 <?php
-                                $images = array();
-                                $label = 'immagini_struttura';
-                                $button_label = 'scegli_immagini';
-                                $field_prefix = "img_struttura";
-                                $urls = array_filter($images, function ($img) {
-                                    return !empty($img);
-                                });
-                                $tips = false;
-                                $multiple = true;
-                                include 'Views/backoffice.images.uploader.php';
+                                    $label = 'immagini_struttura';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = "img_struttura";
+                                    $urls = array();
+                                    $tips = false;
+                                    $multiple = true;
+                                    include 'Views/backoffice.images.uploader.php';
                                 ?>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'descrizione';
-                                    $field = 'descrizione';
-                                    $field_prefix = 'descrizione';
-                                    $items = array();
-                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione';
+                                        $field = 'descrizione';
+                                        $field_prefix = 'descrizione';
+                                        $items = array();
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
 
                                 <?php if ($view_model->user->level > 2) { ?>
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $label = 'descrizione_benefit';
-                                        $field = 'descrizione_benefit';
-                                        $items = array();
-                                        $field_prefix = 'descrizione_benefit';
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                            $label = 'descrizione_benefit';
+                                            $field = 'descrizione_benefit';
+                                            $field_prefix = 'descrizione_benefit';
+                                            $items = array();
+                                            include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
                                 <?php } ?>
@@ -175,9 +178,10 @@
                                 <div class="form-group col-md-12">
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $flag_field_prefix = "orario_continuato";
-                                        $day_field_prefix = "giorno";
-                                        include 'Views/backoffice.timetable.php';
+                                            $flag_field_prefix = "orario_continuato";
+                                            $day_field_prefix = "giorno";
+                                            $model = $view_model->principal;
+                                            include 'Views/backoffice.timetable.php';
                                         ?>
                                     </div>
                                 </div>
@@ -195,78 +199,77 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            <input type="hidden" id="num_eccellenze"
+                            <input type="hidden"
+                                   id="num_eccellenze"
                                    value="1">
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <a href="javascript:void()" class="open-create-eccellenza btn btn-primary"><i
-                                                class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>
-                                    </a>
-                                </div>
-                            </div>
+                            <?php
+                                $excellences = array_map(function($l) { return new Excellence(); }, $view_model->languages->list_all());
+                                $excellence = $excellences[0];
+                            ?>
+                                <div class="form-eccellenza-container fsc-1"
+                                     id="fsc-eccellenza-1">
+                                    <div class="form-row">
 
-                            <div class="form-eccellenza-container fsc-1"
-                                 id="fsc-eccellenza-1">
-                                <div class="form-row">
-                                    <div class="col-12">
-                                        <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
-                                    </div>
+                                        <div class="col-12">
+                                            <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
+                                        </div>
 
-                                    <div class="form-group col-md-12">
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $type = 'input';
+                                            $label = 'nome_servizio';
+                                            $placeholder = 'Es: Piatti giapponesi';
+                                            $field = 'titolo';
+                                            $field_prefix = "nome_eccellenza[1]";
+                                            $items = $excellences;
+                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
+                                        </div>
+
                                         <?php
-                                        $type = 'input';
-                                        $label = 'nome_servizio';
-                                        $placeholder = 'Es: Piatti giapponesi';
-                                        $field = 'titolo';
-                                        $field_prefix = "nome_eccellenza[1]";
-                                        $items = array();
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'immagine_servizio';
+                                        $button_label = 'scegli_immagine';
+                                        $field_prefix = "img_eccellenza[1]";
+                                        $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
+                                        $multiple = false;
+                                        include 'Views/backoffice.images.uploader.php';
                                         ?>
+
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $type = 'richtextbox';
+                                            $label = 'descrizione';
+                                            $field = 'testo';
+                                            $field_prefix = "testo[1]";
+                                            $items = $excellences;
+                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
+                                        </div>
+
                                     </div>
 
-                                    <?php
-                                    $label = 'immagine_servizio';
-                                    $button_label = 'scegli_immagine';
-                                    $field_prefix = "img_eccellenza[1]";
-                                    $urls = array();
-                                    $multiple = false;
-                                    include 'Views/backoffice.images.uploader.php';
-                                    ?>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-3">
+                                            <?php
+                                            $label = 'abilitato';
+                                            $field = "abilitato[1]";
+                                            $value = $excellence->abilitato;
+                                            include 'Views/backoffice.checkbox.php';
+                                            ?>
+                                        </div>
 
-                                    <div class="form-group col-md-12">
-                                        <?php
-                                        $type = 'richtextbox';
-                                        $label = 'descrizione';
-                                        $field = 'testo';
-                                        $field_prefix = "testo[1]";
-                                        $items = array();
-                                        include 'Views/backoffice.multilanguage.textbox.php';
-                                        ?>
-                                    </div>
-
-                                </div>
-
-                                <div class="form-row">
-                                    <div class="form-group col-md-3">
-                                        <?php
-                                        $label = 'abilitato';
-                                        $field = "abilitato[1]";
-                                        $value = array();
-                                        include 'Views/backoffice.checkbox.php';
-                                        ?>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <input type="button" class="btn btn-danger annulla-eccellenza"
-                                               id="eccellenza-1" value="Elimina eccellenza">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <hr/>
-                                        <input type="button" class="btn btn-success save-eccellenza"
-                                               value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
+                                        <div class="form-group col-md-12">
+                                            <input type="button" class="btn btn-danger annulla-eccellenza"
+                                                   id="eccellenza-1" value="Elimina eccellenza">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <hr/>
+                                            <input type="button" class="btn btn-success save-eccellenza"
+                                                   value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -283,12 +286,13 @@
                                 <div class="form-row">
 
                                     <?php
-                                    $label = 'immagini_didascalia';
-                                    $button_label = 'scegli_immagini';
-                                    $field_prefix = 'img_didascalia';
-                                    $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
-                                    $tips = empty($view_model->principal->real_path_immagini_didascalia) ? array('') : explode('|', $view_model->principal->real_path_immagini_didascalia);
-                                    include 'Views/backoffice.images.uploader.php';
+                                        $label = 'immagini_didascalia';
+                                        $button_label = 'scegli_immagini';
+                                        $field_prefix = 'img_didascalia';
+                                        $urls = array();
+                                        $tips = array();
+                                        $multiple = true;
+                                        include 'Views/backoffice.images.uploader.php';
                                     ?>
 
                                 </div>

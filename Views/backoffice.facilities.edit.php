@@ -126,7 +126,7 @@
                                 <?php
                                 $label = 'convenzionato';
                                 $field = 'convenzionato';
-                                $value = $view_model->principal->indicizza;
+                                $value = $view_model->principal->convenzionato;
                                 include 'Views/backoffice.checkbox.php';
                                 ?>
                             </div>
@@ -218,15 +218,9 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <input type="hidden" id="num_eccellenze"
+                        <input type="hidden"
+                               id="num_eccellenze"
                                value="<?php echo count($view_model->related_excellences); ?>">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <a href="javascript:void()" class="open-create-eccellenza btn btn-primary"><i
-                                            class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>
-                                </a>
-                            </div>
-                        </div>
                         <?php
                             foreach ($view_model->related_excellences as $r => $excellences) {
                                 $excellence = $excellences[$view_model->language['shortcode_lingua']];
