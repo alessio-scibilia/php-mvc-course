@@ -7,7 +7,7 @@
                 <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('indietro'); ?>
                     /</a>
-                <h1><i class="fa fa-calendar"></i> <?php echo $view_model->translations->get('modifica_evento'); ?>
+                <h1><i class="fa fa-calendar"></i> <?php echo $view_model->translations->get('crea_evento'); ?>
                 </h1>
             </div>
             <div class="col-xl-12 col-lg-12">
@@ -187,7 +187,7 @@
                 <div class="form-group col-md-12">
                     <div align="left">
                         <input type="submit" class="btn btn-success validate-it"
-                               value="<?php echo $view_model->translations->get('aggiorna_evento'); ?>">
+                               value="<?php echo $view_model->translations->get('crea_evento'); ?>">
 
                     </div>
                     <br/><br/>
