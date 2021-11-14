@@ -126,6 +126,19 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-12 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title"><i
+                                    class="fa fa-wrench"></i> <?php echo $view_model->translations->get('utility'); ?>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <?php include 'Views/backoffice.utilities.php'; ?>
+                    </div>
+                </div>
+            </div>
             <div class="col-xl-12 col-lg-12">
                 <div class="form-group col-md-12">
                     <div align="left">
