@@ -102,7 +102,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="telefono"><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                    <input type="text" name="indirizzo" class="form-control" placeholder="118">
+                    <input type="text" name="indirizzo" class="form-control" placeholder="Via roma 24, Roma">
                 </div>
 
                 <?php
