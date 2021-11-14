@@ -105,7 +105,9 @@ class BackofficeFacilitiesEditController
 
     public function http_post(array &$params): IView
     {
-        if (isset($params['facilities'])) {
+        if (isset($params['facilities']))
+        {
+            $languages = new Languages($this->language_repository->list_all());
 
             $id = intval($params['facilities']);
             $facilities = $this->facility_repository->get_facility_all_langs($id);
@@ -127,8 +129,12 @@ class BackofficeFacilitiesEditController
                 'indirizzo' => 'indirizzo_struttura',
                 'default_image' => 'immagine_principale',
             );
+            $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
             foreach ($facilities as &$facility)
             {
+                $language = $languages->get_by_field('shortcode_lingua', $facility['shortcode_lingua']);
+                $abbreviation = $language['abbreviazione'];
+
                 foreach ($facility_fields as $facility_field)
                 {
                     $facility[$facility_field] = $params[$facility_field];
@@ -138,6 +144,15 @@ class BackofficeFacilitiesEditController
                     $facility[$facility_field] = $params[$post_field];
                 }
 
+                $facility['immagine_didascalia'] = join('|', $params['img_struttura']);
+                $facility['descrizione'] = $params['descrizione'][$abbreviation];
+                $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
+
+                foreach ($params['orario_continuato'] as $weekday => $orario_continuato)
+                {
+                    $orari = join('|', $params['giorno'][$weekday]);
+                    $facility['orari_'.$weekday] = "$orario_continuato|$orari|";
+                }
 
                 $this->facility_repository->update($facility);
             }
