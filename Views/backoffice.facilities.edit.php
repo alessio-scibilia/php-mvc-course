@@ -39,6 +39,7 @@
                                            id="<?php echo $related_hotel->id_hotel; ?>"><?php echo $related_hotel->nome; ?>
                                             <i class="fa fa-close"></i>
                                         </a>
+                                        <input type="hidden" name="related_hotels[]" value="<?php echo $related_hotel->id_hotel; ?>" />
                                     <?php } ?>
                                 </div>
 
@@ -61,6 +62,7 @@
                                            id="<?php echo $related_category->related_id; ?>"><?php echo $related_category->nome; ?>
                                             <i class="fa fa-close"></i>
                                         </a>
+                                        <input type="hidden" name="related_categories[]" value="<?php echo $related_category->related_id; ?>" />
                                     <?php } ?>
                                 </div>
 
@@ -313,7 +315,8 @@
                                     $button_label = 'scegli_immagini';
                                     $field_prefix = 'img_didascalia';
                                     $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
-                                    $tips = empty($view_model->principal->real_path_immagini_didascalia) ? array('') : explode('|', $view_model->principal->real_path_immagini_didascalia);
+                                    $tips = $view_model->tips;
+                                    $multiple = true;
                                     include 'Views/backoffice.images.uploader.php';
                                 ?>
 
