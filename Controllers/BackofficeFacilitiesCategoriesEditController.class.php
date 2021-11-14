@@ -5,6 +5,7 @@ require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/CategoryRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/User.class.php';
+require_once 'Models/Category.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -22,7 +23,7 @@ class BackofficeFacilitiesCategoriesEditController
         $this->user_repository = new UserRepository();
         $this->language_repository = new LanguageRepository();
         $this->translation_repository = new TranslationRepository();
-        $this->category_repository = new TranslationRepository();
+        $this->category_repository = new CategoryRepository();
     }
 
     public function http_get(array &$params): IView
@@ -38,11 +39,15 @@ class BackofficeFacilitiesCategoriesEditController
             $title = $translations->get('gestione_categorie') . ' | ' . $translations->get('nome_sito');
 
             $id = intval($params['categories']);
-            $categories = $this->category_repository->get_by_id($id);
+
+            $categories = $this->category_repository->get_category_all_langs($id);
+
+            $instances = $languages->list_all();
+            $categories_final = Category::grouped_categories($categories, $instances);
 
             $view_model = new BackOfficeViewModel('backoffice.facilities.categories.edit', $title, $languages, $translations);
             $view_model->user = $user;
-            $view_model->categories = $categories;
+            $view_model->category_all_languages = $categories_final;
             $view_model->menu_active_btn = 'facilities';
 
             return new HtmlView($view_model);

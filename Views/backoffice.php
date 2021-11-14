@@ -249,7 +249,7 @@ else
                     </ul>
                 </div>
 
-                <?php if ($view_model->user->level >= 3 || $view_model->user->level == 0) { ?>
+                <?php if ($view_model->user->level >= 3) { ?>
                     <div class="tab-pane fade <?php if (strtolower($view_model->menu_active_btn) == 'guests') echo 'active show'; else echo $view_model->menu_active_btn; ?>"
                          id="guests">
                         <ul class="metismenu tab-nav-menu">
@@ -458,7 +458,7 @@ else
                         </a>
                     </li>
                 <?php } ?>
-                <?php if ($view_model->user->level >= 3 || $view_model->user->level == 0) { ?>
+                <?php if ($view_model->user->level >= 3) { ?>
                     <li class="nav-item">
                         <a class="nav-link open-view-action <?php if ($view_model->menu_active_btn == 'guests') echo 'active'; ?>"
                            data-title="<?php echo $view_model->translations->get('titolo_ospiti') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
