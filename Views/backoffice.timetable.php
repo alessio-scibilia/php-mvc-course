@@ -1,6 +1,6 @@
 <?php
-    $default_timetable_data = '0|||||';
-    $model = $model ?? (object)array
+$default_timetable_data = '0|||||';
+$model = $model ?? (object)array
     (
         'lunedi' => $default_timetable_data,
         'martedi' => $default_timetable_data,
@@ -10,8 +10,8 @@
         'sabato' => $default_timetable_data,
         'domenica' => $default_timetable_data
     );
-    $flag_field_prefix = $flag_field_prefix ?? 'orario_continuato';
-    $day_field_prefix = $day_field_prefix ?? 'giorno';
+$flag_field_prefix = $flag_field_prefix ?? 'orario_continuato';
+$day_field_prefix = $day_field_prefix ?? 'giorno';
 ?>
 <label><?php echo $view_model->translations->get('orari'); ?></label>
 <br/>
@@ -35,20 +35,21 @@ $orari['domenica'] = explode("|", $model->domenica);
             <div class="time-title"><?php echo $view_model->translations->get($weekday); ?>
                 <span> | <input type="hidden"
                                 name="<?php echo $flag_field_prefix; ?>[<?php echo $weekday; ?>]"
-                                value="0"/><input
-                        type="checkbox"
-                        name="<?php echo $flag_field_prefix; ?>[<?php echo $weekday; ?>]"
-                        class="orario-continuato" <?php if ($orari[$weekday][0] == 1) echo 'checked="checked"'; ?>
+                                value="0"/>
+                    <input
+                            type="checkbox"
+                            name="<?php echo $flag_field_prefix; ?>[<?php echo $weekday; ?>]"
+                            class="orario-continuato" <?php if ($orari[$weekday][0] == 1) echo 'checked="checked"'; ?>
                                                                             value="1"> Orario continuato </span>
             </div>
             <div class="input-time-container">
                 <?php for ($i = 0; $i < 2; $i++) { ?>
                     <span class="time-span">
                             <?php echo $view_model->translations->get($intervals[$i]); ?> <input
-                            type="time"
-                            name="<?php echo $day_field_prefix; ?>[<?php echo $weekday; ?>][<?php echo $i; ?>]"
-                            value="<?php echo $orari[$weekday][$i + 1]; ?>"
-                            class="validate-hotel">
+                                type="time"
+                                name="<?php echo $day_field_prefix; ?>[<?php echo $weekday; ?>][<?php echo $i; ?>]"
+                                value="<?php echo $orari[$weekday][$i + 1]; ?>"
+                                class="validate-hotel">
                     </span>
                 <?php } ?>
             </div>

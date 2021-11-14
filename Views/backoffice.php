@@ -382,9 +382,7 @@ else
                                data-menu="<?php echo $view_model->translations->get('link_impostazioni'); ?>"
                                href="/backoffice/settings"
                                 <?php include 'Views/xdebug.attribute.php'; ?>
-                               data-action="/backoffice/settings"
-                               role="button"
-                               data-toggle="dropdown">
+                            >
                                 <i class="fa fa-user-o fa-user-modded"></i>
                                 <div class="header-info">
                                     <span>Hey, <strong><?php echo $view_model->user->nome; ?></strong></span>
