@@ -106,14 +106,13 @@
             let next = id.replace(regex, replacer);
             $(this).attr("id", next);
         });
-        $last.find("[class]").filter(function() {
+        var $targets = $last.find("[class]").filter(function() {
             let classes = $(this).attr("class").split(' ');
             let regex = /^([^-]{4,}-)+\d+$/;
             let matches = classes.filter(function (c) {return c.match(regex);} );
             return matches.length > 0;
         });
-        /*
-        .each(function() {
+        $targets.each(function() {
             let classes = $(this).attr("class").split(' ');
             let regex = /^(.+)(-\d+)$/;
             let replacer = `$1-${items_next}`;
@@ -121,7 +120,7 @@
             let next = new_classes.join(' ');
             $(this).attr("class", next);
         });
-        */
+
         var offset = jQuery("#servizio-" + items_next).offset().top;
         offset = offset;
         $('html,body').animate({ scrollTop: offset }, 'slow');

@@ -1,13 +1,6 @@
 <div class="basic-form">
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <input type="hidden" id="num_utilities"
-                   value="<?php if (isset($view_model->utilities)) echo sizeof($view_model->utilities); else echo 1; ?>">
-            <a href="javascript:void()" class="open-create-service save-utility btn btn-primary"><i
-                        class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_utility'); ?>
-            </a>
-        </div>
-    </div>
+    <input type="hidden" id="num_utilities"
+           value="<?php if (isset($view_model->utilities)) echo sizeof($view_model->utilities); else echo 1; ?>">
     <?php
     $r = 0;
     if (isset($view_model->utilities)) {
