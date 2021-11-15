@@ -76,7 +76,8 @@
     $last.after(form);
 
     if (items_service > 0) {
-        $("[class^='annulla-']").prop('disabled', false);
+        // div[class^='apple-'],div[class*=' apple-']
+        $("[class^='annulla-',[class*=' annulla-']").prop('disabled', false);
 
         $last.find("#abilitato-" + items_service).attr("id", "abilitato-" + items_next);
         $last.find("#servizio-" + items_service).attr("id", "servizio-" + items_next);
