@@ -45,6 +45,7 @@ class BackofficeFacilitiesCategoriesEditController
             $instances = $languages->list_all();
             $categories_final = Category::grouped_categories($categories, $instances);
 
+
             $view_model = new BackOfficeViewModel('backoffice.facilities.categories.edit', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->category_all_languages = $categories_final;

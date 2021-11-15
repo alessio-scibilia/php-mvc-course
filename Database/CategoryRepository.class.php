@@ -61,4 +61,18 @@ class CategoryRepository extends MySQLRepository
         $stmt->execute(array(":$key" => $related_id));
         return $stmt->rowCount() == 1;
     }
+
+    public function get_category(int $shortcode_lingua, $id_category): array
+    {
+        $where = "shortcode_lingua = :shortcode_lingua AND related_id = :related_id";
+        $params = array(":shortcode_lingua" => $shortcode_lingua, ":related_id" => $id_category);
+        return $this->get($where, $params);
+    }
+
+    public function get_by_related_id(int $related_id): array
+    {
+        $where = "related_id = :related_id";
+        $params = array(":related_id" => $related_id);
+        return $this->get($where, $params);
+    }
 }

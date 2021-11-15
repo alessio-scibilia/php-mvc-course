@@ -15,40 +15,46 @@
                 <div class="card-header">
                     <h4 class="card-title"><?php echo $view_model->translations->get('dati_categoria'); ?></h4>
                 </div>
-                <form action="/backoffice/facilities/categories/update"
+                <form action="/backoffice/facilities/category/update"
                       method="post" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="basic-form">
                             <?php
                             $lingue = $view_model->languages->list_all();
-                            $i = 0;
-                            foreach ($lingue as $category) {
-                                if ($i == 0)
-                                    echo '<input type="hidden" name="id_cat" value="' . $category->related_id . '">';
-                                $i++;
-                                ?>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome') . ' ' . $lingue[$category->shortcode_lingua]['nome_lingua']; ?></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="nome_cat form-control validate-1 nome_categoria"
-                                               id="nome_<?php echo $lingue[$category->shortcode_lingua]['shortcode_lingua']; ?>"
-                                               placeholder="Sport"
-                                               name="nome[<?php echo $lingue[$category->shortcode_lingua]['abbreviazione']; ?>]">
+                            $i = 1;
+                            for ($k = 0; $k < sizeof($lingue); $k++) {
+                                foreach ($view_model->category_all_languages as $category) {
+                                    if ($i == 1)
+                                        echo '<input type="hidden" name="id_cat" value="' . $category[$i]->related_id . '">';
+
+                                    ?>
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nome') . ' ' . $lingue[$k]['nome_lingua']; ?></label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="nome_cat form-control validate-1 nome_categoria"
+                                                   id="nome_<?php echo $lingue[$k]['shortcode_lingua']; ?>"
+                                                   placeholder="Sport"
+                                                   value="<?php echo $category[$i]->nome; ?>"
+                                                   name="nome[<?php echo $lingue[$k]['abbreviazione']; ?>]">
+                                        </div>
                                     </div>
-                                </div>
-                            <?php }
+                                    <?php
+                                    $img[0] = $category[$i]->immagine;
+                                    $i++;
+                                }
+                            }
 
                             $label = 'immagine';
                             $button_label = 'immagine';
                             $field_prefix = "immagine";
-                            $urls = empty($principal->immagine) ? array() : array($principal->immagine);
+                            $urls = $img;
                             $multiple = false;
                             include 'Views/backoffice.images.uploader.php';
                             ?>
                             <div class="form-group row">
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary validate-it" id="validate-1"
-                                    ><?php echo $view_model->translations->get('crea_categoria'); ?></button>
+                                    ><?php echo $view_model->translations->get('salva'); ?></button>
                                 </div>
                             </div>
                         </div>

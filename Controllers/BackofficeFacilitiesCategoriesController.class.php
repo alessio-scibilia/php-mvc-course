@@ -19,6 +19,7 @@ class BackofficeFacilitiesCategoriesController
     protected $translation_repository;
     protected $user_repository;
     protected $facility_repository;
+    protected $category_repository;
 
     public function __construct()
     {

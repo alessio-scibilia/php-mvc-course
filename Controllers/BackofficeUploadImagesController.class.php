@@ -70,7 +70,7 @@ class BackofficeUploadImagesController
 
                         // Upload file
                         if (move_uploaded_file($params['immagini_form']['tmp_name'][$index], $path)) {
-                            $files_arr[] = '/uploads/' . $filename . '.' . $ext;
+                            $files_arr[] = 'uploads/' . $filename . '.' . $ext;
                         }
                     }
                 }
