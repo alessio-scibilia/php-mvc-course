@@ -45,7 +45,7 @@ $('input.custom-file-input').on("change", function () {
                 var placeholders = placeholders.split("|");
 
                 for (var index = 0; index < response.length; index++) {
-                    var src = response[index];
+                    var src = '/' + response[index];
 
                     n_pictures++;
                     var n_pictures_next = n_pictures + 1;
@@ -61,13 +61,13 @@ $('input.custom-file-input').on("change", function () {
                         html += '</div>';
 
                     } else
-                        var html = '<div class="img-form-preview"><span class="delete-preview" onClick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="' + src +'" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default_image" value="'+n_pictures_next+'"><label class="f15">&nbsp;Immagine principale</label><br></div></div>';
+                        var html = '<div class="img-form-preview"><span class="delete-preview" onClick="delPreview(this)"><i class="fa fa-close"></i></span><img data-name="' + name + '" class="img-form-preview-item" src="' + src + '" height="200px"><div class="default-image-cont"><div class="pt20"><input type="radio" class="default-image" name="default_image" value="' + n_pictures_next + '"><label class="f15">&nbsp;Immagine principale</label><br></div></div>';
 
 
                     $container.find('.preview').append(html);
                 }
             } else {
-                var src = response[0];
+                var src = '/' + response[0];
                 var name = $(self).data('name') + '[1]';
                 var tips = $(self).data('tips');
                 var placeholders = $(self).data('placeholders');

@@ -36,7 +36,7 @@
                                         <td><?php echo $category->id; ?></td>
                                     <?php } ?>
                                     <td><?php echo $category->nome; ?></td>
-                                    <td><img class="img-table" src="/<?php echo $category->immagine; ?>"/></td>
+                                    <td><img class="img-table" src="<?php echo $category->immagine; ?>"/></td>
                                     <td>
                                         <form action="/backoffice/facilities/category/<?php echo $category->related_id ?>/enable?XDEBUG_SESSION_START"
                                               method="POST" enctype="multipart/form-data">

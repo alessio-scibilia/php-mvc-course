@@ -36,6 +36,8 @@ class BackofficeFacilitiesCategoriesAddController
                 'immagine',
             );
 
+
+            /*
             $categoria['abilitata'] = 0;
             foreach ($languages->list_all() as $lingua) {
                 $categoria['nome'] = $params['nome'][$lingua['abbreviazione']];
@@ -53,6 +55,7 @@ class BackofficeFacilitiesCategoriesAddController
                 }
                 $i_lang++;
             }
+            */
 
             return new HttpRedirectView('/backoffice/facilities/categories');
         }

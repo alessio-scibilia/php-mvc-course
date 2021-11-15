@@ -173,12 +173,10 @@ jQuery(".validate-it").click(function (e) {
         //Validazione email, se non passata mettere is_error = true
         if (jQuery("#email").length) {
             if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-                if (email == '') {
-                    error_message = "<p>- Inserire un indirizzo email valido</p>";
-                    is_error = true;
+                error_message = "<p>- Inserire un indirizzo email valido</p>";
+                is_error = true;
 
-                    jQuery("#email").after('<div class="error_message">' + error_message + '</div>');
-                }
+                jQuery("#email").after('<div class="error_message">' + error_message + '</div>');
             }
         }
 
