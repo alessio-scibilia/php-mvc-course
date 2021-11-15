@@ -79,6 +79,54 @@ class BackofficeHotelsEditController
 
     public function http_post(array &$params): IView
     {
+
+
+        $id = intval($params['hotels']);
+        $languages = new Languages($this->language_repository->list_all());
+        $hotel_fields = array
+        (
+            'nome',
+            'email',
+            'sito_web',
+            'telefono',
+            'indirizzo',
+            'latitudine',
+            'longitudine',
+            'abilitato',
+            'level',
+            'password',
+        );
+        $hotel_translations = $this->hotel_repository->get_by_related_id($id);
+        if (empty($hotel_translations)) {
+            $params['errors'][] = "No hotel translations found";
+            return $this->http_get($params);
+        }
+
+        foreach ($hotel_translations as &$hotel_translation) {
+            foreach ($hotel_fields as $hotel_field) {
+                if ($hotel_field == 'password' && empty($params['password']))
+                    continue;
+                else if ($hotel_field == 'password')
+                    $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
+                else if ($hotel_field == 'level')
+                    $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 0;
+                else
+                    $hotel_translation[$hotel_field] = $params[$hotel_field];
+            }
+
+            $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
+            if (!empty($language)) {
+                $abbreviation = $language['abbreviazione'];
+                $hotel_translation['descrizione_ospiti'] = $params['descrizione_ospiti'][$abbreviation] ?? $hotel_translation['descrizione_ospiti'];
+            }
+            $hotel_translation['immagini_secondarie'] = join('|', $params['img_hotel']) . '|';
+            $hotel_translation['immagine_principale'] = $params['default_image'];
+            $this->hotel_repository->update($hotel_translation);
+        }
+
+        $related_id = $hotel_translations[0]['related_id'];
+        $this->service_repository->remove_by_hotel($related_id);
+
         if (isset($params['hotels']) &&
             isset($params['descrizione']) &&
             isset($params['nome_servizio']) &&
@@ -105,52 +153,6 @@ class BackofficeHotelsEditController
                     }
                 }
             }
-
-            $id = intval($params['hotels']);
-            $languages = new Languages($this->language_repository->list_all());
-            $hotel_fields = array
-            (
-                'nome',
-                'email',
-                'sito_web',
-                'telefono',
-                'indirizzo',
-                'latitudine',
-                'longitudine',
-                'abilitato',
-                'level',
-                'password',
-            );
-            $hotel_translations = $this->hotel_repository->get_by_related_id($id);
-            if (empty($hotel_translations)) {
-                $params['errors'][] = "No hotel translations found";
-                return $this->http_get($params);
-            }
-
-            foreach ($hotel_translations as &$hotel_translation) {
-                foreach ($hotel_fields as $hotel_field) {
-                    if ($hotel_field == 'password' && empty($params['password']))
-                        continue;
-                    else if ($hotel_field == 'password')
-                        $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
-                    else if ($hotel_field == 'level')
-                        $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 0;
-                    else
-                        $hotel_translation[$hotel_field] = $params[$hotel_field];
-                }
-
-                $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
-                if (!empty($language)) {
-                    $abbreviation = $language['abbreviazione'];
-                    $hotel_translation['descrizione_ospiti'] = $params['descrizione_ospiti'][$abbreviation] ?? $hotel_translation['descrizione_ospiti'];
-                }
-                $hotel_translation['immagini_secondarie'] = join('|', $params['img_hotel']) . '|';
-                $hotel_translation['immagine_principale'] = $params['default_image'];
-                $this->hotel_repository->update($hotel_translation);
-            }
-
-            $related_id = $hotel_translations[0]['related_id'];
-            $this->service_repository->remove_by_hotel($related_id);
 
             if (!empty($params['nome_servizio'])) {
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
@@ -183,8 +185,6 @@ class BackofficeHotelsEditController
                 }
             }
             unset($params['errors']);
-        } else {
-            $params['errors'][] = "Missing mandatory field";
         }
 
         return $this->http_get($params);
