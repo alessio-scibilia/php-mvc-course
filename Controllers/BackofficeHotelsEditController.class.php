@@ -118,7 +118,7 @@ class BackofficeHotelsEditController
                 else if ($hotel_field == 'password')
                     $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
                 else if ($hotel_field == 'level')
-                    $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 0;
+                    $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 4;
                 else
                     $hotel_translation[$hotel_field] = $params[$hotel_field];
             }
@@ -163,11 +163,14 @@ class BackofficeHotelsEditController
                 }
             }
 
-            if (!empty($params['nome_servizio'])) {
+            if (!empty($params['nome_servizio']))
+            {
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-                foreach ($params['nome_servizio'] as $i => $names) {
+                foreach ($params['nome_servizio'] as $i => $names)
+                {
                     $images = array_values($params['img_servizio'][$i]);
-                    foreach ($names as $abbreviation => $titolo) {
+                    foreach ($names as $abbreviation => $titolo)
+                    {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                         $service = array
@@ -180,7 +183,8 @@ class BackofficeHotelsEditController
                             'shortcode_lingua' => $language['shortcode_lingua'],
                             'posizione' => $params['posizione'][$i]
                         );
-                        foreach ($weekdays as $weekday) {
+                        foreach ($weekdays as $weekday)
+                        {
                             $orari = $params['giorno'][$i][$weekday];
                             $flag = $params['orario_continuato'][$i][$weekday];
                             $prefix = str_repeat('|', empty($orari) ? 0 : 1);

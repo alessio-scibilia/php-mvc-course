@@ -75,103 +75,57 @@
     var form = $last.clone();
     $last.after(form);
 
-    if (items_service >= 0) {
-    $last.find("#abilitato-" + items_service).attr("id", "abilitato-" + items_next);
-    $last.find("#servizio-" + items_service).attr("id", "servizio-" + items_next);
-    $last.find("#select-language-servizi").attr("data-form-index", items_next);
-    $last.find("#annulla-servizio-" + items_service).attr("id", "annulla-servizio-" + items_next);
-    $last.attr("id", "servizio-" + items_next);
+    if (items_service > 0) {
+        $("[class^='annulla-']").prop('disabled', false);
 
-    jQuery(".form-service-container").fadeIn();
+        $last.find("#abilitato-" + items_service).attr("id", "abilitato-" + items_next);
+        $last.find("#servizio-" + items_service).attr("id", "servizio-" + items_next);
+        $last.find("#select-language-servizi").attr("data-form-index", items_next);
+        $last.find("#annulla-servizio-" + items_service).attr("id", "annulla-servizio-" + items_next);
+        $last.attr("id", "servizio-" + items_next);
 
+        jQuery(".form-service-container").fadeIn();
 
+        // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
+        $last.attr("class", " form-service-container fsc-" + items_next);
+        $last.attr("id", "fsc-servizio-" + items_next);
 
-    // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
-    $last.attr("class", " form-service-container fsc-" + items_next);
-    $last.attr("id", "fsc-servizio-" + items_next);
+        $last.find("[name]").each(function() {
+            let name = $(this).attr("name");
+            let regex = /^([^\d]+)(\d+)(.*)$/;
+            let replacer = `$1${items_next}$3`;
+            let next = name.replace(regex, replacer);
+            $(this).attr("name", next);
+        });
 
-    $last.find("[name]").each(function() {
-    let name = $(this).attr("name");
-    let regex = /^([^\d]+)(\d+)(.*)$/;
-    let replacer = `$1${items_next}$3`;
-    let next = name.replace(regex, replacer);
-    $(this).attr("name", next);
-});
-
-    // class and id end with /-\d+$/
-    $last.find("[id]").each(function() {
-    let id = $(this).attr("id");
-    let regex = /^(.+)(-\d+)$/;
-    let replacer = `$1-${items_next}`;
-    let next = id.replace(regex, replacer);
-    $(this).attr("id", next);
-});
-    $last.find("[class]").filter(function() {
-    let classes = $(this).attr("class").split(' ');
-    let regex = /^([^-]{4,}-)+\d+$/;
-    let matches = classes.filter(function (c) {return c.match(regex);} );
-    return matches.length > 0;
-})
-    .each(function() {
-    let classes = $(this).attr("class").split(' ');
-    let regex = /^(.+)(-\d+)$/;
-    let replacer = `$1-${items_next}`;
-    let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
-    let next = new_classes.join(' ');
-    $(this).attr("class", next);
-});
-
-    var offset = jQuery("#servizio-" + items_next).offset().top;
-    offset = offset;
-    $('html,body').animate({
-    scrollTop: offset
-}, 'slow');
-
-    /**
-     <?php
-     for($i = 0;$i < sizeof($lingue);$i++) {
-     ?>
-     $last.find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
-     $last.find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_service).attr("id", "nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next);
-
-     $last.find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("nome-servizi-" + items_service);
-
-     $last.find("#nome_servizio-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("nome-servizi-" + items_next);
-
-     $last.find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).removeClass("descrizione_servizi-" + items_service);
-
-     $last.find("#descrizione-<?php echo $lingue[$i]['shortcode_lingua'];?>-" + items_next).addClass("descrizione_servizi-" + items_next);
-
-     $last.find("#select-nome-servizi").attr("data-form-index", items_next);
-     <?php } ?>
-
-     $last.find("#immagine_servizio-" + items_service).attr("id", "immagine_servizio-" + items_next);
-     $last.find("#ifps-prws-immagine_servizio-" + items_service).attr("id", "ifps-prws-immagine_servizio-" + items_next);
-
-
-     $last.find("#prws-immagine_servizio-" + items_service).attr("id", "prws-immagine_servizio-" + items_next);
-
-     $last.find("#preview-immagine_servizio-" + items_service).attr("id", "preview-immagine_servizio-" + items_next);
-
-     $last.find("#orario-continuato-1-" + items_service).attr("id", "orario-continuato-1-" + items_next);
-     $last.find("#orario-continuato-2-" + items_service).attr("id", "orario-continuato-2-" + items_next);
-     $last.find("#orario-continuato-3-" + items_service).attr("id", "orario-continuato-3-" + items_next);
-     $last.find("#orario-continuato-4-" + items_service).attr("id", "orario-continuato-4-" + items_next);
-     $last.find("#orario-continuato-5-" + items_service).attr("id", "orario-continuato-5-" + items_next);
-     $last.find("#orario-continuato-6-" + items_service).attr("id", "orario-continuato-6-" + items_next);
-     $last.find("#orario-continuato-7-" + items_service).attr("id", "orario-continuato-7-" + items_next);
-
-     let giorni = ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'];
-     for (let i = 0; i < giorni.length; i++) {
-                for (let j = 0; j < 4; j++) {
-                    let prev_id = `#${j}-${giorni[i]}-${items_service}`;
-                    let next_id = `#${j}-${giorni[i]}-${items_next}`;
-                    $last.find(prev_id).attr("id", next_id);
-                }
-            }
-
-     **/
-}
+        // class and id end with /-\d+$/
+        $last.find("[id]").each(function() {
+            let id = $(this).attr("id");
+            let regex = /^(.+)(-\d+)$/;
+            let replacer = `$1-${items_next}`;
+            let next = id.replace(regex, replacer);
+            $(this).attr("id", next);
+        });
+        $last.find("[class]").filter(function() {
+            let classes = $(this).attr("class").split(' ');
+            let regex = /^([^-]{4,}-)+\d+$/;
+            let matches = classes.filter(function (c) {return c.match(regex);} );
+            return matches.length > 0;
+        });
+        /*
+        .each(function() {
+            let classes = $(this).attr("class").split(' ');
+            let regex = /^(.+)(-\d+)$/;
+            let replacer = `$1-${items_next}`;
+            let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
+            let next = new_classes.join(' ');
+            $(this).attr("class", next);
+        });
+        */
+        var offset = jQuery("#servizio-" + items_next).offset().top;
+        offset = offset;
+        $('html,body').animate({ scrollTop: offset }, 'slow');
+    }
 });
 
 

@@ -53,7 +53,7 @@
                     <?php
                     $label = 'immagine_utility';
                     $button_label = 'immagine_utility';
-                    $field_prefix = "immagine_utility[$r]";
+                    $field_prefix = "img_utility[$r]";
                     $urls = empty($principal->immagine) ? array() : array($principal->immagine);
                     $multiple = false;
                     include 'Views/backoffice.images.uploader.php';

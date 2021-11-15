@@ -68,7 +68,7 @@ class BackofficeHotelsAddController
                 else if ($hotel_field == 'password')
                     $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
                 else if ($hotel_field == 'level') {
-                    $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 0;
+                    $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 4;
                 } else
                     $hotel_translation[$hotel_field] = $params[$hotel_field];
 
