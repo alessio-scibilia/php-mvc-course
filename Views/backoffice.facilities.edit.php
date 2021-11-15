@@ -229,129 +229,129 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-xl-12 col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"><?php echo $view_model->translations->get('eccellenze'); ?></h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="basic-form">
-                            <input type="hidden"
-                                   id="num_eccellenze"
-                                   value="<?php echo count($view_model->related_excellences); ?>">
-                            <?php
-                            foreach ($view_model->related_excellences as $r => $excellences) {
-                                $excellence = $excellences[$view_model->language['shortcode_lingua']];
-                                ?>
-                                <div class="form-eccellenza-container fsc-<?php echo $r; ?>"
-                                     id="fsc-eccellenza-<?php echo $r; ?>">
-                                    <div class="form-row">
-
-                                        <div class="col-12">
-                                            <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
-                                        </div>
-
-                                        <div class="form-group col-md-12">
-                                            <?php
-                                            $type = 'input';
-                                            $label = 'nome_servizio';
-                                            $placeholder = 'Es: Piatti giapponesi';
-                                            $field = 'titolo';
-                                            $field_prefix = "nome_eccellenza[$r]";
-                                            $items = $excellences;
-                                            include 'Views/backoffice.multilanguage.textbox.php';
-                                            ?>
-                                        </div>
-
-                                        <?php
-                                        $label = 'immagine_servizio';
-                                        $button_label = 'scegli_immagine';
-                                        $field_prefix = "img_eccellenza[$r]";
-                                        $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
-                                        $multiple = false;
-                                        include 'Views/backoffice.images.uploader.php';
-                                        ?>
-
-                                        <div class="form-group col-md-12">
-                                            <?php
-                                            $type = 'richtextbox';
-                                            $label = 'descrizione';
-                                            $field = 'testo';
-                                            $field_prefix = "testo[$r]";
-                                            $items = $excellences;
-                                            include 'Views/backoffice.multilanguage.textbox.php';
-                                            ?>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <?php
-                                            $label = 'abilitato';
-                                            $field = "abilitato[$r]";
-                                            $value = $excellence->abilitato;
-                                            include 'Views/backoffice.checkbox.php';
-                                            ?>
-                                        </div>
-
-                                        <div class="form-group col-md-12">
-                                            <input type="button" class="btn btn-danger annulla-eccellenza"
-                                                   id="eccellenza-<?php echo $r; ?>" value="Elimina eccellenza">
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <hr/>
-                                            <input type="button" class="btn btn-success save-eccellenza"
-                                                   value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
-                                        </div>
-                                    </div>
-                                </div>
-                            <?php } ?>
+            <?php if ($view_model->user->level <= 2 || $view_model->principal->created_by == $view_model->user->id) { ?>
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><?php echo $view_model->translations->get('eccellenze'); ?></h4>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-12 col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title"><?php echo $view_model->translations->get('sec_esplorato_per_voi'); ?></h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="basic-form">
-
-                            <div class="form-didascalia-container dds-1" id="fsc-didascalia-1">
-                                <div class="form-row">
-
-                                    <?php
-                                    $label = 'immagini_didascalia';
-                                    $button_label = 'scegli_immagini';
-                                    $field_prefix = 'img_didascalia';
-                                    $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
-                                    $tips = array('');
-                                    $multiple = true;
-                                    include 'Views/backoffice.images.uploader.php';
+                        <div class="card-body">
+                            <div class="basic-form">
+                                <input type="hidden"
+                                       id="num_eccellenze"
+                                       value="<?php echo count($view_model->related_excellences); ?>">
+                                <?php
+                                foreach ($view_model->related_excellences as $r => $excellences) {
+                                    $excellence = $excellences[$view_model->language['shortcode_lingua']];
                                     ?>
+                                    <div class="form-eccellenza-container fsc-<?php echo $r; ?>"
+                                         id="fsc-eccellenza-<?php echo $r; ?>">
+                                        <div class="form-row">
 
-                                </div>
+                                            <div class="col-12">
+                                                <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <?php
+                                                $type = 'input';
+                                                $label = 'nome_servizio';
+                                                $placeholder = 'Es: Piatti giapponesi';
+                                                $field = 'titolo';
+                                                $field_prefix = "nome_eccellenza[$r]";
+                                                $items = $excellences;
+                                                include 'Views/backoffice.multilanguage.textbox.php';
+                                                ?>
+                                            </div>
+
+                                            <?php
+                                            $label = 'immagine_servizio';
+                                            $button_label = 'scegli_immagine';
+                                            $field_prefix = "img_eccellenza[$r]";
+                                            $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
+                                            $multiple = false;
+                                            include 'Views/backoffice.images.uploader.php';
+                                            ?>
+
+                                            <div class="form-group col-md-12">
+                                                <?php
+                                                $type = 'richtextbox';
+                                                $label = 'descrizione';
+                                                $field = 'testo';
+                                                $field_prefix = "testo[$r]";
+                                                $items = $excellences;
+                                                include 'Views/backoffice.multilanguage.textbox.php';
+                                                ?>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <?php
+                                                $label = 'abilitato';
+                                                $field = "abilitato[$r]";
+                                                $value = $excellence->abilitato;
+                                                include 'Views/backoffice.checkbox.php';
+                                                ?>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <input type="button" class="btn btn-danger annulla-eccellenza"
+                                                       id="eccellenza-<?php echo $r; ?>" value="Elimina eccellenza">
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <hr/>
+                                                <input type="button" class="btn btn-success save-eccellenza"
+                                                       value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-12 col-lg-12">
-                    <div class="form-group col-md-12">
-                        <div align="left">
-                            <input type="submit"
-                                   class="btn btn-success validate-it"
-                                   data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
-                                   data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
-                                   value="<?php echo $view_model->translations->get('aggiorna_struttura'); ?>">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title"><?php echo $view_model->translations->get('sec_esplorato_per_voi'); ?></h4>
                         </div>
-                        <br/><br/>
+                        <div class="card-body">
+                            <div class="basic-form">
+
+                                <div class="form-didascalia-container dds-1" id="fsc-didascalia-1">
+                                    <div class="form-row">
+
+                                        <?php
+                                        $label = 'immagini_didascalia';
+                                        $button_label = 'scegli_immagini';
+                                        $field_prefix = 'img_didascalia';
+                                        $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
+                                        $tips = array('');
+                                        $multiple = true;
+                                        include 'Views/backoffice.images.uploader.php';
+                                        ?>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 col-lg-12">
+                        <div class="form-group col-md-12">
+                            <div align="left">
+                                <input type="submit"
+                                       class="btn btn-success validate-it"
+                                       data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                       data-failure="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                       value="<?php echo $view_model->translations->get('aggiorna_struttura'); ?>">
+                            </div>
+                            <br/><br/>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            <?php } ?>
         </form>
     </div>
 </div>
