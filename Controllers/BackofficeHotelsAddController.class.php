@@ -4,11 +4,13 @@ require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
 require_once 'Database/ServiceRepository.class.php';
+require_once 'Database/UtilityRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Service.class.php';
+require_once 'Models/Utility.class.php';
 require_once 'Models/Hotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
@@ -23,6 +25,7 @@ class BackofficeHotelsAddController
     protected $user_repository;
     protected $hotel_repository;
     protected $service_repository;
+    protected $utility_repository;
 
     public function __construct()
     {
@@ -31,6 +34,7 @@ class BackofficeHotelsAddController
         $this->user_repository = new UserRepository();
         $this->hotel_repository = new HotelRepository();
         $this->service_repository = new ServiceRepository();
+        $this->utility_repository = new UtilityRepository();
     }
 
     public function http_post(array &$params): IView
@@ -51,8 +55,13 @@ class BackofficeHotelsAddController
                 'nome_servizio',
                 'orario_continuato',
                 'giorno',
-                'img_servizio'
+                'img_servizio',
+                'nome_utility',
+                'indirizzo',
+                'telefono',
+                'img_utility',
             );
+
             $n = -1;
             foreach ($multiples as $multiple) {
                 if ($n == -1) {
@@ -64,6 +73,7 @@ class BackofficeHotelsAddController
                     }
                 }
             }
+
 
             $languages = new Languages($this->language_repository->list_all());
             $hotel_fields = array
@@ -152,6 +162,26 @@ class BackofficeHotelsAddController
                         }
 
                         $service['id'] = $this->service_repository->add($service);
+                    }
+                }
+            } else if (!empty($params['nome_utility'])) {
+                foreach ($params['nome_utility'] as $i => $names) {
+                    $images = array_values($params['img_servizio'][$i]);
+                    foreach ($names as $abbreviation => $titolo) {
+                        $language = $languages->get_by_field('abbreviazione', $abbreviation);
+
+                        $utility = array
+                        (
+                            'hotel_associato' => $related_id,
+                            'nome' => $titolo,
+                            'indirizzo' => params['indirizzo'][$i][$abbreviation],
+                            'telefono' => params['telefono'][$i][$abbreviation],
+                            'immagine' => $images[0], // only 1 image for services
+                            'shortcode_lingua' => $language['shortcode_lingua'],
+                            'posizione' => $params['posizione'][$i]
+                        );
+
+                        $utility['id'] = $this->utility_repository->add($utility);
                     }
                 }
             }

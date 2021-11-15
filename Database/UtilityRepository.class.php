@@ -1,7 +1,7 @@
 <?php
 require_once 'Database/MySQLRepository.class.php';
 
-class ServiceRepository extends MySQLRepository
+class UtilityRepository extends MySQLRepository
 {
     public function __construct()
     {
