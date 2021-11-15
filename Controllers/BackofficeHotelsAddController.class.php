@@ -99,10 +99,7 @@ class BackofficeHotelsAddController
                     else if ($hotel_field == 'password')
                         $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
                     else if ($hotel_field == 'level') {
-                        if ($hotel_field == 0)
-                            $hotel_translation['level'] = 3;
-                        else
-                            $hotel_translation['level'] = 4;
+                        $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 0;
                     } else
                         $hotel_translation[$hotel_field] = $params[$hotel_field];
 
@@ -190,6 +187,6 @@ class BackofficeHotelsAddController
             $params['errors'][] = "Missing mandatory field";
         }
 
-        return new HttpRedirectView('/backoffice/hotels');
+        return new HttpRedirectView("/backoffice/hotels/$related_id/edit");
     }
 }

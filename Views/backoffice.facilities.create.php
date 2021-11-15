@@ -206,70 +206,69 @@
                                 $excellences = array_map(function($l) { return new Excellence(); }, $view_model->languages->list_all());
                                 $excellence = $excellences[0];
                             ?>
-                                <div class="form-eccellenza-container fsc-1"
-                                     id="fsc-eccellenza-1">
-                                    <div class="form-row">
+                            <div class="form-eccellenza-container fsc-1"
+                                 id="fsc-eccellenza-1">
+                                <div class="form-row">
 
-                                        <div class="col-12">
-                                            <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
-                                        </div>
-
-                                        <div class="form-group col-md-12">
-                                            <?php
-                                            $type = 'input';
-                                            $label = 'nome_servizio';
-                                            $placeholder = 'Es: Piatti giapponesi';
-                                            $field = 'titolo';
-                                            $field_prefix = "nome_eccellenza[1]";
-                                            $items = $excellences;
-                                            include 'Views/backoffice.multilanguage.textbox.php';
-                                            ?>
-                                        </div>
-
-                                        <?php
-                                        $label = 'immagine_servizio';
-                                        $button_label = 'scegli_immagine';
-                                        $field_prefix = "img_eccellenza[1]";
-                                        $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
-                                        $multiple = false;
-                                        include 'Views/backoffice.images.uploader.php';
-                                        ?>
-
-                                        <div class="form-group col-md-12">
-                                            <?php
-                                            $type = 'richtextbox';
-                                            $label = 'descrizione';
-                                            $field = 'testo';
-                                            $field_prefix = "testo[1]";
-                                            $items = $excellences;
-                                            include 'Views/backoffice.multilanguage.textbox.php';
-                                            ?>
-                                        </div>
-
+                                    <div class="col-12">
+                                        <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
                                     </div>
 
-                                    <div class="form-row">
-                                        <div class="form-group col-md-3">
-                                            <?php
-                                            $label = 'abilitato';
-                                            $field = "abilitato[1]";
-                                            $value = $excellence->abilitato;
-                                            include 'Views/backoffice.checkbox.php';
-                                            ?>
-                                        </div>
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $type = 'input';
+                                        $label = 'nome_servizio';
+                                        $placeholder = 'Es: Piatti giapponesi';
+                                        $field = 'titolo';
+                                        $field_prefix = "nome_eccellenza[1]";
+                                        $items = $excellences;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                        ?>
+                                    </div>
 
-                                        <div class="form-group col-md-12">
-                                            <input type="button" class="btn btn-danger annulla-eccellenza"
-                                                   id="eccellenza-1" value="Elimina eccellenza">
-                                        </div>
-                                        <div class="form-group col-md-12">
-                                            <hr/>
-                                            <input type="button" class="btn btn-success save-eccellenza"
-                                                   value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
-                                        </div>
+                                    <?php
+                                    $label = 'immagine_servizio';
+                                    $button_label = 'scegli_immagine';
+                                    $field_prefix = "img_eccellenza[1]";
+                                    $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
+                                    $multiple = false;
+                                    include 'Views/backoffice.images.uploader.php';
+                                    ?>
+
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $type = 'richtextbox';
+                                        $label = 'descrizione';
+                                        $field = 'testo';
+                                        $field_prefix = "testo[1]";
+                                        $items = $excellences;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                        ?>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                        <?php
+                                        $label = 'abilitato';
+                                        $field = "abilitato[1]";
+                                        $value = $excellence->abilitato;
+                                        include 'Views/backoffice.checkbox.php';
+                                        ?>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <input type="button" class="btn btn-danger annulla-eccellenza"
+                                               id="eccellenza-1" value="Elimina eccellenza">
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <hr/>
+                                        <input type="button" class="btn btn-success save-eccellenza"
+                                               value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
                                     </div>
                                 </div>
-                            <?php } ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -290,7 +289,7 @@
                                         $button_label = 'scegli_immagini';
                                         $field_prefix = 'img_didascalia';
                                         $urls = array();
-                                        $tips = array();
+                                        $tips = array('');
                                         $multiple = true;
                                         include 'Views/backoffice.images.uploader.php';
                                     ?>
