@@ -160,6 +160,6 @@ class BackofficeHotelsAddController
             $params['errors'][] = "Missing mandatory field";
         }
 
-        return new HttpRedirectView('/backoffice/hotels');
+        return new HttpRedirectView("/backoffice/hotels/$related_id/edit");
     }
 }

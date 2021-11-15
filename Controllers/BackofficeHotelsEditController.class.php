@@ -133,11 +133,12 @@ class BackofficeHotelsEditController
                         continue;
                     else if ($hotel_field == 'password')
                         $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
-
+                    else if ($hotel_field == 'level')
+                        $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 0;
                     else
                         $hotel_translation[$hotel_field] = $params[$hotel_field];
-
                 }
+
                 $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
                 if (!empty($language)) {
                     $abbreviation = $language['abbreviazione'];

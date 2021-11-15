@@ -12,7 +12,7 @@ else
 <div id="main-wrapper" class="show" <?php include 'Views/xdebug.attribute.php'; ?>>
 
     <div class="nav-header">
-        <a href="index" class="brand-logo">
+        <a href="/backoffice" class="brand-logo">
             <img class="logo-abbr" src="/images/logo-piccolo.png" alt="">
             <img class="logo-compact" src="/images/logo-text.png" alt="">
             <img class="brand-title" src="/images/logo-text.png" alt="">

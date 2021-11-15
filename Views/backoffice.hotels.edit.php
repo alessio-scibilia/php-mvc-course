@@ -82,43 +82,45 @@
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'abilitato';
-                                    $field = 'abilitato';
-                                    $field_prefix = 'abilitato';
-                                    include 'Views/backoffice.checkbox.php';
+                                        $label = 'abilitato';
+                                        $field = 'abilitato';
+                                        $field_prefix = 'abilitato';
+                                        $value = $view_model->profile->abilitato;
+                                        include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'hotel_pro';
-                                    $field = 'level';
-                                    $field_prefix = 'level';
-                                    include 'Views/backoffice.checkbox.php';
+                                        $label = 'hotel_pro';
+                                        $field = 'level';
+                                        $field_prefix = 'level';
+                                        $value = $view_model->profile->level == 3;
+                                        include 'Views/backoffice.checkbox.php';
                                     ?>
                                 </div>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                    $label = 'descrizione_ospiti';
-                                    $field = 'descrizione_ospiti';
-                                    $field_prefix = 'descrizione_ospiti';
-                                    $items = $view_model->hotel_translations;
-                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione_ospiti';
+                                        $field = 'descrizione_ospiti';
+                                        $field_prefix = 'descrizione_ospiti';
+                                        $items = $view_model->hotel_translations;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
 
                                 <?php
-                                $immagini = explode("|", $view_model->profile->immagini_secondarie);
+                                    $immagini = explode("|", $view_model->profile->immagini_secondarie);
 
-                                $label = 'immagini_hotel';
-                                $button_label = 'scegli_immagini';
-                                $field_prefix = "img_hotel";
-                                $urls = array_filter($immagini, function ($img) {
-                                    return !empty($img);
-                                });
-                                $multiple = true;
-                                include 'Views/backoffice.images.uploader.php';
+                                    $label = 'immagini_hotel';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = "img_hotel";
+                                    $urls = array_filter($immagini, function ($img) {
+                                        return !empty($img);
+                                    });
+                                    $multiple = true;
+                                    include 'Views/backoffice.images.uploader.php';
                                 ?>
 
                             </div>
