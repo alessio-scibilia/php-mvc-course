@@ -163,7 +163,7 @@ class BackofficeHotelsAddController
 
         if (isset($params['nome_utility']) && isset($params['img_utility'])) {
             foreach ($params['nome_utility'] as $i => $names) {
-                $images = array_values($params['img_utility'][$i]);
+                $images = array_values($params['img_utility'][0]);
                 foreach ($names as $abbreviation => $titolo) {
                     $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
@@ -171,8 +171,8 @@ class BackofficeHotelsAddController
                     (
                         'hotel_associato' => $related_id,
                         'nome' => $titolo,
-                        'indirizzo' => params['indirizzo'][$i][$abbreviation],
-                        'telefono' => params['telefono'][$i][$abbreviation],
+                        'indirizzo' => $params['indirizzo'],
+                        'telefono' => $params['telefono'],
                         'immagine' => $images[0], // only 1 image for services
                         'shortcode_lingua' => $language['shortcode_lingua'],
                         'posizione' => $params['posizione'][$i]
@@ -181,6 +181,8 @@ class BackofficeHotelsAddController
                     $utility['id'] = $this->utility_repository->add($utility);
                 }
             }
+        } else {
+            $params['errors'][] = "Missing mandatory field";
         }
 
         return new HttpRedirectView("/backoffice/hotels/$related_id/edit");

@@ -236,6 +236,26 @@ jQuery(".validate-it").click(function (e) {
             }
         }
 
+        var found = false;
+        $(".custom-file-input").each(function () {
+            if ($(this).data('name') == 'img_hotel') {
+                found = true;
+            }
+        });
+
+        if (found == true) {
+            if (!$("input[name='default_image']").is(':checked')) {
+                is_error = true;
+                error_message = '<p>- Devi scegliere un\'immagine principale';
+                $(".custom-file-input").each(function () {
+                    if ($(this).data('name') == 'img_hotel') {
+                        $(this).parent().parent().parent().append('<div class="error_message">' + error_message + '</div>');
+                    }
+                });
+            }
+        }
+
+
         if (jQuery("#password").length) {
             if (password.length < 8 && jQuery("#conferma_password-type-2").length == 0) {
                 error_message = "- La password deve contenere almeno 8 caratteri";
