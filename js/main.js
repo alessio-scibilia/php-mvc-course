@@ -199,15 +199,13 @@ jQuery(".validate-it").click(function (e) {
             }
         }
 
-        if (!/^3\d{0}$/.test(sito)) {
-            if (telefono.length < 9) {
-                if (telefono == '') {
-                    error_message = "- Inserire un numero di telefono";
-                    is_error = true;
+        if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(telefono)) {
+            error_message = "- Inserire un numero di telefono";
+            is_error = true;
 
-                    jQuery("#telefono").after('<div class="error_message">' + error_message + '</div>');
-                }
-            }
+            jQuery("#telefono").after('<div class="error_message">' + error_message + '</div>');
+
+
         }
 
         if (jQuery("#indirizzo").length) {
