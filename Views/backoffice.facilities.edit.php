@@ -70,146 +70,160 @@
                                     </div>
 
                                 <?php } ?>
-
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
-                                    <input value="<?php echo $view_model->principal->nome_struttura; ?>"
-                                           name="nome_struttura"
-                                           type="text"
-                                           class="form-control validate-1"
-                                           placeholder="London Hotel">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('email'); ?></label>
-                                    <input value="<?php echo $view_model->principal->email; ?>"
-                                           name="email"
-                                           type="text"
-                                           class="form-control validate-1"
-                                           placeholder="mario@rossi.it">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('sito_web'); ?></label>
-                                    <input value="<?php echo $view_model->principal->sito_web; ?>"
-                                           type="text"
-                                           class="form-control validate-1"
-                                           name="sito_web"
-                                           placeholder="www.hotelsuperlondon.co.uk">
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label><?php echo $view_model->translations->get('telefono'); ?></label>
-                                    <input value="<?php echo $view_model->principal->telefono; ?>"
-                                           type="text"
-                                           class="form-control validate-1"
-                                           name="telefono"
-                                           placeholder="020483039">
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <?php
-                                    $label = 'abilitato';
-                                    $field = 'abilitata';
-                                    $value = $view_model->principal->abilitata;
-                                    include 'Views/backoffice.checkbox.php';
-                                    ?>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <?php
-                                    $label = 'indicizza';
-                                    $field = 'indicizza';
-                                    $value = $view_model->principal->indicizza;
-                                    include 'Views/backoffice.checkbox.php';
-                                    ?>
-                                </div>
-
-                                <div class="form-group col-md-12">
-                                    <?php
-                                    $label = 'convenzionato';
-                                    $field = 'convenzionato';
-                                    $value = $view_model->principal->convenzionato;
-                                    include 'Views/backoffice.checkbox.php';
-                                    ?>
-                                </div>
-
-                                <?php $model = $view_model->principal;
-                                include 'Views/backoffice.geolocator.php'; ?>
-
-                                <div class="form-group col-md-4">
-                                    <label><?php echo $view_model->translations->get('tipo_viaggio'); ?></label>
-                                    <div class="route-container">
-                                        <div class="route-div"><input
-                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 1) echo 'checked="checked"'; ?>
-                                                    name="tipo_viaggio" class="tipo_viaggio" value="1">
-                                            <img src="/images/walking.svg" class="svg-route"/>
-                                            <span for="tipo_viaggio"
-                                                  class="route-span">A piedi</span>
-                                        </div>
-                                        <div class="route-div"><input
-                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 2) echo 'checked="checked"'; ?>
-                                                    name="tipo_viaggio" class="tipo_viaggio" value="2">
-                                            <img src="/images/car.svg" class="svg-route"/>
-                                            <span for="tipo_viaggio"
-                                                  class="route-span">In auto</span>
-                                        </div>
-                                        <div class="route-div"><input
-                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 3) echo 'checked="checked"'; ?>
-                                                    name="tipo_viaggio" class="tipo_viaggio" value="3">
-                                            <img src="/images/mezzi.svg" class="svg-route"/>
-                                            <span for="tipo_viaggio"
-                                                  class="route-span">Trasporti pubblici</span>
-                                        </div>
+                                <?php if ($view_model->user->level <= 2 || $view_model->principal->created_by == $view_model->user->id) { ?>
+                                    <div class="form-group col-md-6">
+                                        <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
+                                        <input value="<?php echo $view_model->principal->nome_struttura; ?>"
+                                               name="nome_struttura"
+                                               type="text"
+                                               class="form-control validate-1"
+                                               placeholder="London Hotel">
                                     </div>
-                                </div>
 
-                                <?php
-                                $images = empty($view_model->principal->immagine_didascalia) ? array() : explode('|', $view_model->principal->immagine_didascalia);
-                                $label = 'immagini_struttura';
-                                $button_label = 'scegli_immagini';
-                                $field_prefix = "img_struttura";
-                                $urls = array_filter($images, function ($img) {
-                                    return !empty($img);
-                                });
-                                $tips = false;
-                                $multiple = true;
-                                include 'Views/backoffice.images.uploader.php';
-                                ?>
+                                    <div class="form-group col-md-6">
+                                        <label><?php echo $view_model->translations->get('email'); ?></label>
+                                        <input value="<?php echo $view_model->principal->email; ?>"
+                                               name="email"
+                                               type="text"
+                                               class="form-control validate-1"
+                                               placeholder="mario@rossi.it">
+                                    </div>
 
-                                <div class="form-group col-md-12">
-                                    <?php
-                                    $label = 'descrizione';
-                                    $field = 'descrizione';
-                                    $field_prefix = 'descrizione';
-                                    $items = $view_model->facilities;
-                                    include 'Views/backoffice.multilanguage.textbox.php';
-                                    ?>
-                                </div>
+                                    <div class="form-group col-md-6">
+                                        <label><?php echo $view_model->translations->get('sito_web'); ?></label>
+                                        <input value="<?php echo $view_model->principal->sito_web; ?>"
+                                               type="text"
+                                               class="form-control validate-1"
+                                               name="sito_web"
+                                               placeholder="www.hotelsuperlondon.co.uk">
+                                    </div>
 
-                                <?php if ($view_model->user->level > 2) { ?>
+                                    <div class="form-group col-md-6">
+                                        <label><?php echo $view_model->translations->get('telefono'); ?></label>
+                                        <input value="<?php echo $view_model->principal->telefono; ?>"
+                                               type="text"
+                                               class="form-control validate-1"
+                                               name="telefono"
+                                               placeholder="020483039">
+                                    </div>
+
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $label = 'descrizione_benefit';
-                                        $field = 'descrizione_benefit';
-                                        $field_prefix = 'descrizione_benefit';
+                                        $label = 'abilitato';
+                                        $field = 'abilitata';
+                                        $value = $view_model->principal->abilitata;
+                                        include 'Views/backoffice.checkbox.php';
+                                        ?>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $label = 'indicizza';
+                                        $field = 'indicizza';
+                                        $value = $view_model->principal->indicizza;
+                                        include 'Views/backoffice.checkbox.php';
+                                        ?>
+                                    </div>
+
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $label = 'convenzionato';
+                                        $field = 'convenzionato';
+                                        $value = $view_model->principal->convenzionato;
+                                        include 'Views/backoffice.checkbox.php';
+                                        ?>
+                                    </div>
+
+                                    <?php $model = $view_model->principal;
+                                    include 'Views/backoffice.geolocator.php'; ?>
+
+                                    <div class="form-group col-md-4">
+                                        <label><?php echo $view_model->translations->get('tipo_viaggio'); ?></label>
+                                        <div class="route-container">
+                                            <div class="route-div"><input
+                                                        type="radio" <?php if ($view_model->principal->tipo_viaggio == 1) echo 'checked="checked"'; ?>
+                                                        name="tipo_viaggio" class="tipo_viaggio" value="1">
+                                                <img src="/images/walking.svg" class="svg-route"/>
+                                                <span for="tipo_viaggio"
+                                                      class="route-span">A piedi</span>
+                                            </div>
+                                            <div class="route-div"><input
+                                                        type="radio" <?php if ($view_model->principal->tipo_viaggio == 2) echo 'checked="checked"'; ?>
+                                                        name="tipo_viaggio" class="tipo_viaggio" value="2">
+                                                <img src="/images/car.svg" class="svg-route"/>
+                                                <span for="tipo_viaggio"
+                                                      class="route-span">In auto</span>
+                                            </div>
+                                            <div class="route-div"><input
+                                                        type="radio" <?php if ($view_model->principal->tipo_viaggio == 3) echo 'checked="checked"'; ?>
+                                                        name="tipo_viaggio" class="tipo_viaggio" value="3">
+                                                <img src="/images/mezzi.svg" class="svg-route"/>
+                                                <span for="tipo_viaggio"
+                                                      class="route-span">Trasporti pubblici</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <?php
+                                    $images = empty($view_model->principal->immagine_didascalia) ? array() : explode('|', $view_model->principal->immagine_didascalia);
+                                    $label = 'immagini_struttura';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = "img_struttura";
+                                    $urls = array_filter($images, function ($img) {
+                                        return !empty($img);
+                                    });
+                                    $tips = false;
+                                    $multiple = true;
+                                    include 'Views/backoffice.images.uploader.php';
+                                    ?>
+
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $label = 'descrizione';
+                                        $field = 'descrizione';
+                                        $field_prefix = 'descrizione';
                                         $items = $view_model->facilities;
                                         include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
-                                <?php } ?>
 
-                                <div class="form-group col-md-12">
+                                    <?php if ($view_model->user->level > 2) { ?>
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $label = 'descrizione_benefit';
+                                            $field = 'descrizione_benefit';
+                                            $field_prefix = 'descrizione_benefit';
+                                            $items = $view_model->facilities;
+                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
+                                        </div>
+                                    <?php } ?>
+
                                     <div class="form-group col-md-12">
-                                        <?php
-                                        $flag_field_prefix = "orario_continuato";
-                                        $day_field_prefix = "giorno";
-                                        $model = $view_model->principal;
-                                        include 'Views/backoffice.timetable.php';
-                                        ?>
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $flag_field_prefix = "orario_continuato";
+                                            $day_field_prefix = "giorno";
+                                            $model = $view_model->principal;
+                                            include 'Views/backoffice.timetable.php';
+                                            ?>
+                                        </div>
                                     </div>
-                                </div>
-
+                                <?php } ?>
+                                <?php
+                                if ($view_model->user->level > 2 && $view_model->principal->created_by != $view_model->user->level) { ?>
+                                    <?php if ($view_model->user->level > 2) { ?>
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $label = 'descrizione_benefit';
+                                            $field = 'descrizione_benefit';
+                                            $field_prefix = 'descrizione_benefit';
+                                            $items = $view_model->facilities;
+                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                            ?>
+                                        </div>
+                                    <?php } ?>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

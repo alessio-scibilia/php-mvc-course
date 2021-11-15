@@ -134,12 +134,12 @@ class BackofficeEventsAddController
                             'id_hotel' => $id_hotel,
                             'id_struttura' => $id_struttura
                         );
-                        $this->facility_event_repository->add($facility_event);
+                        $id = $this->facility_event_repository->add($facility_event);
                     }
                 }
             }
         }
 
-        return new HttpRedirectView("/backoffice/events/");
+        return new HttpRedirectView("/backoffice/events/" . $id . '/edit');
     }
 }
