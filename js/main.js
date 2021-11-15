@@ -199,7 +199,7 @@ jQuery(".validate-it").click(function (e) {
             }
         }
 
-        if (jQuery("#telefono").length) {
+        if (!/^3\d{0}$/.test(sito)) {
             if (telefono.length < 9) {
                 if (telefono == '') {
                     error_message = "- Inserire un numero di telefono";

@@ -146,6 +146,21 @@ jQuery(document).on("click", ".annulla-servizio", function () {
     }
 });
 
+jQuery(document).on("click", ".annulla-eccellenza", function () {
+    var id = jQuery(this).attr("id");
+    if (jQuery("#num_eccellenze").val() > 1) {
+        var prec = jQuery("#num_eccellenze").val();
+        var less = prec - 1;
+        jQuery("#num_eccellenze").val(less);
+        jQuery("#fsc-" + id).remove();
+    } else if (id == 'eccellenza-1' && jQuery("#num_eccellenze").val() == 1) {
+        var prec = jQuery("#num_eccellenze").val();
+        var less = 0;
+        jQuery("#num_eccellenze").val(less);
+        jQuery(".form-eccellenze-container").hide();
+    }
+});
+
 
 jQuery(document).on("click", ".annulla-utility", function () {
     var id = jQuery(this).attr("id");

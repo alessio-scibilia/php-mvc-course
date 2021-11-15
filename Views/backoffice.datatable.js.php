@@ -467,8 +467,9 @@
     var items_eccellenza = $(".form-eccellenza-container").length;
     items_next = items_eccellenza+1;
     jQuery("#num_eccellenze").val(items_next);
-    var form = jQuery(".form-eccellenza-container").last().clone();
-    jQuery(".form-eccellenza-container").last().append(form);
+    let $last = jQuery(".form-eccellenza-container").last();
+    var form = $last.clone();
+    $last.after(form);
     if(items_eccellenza >= 0) {
     jQuery(".form-eccellenza-container").last().find("#abilitato-"+items_eccellenza).attr("id","abilitato-"+items_next);
     jQuery(".form-eccellenza-container").last().find("#eccellenza-"+items_eccellenza).attr("id","eccellenza-"+items_next);
@@ -477,6 +478,41 @@
     jQuery(".form-eccellenza-container").last().attr("id","eccellenza-"+items_next);
 
     jQuery(".form-eccellenza-container").fadeIn();
+
+    // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
+    $last.attr("class", " form-eccellenza-container fsc-" + items_next);
+    $last.attr("id", "fsc-eccellenza-" + items_next);
+
+    $last.find("[name]").each(function() {
+    let name = $(this).attr("name");
+    let regex = /^([^\d]+)(\d+)(.*)$/;
+    let replacer = `$1${items_next}$3`;
+    let next = name.replace(regex, replacer);
+    $(this).attr("name", next);
+});
+
+    // class and id end with /-\d+$/
+    $last.find("[id]").each(function() {
+    let id = $(this).attr("id");
+    let regex = /^(.+)(-\d+)$/;
+    let replacer = `$1-${items_next}`;
+    let next = id.replace(regex, replacer);
+    $(this).attr("id", next);
+});
+    $last.find("[class]").filter(function() {
+    let classes = $(this).attr("class").split(' ');
+    let regex = /^([^-]{4,}-)+\d+$/;
+    let matches = classes.filter(function (c) {return c.match(regex);} );
+    return matches.length > 0;
+})
+    .each(function() {
+    let classes = $(this).attr("class").split(' ');
+    let regex = /^(.+)(-\d+)$/;
+    let replacer = `$1-${items_next}`;
+    let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
+    let next = new_classes.join(' ');
+    $(this).attr("class", next);
+});
 
     var offset = jQuery("#eccellenza-"+items_next).offset().top;
     offset = offset-100;
