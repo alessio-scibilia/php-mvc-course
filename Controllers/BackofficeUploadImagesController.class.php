@@ -52,7 +52,7 @@ class BackofficeUploadImagesController
 
                     $randomNumber = rand(0, 10000000000);
 
-                    for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') - 1; $i != 32; $x = rand(0, $z), $s .= $a{$x}, $i++) ;
+                    for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') - 1; $i != 32; $x = rand(0, $z), $s .= $a[$x], $i++) ;
 
                     $filename = $randomNumber . $s;
 
