@@ -7,7 +7,8 @@
                 <a href="/backoffice/facilities" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_strutture'); ?>
                     /</a>
-                <h1><i class="fa fa-building"></i> <?php echo $view_model->translations->get('modifica_struttura'); ?></h1>
+                <h1><i class="fa fa-building"></i> <?php echo $view_model->translations->get('crea_nuova_struttura'); ?>
+                </h1>
             </div>
 
             <div class="col-xl-12 col-lg-12">
@@ -144,33 +145,33 @@
                                 </div>
 
                                 <?php
-                                    $label = 'immagini_struttura';
-                                    $button_label = 'scegli_immagini';
-                                    $field_prefix = "img_struttura";
-                                    $urls = array();
-                                    $tips = false;
-                                    $multiple = true;
-                                    include 'Views/backoffice.images.uploader.php';
+                                $label = 'immagini_struttura';
+                                $button_label = 'scegli_immagini';
+                                $field_prefix = "img_struttura";
+                                $urls = array();
+                                $tips = false;
+                                $multiple = true;
+                                include 'Views/backoffice.images.uploader.php';
                                 ?>
 
                                 <div class="form-group col-md-12">
                                     <?php
-                                        $label = 'descrizione';
-                                        $field = 'descrizione';
-                                        $field_prefix = 'descrizione';
-                                        $items = array();
-                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                    $label = 'descrizione';
+                                    $field = 'descrizione';
+                                    $field_prefix = 'descrizione';
+                                    $items = array();
+                                    include 'Views/backoffice.multilanguage.textbox.php';
                                     ?>
                                 </div>
 
                                 <?php if ($view_model->user->level > 2) { ?>
                                     <div class="form-group col-md-12">
                                         <?php
-                                            $label = 'descrizione_benefit';
-                                            $field = 'descrizione_benefit';
-                                            $field_prefix = 'descrizione_benefit';
-                                            $items = array();
-                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione_benefit';
+                                        $field = 'descrizione_benefit';
+                                        $field_prefix = 'descrizione_benefit';
+                                        $items = array();
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
                                 <?php } ?>
@@ -178,10 +179,10 @@
                                 <div class="form-group col-md-12">
                                     <div class="form-group col-md-12">
                                         <?php
-                                            $flag_field_prefix = "orario_continuato";
-                                            $day_field_prefix = "giorno";
-                                            $model = $view_model->principal;
-                                            include 'Views/backoffice.timetable.php';
+                                        $flag_field_prefix = "orario_continuato";
+                                        $day_field_prefix = "giorno";
+                                        $model = $view_model->principal;
+                                        include 'Views/backoffice.timetable.php';
                                         ?>
                                     </div>
                                 </div>
@@ -203,8 +204,10 @@
                                    id="num_eccellenze"
                                    value="1">
                             <?php
-                                $excellences = array_map(function($l) { return new Excellence(); }, $view_model->languages->list_all());
-                                $excellence = $excellences[0];
+                            $excellences = array_map(function ($l) {
+                                return new Excellence();
+                            }, $view_model->languages->list_all());
+                            $excellence = $excellences[0];
                             ?>
                             <div class="form-eccellenza-container fsc-1"
                                  id="fsc-eccellenza-1">
@@ -285,13 +288,13 @@
                                 <div class="form-row">
 
                                     <?php
-                                        $label = 'immagini_didascalia';
-                                        $button_label = 'scegli_immagini';
-                                        $field_prefix = 'img_didascalia';
-                                        $urls = array();
-                                        $tips = array('');
-                                        $multiple = true;
-                                        include 'Views/backoffice.images.uploader.php';
+                                    $label = 'immagini_didascalia';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = 'img_didascalia';
+                                    $urls = array();
+                                    $tips = array('');
+                                    $multiple = true;
+                                    include 'Views/backoffice.images.uploader.php';
                                     ?>
 
                                 </div>

@@ -170,10 +170,10 @@ class BackofficeHotelsAddController
                     $utility = array
                     (
                         'hotel_associato' => $related_id,
-                        'nome' => $titolo,
-                        'indirizzo' => $params['indirizzo'],
-                        'telefono' => $params['telefono'],
-                        'immagine' => $images[0], // only 1 image for services
+                        'nome_utility' => $titolo,
+                        'indirizzo_utility' => $params['indirizzo_utility'],
+                        'telefono_utility' => $params['telefono_utility'],
+                        'immagine_utility' => $images[0], // only 1 image for services
                         'shortcode_lingua' => $language['shortcode_lingua'],
                         'posizione' => $params['posizione'][$i]
                     );

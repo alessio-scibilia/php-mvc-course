@@ -10,13 +10,16 @@ class Utility
     public $hotel_associato;
 
     /** @var string */
-    public $nome;
+    public $nome_utility;
 
     /** @var string */
-    public $indirizzo;
+    public $indirizzo_utility;
 
     /** @var string */
-    public $immagine;
+    public $telefono_utility;
+
+    /** @var string */
+    public $immagine_utility;
 
     /** @var int */
     public $shortcode_lingua;

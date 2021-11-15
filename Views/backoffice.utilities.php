@@ -29,8 +29,8 @@
                         <?php
                         $type = 'input';
                         $label = 'nome_utility';
-                        $placeholder = 'Es. Numero di emergenza, Reception';
-                        $field = 'titolo';
+                        $placeholder = 'Reception';
+                        $field = 'nome_utility';
                         $field_prefix = "nome_utility[$r]";
                         //$items = array_merge(...$group);
                         $items = array_values($utility);
@@ -39,18 +39,21 @@
                     </div>
                     <div class="form-group col-md-4">
                         <label for="telefono"><?php echo $view_model->translations->get('telefono'); ?></label>
-                        <input type="text" name="telefono" id="telefono" class="form-control" placeholder="118">
+                        <input type="text" name="telefono_utility" value="<?php echo $utility[$r]->telefono_utility; ?>"
+                               id="telefono"
+                               class="form-control" placeholder="118">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="telefono"><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                        <input type="text" name="indirizzo" id="indirizzo" class="form-control"
+                        <input type="text" name="indirizzo_utility" id="indirizzo"
+                               value="<?php echo $utility[$r]->indirizzo_utility; ?>" class="form-control"
                                placeholder="Via Roma 108, Milano (MI)">
                     </div>
 
                     <?php
                     $label = 'immagine_utility';
                     $button_label = 'immagine_utility';
-                    $field_prefix = "img_utility[$r]";
+                    $field_prefix = "immagine_utility[$r]";
                     $urls = empty($principal->immagine) ? array() : array($principal->immagine);
                     $multiple = false;
                     include 'Views/backoffice.images.uploader.php';
@@ -88,7 +91,7 @@
                     $type = 'input';
                     $label = 'nome_utility';
                     $placeholder = 'Es. Numero di emergenza, Reception';
-                    $field = 'titolo';
+                    $field = 'nome_utility';
                     $field_prefix = "nome_utility[1]";
                     //$items = array_merge(...$group);
                     $items = array();
@@ -98,17 +101,17 @@
 
                 <div class="form-group col-md-4">
                     <label for="telefono"><?php echo $view_model->translations->get('telefono'); ?></label>
-                    <input type="text" name="telefono" class="form-control" placeholder="118">
+                    <input type="text" name="telefono_utility" class="form-control" placeholder="118">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="telefono"><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                    <input type="text" name="indirizzo" class="form-control" placeholder="Via roma 24, Roma">
+                    <input type="text" name="indirizzo_utility" class="form-control" placeholder="Via roma 24, Roma">
                 </div>
 
                 <?php
                 $label = 'immagine_utility';
                 $button_label = 'immagine_utility';
-                $field_prefix = "img_utility[$r]";
+                $field_prefix = "immagine_utility[$r]";
                 $urls = empty($principal->immagine) ? array() : array($principal->immagine);
                 $multiple = false;
                 include 'Views/backoffice.images.uploader.php';

@@ -462,4 +462,36 @@
 }
 });
 
+
+    jQuery(document).on("click",".save-eccellenza",function() {
+    var items_eccellenza = $(".form-eccellenza-container").length;
+    items_next = items_eccellenza+1;
+    jQuery("#num_eccellenze").val(items_next);
+    var form = jQuery(".form-eccellenza-container").last().clone();
+    jQuery(".form-eccellenza-container").last().append(form);
+    if(items_eccellenza >= 0) {
+    jQuery(".form-eccellenza-container").last().find("#abilitato-"+items_eccellenza).attr("id","abilitato-"+items_next);
+    jQuery(".form-eccellenza-container").last().find("#eccellenza-"+items_eccellenza).attr("id","eccellenza-"+items_next);
+    jQuery(".form-eccellenza-container").last().find("#select-nome-eccellenze").attr("data-form-index",items_next);
+    jQuery(".form-eccellenza-container").last().find("#annulla-eccellenza-"+items_eccellenza).attr("id","annulla-eccellenza-"+items_next);
+    jQuery(".form-eccellenza-container").last().attr("id","eccellenza-"+items_next);
+
+    jQuery(".form-eccellenza-container").fadeIn();
+
+    var offset = jQuery("#eccellenza-"+items_next).offset().top;
+    offset = offset-100;
+    $('html,body').animate({
+    scrollTop: offset
+}, 'slow');
+
+    jQuery(".form-eccellenza-container").last().attr("class"," form-eccellenza-container fsc-"+items_next);
+    jQuery(".form-eccellenza-container").last().attr("id","fsc-eccellenza-"+items_next);
+    jQuery(".form-eccellenza-container").last().find("#immagine_eccellenza-"+items_eccellenza).attr("id","immagine_eccellenza-"+items_next);
+    jQuery(".form-eccellenza-container").last().find("#ifps-prws-immagine_eccellenza-"+items_eccellenza).attr("id","ifps-prws-immagine_eccellenza-"+items_next);
+    jQuery(".form-eccellenza-container").last().find("#prws-immagine_eccellenza-"+items_eccellenza).attr("id","prws-immagine_eccellenza-"+items_next);
+    jQuery(".form-eccellenza-container").last().find("#prws-immagine_eccellenza-"+items_next).attr("onclick","delPreviewServizi('immagine_eccellenza-"+items_next+"')");
+    jQuery(".form-eccellenza-container").last().find("#preview-immagine_eccellenza-"+items_eccellenza).attr("id","preview-immagine_eccellenza-"+items_next);
+
+}});
+
 </script>

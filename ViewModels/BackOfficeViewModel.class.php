@@ -6,6 +6,7 @@ require_once 'Models/Hotel.class.php';
 require_once 'Models/Facility.class.php';
 require_once 'Models/FacilityHotel.class.php';
 require_once 'Models/Service.class.php';
+require_once 'Models/Utility.class.php';
 require_once 'Models/Profile.class.php';
 require_once 'Models/Guest.class.php';
 require_once 'Models/Category.class.php';

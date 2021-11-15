@@ -4,12 +4,14 @@ require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/HotelRepository.class.php';
 require_once 'Database/ServiceRepository.class.php';
+require_once 'Database/UtilityRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Profile.class.php';
 require_once 'Models/Hotel.class.php';
+require_once 'Models/Utility.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -23,6 +25,7 @@ class BackofficeHotelsEditController
     protected $user_repository;
     protected $hotel_repository;
     protected $service_repository;
+    protected $utility_repository;
 
     public function __construct()
     {
@@ -31,6 +34,7 @@ class BackofficeHotelsEditController
         $this->user_repository = new UserRepository();
         $this->hotel_repository = new HotelRepository();
         $this->service_repository = new ServiceRepository();
+        $this->utility_repository = new UtilityRepository();
     }
 
     public function http_get(array &$params): IView
@@ -58,6 +62,10 @@ class BackofficeHotelsEditController
             $instances = $languages->list_all();
             $services = Service::grouped_services($rows, $instances);
 
+            $utilities = array();
+            $rows = $this->utility_repository->get_utilities_by_hotel($id);
+            $utilities = Utility::grouped_utilities($rows, $instances);
+
             $rows = $this->hotel_repository->get_translations($profile->related_id);
             $hotel_translations = Hotel::hotels($rows);
 
@@ -68,6 +76,7 @@ class BackofficeHotelsEditController
             $view_model->language = $languages->get($id_lingua);
             $view_model->hotel_translations = $hotel_translations;
             $view_model->services = $services;
+            $view_model->utilities = $utilities;
             $view_model->menu_active_btn = 'hotels';
             $view_model->errors = $params['errors'] ?? array();
 
