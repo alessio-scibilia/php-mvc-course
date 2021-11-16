@@ -37,33 +37,29 @@ class SessionManager
     protected static function set_user_cookie($type, $id)
     {
         $host = $_SERVER['HTTP_HOST'];
-        $expire_time = time() + 24 * 60 * 60;
-        $options = array
-        (
-            'expires' => $expire_time,
-            'path' => '/',
-            'domain' => $host,
-            'secure' => $host != self::LOCALHOST,
-            'httponly' => true,
-            'samesite' => 'Lax'
-        );
-        if ($host == self::LOCALHOST) {
-            //unset($options['domain']);
-        }
+        $lifetime = 24 * 60 * 60;
         $v = phpversion();
-        if ($v > '7.3') {
+        if ($v > '7.3')
+        {
+            $expire_time = time() + $lifetime;
+            $options = array
+            (
+                'expires' => $expire_time,
+                'path' => '/',
+                'domain' => $host,
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            );
             return setcookie(self::COOKIE_NAME, $value, $options);
-        } else {
+        }
+        else
+        {
             $key = self::COOKIE_NAME;
             $value = rawurlencode("$type-$id");
-            $expires =
-            $secure = $host != self::LOCALHOST ? ' Secure;' : '';
-            $header = "Set-Cookie: $key=$value; Expires=$expires; Domain=$host; Path=/;$secure HttpOnly; SameSite=Lax";
-            header($header);
+            $header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/; Secure; HttpOnly; SameSite=Lax";
+            header($header, true);
         }
-
-        $written = setrawcookie(self::COOKIE_NAME, $value, $options);
-        $written = setrawcookie(self::COOKIE_NAME, $value);
     }
 
     public static function get_user(): User
