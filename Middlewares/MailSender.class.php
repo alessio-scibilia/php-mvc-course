@@ -5,9 +5,9 @@ class MailSender
 
     public static function send(string $to, string $subject, string $body)
     {
-        $result = mail($to, $subject, $body);
+        //$result = mail($to, $subject, $body);
 
-        if (!$result) {
+        //if (!$result) {
             require_once 'vendor/autoload.php';
 
             //Parametri connessione server di posta
@@ -29,7 +29,7 @@ class MailSender
             $result = $mailer->send($message);
 
             return $result;
-        }
+        //}
     }
 }
 

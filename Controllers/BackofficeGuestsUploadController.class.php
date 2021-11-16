@@ -12,6 +12,7 @@ require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
 require_once 'Views/Html404.class.php';
+require_once 'Views/TaskRunnerView.class.php';
 
 class BackofficeGuestsUploadController
 {
@@ -90,9 +91,12 @@ class BackofficeGuestsUploadController
                 }
             }
 
+            $task_run = null;
+
             if ($ext == 'csv') {
                 $file = fopen($params['DOCUMENT_ROOT'] . '/import/' . $filename . '.' . $ext, 'r');
                 $i = 0;
+                $task_data = array();
                 while (($line = fgetcsv($file)) !== FALSE) {
                     //$line is an array of the csv elements
                     if ($i > 1) {
@@ -121,7 +125,12 @@ class BackofficeGuestsUploadController
                         $msg = "Benvenuto su Wellcome ecco le tue credenziali di accesso:" . PHP_EOL . PHP_EOL . "Link di accesso: " . $link . PHP_EOL . "Numero stanza: " . $new[8] . PHP_EOL . "Password: " . $password_text . PHP_EOL . PHP_EOL;
                         $msg .= 'Goditi il relax!';
 
-                        MailSender::send($new[3], $translations->get('benvenuto_wellcome'), $msg);
+                        $task_data[] = array
+                        (
+                            'to' => $new_user['email'],
+                            'subject' => $translations->get('benvenuto_wellcome'),
+                            'body' => $msg
+                        );
 
                         $this->guest_repository->add($new_user);
 
@@ -129,6 +138,15 @@ class BackofficeGuestsUploadController
                     $i++;
                 }
                 fclose($file);
+
+                $task_run = function() use($task_data)
+                {
+                    foreach ($task_data as $email)
+                    {
+                        MailSender::send($email['to'], $email['subject'], $email['body']);
+                    }
+                };
+
             } else if ($ext == 'xls') {
                 require_once 'Middlewares/excelReader/excel_reader.php';
                 $r = 1;
@@ -182,7 +200,9 @@ class BackofficeGuestsUploadController
             $view_model->guests = $guests;
             $view_model->menu_active_btn = 'guests';
 
-            return new HtmlView($view_model);
+            $inner_view = new HtmlView($view_model);
+
+            return new TaskRunnerView($inner_view, $task_run);
         }
     }
 }
