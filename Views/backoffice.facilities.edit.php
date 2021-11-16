@@ -115,24 +115,29 @@
                                         include 'Views/backoffice.checkbox.php';
                                         ?>
                                     </div>
+                                    <?php
+                                    if ($view_model->user->level <= 2) { ?>
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $label = 'indicizza';
+                                            $field = 'indicizza';
+                                            $value = $view_model->principal->indicizza;
+                                            include 'Views/backoffice.checkbox.php';
+                                            ?>
+                                        </div>
+                                    <?php } ?>
 
-                                    <div class="form-group col-md-12">
-                                        <?php
-                                        $label = 'indicizza';
-                                        $field = 'indicizza';
-                                        $value = $view_model->principal->indicizza;
-                                        include 'Views/backoffice.checkbox.php';
-                                        ?>
-                                    </div>
-
-                                    <div class="form-group col-md-12">
-                                        <?php
-                                        $label = 'convenzionato';
-                                        $field = 'convenzionato';
-                                        $value = $view_model->principal->convenzionato;
-                                        include 'Views/backoffice.checkbox.php';
-                                        ?>
-                                    </div>
+                                    <?php
+                                    if ($view_model->user->level > 2) { ?>
+                                        <div class="form-group col-md-12">
+                                            <?php
+                                            $label = 'convenzionato';
+                                            $field = 'convenzionato';
+                                            $value = $view_model->principal->convenzionato;
+                                            include 'Views/backoffice.checkbox.php';
+                                            ?>
+                                        </div>
+                                    <?php } ?>
 
                                     <?php $model = $view_model->principal;
                                     include 'Views/backoffice.geolocator.php'; ?>

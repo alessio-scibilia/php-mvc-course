@@ -78,28 +78,23 @@ class BackofficeFacilitiesEditController
             $temp_tips = empty($principal->real_path_immagini_didascalia) ? array() : explode('&&', $principal->real_path_immagini_didascalia);
             $tips = array();
             $i = 0;
-            foreach ($temp_tips as $temp_tip)
-            {
+            foreach ($temp_tips as $temp_tip) {
                 $values = empty($temp_tip) ? array() : explode('||', $temp_tip);
                 $map = array();
                 $j = 0;
-                foreach ($languages->list_all() as $language)
-                {
+                foreach ($languages->list_all() as $language) {
                     $map[$language['abbreviazione']] = $values[$j++] ?? '';
                 }
                 $tips[$i++] = $map;
             }
 
-            if ($user->level <= 2)
-            {
+            if ($user->level <= 2) {
                 $rows = $this->hotel_repository->get_all_hotels($language['shortcode_lingua']);
                 $hotels = Hotel::hotels($rows);
 
                 $rows = $this->category_repository->get_all_categories($language['shortcode_lingua']);
                 $categories = Category::categories($rows);
-            }
-            else
-            {
+            } else {
                 $hotels = array();
                 $categories = array();
             }
@@ -136,8 +131,7 @@ class BackofficeFacilitiesEditController
 
     public function http_post(array &$params): IView
     {
-        if (isset($params['facilities']))
-        {
+        if (isset($params['facilities'])) {
             $user = SessionManager::get_user();
             if (User::is_empty($user)) {
                 return new HttpRedirectView('/backoffice');
@@ -166,44 +160,43 @@ class BackofficeFacilitiesEditController
                 'default_image' => 'immagine_principale',
             );
             $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-            foreach ($facilities as &$facility)
-            {
+            foreach ($facilities as &$facility) {
                 $language = $languages->get_by_field('shortcode_lingua', $facility['shortcode_lingua']);
                 $abbreviation = $language['abbreviazione'];
 
-                foreach ($facility_fields as $facility_field)
-                {
+                foreach ($facility_fields as $facility_field) {
+                    if ($facility_field == 'convenzionato' && $user->level < 3)
+                        continue;
+
+                    if ($facility_field == 'indicizza' && $user->level > 2)
+                        continue;
                     $facility[$facility_field] = $params[$facility_field];
                 }
-                foreach ($facility_fields_remap as $post_field => $facility_field)
-                {
+                foreach ($facility_fields_remap as $post_field => $facility_field) {
                     $facility[$facility_field] = $params[$post_field];
                 }
 
                 $facility['immagine_didascalia'] = join('|', $params['img_struttura']);
                 $facility['descrizione'] = $params['descrizione'][$abbreviation];
-                if ($user->level > 2)
-                {
+                if ($user->level > 2) {
                     $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                 }
 
                 $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array());
 
                 $tips = array();
-                foreach ($params['didascalia_img_didascalia'] ?? array() as $image_tips)
-                {
+                foreach ($params['didascalia_img_didascalia'] ?? array() as $image_tips) {
                     $tips[] = join('||', $image_tips) . '||';
                 }
                 $tips = empty($tips) ? '' : join('&&', $tips) . '&&';
                 $facility['real_path_immagini_didascalia'] = $tips;
 
-                foreach ($params['orario_continuato'] as $weekday => $flag)
-                {
+                foreach ($params['orario_continuato'] as $weekday => $flag) {
                     $orari = $params['giorno'][$weekday];
                     $prefix = str_repeat('|', empty($orari) ? 0 : 1);
                     $content = join('|', $orari);
                     $suffix = str_repeat('|', 5 - count($orari));
-                    $facility['orari_'.$weekday] = $flag . $prefix . $content . $suffix;
+                    $facility['orari_' . $weekday] = $flag . $prefix . $content . $suffix;
                 }
 
                 $this->facility_repository->update($facility);
@@ -211,8 +204,7 @@ class BackofficeFacilitiesEditController
 
             // facility hotels
             $this->facility_hotel_repository->remove_by_facility($id);
-            foreach ($params['related_hotels'] as $id_hotel)
-            {
+            foreach ($params['related_hotels'] as $id_hotel) {
                 $facility_hotel = array
                 (
                     'id_struttura' => $id,
@@ -224,8 +216,7 @@ class BackofficeFacilitiesEditController
 
             // facility categories
             $this->facility_category_repository->remove_by_facility($id);
-            foreach ($params['related_categories'] as $id_categoria)
-            {
+            foreach ($params['related_categories'] as $id_categoria) {
                 $facility_category = array
                 (
                     'id_struttura' => $id,
@@ -237,10 +228,8 @@ class BackofficeFacilitiesEditController
 
             // excellences
             $this->excellence_repository->remove_by_facility($id);
-            foreach ($params['nome_eccellenza'] as $position => $names)
-            {
-                foreach ($names as $abbreviation => $name)
-                {
+            foreach ($params['nome_eccellenza'] as $position => $names) {
+                foreach ($names as $abbreviation => $name) {
                     $language = $languages->get_by_field('abbreviazione', $abbreviation);
                     $images = array_values($params['img_eccellenza'][$position] ?? array());
                     $image = array_pop($images);
