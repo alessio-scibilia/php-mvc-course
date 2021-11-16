@@ -38,7 +38,6 @@
                             <tbody>
                             <?php foreach ($view_model->facilities as &$facility) {
                                 if ($view_model->user->level == 0 || $view_model->user->id == $facility->created_by) { ?>
-                                    
                                     <tr>
                                         <?php if ($view_model->user->level == 0) { ?>
                                             <td><?php echo $facility->id; ?></td>
@@ -81,7 +80,62 @@
                                             </a>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php } else if ($view_model->user->id != $facility->created_by) {
+                                    foreach ($view_model->hotel_associati as $hotel) {
+                                        for ($i = 0; $i < sizeof($hotel); $i++) {
+                                            if ($hotel[$i]->id_hotel == $view_model->user->id) {
+                                                ?>
+                                                <tr>
+                                                    <?php if ($view_model->user->level == 0) { ?>
+                                                        <td><?php echo $facility->id; ?></td>
+                                                    <?php } ?>
+                                                    <td><?php echo $facility->nome_struttura; ?></td>
+                                                    <td><?php echo $facility->email; ?></td>
+                                                    <td><?php echo $facility->telefono; ?></td>
+                                                    <td><?php echo $facility->indirizzo_struttura; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        $rel_hotels = $view_model->hotel_associati[$facility->related_id];
+                                                        foreach ($rel_hotels as $hotel_associato) { ?>
+                                                            <a href="/backoffice/facilities/hotels/set?hotel=<?php echo $hotel_associato->id_hotel; ?>&facility=<?php echo $facility->related_id; ?>"
+                                                               class="tagit delHot"><?php echo $hotel_associato->nome; ?>
+                                                                <i
+                                                                        class="fa fa-close"></i></a>
+                                                        <?php } ?>
+
+                                                    </td>
+                                                    <td>
+                                                        <form action="/backoffice/facility/<?php echo $facility->related_id ?>/enable"
+                                                              method="POST" enctype="multipart/form-data">
+                                                            <input type="checkbox"
+                                                                   data-success="<?php echo $view_model->translations->get('modifiche_salvate'); ?>"
+                                                                   data-fail="<?php echo $view_model->translations->get('errore_salvataggio'); ?>"
+                                                                <?php echo $facility->abilitata == 1 ? 'checked="checked"' : ''; ?>
+                                                                   name="enabled"
+                                                                   value="1"
+                                                                   onclick="this.closest('form').submit(); return false;">
+                                                        </form>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/backoffice/facilities/<?php echo $facility->related_id ?>/edit"
+                                                           class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
+                                                           data-params="<?php echo $facility->related_id; ?>">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        <a href="/backoffice/facility/<?php echo $facility->related_id; ?>/delete"
+                                                           class="btn btn-danger shadow btn-xs sharp view-action">
+                                                            <i class="fa fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <?php
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                ?>
                             <?php } ?>
                             </tbody>
                             <tfoot>
