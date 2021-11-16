@@ -10,8 +10,7 @@
             //$group = array_values($service);
             $principal = $utility[$view_model->language['shortcode_lingua']];
             ?>
-            <div style="display: block;" class="form-utility-container fsu-<?php echo $r; ?>"
-                 id="fsu-utility-<?php echo $r; ?>">
+            <div style="display: block;" class="form-container fc-<?php echo $r; ?>">
                 <input type="hidden" name="posizione[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
                 <div class="form-row">
                     <div class="col-12">
@@ -73,8 +72,7 @@
             </div>
         <?php }
     } else { ?>
-        <div style="display: block;" class="form-utility-container fsu-1"
-             id="fsu-utility-1">
+        <div style="display: block;" class="form-container fc-1">
             <input type="hidden" name="posizione[1]" value="1">
             <div class="form-row">
                 <div class="col-12">

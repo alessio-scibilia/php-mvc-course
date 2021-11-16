@@ -249,8 +249,8 @@
                                 foreach ($view_model->related_excellences as $r => $excellences) {
                                     $excellence = $excellences[$view_model->language['shortcode_lingua']];
                                     ?>
-                                    <div class="form-eccellenza-container fsc-<?php echo $r; ?>"
-                                         id="fsc-eccellenza-<?php echo $r; ?>">
+                                    <div class="form-container fc-<?php echo $r; ?>"
+                                         id="fc-excellence-<?php echo $r; ?>">
                                         <div class="form-row">
 
                                             <div class="col-12">
@@ -327,7 +327,7 @@
                     <div class="card-body">
                         <div class="basic-form">
 
-                                <div class="form-didascalia-container dds-1" id="fsc-didascalia-1">
+                                <div class="form-container fc-1">
                                     <div class="form-row">
 
                                         <?php

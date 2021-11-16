@@ -67,26 +67,24 @@ jQuery(document).on("click", ".view-action", function () {
 });
 
 jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-utility", function () {
-    var id = jQuery(this).attr("id");
     var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
     var num = parseInt(jQuery(num_id).val());
     if (num > 1) {
         jQuery(num_id).val(num - 1);
-        jQuery("#fsc-" + id).remove();
-        var pieces = id.split('-');
-        var last = parseInt(pieces.pop());
-        var suffix = pieces.join('-');
+        var $container = jQuery(this).closest(".form-container");
+        var last = parseInt($container.attr('class').split(' ').pop().split('-').pop());
+        $container.remove();
 
-        for (var i = last; i < num; i++) {
+        for (var i = last; i <= num; i++) {
 
-            var next_id = ["#fsc", suffix, i].join('-');
-            var $target = jQuery(next_id);
-            var items_next = i + 1;
+            var next_class = '.form-container.fc-' + i;
+            var $target = jQuery(next_class);
+            var items_prev = i - 1;
 
             $target.find("[data-target]").each(function() {
                 let name = $(this).data("target");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
-                let replacer = `$1${items_next}$3`;
+                let replacer = `$1${items_prev}$3`;
                 let next = name.replace(regex, replacer);
                 $(this).data("target", next);
             });
@@ -94,7 +92,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
             $target.find("[data-name]").each(function() {
                 let name = $(this).data("name");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
-                let replacer = `$1${items_next}$3`;
+                let replacer = `$1${items_prev}$3`;
                 let next = name.replace(regex, replacer);
                 $(this).data("name", next);
             });
@@ -102,7 +100,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
             $target.find("[name]").each(function() {
                 let name = $(this).attr("name");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
-                let replacer = `$1${items_next}$3`;
+                let replacer = `$1${items_prev}$3`;
                 let next = name.replace(regex, replacer);
                 $(this).attr("name", next);
             });
@@ -111,7 +109,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
             $target.find("[id]").each(function() {
                 let id = $(this).attr("id");
                 let regex = /^(.+)(-\d+)$/;
-                let replacer = `$1-${items_next}`;
+                let replacer = `$1-${items_prev}`;
                 let next = id.replace(regex, replacer);
                 $(this).attr("id", next);
             });
@@ -126,7 +124,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
             $targets.each(function() {
                 let classes = $(this).attr("class").split(' ');
                 let regex = /^(.+)(-\d+)$/;
-                let replacer = `$1-${items_next}`;
+                let replacer = `$1-${items_prev}`;
                 let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
                 let next = new_classes.join(' ');
                 $(this).attr("class", next);
@@ -141,19 +139,19 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
     var items_next = items_current + 1;
     jQuery(num_id).val(items_next);
 
-    let $last = jQuery(".form-service-container").last();
+    let $container = jQuery(this).closest(".form-container");
+    let $last = $container.parent().children().last();
     var form = $last.clone();
-    $last.after(form);
+    $last.before(form);
 
     if (items_current > 0) {
         // div[class^='apple-'],div[class*=' apple-']
         $("[class^='annulla-'],[class*=' annulla-']").prop('disabled', false);
 
-        jQuery(".form-service-container").fadeIn();
+        $container.fadeIn();
 
-        // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
-        $last.attr("class", " form-service-container fsc-" + items_next);
-        $last.attr("id", "fsc-servizio-" + items_next);
+        // SI: vanno lasciati perché hanno "fc-*" che è < 4 caratteri!
+        $last.attr("class", "form-container fc-" + items_next);
 
         $last.find("[data-target]").each(function() {
             let name = $(this).data("target");
@@ -202,7 +200,8 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
             $(this).attr("class", next);
         });
 
-        var offset = $last.next().offset().top;
+
+        var offset = $last.offset().top;
         $('html,body').animate({ scrollTop: offset }, 'slow');
     }
 });

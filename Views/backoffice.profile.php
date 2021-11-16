@@ -181,8 +181,8 @@
                                  $r++) {
                                 $c = $r - 1;
                                 ?>
-                                <div style="display: block;" class="form-service-container fsc-<?php echo $r; ?>"
-                                     id="fsc-servizio-<?php echo $r; ?>">
+                                <div style="display: block;" class="form-container fc-<?php echo $r; ?>"
+                                     id="fc-service-<?php echo $r; ?>">
                                     <div class="form-row">
                                         <div class="col-12">
                                             <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5>
@@ -596,7 +596,7 @@
 
                         <?php if ($r == 1) {
                             ?>
-                            <div class="form-service-container fsc-1" id="fsc-servizio-1">
+                            <div class="form-container fc-1">
                                 <div class="form-row">
                                     <div class="col-12">
                                         <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5></div>

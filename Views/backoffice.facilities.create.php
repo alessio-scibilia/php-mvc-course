@@ -215,8 +215,7 @@
                             }, $view_model->languages->list_all());
                             $excellence = $excellences[0];
                             ?>
-                            <div class="form-eccellenza-container fsc-1"
-                                 id="fsc-eccellenza-1">
+                            <div class="form-container fc-1">
                                 <div class="form-row">
 
                                     <div class="col-12">
@@ -292,7 +291,7 @@
                     <div class="card-body">
                         <div class="basic-form">
 
-                            <div class="form-didascalia-container dds-1" id="fsc-didascalia-1">
+                            <div class="form-container fc-1">
                                 <div class="form-row">
 
                                     <?php
