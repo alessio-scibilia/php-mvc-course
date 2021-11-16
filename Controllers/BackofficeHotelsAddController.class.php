@@ -144,7 +144,7 @@ class BackofficeHotelsAddController
                         'immagine' => $images[0] ?? '', // only 1 image for services
                         'abilitato' => $params['servizio_abilitato'][$i],
                         'shortcode_lingua' => $language['shortcode_lingua'],
-                        'posizione' => $params['posizione_servizio'][$i]
+                        'posizione' => $i // $params['posizione_servizio'][$i]
                     );
                     foreach ($weekdays as $weekday) {
                         $orari = $params['giorno'][$i][$weekday];
@@ -180,7 +180,7 @@ class BackofficeHotelsAddController
                         'telefono_utility' => $params['telefono_utility'],
                         'immagine_utility' => $images[0], // only 1 image for services
                         'shortcode_lingua' => $language['shortcode_lingua'],
-                        'posizione' => $params['posizione_utility'][$i]
+                        'posizione' =>  $i // TODO: does not work: $params['posizione_utility'][$i]
                     );
 
                     $utility['id'] = $this->utility_repository->add($utility);
