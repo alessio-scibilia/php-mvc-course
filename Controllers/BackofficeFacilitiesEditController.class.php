@@ -216,15 +216,15 @@ class BackofficeFacilitiesEditController
                     $this->facility_repository->update($facility);
 
                     // facility hotels
-                    $this->facility_hotel_repository->remove_by_facility($id);
-                    foreach ($params['related_hotels'] as $id_hotel) {
-                        $facility_hotel = array
-                        (
-                            'id_struttura' => $id,
-                            'id_hotel' => $id_hotel,
-                        );
-                        $facility_hotel['id'] = $this->facility_hotel_repository->add($facility_hotel);
-                    }
+                    /* foreach ($params['related_hotels'] as $id_hotel) {
+                         $facility_hotel = array
+                         (
+                             'id_struttura' => $id,
+                             'id_hotel' => $id_hotel,
+                         );
+                         $facility_hotel['id'] = $this->facility_hotel_repository->update_relationship($id_facility, $id_hotel);
+                     }
+                    */
 
                     // facility categories
                     $this->facility_category_repository->remove_by_facility($id);
