@@ -59,7 +59,7 @@ else
                     </ul>
                 </div>
 
-                <?php if ($view_model->user->level <= 4) { ?>
+                <?php if ($view_model->user->level <= 2) { ?>
                     <div class="tab-pane fade <?php if (strtolower($view_model->menu_active_btn) == 'hotels') echo 'active show'; else echo $view_model->menu_active_btn; ?>"
                          id="hotels" role="tabpanel">
                         <ul class="metismenu tab-nav-menu">
@@ -212,7 +212,6 @@ else
                                     <span class="nav-text"><?php echo $view_model->translations->get('informazioni_hotel'); ?></span>
                                 </a>
                             </li>
-
                         </ul>
                     </div>
                 <?php } ?>
