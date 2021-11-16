@@ -145,8 +145,7 @@ class BackofficeHotelsEditController
                 'descrizione',
                 'nome_servizio',
                 'orario_continuato',
-                'giorno',
-                'img_servizio'
+                'giorno'
             );
             $n = -1;
             foreach ($multiples as $multiple) {
@@ -171,6 +170,8 @@ class BackofficeHotelsEditController
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
                 foreach ($params['nome_servizio'] as $i => $names)
                 {
+                    if (empty($params['img_servizio'][$i])) continue;
+
                     $images = array_values($params['img_servizio'][$i]);
                     foreach ($names as $abbreviation => $titolo)
                     {
@@ -207,7 +208,7 @@ class BackofficeHotelsEditController
 
                 foreach ($params['nome_utility'] as $i => $names)
                 {
-                    $images = array_values($params['img_utility'][0]);
+                    $images = array_values($params['img_utility'][$i]);
                     foreach ($names as $abbreviation => $titolo)
                     {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
