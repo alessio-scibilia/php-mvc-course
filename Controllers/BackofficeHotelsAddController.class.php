@@ -104,16 +104,15 @@ class BackofficeHotelsAddController
         if (isset($params['descrizione']) &&
             isset($params['nome_servizio']) &&
             isset($params['orario_continuato']) &&
-            isset($params['giorno']) &&
-            isset($params['img_servizio'])
-        ) {
+            isset($params['giorno'])
+            )
+        {
             $multiples = array
             (
                 'descrizione',
                 'nome_servizio',
                 'orario_continuato',
-                'giorno',
-                'img_servizio',
+                'giorno'
             );
 
             $n = -1;
@@ -129,9 +128,12 @@ class BackofficeHotelsAddController
             }
 
             $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-            foreach ($params['nome_servizio'] as $i => $names) {
-                $images = array_values($params['img_servizio'][$i]);
-                foreach ($names as $abbreviation => $titolo) {
+            foreach ($params['nome_servizio'] as $i => $names)
+            {
+                if (empty($params['img_servizio'][$i])) continue;
+                $images = array_values($params['img_servizio'][$i] );
+                foreach ($names as $abbreviation => $titolo)
+                {
                     $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                     $service = array
@@ -139,10 +141,10 @@ class BackofficeHotelsAddController
                         'hotel_associato' => $related_id,
                         'titolo' => $titolo,
                         'descrizione' => $params['descrizione'][$i][$abbreviation],
-                        'immagine' => $images[0], // only 1 image for services
+                        'immagine' => $images[0] ?? '', // only 1 image for services
                         'abilitato' => $params['servizio_abilitato'][$i],
                         'shortcode_lingua' => $language['shortcode_lingua'],
-                        'posizione' => $params['posizione'][$i]
+                        'posizione' => $params['posizione_servizio'][$i]
                     );
                     foreach ($weekdays as $weekday) {
                         $orari = $params['giorno'][$i][$weekday];
@@ -161,10 +163,13 @@ class BackofficeHotelsAddController
             $params['errors'][] = "Missing mandatory field";
         }
 
-        if (isset($params['nome_utility']) && isset($params['img_utility'])) {
-            foreach ($params['nome_utility'] as $i => $names) {
-                $images = array_values($params['img_utility'][0]);
-                foreach ($names as $abbreviation => $titolo) {
+        if (isset($params['nome_utility']) && isset($params['immagine_utility']))
+        {
+            foreach ($params['nome_utility'] as $i => $names)
+            {
+                $images = array_values($params['immagine_utility'][0]);
+                foreach ($names as $abbreviation => $titolo)
+                {
                     $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                     $utility = array
@@ -175,7 +180,7 @@ class BackofficeHotelsAddController
                         'telefono_utility' => $params['telefono_utility'],
                         'immagine_utility' => $images[0], // only 1 image for services
                         'shortcode_lingua' => $language['shortcode_lingua'],
-                        'posizione' => $params['posizione'][$i]
+                        'posizione' => $params['posizione_utility'][$i]
                     );
 
                     $utility['id'] = $this->utility_repository->add($utility);
