@@ -178,8 +178,6 @@ class BackofficeFacilitiesEditController
 
                 } else {
 
-                    $this->update_related_items($params, $id);
-
                     foreach ($facility_fields as $facility_field) {
                         if ($facility_field == 'convenzionato' && $user->level < 3)
                             continue;
@@ -253,7 +251,8 @@ class BackofficeFacilitiesEditController
                 }
 
             }
-            $this->update_related_items($params, $id);
+            if (isset($params['related_hotels']))
+                $this->update_related_items($params, $id);
 
             return $this->http_get($params);
         }
@@ -282,7 +281,7 @@ class BackofficeFacilitiesEditController
                 $id = $this->facility_hotel_repository->add($facility_hotel);
             } else {
                 $facilities_hotels = array_filter($facilities_hotels, function ($f) use ($found) {
-                    return $f['id_hotel'] != $found;
+                    return $f['id_hotel'] != $found['id_hotel'];
                 });
             }
 
