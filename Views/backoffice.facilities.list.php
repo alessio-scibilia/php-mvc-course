@@ -70,16 +70,20 @@
                                                        onclick="this.closest('form').submit(); return false;">
                                             </form>
                                         </td>
-                                        <td>
+                                        <td class="d-flex">
                                             <a href="/backoffice/facilities/<?php echo $facility->related_id ?>/edit"
                                                class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
                                                data-params="<?php echo $facility->related_id; ?>">
                                                 <i class="fa fa-pencil"></i>
                                             </a>
-                                            <a href="/backoffice/facility/<?php echo $facility->related_id; ?>/delete"
-                                               class="btn btn-danger shadow btn-xs sharp view-action">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            <form action="/backoffice/facility/<?php echo $facility->related_id; ?>/delete"
+                                                  method="POST" enctype="multipart/form-data">
+                                                <button type="submit"
+                                                        class="btn btn-danger shadow btn-xs sharp view-action"
+                                                        onclick="return confirm('Confermare eliminazione?');">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                             <?php }

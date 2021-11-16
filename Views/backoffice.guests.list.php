@@ -59,9 +59,7 @@
                                                    onclick="this.closest('form').submit(); return false;">
                                         </form>
                                     </td>
-
-                                    
-                                    <td>
+                                    <td class="d-flex">
                                         <a href="/backoffice/guests/<?php echo $guest->id ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
                                            data-params="<?php echo $guest->id; ?>">
@@ -69,11 +67,11 @@
                                         </a>
                                         <form action="/backoffice/guest/<?php echo $guest->id; ?>/delete"
                                               method="POST" enctype="multipart/form-data">
-                                            <a href="javascript:void()"
-                                               class="btn btn-danger shadow btn-xs sharp"
-                                               onclick="this.closest('form').submit();return false;">
+                                            <button type="submit"
+                                                    class="btn btn-danger shadow btn-xs sharp"
+                                                    onclick="return confirm('Confermare eliminazione?');">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

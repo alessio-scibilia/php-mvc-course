@@ -52,11 +52,11 @@
                                     </a>
                                     <form action="/backoffice/translations/language/<?php echo $lista_lingue[$i]['id']; ?>/delete"
                                           method="POST" enctype="multipart/form-data">
-                                        <a href="javascript:void()"
+                                        <button
                                            class="btn btn-danger shadow btn-xs sharp"
-                                           onclick="this.closest('form').submit();return false;">
+                                           onclick="return confirm('Confermare eliminazione?');">
                                             <i class="fa fa-trash"></i>
-                                        </a>
+                                        </button>
                                     </form>
                                 </td>
                                 <?php

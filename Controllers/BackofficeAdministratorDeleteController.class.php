@@ -18,9 +18,14 @@ class BackofficeAdministratorDeleteController
 
     public function http_post(array &$params): IView
     {
-        if (isset($params['administrator'])) {
-            $user = SessionManager::get_user();
+        $user = SessionManager::get_user();
+        if (User::is_empty($user))
+        {
+            return new HttpRedirectView('/backoffice');
+        }
 
+        if (isset($params['administrator']))
+        {
             // Solo gli utenti con level <= 2 possono accedere a queste pagine "amministratori",
             // Gli altri bisogna mandarli su pagine adeguate tramite redirect
             if (User::is_empty($user) || $user->level > 2) {
@@ -29,7 +34,6 @@ class BackofficeAdministratorDeleteController
 
             $id = intval($params['administrator']);
             $this->user_repository->remove_by_id($id);
-            
         }
 
         return new HttpRedirectView('/backoffice/administrators');

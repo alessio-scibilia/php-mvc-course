@@ -11,18 +11,23 @@ require_once 'Views/Html404.class.php';
 
 class BackofficeEventDeleteController
 {
-    protected $user_repository;
     protected $event_repository;
 
     public function __construct()
     {
-        $this->user_repository = new UserRepository();
         $this->event_repository = new EventRepository();
     }
 
     public function http_post(array &$params): IView
     {
-        if (isset($params['event'])) {
+        $user = SessionManager::get_user();
+        if (User::is_empty($user))
+        {
+            return new HttpRedirectView('/backoffice');
+        }
+
+        if (isset($params['event']))
+        {
             $id = intval($params['event']);
             $this->event_repository->remove_by_id($id);
         }

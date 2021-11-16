@@ -18,54 +18,6 @@ $(window).bind("popstate", function (e) {
     }
 });
 
-jQuery(document).on("click", ".view-action", function () {
-    //refreshView();
-    if ($(this).hasClass("btn-danger")) {
-        var isDelete = true;
-    } else var isDelete = false;
-
-    if (isDelete == true) {
-        if (!$(this).hasClass("toConfirm")) {
-            var deleteNext = true;
-            $(this).addClass("toConfirm");
-            $(this).html("Confermare eliminazione?");
-        } else {
-            var deleteNext = false;
-            isDelete = false;
-        }
-    }
-    var toFunction = jQuery(this).attr("data-function");
-    var params = jQuery(this).attr("data-params");
-    var callback = jQuery(this).attr("data-callback");
-    var success = jQuery(this).attr("data-success");
-    var fail = jQuery(this).attr("data-fail");
-    var jsonStringParams = JSON.stringify(params);
-    if (deleteNext == false) {
-        $.post("functions/api?use=" + toFunction, {parameters: jsonStringParams})
-            .done(function (data) {
-
-                if (data != 'error') {
-                    refreshView();
-                    $(".notification-message").html(success);
-                    $(".notification-message").removeClass("nm-error");
-                    $(".notification-message").removeClass("nm-info");
-                    $(".notification-message").addClass("nm-success");
-                    $(".notification-message").fadeIn();
-                } else {
-                    refreshView();
-                    $(".notification-message").html(fail);
-                    $(".notification-message").removeClass("nm-success");
-                    $(".notification-message").removeClass("nm-info");
-                    $(".notification-message").addClass("nm-error");
-                    $(".notification-message").fadeIn();
-                }
-            })
-            .fail(function (xhr, textStatus, errorThrown) {
-                $(".content-ajax").html('<div class="error_message">Errore</div>');
-            });
-    }
-});
-
 jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-utility", function () {
     var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
     var num = parseInt(jQuery(num_id).val());

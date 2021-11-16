@@ -55,7 +55,7 @@
                                                    onclick="this.closest('form').submit(); return false;">
                                         </form>
                                     </td>
-                                    <td>
+                                    <td class="d-flex">
                                         <a href="/backoffice/administrators/<?php echo $user->id; ?>/edit"
                                            class="btn btn-primary shadow btn-xs sharp mr-1 open-view-action-inside"
                                            data-action="<?php echo $view_model->translations->get('link_amministratori'); ?>"
@@ -65,11 +65,11 @@
                                         </a>
                                         <form action="/backoffice/administrator/<?php echo $user->id; ?>/delete"
                                               method="POST" enctype="multipart/form-data">
-                                            <a href="javascript:void()"
+                                            <button type="submit"
                                                class="btn btn-danger shadow btn-xs sharp"
-                                               onclick="this.closest('form').submit();return false;">
+                                               onclick="return confirm('Confermare eliminazione?');">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>
