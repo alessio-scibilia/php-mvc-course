@@ -131,12 +131,11 @@ class BackofficeEventsController
                 {
                     $language = $languages->get_by_field('shortcode_lingua', $facility_event['id_lingua']);
                     $abbreviation = $language['abbreviazione'];
-                    if (isset($params['descrizione_ospiti'][$abbreviation])) {
-                        $facility_event['testo_convenzione'] = $params['descrizione_ospiti'][$abbreviation];
-                        $this->facility_event_repository->update($facility_event);
-                    }
+
+                    $facility_event['testo_convenzione'] = isset($params['recupera_convenzione']) ? '' : $params['testo_convenzione'][$abbreviation] ?? '';
+                    $this->facility_event_repository->update($facility_event);
                 }
-                return new HttpRedirectView('/backoffice/events');
+                return new HttpRedirectView("/backoffice/events/$id_evento/edit");
             }
 
             // update dell'evento

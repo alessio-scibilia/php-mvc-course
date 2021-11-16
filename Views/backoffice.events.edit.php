@@ -14,12 +14,11 @@
                 <div class="card">
                     <?php if ($view_model->event->created_by != $view_model->user->id && $view_model->user->level > 2) { ?>
                         <div class="card-header">
-                            <?php echo $view_model->event->nome_evento; ?>
+                            <h3><?php echo $view_model->event->nome_evento; ?></h3>
                         </div>
                     <?php } ?>
                     <div class="card-body">
-                        <?php if ($view_model->event->created_by == $view_model->user->id || $view_model->user->level <= 2) {
-                            ?>
+                        <?php if ($view_model->event->created_by == $view_model->user->id || $view_model->user->level <= 2) { ?>
                             <div class="basic-form">
                                 <div class="form-row">
                                     <div class="col-md-12">
@@ -212,6 +211,16 @@
                                         <hr/>
                                     </div>
 
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $label = 'recupera_convenzione';
+                                        $field = 'recupera_convenzione';
+                                        $field_prefix = 'recupera_convenzione';
+                                        $value = $view_model->event->recupera_convenzione == "1";
+                                        include 'Views/backoffice.checkbox.php';
+                                        ?>
+                                    </div>
+
                                     <div id="rec-conv" class="form-group col-md-12">
                                         <?php
                                         $label = 'descrizione_ospiti';
@@ -221,6 +230,7 @@
                                         include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
+
                                 </div>
                             </div>
                         <?php } ?>
