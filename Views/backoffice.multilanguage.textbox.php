@@ -13,7 +13,7 @@
     <?php foreach ($view_model->languages->list_all() as &$language) { ?>
         | <span>
             <a href="javascript:void()"
-               class="ml-textbox-button"
+               class="multilanguage-textbox-button"
                data-target="<?php echo $class_name; ?>"
                data-code="<?php echo $language['abbreviazione']; ?>">
                 <?php echo $language['nome_lingua']; ?>
@@ -27,7 +27,7 @@
     <?php $results = array_filter($items, $filter); ?>
     <?php $model = array_pop($results); ?>
     <?php $is_selected = ($model->shortcode_lingua ?? $language['shortcode_lingua']) == $view_model->language['shortcode_lingua']; ?>
-    <div class="ml-textbox ml-textbox-<?php echo $class_name; ?> ml-textbox-<?php echo $language['abbreviazione'] ?>"
+    <div class="multilanguage-textbox multilanguage-textbox-<?php echo $class_name; ?> multilanguage-textbox-<?php echo $language['abbreviazione'] ?>"
         <?php if (!$is_selected) echo 'style="display:none;"'; ?>>
         <?php
         switch ($type) {

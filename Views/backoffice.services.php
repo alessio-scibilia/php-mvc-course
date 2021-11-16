@@ -80,6 +80,7 @@
                                class="btn btn-danger annulla-servizio"
                                id="servizio-<?php echo $r; ?>"
                                value="Elimina servizio"
+                               data-num="#num_services"
                                <?php if (count($view_model->services) == 1) echo 'disabled'; ?>>
                     </div>
 
@@ -87,6 +88,7 @@
                         <hr/>
                         <input type="button"
                                class="btn btn-success save-servizio"
+                               data-num="#num_services"
                                value="Aggiungi un altro servizio">
                     </div>
 
@@ -169,6 +171,7 @@
                     <input type="button"
                            class="btn btn-danger annulla-servizio"
                            id="servizio-1"
+                           data-num="#num_services"
                            value="Elimina servizio" disabled>
                 </div>
 
@@ -176,6 +179,7 @@
                     <hr/>
                     <input type="button"
                            class="btn btn-success save-servizio"
+                           data-num="#num_services"
                            value="Aggiungi un altro servizio">
                 </div>
 

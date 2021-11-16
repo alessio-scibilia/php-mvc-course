@@ -1,9 +1,9 @@
-a.ml-textbox-button {
+a.multilanguage-textbox-button {
     color: #014dea;
 }
 
-a.ml-textbox-button:hover,
-a.ml-textbox-button:focus,
-a.ml-textbox-button.active {
+a.multilanguage-textbox-button:hover,
+a.multilanguage-textbox-button:focus,
+a.multilanguage-textbox-button.active {
     text-decoration: underline;
 }

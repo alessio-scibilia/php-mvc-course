@@ -269,11 +269,13 @@
 
                                     <div class="form-group col-md-12">
                                         <input type="button" class="btn btn-danger annulla-eccellenza"
+                                               data-num="#num_eccellenze"
                                                id="eccellenza-1" value="Elimina eccellenza">
                                     </div>
                                     <div class="form-group col-md-12">
                                         <hr/>
                                         <input type="button" class="btn btn-success save-eccellenza"
+                                               data-num="#num_eccellenze"
                                                value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
                                     </div>
                                 </div>

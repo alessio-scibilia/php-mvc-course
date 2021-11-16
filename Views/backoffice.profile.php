@@ -169,15 +169,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <input type="hidden" id="num_services"
-                                       value="<?php //if (isset($params[1])) echo getNumServices($dbh, $params[1]); else echo getNumServices($dbh, $_SESSION['id_user']); ?>">
-                                <a href="javascript:void()" class="open-create-service btn btn-primary"><i
-                                            class="fa fa-plus"></i> <?php echo $view_model->translations->get('aggiungi_servizio'); ?>
-                                </a>
-                            </div>
-                        </div>
+                        <input type="hidden" id="num_services" value="<?php echo sizeof($view_model->services[0]); ?>">
                         <?php
                         $r = 1;
                         $c = 0;
@@ -937,11 +929,13 @@
 
                                     <div class="form-group col-md-12">
                                         <input type="button" class="btn btn-danger annulla-servizio" id="servizio-1"
+                                               data-num="#num_services"
                                                value="Elimina servizio">
                                     </div>
                                     <div class="form-group col-md-12">
                                         <hr/>
                                         <input type="button" class="btn btn-success save-servizio"
+                                               data-num="#num_services"
                                                value="Aggiungi un altro servizio">
                                     </div>
                                 </div>

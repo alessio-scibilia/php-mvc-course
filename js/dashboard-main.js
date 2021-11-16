@@ -66,129 +66,144 @@ jQuery(document).on("click", ".view-action", function () {
     }
 });
 
-jQuery(".open-create-service").click(function () {
-    jQuery(".form-service-container").fadeIn();
-    var val = jQuery("#num_services").val();
-    val++;
-    jQuery("#num_services").val(val);
-    var offset = jQuery(".form-service-container").offset().top;
-    offset = offset - 100;
-    $('html,body').animate({
-        scrollTop: offset
-    }, 'slow');
-});
-jQuery(document).on("click", ".open-create-eccellenza", function () {
-    if (jQuery("#num_eccellenze").val() == 0) {
-        jQuery(".form-eccellenza-container-container").fadeIn();
-        var val = jQuery("#num_eccellenze").val();
-        $(".fsc-1").fadeIn();
-        val++;
-        jQuery("#num_eccellenze").val(val);
-        var offset = jQuery(".form-service-container").offset().top;
-        offset = offset - 100;
-        $('html,body').animate({
-            scrollTop: offset
-        }, 'slow');
-    }
-});
-
-
-jQuery(document).on("change", "#select-language", function () {
-    var shortcode_lingua = jQuery(this).val();
-    jQuery(".descrizione_ospiti").hide();
-    jQuery("#descrizione_ospiti-" + shortcode_lingua).fadeIn();
-});
-jQuery(document).on("change", "#select-language-desc-evento", function () {
-    var shortcode_lingua = jQuery(this).val();
-    jQuery(".descrizione_evento").hide();
-    jQuery("#descrizione_evento-" + shortcode_lingua).fadeIn();
-});
-jQuery(document).on("change", "#select-language-benefit", function () {
-    var shortcode_lingua = jQuery(this).val();
-    jQuery(".descrizione_benefit").hide();
-    jQuery("#descrizione_benefit-" + shortcode_lingua).fadeIn();
-});
-
-jQuery(document).on("change", "#select-nome-servizi", function () {
-    var shortcode_lingua = jQuery(this).val();
-    var form_index = jQuery(this).attr("data-form-index");
-    jQuery(".nome-servizi-" + form_index).hide();
-    jQuery("#nome_servizio-" + shortcode_lingua + '-' + form_index).fadeIn();
-});
-jQuery(document).on("change", "#select-language-servizi", function () {
-    var shortcode_lingua = jQuery(this).val();
-    var form_index = jQuery(this).attr("data-form-index");
-    jQuery(".descrizione_servizi-" + form_index).hide();
-    jQuery("#descrizione-" + shortcode_lingua + '-' + form_index).fadeIn();
-});
-
-
-jQuery(document).on("change", "#select-nome-eccellenze", function () {
-    var shortcode_lingua = jQuery(this).val();
-    var form_index = jQuery(this).attr("data-form-index");
-    jQuery(".nome_eccellenze-" + form_index).hide();
-    jQuery("#nome-eccellenza-" + shortcode_lingua + '-' + form_index).fadeIn();
-});
-
-
-jQuery(document).on("click", ".annulla-servizio", function () {
+jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-utility", function () {
     var id = jQuery(this).attr("id");
-    if (jQuery("#num_services").val() > 1) {
-        var prec = jQuery("#num_services").val();
-        var less = prec - 1;
-        jQuery("#num_services").val(less);
+    var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
+    var num = parseInt(jQuery(num_id).val());
+    if (num > 1) {
+        jQuery(num_id).val(num - 1);
         jQuery("#fsc-" + id).remove();
-    } else if (id == 'servizio-1' && jQuery("#num_services").val() == 1) {
-        var prec = jQuery("#num_services").val();
-        var less = 0;
-        jQuery("#num_services").val(less);
-        jQuery(".form-service-container").hide();
+        var pieces = id.split('-');
+        var last = parseInt(pieces.pop());
+        var suffix = pieces.join('-');
+
+        for (var i = last; i < num; i++) {
+
+            var next_id = ["#fsc", suffix, i].join('-');
+            var $target = jQuery(next_id);
+            var items_next = i + 1;
+
+            $target.find("[data-target]").each(function() {
+                let name = $(this).data("target");
+                let regex = /^([^\d]+)(\d+)(.*)$/;
+                let replacer = `$1${items_next}$3`;
+                let next = name.replace(regex, replacer);
+                $(this).data("target", next);
+            });
+
+            $target.find("[data-name]").each(function() {
+                let name = $(this).data("name");
+                let regex = /^([^\d]+)(\d+)(.*)$/;
+                let replacer = `$1${items_next}$3`;
+                let next = name.replace(regex, replacer);
+                $(this).data("name", next);
+            });
+
+            $target.find("[name]").each(function() {
+                let name = $(this).attr("name");
+                let regex = /^([^\d]+)(\d+)(.*)$/;
+                let replacer = `$1${items_next}$3`;
+                let next = name.replace(regex, replacer);
+                $(this).attr("name", next);
+            });
+
+            // class and id end with /-\d+$/
+            $target.find("[id]").each(function() {
+                let id = $(this).attr("id");
+                let regex = /^(.+)(-\d+)$/;
+                let replacer = `$1-${items_next}`;
+                let next = id.replace(regex, replacer);
+                $(this).attr("id", next);
+            });
+
+            var $targets = $target.find("[class]").filter(function() {
+                let classes = $(this).attr("class").split(' ');
+                let regex = /^([^-]{4,}-)+\d+$/;
+                let matches = classes.filter(function (c) {return c.match(regex);} );
+                return matches.length > 0;
+            });
+
+            $targets.each(function() {
+                let classes = $(this).attr("class").split(' ');
+                let regex = /^(.+)(-\d+)$/;
+                let replacer = `$1-${items_next}`;
+                let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
+                let next = new_classes.join(' ');
+                $(this).attr("class", next);
+            });
+        }
     }
 });
 
-jQuery(document).on("click", ".annulla-eccellenza", function () {
-    var id = jQuery(this).attr("id");
-    if (jQuery("#num_eccellenze").val() > 1) {
-        var prec = jQuery("#num_eccellenze").val();
-        var less = prec - 1;
-        jQuery("#num_eccellenze").val(less);
-        jQuery("#fsc-" + id).remove();
-    } else if (id == 'eccellenza-1' && jQuery("#num_eccellenze").val() == 1) {
-        var prec = jQuery("#num_eccellenze").val();
-        var less = 0;
-        jQuery("#num_eccellenze").val(less);
-        jQuery(".form-eccellenze-container").hide();
-    }
-});
+jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", function () {
+    var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
+    var items_current = parseInt($(num_id).val());
+    var items_next = items_current + 1;
+    jQuery(num_id).val(items_next);
 
+    let $last = jQuery(".form-service-container").last();
+    var form = $last.clone();
+    $last.after(form);
 
-jQuery(document).on("click", ".annulla-utility", function () {
-    var id = jQuery(this).attr("id");
-    if (jQuery("#num_utilities").val() > 1) {
-        var prec = jQuery("#num_utilities").val();
-        var less = prec - 1;
-        jQuery("#num_utilities").val(less);
-        jQuery("#fsu-" + id).remove();
-    } else if (id == 'utility-1' && jQuery("#num_utilities").val() == 1) {
-        var prec = jQuery("#num_utilities").val();
-        var less = 0;
-        jQuery("#num_utilities").val(less);
-        jQuery(".form-utility-container").hide();
-    }
-});
+    if (items_current > 0) {
+        // div[class^='apple-'],div[class*=' apple-']
+        $("[class^='annulla-'],[class*=' annulla-']").prop('disabled', false);
 
-jQuery(document).on("click", ".annulla-eccellenza", function () {
-    var id = jQuery(this).attr("id");
-    if (jQuery("#num_eccellenze").val() > 1) {
-        var prec = jQuery("#num_eccellenze").val();
-        var less = prec - 1;
-        jQuery("#num_eccellenze").val(less);
-        jQuery("#fsc-" + id).remove();
-    } else if (id == 'eccellenza-1' && jQuery("#num_eccellenze").val() == 1) {
-        var prec = jQuery("#num_eccellenze").val();
-        var less = 0;
-        jQuery("#num_eccellenze").val(less);
-        jQuery(".form-eccellenza-container").hide();
+        jQuery(".form-service-container").fadeIn();
+
+        // SI: vanno lasciati perché hanno "fsc-*" che è < 4 caratteri!
+        $last.attr("class", " form-service-container fsc-" + items_next);
+        $last.attr("id", "fsc-servizio-" + items_next);
+
+        $last.find("[data-target]").each(function() {
+            let name = $(this).data("target");
+            let regex = /^([^\d]+)(\d+)(.*)$/;
+            let replacer = `$1${items_next}$3`;
+            let next = name.replace(regex, replacer);
+            $(this).data("target", next);
+        });
+
+        $last.find("[data-name]").each(function() {
+            let name = $(this).data("name");
+            let regex = /^([^\d]+)(\d+)(.*)$/;
+            let replacer = `$1${items_next}$3`;
+            let next = name.replace(regex, replacer);
+            $(this).data("name", next);
+        });
+
+        $last.find("[name]").each(function() {
+            let name = $(this).attr("name");
+            let regex = /^([^\d]+)(\d+)(.*)$/;
+            let replacer = `$1${items_next}$3`;
+            let next = name.replace(regex, replacer);
+            $(this).attr("name", next);
+        });
+
+        // class and id end with /-\d+$/
+        $last.find("[id]").each(function() {
+            let id = $(this).attr("id");
+            let regex = /^(.+)(-\d+)$/;
+            let replacer = `$1-${items_next}`;
+            let next = id.replace(regex, replacer);
+            $(this).attr("id", next);
+        });
+        var $targets = $last.find("[class]").filter(function() {
+            let classes = $(this).attr("class").split(' ');
+            let regex = /^([^-]{4,}-)+\d+$/;
+            let matches = classes.filter(function (c) {return c.match(regex);} );
+            return matches.length > 0;
+        });
+        $targets.each(function() {
+            let classes = $(this).attr("class").split(' ');
+            let regex = /^(.+)(-\d+)$/;
+            let replacer = `$1-${items_next}`;
+            let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
+            let next = new_classes.join(' ');
+            $(this).attr("class", next);
+        });
+
+        var offset = $last.next().offset().top;
+        $('html,body').animate({ scrollTop: offset }, 'slow');
     }
 });
 

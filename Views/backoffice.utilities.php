@@ -58,12 +58,14 @@
                         <input type="button"
                                class="btn btn-danger annulla-utility"
                                id="utility-<?php echo $r; ?>"
+                               data-num="#num_utilities"
                                value="Elimina utility">
                     </div>
                     <div class="form-group col-md-12">
                         <hr/>
                         <input type="button"
                                class="btn btn-success save-utility"
+                               data-num="#num_utilities"
                                value="Aggiungi un'altra utility">
                     </div>
 
@@ -115,12 +117,14 @@
                     <input type="button"
                            class="btn btn-danger annulla-utility"
                            id="utility-1"
+                           data-num="#num_utilities"
                            value="Elimina utility">
                 </div>
                 <div class="form-group col-md-12">
                     <hr/>
                     <input type="button"
                            class="btn btn-success save-utility"
+                           data-num="#num_utilities"
                            value="Aggiungi un'altra utility">
                 </div>
             </div>
