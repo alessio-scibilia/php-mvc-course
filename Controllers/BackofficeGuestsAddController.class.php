@@ -39,7 +39,7 @@ class BackofficeGuestsAddController
                 $new_user['abilitato'] = $params['abilitato'];
                 $new_user['numero_stanza'] = $params['numero_stanza'];
                 $new_user['password'] = md5($params['password']);
-                $new_user['hotel_associato'] = $user->hotel_associato;
+                $new_user['hotel_associato'] = $user->related_id;
 
                 $id = $this->guest_repository->add($new_user);
                 $result = ($id === false) ? 'error' : 'success';
