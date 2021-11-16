@@ -212,7 +212,7 @@ jQuery(document).on("changed.bs.select", ".selectpicker, .selectpicker1, .select
             var classe_ancora = 'relCat';
             var id_append = '#relatedCat';
             var classe_ancora_2 = 'relatedCat-' + val;
-            var onclick_function = 'cat(' + val + ')';
+            var onclick_function = "removeRelatedCat('" + val + "')";
             var class_hidden = 'cat-' + val;
             var nome = jQuery(".selectpicker3 :selected").text();
             break;
