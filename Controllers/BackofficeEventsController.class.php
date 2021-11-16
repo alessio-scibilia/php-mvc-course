@@ -55,10 +55,15 @@ class BackofficeEventsController
             $rows = $this->event_repository->get_all_events();
             $events = Event::events($rows);
 
+            $rows = $user->id > 2 ? $this->facility_hotel_repository->get_facilities_by_hotel($user->id) : array();
+            $facilities_hotel = FacilityHotel::facilities_hotels($rows);
+            $facilities = array_map(function($fh) { return $fh->id_struttura; }, $facilities_hotel);
+
             $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->events = $events;
             $view_model->language = $language;
+            $view_model->facilities = $facilities;
             $view_model->menu_active_btn = 'events';
 
             return new HtmlView($view_model);

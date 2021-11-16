@@ -35,7 +35,14 @@
 
                             </thead>
                             <tbody>
-                            <?php foreach ($view_model->events as &$event) { ?>
+                            <?php foreach ($view_model->events as &$event) {
+                                    list($type, $identifier) = explode('-', $event->struttura_collegata);
+
+                                    if ($view_model->user->level == 0 ||
+                                        $view_model->user->id == $event->created_by ||
+                                        ($type == "1" && $view_model->user->id == $identifier) ||
+                                        ($type == "2" && in_array($identifier, $view_model->facilities))) {
+                                ?>
                                 <tr>
                                     <?php if ($view_model->user->level == 0) { ?>
                                         <td><?php echo $event->id; ?></td>
@@ -70,7 +77,8 @@
                                     </td>
                                     </td>
                                 </tr>
-                            <?php } ?>
+                            <?php }
+                            } ?>
 
                             </tbody>
                             <tfoot>

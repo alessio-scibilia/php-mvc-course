@@ -80,7 +80,7 @@ class FacilityEventRepository extends MySQLRepository
             "  AND se.id_hotel = :id_hotel",
             "  AND se.shortcode_lingua = :id_lingua",
             "UNION",
-            "SELECT se.*, h.nome_struttura AS nome",
+            "SELECT se.*, s.nome_struttura AS nome",
             "FROM $table se",
             "INNER JOIN strutture s ON",
             "   s.related_id = se.id_struttura AND",

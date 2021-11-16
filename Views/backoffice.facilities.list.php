@@ -38,7 +38,7 @@
                             <tbody>
                             <?php foreach ($view_model->facilities as &$facility) {
                                 $hotels = $view_model->hotel_associati[$facility->related_id];
-                                $matches = array_filter(function($h) use($view_model) { return $h->id_hotel == $view_model->user->id; }, $hotels);
+                                $matches = array_filter($hotels, function($h) use($view_model) { return $h->id_hotel == $view_model->user->id; });
                                 if ($view_model->user->level == 0 || $view_model->user->id == $facility->created_by || count($matches) > 0) { ?>
                                     <tr>
                                         <?php if ($view_model->user->level == 0) { ?>

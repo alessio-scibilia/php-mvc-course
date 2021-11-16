@@ -12,8 +12,11 @@
 
             <div class="col-xl-12 col-lg-12">
                 <div class="card">
-
-
+                    <?php if ($view_model->event->created_by != $view_model->user->id && $view_model->user->level > 2) { ?>
+                        <div class="card-header">
+                            <?php echo $view_model->event->nome_evento; ?>
+                        </div>
+                    <?php } ?>
                     <div class="card-body">
                         <?php if ($view_model->event->created_by == $view_model->user->id || $view_model->user->level <= 2) {
                             ?>

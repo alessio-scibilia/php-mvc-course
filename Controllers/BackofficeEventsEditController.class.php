@@ -13,6 +13,7 @@ require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Event.class.php';
 require_once 'Models/FacilityEvent.class.php';
+require_once 'Models/FacilityHotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -62,7 +63,7 @@ class BackofficeEventsEditController
 
             if ($user->level > 2) {
                 $rows = $this->facility_hotel_repository->get_facilities_by_hotel($user->id);
-                $related_facilities = FacilitiesHotels::facilities_hotels($rows);
+                $related_facilities = FacilityHotel::facilities_hotels($rows);
                 $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id_and_language_id($id, $user->id, $id_lingua);
                 $facility_events = FacilityEvent::facility_events($rows);
                 $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id($id, $user->id);
