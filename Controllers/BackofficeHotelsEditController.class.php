@@ -208,7 +208,7 @@ class BackofficeHotelsEditController
 
                 foreach ($params['nome_utility'] as $i => $names)
                 {
-                    $images = array_values($params['img_utility'][$i]);
+                    $images = array_values($params['img_utility'][$i] ?? array(''));
                     foreach ($names as $abbreviation => $titolo)
                     {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
