@@ -177,6 +177,9 @@ class BackofficeFacilitiesEditController
 
 
                 } else {
+
+                    //update_related_items($params, $id);
+
                     foreach ($facility_fields as $facility_field) {
                         if ($facility_field == 'convenzionato' && $user->level < 3)
                             continue;
@@ -215,16 +218,23 @@ class BackofficeFacilitiesEditController
 
                     $this->facility_repository->update($facility);
 
-                    // facility hotels
-                    /* foreach ($params['related_hotels'] as $id_hotel) {
-                         $facility_hotel = array
-                         (
-                             'id_struttura' => $id,
-                             'id_hotel' => $id_hotel,
-                         );
-                         $facility_hotel['id'] = $this->facility_hotel_repository->update_relationship($id_facility, $id_hotel);
-                     }
-                    */
+                    /*
+                     * leggere tutte le relazioni
+                     * per ogni collegamento specificato dall'utente vedi se esiste nell'elenco precedente
+                     * se esiste update con i params
+                     * se non esiste faccio add
+                     *
+                     */
+                    /*foreach ($params['related_hotels'] as $id_hotel) {
+
+                        $facility_hotel = array
+                        (
+                            'id_struttura' => $id,
+                            'id_hotel' => $id_hotel,
+                        );
+                        $facility_hotel['id'] = $this->facility_hotel_repository->update($facility_hotel);
+                    }*/
+
 
                     // facility categories
                     $this->facility_category_repository->remove_by_facility($id);
@@ -267,5 +277,33 @@ class BackofficeFacilitiesEditController
         }
 
         return new HttpRedirectView('/backoffice/facilities');
+    }
+
+    protected function update_related_items(array $params, int $id_facility): int
+    {
+        $facilities_hotels = $this->facility_hotel_repository->get_related_by_facility_id_and_language_id($id_facility, 1);
+        for ($i = 0; $i < sizeof($params['related_hotels']); $i++) {
+            $found = false;
+            for ($k = 0; $k < sizeof($facilities_hotels); $k++) {
+                $id_hotel = $facilities_hotels[$k];
+                if ($params['related_hotels'][$i] == $facilities_hotels[$k]['id_hotel']) {
+                    $found = true;
+                }
+            }
+
+            $facility_hotel = array
+            (
+                'id_struttura' => $id_facility,
+                'id_hotel' => $id_hotel,
+            );
+
+            if ($found == false)
+                $id = $this->facility_hotel_repository->add($facility_hotel);
+            else
+                $id = $this->facility_hotel_repository->update($facility_hotel);
+        }
+
+        return ($id);
+
     }
 }
