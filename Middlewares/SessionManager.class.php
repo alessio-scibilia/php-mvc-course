@@ -31,7 +31,7 @@ class SessionManager
         self::set_user_cookie($type, $user->id);
     }
 
-    const COOKIE_NAME = 'backoffice.id';
+    const COOKIE_NAME = 'backoffice_id';
     const LOCALHOST = 'localhost';
 
     protected static function set_user_cookie($type, $id)
