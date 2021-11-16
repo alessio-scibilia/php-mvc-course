@@ -37,9 +37,10 @@ class SessionManager
     protected static function set_user_cookie($type, $id)
     {
         $host = $_SERVER['HTTP_HOST'];
+        $expire_time = time() + 24 * 60 * 60;
         $options = array
         (
-            'expires' => time() + 24 * 60 * 60,
+            'expires' => $expire_time,
             'path' => '/',
             'domain' => $host,
             'secure' => $host != self::LOCALHOST,
@@ -47,10 +48,22 @@ class SessionManager
             'samesite' => 'Lax'
         );
         if ($host == self::LOCALHOST) {
-            unset($options['domain']);
-            unset($options['samesite']);
+            //unset($options['domain']);
         }
-        setcookie(self::COOKIE_NAME, "$type-$id", $options);
+        $v = phpversion();
+        if ($v > '7.3') {
+            return setcookie(self::COOKIE_NAME, $value, $options);
+        } else {
+            $key = self::COOKIE_NAME;
+            $value = rawurlencode("$type-$id");
+            $expires =
+            $secure = $host != self::LOCALHOST ? ' Secure;' : '';
+            $header = "Set-Cookie: $key=$value; Expires=$expires; Domain=$host; Path=/;$secure HttpOnly; SameSite=Lax";
+            header($header);
+        }
+
+        $written = setrawcookie(self::COOKIE_NAME, $value, $options);
+        $written = setrawcookie(self::COOKIE_NAME, $value);
     }
 
     public static function get_user(): User
