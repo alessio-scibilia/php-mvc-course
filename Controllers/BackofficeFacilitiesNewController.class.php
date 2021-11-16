@@ -152,10 +152,13 @@ class BackofficeFacilitiesNewController
             $facility['shortcode_lingua'] = $language['shortcode_lingua'];
             $facility['created_by'] = $created_by;
 
+
             foreach ($facility_fields as $facility_field) {
                 if ($facility_field == 'convenzionato' && $user->level < 3)
                     continue;
-                
+                else if ($facility_field == 'convenzionato')
+                    $related['convenzionato'] = $params['convenzionato'];
+
                 if ($facility_field == 'indicizza' && $user->level > 2)
                     continue;
 
@@ -169,6 +172,7 @@ class BackofficeFacilitiesNewController
             $facility['descrizione'] = $params['descrizione'][$abbreviation];
             if ($user->level > 2) {
                 $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
+
             }
 
             $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array());
@@ -194,32 +198,41 @@ class BackofficeFacilitiesNewController
                 $id = $facility['id'];
                 $facility['related_id'] = $id;
                 $this->facility_repository->update($facility);
+
+                $relation['id_hotel'] = $user->id;
+                $relation['id_struttura'] = $id;
+                $relation['convenzionato'] = $params['convenzionato'];
+                $this->facility_hotel_repository->add($relation);
+
                 $first = false;
             }
         }
 
         // facility hotels
         $this->facility_hotel_repository->remove_by_facility($id);
-        foreach ($params['related_hotels'] as $id_hotel) {
-            $facility_hotel = array
-            (
-                'id_struttura' => $id,
-                'id_hotel' => $id_hotel,
-                'convenzionato' => $params['convenzionato'],
-            );
-            $facility_hotel['id'] = $this->facility_hotel_repository->add($facility_hotel);
-        }
+        if (isset($params['related_hotels'])) {
+            foreach ($params['related_hotels'] as $id_hotel) {
+                $facility_hotel = array
+                (
+                    'id_struttura' => $id,
+                    'id_hotel' => $id_hotel,
+                    'convenzionato' => $params['convenzionato'],
+                );
+                $facility_hotel['id'] = $this->facility_hotel_repository->add($facility_hotel);
+            }
 
-        // facility categories
-        $this->facility_category_repository->remove_by_facility($id);
-        foreach ($params['related_categories'] as $id_categoria) {
-            $facility_category = array
-            (
-                'id_struttura' => $id,
-                'id_categoria' => $id_categoria,
-                'email_struttura' => $facility['email']
-            );
-            $facility_category['id'] = $this->facility_category_repository->add($facility_category);
+
+            // facility categories
+            $this->facility_category_repository->remove_by_facility($id);
+            foreach ($params['related_categories'] as $id_categoria) {
+                $facility_category = array
+                (
+                    'id_struttura' => $id,
+                    'id_categoria' => $id_categoria,
+                    'email_struttura' => $facility['email']
+                );
+                $facility_category['id'] = $this->facility_category_repository->add($facility_category);
+            }
         }
 
         // excellences

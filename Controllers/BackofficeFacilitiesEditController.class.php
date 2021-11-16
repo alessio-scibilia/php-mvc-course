@@ -168,6 +168,14 @@ class BackofficeFacilitiesEditController
                     $facility['convenzionato'] = $params['convenzionato'];
                     $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                     $this->facility_repository->update($facility);
+
+                    $this->facility_hotel_repository->delete_relation($user->id, $facility['related_id']);
+                    $relation['id_hotel'] = $user->id;
+                    $relation['id_struttura'] = $facility['related_id'];
+                    $relation['convenzionato'] = $params['convenzionato'];
+                    $this->facility_hotel_repository->add($relation);
+
+
                 } else {
                     foreach ($facility_fields as $facility_field) {
                         if ($facility_field == 'convenzionato' && $user->level < 3)
