@@ -164,7 +164,7 @@ class BackofficeFacilitiesEditController
                 $language = $languages->get_by_field('shortcode_lingua', $facility['shortcode_lingua']);
                 $abbreviation = $language['abbreviazione'];
 
-                if ($user->level > 2 && $facility['created_by'] != $user->level) {
+                if ($user->level > 2 && $facility['created_by'] != $user->id) {
                     $facility['convenzionato'] = $params['convenzionato'];
                     $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                     $this->facility_repository->update($facility);
@@ -214,7 +214,6 @@ class BackofficeFacilitiesEditController
                         (
                             'id_struttura' => $id,
                             'id_hotel' => $id_hotel,
-                            'convenzionato' => $params['convenzionato'],
                         );
                         $facility_hotel['id'] = $this->facility_hotel_repository->add($facility_hotel);
                     }
