@@ -62,4 +62,13 @@ class FacilityHotelRepository extends MySQLRepository
         $stmt->execute(array(":id_struttura" => $id_struttura));
         return $stmt->rowCount() > 0;
     }
+
+    public function remove_by_hotel($id_hotel, $id_struttura): bool
+    {
+        $table = $this->tableName;
+        $query = "DELETE FROM $table WHERE id_hotel = :id_hotel AND id_struttura = :id_struttura";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute(array(":id_hotel" => $id_hotel, ":id_struttura" => $id_struttura));
+        return $stmt->rowCount() > 0;
+    }
 }
