@@ -4,7 +4,7 @@
             <h1><i class="fa fa-gear"></i> <?php echo $view_model->translations->get('impostazioni'); ?></h1>
         </div>
         <div class="col-md-12">
-            <pre><?php echo json_encode($_COOKIE, JSON_PRETTY_PRINT); ?></pre>
+            <!--pre><?php echo json_encode($_COOKIE, JSON_PRETTY_PRINT); ?></pre-->
         </div>
         <div class="col-xl-6 col-lg-12">
             <div class="card">
