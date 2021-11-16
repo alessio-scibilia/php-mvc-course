@@ -17,6 +17,13 @@ function hideEasy(hide_or_display) {
     }
 }
 
+$(document).ready(function () {
+    $(".multilanguage-textbox-button").each(function () {
+        if ($(this).data('code') == 'IT') {
+            $(this).trigger("click");
+        }
+    });
+});
 
 $(document).click(function (event) {
     var $target = $(event.target);
