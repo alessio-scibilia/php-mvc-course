@@ -34,10 +34,16 @@ class SessionManager
     const COOKIE_NAME = 'backoffice_id';
     const LOCALHOST = 'localhost';
 
-    protected static function set_user_cookie($type, $id)
+    /**
+     * @param string $type
+     * @param string $id
+     * @return void
+     */
+    protected static function set_user_cookie(string $type, string $id)
     {
         $host = $_SERVER['HTTP_HOST'];
         $lifetime = 24 * 60 * 60;
+        $value = rawurlencode("$type-$id");
         $v = phpversion();
         if ($v > '7.3')
         {
@@ -51,14 +57,39 @@ class SessionManager
                 'httponly' => true,
                 'samesite' => 'Lax'
             );
-            return setcookie(self::COOKIE_NAME, $value, $options);
+            setcookie(self::COOKIE_NAME, $value, $options);
         }
         else
         {
             $key = self::COOKIE_NAME;
-            $value = rawurlencode("$type-$id");
             //$header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/; Secure; HttpOnly; SameSite=Lax";
             $header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/";
+            header($header, true);
+        }
+    }
+
+    protected static function remove_user_cookie()
+    {
+        $host = $_SERVER['HTTP_HOST'];
+        $v = phpversion();
+        if ($v > '7.3')
+        {
+            $options = array
+            (
+                'expires' => time(),
+                'path' => '/',
+                'domain' => $host,
+                'secure' => true,
+                'httponly' => true,
+                'samesite' => 'Lax'
+            );
+            setcookie(self::COOKIE_NAME, '', $options);
+        }
+        else
+        {
+            $key = self::COOKIE_NAME;
+            //$header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/; Secure; HttpOnly; SameSite=Lax";
+            $header = "Set-Cookie: $key=$value; Max-Age=0; Domain=$host; Path=/";
             header($header, true);
         }
     }
@@ -110,6 +141,7 @@ class SessionManager
 
     public static function destroy()
     {
+        self::remove_user_cookie();
         session_destroy();
     }
 }

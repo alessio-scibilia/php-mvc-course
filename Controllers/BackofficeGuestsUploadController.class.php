@@ -86,18 +86,28 @@ class BackofficeGuestsUploadController
                             $files_arr[] = '/import/' . $filename . '.' . $ext;
                         }
 
-
                     }
                 }
             }
 
-            $task_run = null;
 
-            if ($ext == 'csv') {
+            $task_data = array();
+            $task_run = function() use($task_data)
+            {
+                foreach ($task_data as $email)
+                {
+                    MailSender::send($email['to'], $email['subject'], $email['body']);
+                }
+            };
+
+
+            if ($ext == 'csv')
+            {
                 $file = fopen($params['DOCUMENT_ROOT'] . '/import/' . $filename . '.' . $ext, 'r');
                 $i = 0;
                 $task_data = array();
-                while (($line = fgetcsv($file)) !== FALSE) {
+                while (($line = fgetcsv($file)) !== FALSE)
+                {
                     //$line is an array of the csv elements
                     if ($i > 1) {
                         $dati = $line[0];
@@ -121,39 +131,29 @@ class BackofficeGuestsUploadController
 
                         $new_user['password'] = md5($password_text);
 
-                        $link = 'https://alfiere.digital/home/index.php?strh=' . $user->related_id;
-                        $msg = "Benvenuto su Wellcome ecco le tue credenziali di accesso:" . PHP_EOL . PHP_EOL . "Link di accesso: " . $link . PHP_EOL . "Numero stanza: " . $new[8] . PHP_EOL . "Password: " . $password_text . PHP_EOL . PHP_EOL;
-                        $msg .= 'Goditi il relax!';
-
                         $task_data[] = array
                         (
                             'to' => $new_user['email'],
                             'subject' => $translations->get('benvenuto_wellcome'),
-                            'body' => $msg
+                            'body' => $this->build_email_body($user, $new_user['numero_stanza'], $password_text)
                         );
 
                         $this->guest_repository->add($new_user);
-
                     }
                     $i++;
                 }
                 fclose($file);
+            }
 
-                $task_run = function() use($task_data)
-                {
-                    foreach ($task_data as $email)
-                    {
-                        MailSender::send($email['to'], $email['subject'], $email['body']);
-                    }
-                };
-
-            } else if ($ext == 'xls') {
+            else if ($ext == 'xls')
+            {
                 require_once 'Middlewares/excelReader/excel_reader.php';
                 $r = 1;
                 $excel = new PhpExcelReader;
                 $excel->setOutputEncoding('UTF-8');
                 $excel->read($params['DOCUMENT_ROOT'] . '/import/' . $filename . '.' . $ext);
-                foreach ($excel->sheets[0]['cells'] as $row) {
+                foreach ($excel->sheets[0]['cells'] as $row)
+                {
                     if ($r > 3) {
                         $new_user['hotel_associato'] = $user->id;
 
@@ -183,6 +183,13 @@ class BackofficeGuestsUploadController
 
                         $new_user['password'] = md5($password_text);
 
+                        $task_data[] = array
+                        (
+                            'to' => $new_user['email'],
+                            'subject' => $translations->get('benvenuto_wellcome'),
+                            'body' => $this->build_email_body($user, $new_user['numero_stanza'], $password_text)
+                        );
+
                         $this->guest_repository->add($new_user);
                     }
                     $r++;
@@ -192,9 +199,7 @@ class BackofficeGuestsUploadController
 
             $rows = $this->guest_repository->get_all_guests();
             $guests = Guest::guests($rows);
-            //$guests = array(); // TODO: da leggere da DB
 
-            //'d92fgov02dm2jf493fspamwi2d0za201',
             $view_model = new BackOfficeViewModel('backoffice.guests.list', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->guests = $guests;
@@ -204,5 +209,26 @@ class BackofficeGuestsUploadController
 
             return new TaskRunnerView($inner_view, $task_run);
         }
+    }
+
+    /**
+     * @param User $user
+     * @param string $numero_stanza
+     * @param string $password_text
+     * @return string
+     */
+    private function build_email_body(User &$user, string $numero_stanza, string $password_text): string
+    {
+        $protocol = ($_SERVER['HTTPS'] ?? '') === 'on' ? "https" : "http";
+        $host = $_SERVER['HTTP_HOST'];
+        $base_url = "$protocol://$host";
+        $strh = $user->related_id;
+        $link = "$/home/index.php?strh=$strh";
+        $msg = "Benvenuto su Wellcome ecco le tue credenziali di accesso:" . PHP_EOL . PHP_EOL .
+                "Link di accesso: " . $link . PHP_EOL .
+                "Numero stanza: " . $numero_stanza . PHP_EOL .
+                "Password: " . $password_text . PHP_EOL . PHP_EOL;
+        $msg .= 'Goditi il relax!';
+        return $msg;
     }
 }

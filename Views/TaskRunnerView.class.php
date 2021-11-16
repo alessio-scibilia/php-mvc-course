@@ -13,7 +13,7 @@ class TaskRunnerView implements IView
      * @param IView $inner
      * @param callable $task_run
      */
-    public function __construct(IView $inner, callable $task_run)
+    public function __construct(IView &$inner, callable $task_run)
     {
         $this->inner_view = $inner;
         $this->task_run = $task_run;
