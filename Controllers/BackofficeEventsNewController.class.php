@@ -10,6 +10,7 @@ require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
+require_once 'Models/FacilityHotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -57,7 +58,7 @@ class BackofficeEventsNewController
 
             if ($user->level > 2) {
                 $rows = $this->facilities_hotels_repository->get_facilities_by_hotel($user->id);
-                $related_facilities = FacilitiesHotels::facilities_hotels($rows);
+                $related_facilities = FacilityHotel::facilities_hotels($rows);
             } else {
                 $rows = $this->facility_repository->get_all_facilities($id_lingua);
                 $related_facilities = Facility::facilities($rows);
