@@ -81,7 +81,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
             var $target = jQuery(next_class);
             var items_prev = i - 1;
 
-            $target.find("[data-target]").each(function() {
+            $target.find("[data-target]").each(function () {
                 let name = $(this).data("target");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
                 let replacer = `$1${items_prev}$3`;
@@ -89,7 +89,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
                 $(this).data("target", next);
             });
 
-            $target.find("[data-name]").each(function() {
+            $target.find("[data-name]").each(function () {
                 let name = $(this).data("name");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
                 let replacer = `$1${items_prev}$3`;
@@ -97,7 +97,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
                 $(this).data("name", next);
             });
 
-            $target.find("[name]").each(function() {
+            $target.find("[name]").each(function () {
                 let name = $(this).attr("name");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
                 let replacer = `$1${items_prev}$3`;
@@ -106,7 +106,7 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
             });
 
             // class and id end with /-\d+$/
-            $target.find("[id]").each(function() {
+            $target.find("[id]").each(function () {
                 let id = $(this).attr("id");
                 let regex = /^(.+)(-\d+)$/;
                 let replacer = `$1-${items_prev}`;
@@ -114,18 +114,22 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
                 $(this).attr("id", next);
             });
 
-            var $targets = $target.find("[class]").filter(function() {
+            var $targets = $target.find("[class]").filter(function () {
                 let classes = $(this).attr("class").split(' ');
                 let regex = /^([^-]{4,}-)+\d+$/;
-                let matches = classes.filter(function (c) {return c.match(regex);} );
+                let matches = classes.filter(function (c) {
+                    return c.match(regex);
+                });
                 return matches.length > 0;
             });
 
-            $targets.each(function() {
+            $targets.each(function () {
                 let classes = $(this).attr("class").split(' ');
                 let regex = /^(.+)(-\d+)$/;
                 let replacer = `$1-${items_prev}`;
-                let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
+                let new_classes = classes.map(function (c) {
+                    return c.replace(regex, replacer);
+                });
                 let next = new_classes.join(' ');
                 $(this).attr("class", next);
             });
@@ -153,7 +157,7 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
         // SI: vanno lasciati perché hanno "fc-*" che è < 4 caratteri!
         $last.attr("class", "form-container fc-" + items_next);
 
-        $last.find("[data-target]").each(function() {
+        $last.find("[data-target]").each(function () {
             let name = $(this).data("target");
             let regex = /^([^\d]+)(\d+)(.*)$/;
             let replacer = `$1${items_next}$3`;
@@ -161,7 +165,7 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
             $(this).data("target", next);
         });
 
-        $last.find("[data-name]").each(function() {
+        $last.find("[data-name]").each(function () {
             let name = $(this).data("name");
             let regex = /^([^\d]+)(\d+)(.*)$/;
             let replacer = `$1${items_next}$3`;
@@ -169,7 +173,7 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
             $(this).data("name", next);
         });
 
-        $last.find("[name]").each(function() {
+        $last.find("[name]").each(function () {
             let name = $(this).attr("name");
             let regex = /^([^\d]+)(\d+)(.*)$/;
             let replacer = `$1${items_next}$3`;
@@ -178,31 +182,35 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
         });
 
         // class and id end with /-\d+$/
-        $last.find("[id]").each(function() {
+        $last.find("[id]").each(function () {
             let id = $(this).attr("id");
             let regex = /^(.+)(-\d+)$/;
             let replacer = `$1-${items_next}`;
             let next = id.replace(regex, replacer);
             $(this).attr("id", next);
         });
-        var $targets = $last.find("[class]").filter(function() {
+        var $targets = $last.find("[class]").filter(function () {
             let classes = $(this).attr("class").split(' ');
             let regex = /^([^-]{4,}-)+\d+$/;
-            let matches = classes.filter(function (c) {return c.match(regex);} );
+            let matches = classes.filter(function (c) {
+                return c.match(regex);
+            });
             return matches.length > 0;
         });
-        $targets.each(function() {
+        $targets.each(function () {
             let classes = $(this).attr("class").split(' ');
             let regex = /^(.+)(-\d+)$/;
             let replacer = `$1-${items_next}`;
-            let new_classes = classes.map(function(c) {return c.replace(regex, replacer);});
+            let new_classes = classes.map(function (c) {
+                return c.replace(regex, replacer);
+            });
             let next = new_classes.join(' ');
             $(this).attr("class", next);
         });
 
 
         var offset = $last.offset().top;
-        $('html,body').animate({ scrollTop: offset }, 'slow');
+        $('html,body').animate({scrollTop: offset}, 'slow');
     }
 });
 
@@ -210,14 +218,18 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
 function removeRelatedHotel(val) {
     $(".isRelatedTo-" + val).slideDown();
     $(".isRelatedToShow-" + val).slideDown();
+    $(".isRelatedTo-" + val).next().remove();
     $(".isRelatedTo-" + val).remove();
+    $(".isRelatedToShow-" + val).next().remove();
     $(".isRelatedToShow-" + val).remove();
 }
 
 function removeRelatedCat(val) {
     $(".cat-" + val).slideDown();
     $(".relatedCat-" + val).slideDown();
+    $(".cat-" + val).next().remove();
     $(".cat-" + val).remove();
+    $(".relatedCat-" + val).next().remove();
     $(".relatedCat-" + val).remove();
 }
 

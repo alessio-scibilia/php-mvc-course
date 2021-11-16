@@ -26,7 +26,6 @@
                                 <?php } ?>
                                 <th><?php echo $view_model->translations->get('nome_evento'); ?></th>
                                 <th><?php echo $view_model->translations->get('nome_struttura_evento'); ?></th>
-                                <th><?php echo $view_model->translations->get('struttura_collegata'); ?></th>
                                 <th><?php echo $view_model->translations->get('indirizzo'); ?></th>
                                 <th><?php echo $view_model->translations->get('data'); ?></th>
                                 <th><?php echo $view_model->translations->get('abilita'); ?></th>
@@ -49,7 +48,6 @@
                                     <?php } ?>
                                     <td><?php echo $event->nome_evento; ?></td>
                                     <td><?php echo $event->nome_struttura; ?></td>
-                                    <td><?php echo $event->struttura_collegata; ?></td>
                                     <td><?php echo $event->indirizzo; ?></td>
                                     <td><?php echo $event->data_inizio_evento; ?></td>
                                     <td>
@@ -88,7 +86,6 @@
                                 <?php } ?>
                                 <th><?php echo $view_model->translations->get('nome_evento'); ?></th>
                                 <th><?php echo $view_model->translations->get('nome_struttura_evento'); ?></th>
-                                <th><?php echo $view_model->translations->get('struttura_collegata'); ?></th>
                                 <th><?php echo $view_model->translations->get('indirizzo'); ?></th>
                                 <th><?php echo $view_model->translations->get('data'); ?></th>
                                 <th><?php echo $view_model->translations->get('abilita'); ?></th>

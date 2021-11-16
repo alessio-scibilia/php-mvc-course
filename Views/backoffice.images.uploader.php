@@ -1,16 +1,20 @@
 <?php
-    $label = $label ?? 'immagine';
-    $button_label = $button_label ?? 'scegli_immagini';
-    $field_prefix = $field_prefix ?? 'img_url';
-    $urls = $urls ?? array();
-    $tips = $tips ?? array();
-    $main_url_position = $main_url_position ?? 1;
-    $multiple = $multiple ?? true;
-    $disabled = !$multiple && count($urls) > 0;
-    $post_url = "/backoffice/upload/images";
-    $languages = $view_model->languages->list_all() ?? array();
-    $abbreviations = array_map(function($l) { return $l['abbreviazione']; }, $languages);
-    $names = array_map(function($l) { return $l['nome_lingua']; }, $languages);
+$label = $label ?? 'immagine';
+$button_label = $button_label ?? 'scegli_immagini';
+$field_prefix = $field_prefix ?? 'img_url';
+$urls = $urls ?? array();
+$tips = $tips ?? array();
+$main_url_position = $main_url_position ?? 1;
+$multiple = $multiple ?? true;
+$disabled = !$multiple && count($urls) > 0;
+$post_url = "/backoffice/upload/images";
+$languages = $view_model->languages->list_all() ?? array();
+$abbreviations = array_map(function ($l) {
+    return $l['abbreviazione'];
+}, $languages);
+$names = array_map(function ($l) {
+    return $l['nome_lingua'];
+}, $languages);
 ?>
 <div class="input-group col-md-12">
     <div class="input-group-prepend">
@@ -19,7 +23,8 @@
     <div class="custom-file">
         <input type="file" <?php if ($multiple) echo 'multiple="multiple"'; ?>
                data-name="<?php echo $field_prefix ?>"
-               data-post-url="<?php echo $post_url; include 'Views/xdebug.querystring.first.php'; ?>"
+               data-post-url="<?php echo $post_url;
+               include 'Views/xdebug.querystring.first.php'; ?>"
                data-tips="<?php echo empty($tips) ? "false" : "true" ?>"
                data-languages="<?php echo join('|', $abbreviations) ?>"
                data-placeholders="<?php echo join('|', $names); ?>"
@@ -32,19 +37,23 @@
         <?php for ($i = 0; $i < sizeof($urls); $i++) { ?>
             <div class="img-form-preview">
                 <span
-                    class="delete-preview"
-                    onclick="delPreview(this)"><i class="fa fa-close"></i></span><img
-                    class="img-form-preview-item"
-                    data-name="<?php echo $field_prefix ?>[<?php echo $i + 1; ?>]"
-                    src="<?php echo $urls[$i]; ?>" height="200px">
+                        class="delete-preview"
+                        onclick="delPreview(this)"><i class="fa fa-close"></i></span><img
+                        class="img-form-preview-item"
+                        data-name="<?php echo $field_prefix ?>[<?php echo $i + 1; ?>]"
+                        src="<?php echo $urls[$i]; ?>" height="200px">
                 <div class="default-image-cont">
                     <div class="pt20">
                         <?php if (!empty($tips)) { ?>
-                            <?php foreach ($abbreviations as $abbreviation) { ?>
-                            <textarea
-                                    name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>][<?php echo $abbreviation; ?>]"
-                                    placeholder="<?php echo $abbreviation; ?>"><?php echo $tips[$i][$abbreviation] ?? ''; ?></textarea>
-                            <?php } ?>
+                            <?php
+                            $i_lang = 0;
+                            foreach ($abbreviations as $abbreviation) { ?>
+                                <textarea
+                                        name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>][<?php echo $abbreviation; ?>]"
+                                        placeholder="<?php echo $abbreviation; ?>"><?php echo $tips[0][$i][$abbreviation] ?? ''; ?></textarea>
+                                <?php
+                                $i_lang++;
+                            } ?>
                         <?php } else if ($multiple) { ?>
                             <input type="radio"
                                    id="default-image"

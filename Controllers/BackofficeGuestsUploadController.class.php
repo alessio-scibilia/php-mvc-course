@@ -4,6 +4,7 @@ require_once 'Database/TranslationRepository.class.php';
 require_once 'Database/UserRepository.class.php';
 require_once 'Database/GuestRepository.class.php';
 require_once 'Middlewares/SessionManager.class.php';
+require_once 'Middlewares/MailSender.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
@@ -63,7 +64,7 @@ class BackofficeGuestsUploadController
 
                     $randomNumber = rand(0, 10000000000);
 
-                    for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') - 1; $i != 32; $x = rand(0, $z), $s .= $a{$x}, $i++) ;
+                    for ($s = '', $i = 0, $z = strlen($a = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789') - 1; $i != 32; $x = rand(0, $z), $s .= $a[$x], $i++) ;
 
                     $filename = $randomNumber . $s;
 
@@ -98,7 +99,7 @@ class BackofficeGuestsUploadController
                         $dati = $line[0];
                         $new = explode(";", $dati);
 
-                        $new_user['hotel_associato'] = $user->id;
+                        $new_user['hotel_associato'] = $user->related_id;
 
                         $new_user['nome'] = $new[0];
                         $new_user['cognome'] = $new[1];
@@ -107,6 +108,7 @@ class BackofficeGuestsUploadController
                         $new_user['data_checkin'] = $new[4];
                         $new_user['data_checkout'] = $new[5];
                         $new_user['numero_ospiti'] = $new[6];
+                        $new_user['numero_stanza'] = $new[8];
 
                         if (empty($new[7]))
                             $password_text = mt_rand(100000, 999999);
@@ -114,7 +116,12 @@ class BackofficeGuestsUploadController
                             $password_text = $new[7];
 
                         $new_user['password'] = md5($password_text);
-                        $new_user['numero_stanza'] = $new[8];
+
+                        $link = 'https://alfiere.digital/home/index.php?strh=' . $user->related_id;
+                        $msg = "Benvenuto su Wellcome ecco le tue credenziali di accesso:" . PHP_EOL . PHP_EOL . "Link di accesso: " . $link . PHP_EOL . "Numero stanza: " . $new[8] . PHP_EOL . "Password: " . $password_text . PHP_EOL . PHP_EOL;
+                        $msg .= 'Goditi il relax!';
+
+                        MailSender::send($new[3], $translations->get('benvenuto_wellcome'), $msg);
 
                         $this->guest_repository->add($new_user);
 

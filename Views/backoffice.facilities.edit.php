@@ -232,6 +232,7 @@
                                             $field = 'descrizione_benefit';
                                             $field_prefix = 'descrizione_benefit';
                                             $items = $view_model->facilities;
+
                                             include 'Views/backoffice.multilanguage.textbox.php';
                                             ?>
                                         </div>
@@ -343,7 +344,7 @@
                                         $button_label = 'scegli_immagini';
                                         $field_prefix = 'img_didascalia';
                                         $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
-                                        $tips = array('');
+                                        $tips = array($view_model->tips);
                                         $multiple = true;
                                         include 'Views/backoffice.images.uploader.php';
                                         ?>
