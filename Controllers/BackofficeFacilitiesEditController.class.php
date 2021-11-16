@@ -218,7 +218,7 @@ class BackofficeFacilitiesEditController
 
                     // facility categories
                     $this->facility_category_repository->remove_by_facility($id);
-                    foreach ($params['related_categories'] as $id_categoria) {
+                    foreach ($params['related_categories'] ?? array() as $id_categoria) {
                         $facility_category = array
                         (
                             'id_struttura' => $id,

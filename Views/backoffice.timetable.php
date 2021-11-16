@@ -48,7 +48,7 @@ $orari['domenica'] = explode("|", $model->domenica);
                             <?php echo $view_model->translations->get($intervals[$i]); ?> <input
                                 type="time"
                                 name="<?php echo $day_field_prefix; ?>[<?php echo $weekday; ?>][<?php echo $i; ?>]"
-                                value="<?php echo $orari[$weekday][$i + 1]; ?>"
+                                value="<?php echo $orari[$weekday][$i + 1] ?? null; ?>"
                                 class="validate-hotel">
                     </span>
                 <?php } ?>
@@ -61,7 +61,7 @@ $orari['domenica'] = explode("|", $model->domenica);
                             type="time"
                             name="<?php echo $day_field_prefix; ?>[<?php echo $weekday; ?>][<?php echo $i; ?>]"
                             class="validate-hotel"
-                            value="<?php echo $orari[$weekday][$i + 1]; ?>">
+                            value="<?php echo $orari[$weekday][$i + 1] ?? null; ?>">
                     </span>
                 <?php } ?>
             </div>
