@@ -58,7 +58,7 @@ class BackofficeEventsEditController
             }
 
             $id = intval($params['events']);
-            $row = $this->event_repository->get_event($id);
+            $row = $this->event_repository->get_by_id($id);
             $event = new Event($row);
 
             if ($user->level > 2) {

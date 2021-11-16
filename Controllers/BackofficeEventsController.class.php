@@ -93,8 +93,9 @@ class BackofficeEventsController
                 'data_fine_evento',
                 'ora_inizio_evento',
                 'ora_fine_evento',
+                'recupera_struttura'
             );
-            if (isset($params['recupera_struttura']))
+            if (!isset($params['recupera_struttura']))
             {
                 $event_fields_main = array
                 (
@@ -144,6 +145,7 @@ class BackofficeEventsController
                 switch ($field)
                 {
                     case 'abilitato':
+                    case 'recupera_struttura':
                         $event[$field] = intval($params[$field]);
                         break;
 

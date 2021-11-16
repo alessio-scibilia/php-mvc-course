@@ -42,12 +42,4 @@ class EventRepository extends MySQLRepository
         $params = array(':id_hotel', $id_hotel);
         return $this->query($query, $params);
     }
-
-    public function get_event(int $id): array
-    {
-        $where = "id = :id";
-        $params = array(":id" => $id);
-        $results = $this->get($where, $params);
-        return array_pop($results);
-    }
 }

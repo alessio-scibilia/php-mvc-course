@@ -34,7 +34,8 @@ abstract class MySQLRepository
         $query = "SELECT * FROM $table WHERE $key = :$key";
         $stmt = MySQL::$instance->prepare($query);
         $stmt->execute(array(":$key" => $id));
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result === false ? array() : $result;
     }
 
     public function add(array $entity)
