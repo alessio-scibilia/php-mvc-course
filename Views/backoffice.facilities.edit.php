@@ -27,7 +27,7 @@
                                                 data-name="related_hotels">
                                             <option disabled selected>Seleziona...</option>
                                             <?php foreach ($view_model->hotels as &$hotel) { ?>
-                                                <option value="<?php echo $hotel->id; ?>"
+                                                <option value="<?php echo $hotel->related_id; ?>"
                                                         data-tokens="<?php echo $hotel->nome . ' ' . $hotel->email . ' ' . $hotel->indirizzo; ?>"><?php echo $hotel->nome; ?></option>
                                             <?php } ?>
                                         </select>
@@ -51,7 +51,7 @@
                                                 data-name="related_categories">
                                             <option disabled selected>Seleziona...</option>
                                             <?php foreach ($view_model->categories as &$category) { ?>
-                                                <option value="<?php echo $category->id; ?>"
+                                                <option value="<?php echo $category->related_id; ?>"
                                                         data-tokens="<?php echo $category->nome; ?>"><?php echo $category->nome; ?></option>
                                             <?php } ?>
                                         </select>
