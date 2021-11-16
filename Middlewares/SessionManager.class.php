@@ -58,7 +58,7 @@ class SessionManager
             $key = self::COOKIE_NAME;
             $value = rawurlencode("$type-$id");
             //$header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/; Secure; HttpOnly; SameSite=Lax";
-            $header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/; HttpOnly";
+            $header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/";
             header($header, true);
         }
     }
