@@ -34,3 +34,5 @@ download/
 uploads/
 *.ini
 .idea/*
+*.csv
+*.xls
