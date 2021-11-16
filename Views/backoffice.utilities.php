@@ -11,7 +11,7 @@
             $principal = $utility[$view_model->language['shortcode_lingua']];
             ?>
             <div style="display: block;" class="form-container fc-<?php echo $r; ?>">
-                <input type="hidden" name="posizione[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
+                <input type="hidden" name="posizione_utility[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
                 <div class="form-row">
                     <div class="col-12">
                         <h5><?php echo $view_model->translations->get('numeri_utili'); ?></h5>
@@ -46,7 +46,7 @@
                     $label = 'immagine_utility';
                     $button_label = 'immagine_utility';
                     $field_prefix = "img_utility[$r]";
-                    $urls = empty($principal->immagine) ? array() : array($principal->immagine);
+                    $urls = empty($principal->immagine_utility) ? array() : array($principal->immagine_utility);
                     $multiple = false;
                     include 'Views/backoffice.images.uploader.php';
                     ?>
@@ -73,7 +73,7 @@
         <?php }
     } else { ?>
         <div style="display: block;" class="form-container fc-1">
-            <input type="hidden" name="posizione[1]" value="1">
+            <input type="hidden" name="posizione_utility[1]" value="1">
             <div class="form-row">
                 <div class="col-12">
                     <h5><?php echo $view_model->translations->get('datu_utility'); ?></h5>

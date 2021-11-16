@@ -86,70 +86,66 @@ class BackofficeHotelsEditController
         return new HttpRedirectView('/backoffice/hotels');
     }
 
+    /**
+     * @param array $params
+     * @return IView
+     */
     public function http_post(array &$params): IView
     {
-
-
-        $id = intval($params['hotels']);
-        $languages = new Languages($this->language_repository->list_all());
-        $hotel_fields = array
-        (
-            'nome',
-            'email',
-            'sito_web',
-            'telefono',
-            'indirizzo',
-            'latitudine',
-            'longitudine',
-            'abilitato',
-            'level',
-            'password',
-        );
-        $hotel_translations = $this->hotel_repository->get_by_related_id($id);
-        if (empty($hotel_translations)) {
-            $params['errors'][] = "No hotel translations found";
-            return $this->http_get($params);
-        }
-
-        foreach ($hotel_translations as &$hotel_translation) {
-            foreach ($hotel_fields as $hotel_field) {
-                if ($hotel_field == 'password' && empty($params['password']))
-                    continue;
-                else if ($hotel_field == 'password')
-                    $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
-                else if ($hotel_field == 'level')
-                    $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 4;
-                else
-                    $hotel_translation[$hotel_field] = $params[$hotel_field];
+        if (isset($params['hotels']))
+        {
+            $id = intval($params['hotels']);
+            $languages = new Languages($this->language_repository->list_all());
+            $hotel_fields = array
+            (
+                'nome',
+                'email',
+                'sito_web',
+                'telefono',
+                'indirizzo',
+                'latitudine',
+                'longitudine',
+                'abilitato',
+                'level',
+                'password',
+            );
+            $hotel_translations = $this->hotel_repository->get_by_related_id($id);
+            if (empty($hotel_translations)) {
+                $params['errors'][] = "No hotel translations found";
+                return $this->http_get($params);
             }
 
-            $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
-            if (!empty($language)) {
-                $abbreviation = $language['abbreviazione'];
-                $hotel_translation['descrizione_ospiti'] = $params['descrizione_ospiti'][$abbreviation] ?? $hotel_translation['descrizione_ospiti'];
+            foreach ($hotel_translations as &$hotel_translation) {
+                foreach ($hotel_fields as $hotel_field) {
+                    if ($hotel_field == 'password' && empty($params['password']))
+                        continue;
+                    else if ($hotel_field == 'password')
+                        $hotel_translation[$hotel_field] = md5($params[$hotel_field]);
+                    else if ($hotel_field == 'level')
+                        $hotel_translation[$hotel_field] = $params[$hotel_field] == "1" ? 3 : 4;
+                    else
+                        $hotel_translation[$hotel_field] = $params[$hotel_field];
+                }
+
+                $language = $languages->get_by_field('shortcode_lingua', $hotel_translation['shortcode_lingua']);
+                if (!empty($language)) {
+                    $abbreviation = $language['abbreviazione'];
+                    $hotel_translation['descrizione_ospiti'] = $params['descrizione_ospiti'][$abbreviation] ?? $hotel_translation['descrizione_ospiti'];
+                }
+                $hotel_translation['immagini_secondarie'] = join('|', $params['img_hotel']) . '|';
+                $hotel_translation['immagine_principale'] = $params['default_image'];
+                $this->hotel_repository->update($hotel_translation);
             }
-            $hotel_translation['immagini_secondarie'] = join('|', $params['img_hotel']) . '|';
-            $hotel_translation['immagine_principale'] = $params['default_image'];
-            $this->hotel_repository->update($hotel_translation);
-        }
 
-        $related_id = $hotel_translations[0]['related_id'];
-        $this->service_repository->remove_by_hotel($related_id);
+            $related_id = $hotel_translations[0]['related_id'];
+            $this->service_repository->remove_by_hotel($related_id);
 
-        if (isset($params['hotels']) &&
-            isset($params['descrizione']) &&
-            isset($params['nome_servizio']) &&
-            isset($params['orario_continuato']) &&
-            isset($params['giorno']) &&
-            isset($params['img_servizio'])
-        ) {
             $multiples = array
             (
                 'descrizione',
                 'nome_servizio',
                 'orario_continuato',
-                'giorno',
-                'img_servizio'
+                'giorno'
             );
             $n = -1;
             foreach ($multiples as $multiple) {
@@ -163,11 +159,19 @@ class BackofficeHotelsEditController
                 }
             }
 
-            if (!empty($params['nome_servizio']))
+            if (!empty($params['nome_servizio']) &&
+                !empty($params['descrizione']) &&
+                !empty($params['nome_servizio']) &&
+                !empty($params['orario_continuato']) &&
+                !empty($params['giorno']) &&
+                !empty($params['img_servizio'])
+                )
             {
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
                 foreach ($params['nome_servizio'] as $i => $names)
                 {
+                    if (empty($params['img_servizio'][$i])) continue;
+
                     $images = array_values($params['img_servizio'][$i]);
                     foreach ($names as $abbreviation => $titolo)
                     {
@@ -181,7 +185,7 @@ class BackofficeHotelsEditController
                             'immagine' => $images[0], // only 1 image for services
                             'abilitato' => $params['servizio_abilitato'][$i],
                             'shortcode_lingua' => $language['shortcode_lingua'],
-                            'posizione' => $params['posizione'][$i]
+                            'posizione' => $params['posizione_servizio'][$i]
                         );
                         foreach ($weekdays as $weekday)
                         {
@@ -197,9 +201,39 @@ class BackofficeHotelsEditController
                     }
                 }
             }
+
+            if (!empty($params['nome_utility']))
+            {
+                $this->utility_repository->remove_by_hotel($id);
+
+                foreach ($params['nome_utility'] as $i => $names)
+                {
+                    $images = array_values($params['img_utility'][$i]);
+                    foreach ($names as $abbreviation => $titolo)
+                    {
+                        $language = $languages->get_by_field('abbreviazione', $abbreviation);
+
+                        $utility = array
+                        (
+                            'hotel_associato' => $id,
+                            'nome_utility' => $titolo,
+                            'indirizzo_utility' => $params['indirizzo_utility'],
+                            'telefono_utility' => $params['telefono_utility'],
+                            'immagine_utility' => $images[0], // only 1 image for services
+                            'shortcode_lingua' => $language['shortcode_lingua'],
+                            'posizione' => $params['posizione_utility'][$i]
+                        );
+
+                        $utility['id'] = $this->utility_repository->add($utility);
+                    }
+                }
+            }
+
             unset($params['errors']);
+
+            return $this->http_get($params);
         }
 
-        return $this->http_get($params);
+        return new HttpRedirectView('/backoffice/hotels');
     }
 }

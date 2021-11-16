@@ -11,7 +11,7 @@
             $principal = $service[$view_model->language['shortcode_lingua']];
             ?>
             <div style="display: block;" class="form-container fc-<?php echo $r; ?>">
-                <input type="hidden" name="posizione[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
+                <input type="hidden" name="posizione_servizio[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
                 <div class="form-row">
                     <div class="col-12">
                         <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5>
@@ -96,7 +96,7 @@
         <?php }
     } else { ?>
         <div style="display: block;" class="form-container fc-1">
-            <input type="hidden" name="posizione[1]" value="1">
+            <input type="hidden" name="posizione_servizio[1]" value="1">
             <div class="form-row">
                 <div class="col-12">
                     <h5><?php echo $view_model->translations->get('dati_servizio'); ?></h5>
