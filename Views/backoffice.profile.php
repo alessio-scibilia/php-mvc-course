@@ -10,7 +10,8 @@
                 <h1><i class="fa fa-building-o"></i> <?php echo $view_model->profile->nome; ?></h1>
             </div>
             <div class="col-xl-12 col-lg-12">
-                <a href="/<?php echo $view_model->profile->id; ?>"
+                <a href="javascript:void()"
+                   onclick="window.open(window.location.origin+'/home/index.php?strh=<?php echo $view_model->profile->id; ?>', '_blank', 'location=no,height=667,width=375,scrollbars=no,status=no')"
                    class="btn btn-info" target="_blank"><i class="fa fa-eye"></i> Vedi come ospite</a><br/><br/>
                 <div class="card">
                     <div class="card-header">

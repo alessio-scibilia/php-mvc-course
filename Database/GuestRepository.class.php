@@ -12,8 +12,7 @@ class GuestRepository extends MySQLRepository
     {
         $where = "hotel_associato = :id_hotel";
         $params = array(":id_hotel" => $id);
-        $results = $this->get($where, $params);
-        return array_pop($results);
+        return $this->get($where, $params);
     }
 
     public function get_all_guests(): array

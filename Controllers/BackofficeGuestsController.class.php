@@ -44,7 +44,7 @@ class BackofficeGuestsController
                 return new HttpRedirectView('/backoffice');
             }
 
-            $rows = $this->guest_repository->get_all_guests();
+            $rows = $this->guest_repository->get_by_hotel($user->id);
             $guests = Guest::guests($rows);
             //$guests = array(); // TODO: da leggere da DB
 
