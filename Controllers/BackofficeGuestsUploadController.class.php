@@ -92,9 +92,9 @@ class BackofficeGuestsUploadController
 
 
             $task_data = array();
-            $task_run = function() use($task_data)
+            $task_run = function($context)
             {
-                foreach ($task_data as $email)
+                foreach ($context as $email)
                 {
                     MailSender::send($email['to'], $email['subject'], $email['body']);
                 }
@@ -207,7 +207,7 @@ class BackofficeGuestsUploadController
 
             $inner_view = new HtmlView($view_model);
 
-            return new TaskRunnerView($inner_view, $task_run);
+            return new TaskRunnerView($inner_view, $task_run, $task_data);
         }
     }
 
@@ -223,7 +223,7 @@ class BackofficeGuestsUploadController
         $host = $_SERVER['HTTP_HOST'];
         $base_url = "$protocol://$host";
         $strh = $user->related_id;
-        $link = "$/home/index.php?strh=$strh";
+        $link = "$base_url/home/index.php?strh=$strh";
         $msg = "Benvenuto su Wellcome ecco le tue credenziali di accesso:" . PHP_EOL . PHP_EOL .
                 "Link di accesso: " . $link . PHP_EOL .
                 "Numero stanza: " . $numero_stanza . PHP_EOL .

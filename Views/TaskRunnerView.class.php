@@ -9,14 +9,18 @@ class TaskRunnerView implements IView
     /** @var callable */
     protected $task_run;
 
+    /** @var array */
+    protected $context;
+
     /**
      * @param IView $inner
      * @param callable $task_run
      */
-    public function __construct(IView &$inner, callable $task_run)
+    public function __construct(IView &$inner, callable $task_run, array &$context = array())
     {
         $this->inner_view = $inner;
         $this->task_run = $task_run;
+        $this->context = $context;
     }
 
     /**
@@ -28,7 +32,7 @@ class TaskRunnerView implements IView
         flush();
         if ($this->task_run != null)
         {
-            $this->task_run();
+            call_user_func($this->task_run, $this->context);
         }
     }
 }
