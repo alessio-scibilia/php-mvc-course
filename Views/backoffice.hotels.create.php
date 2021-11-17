@@ -61,6 +61,7 @@
                                     <label><?php echo $view_model->translations->get('password'); ?></label>
                                     <input type="password"
                                            name="password"
+                                           autocomplete="new-password"
                                            id="password"
                                            class="form-control">
                                 </div>
@@ -68,6 +69,7 @@
                                 <div class="form-group col-md-6">
                                     <label><?php echo $view_model->translations->get('conferma_password'); ?></label>
                                     <input type="password"
+                                           autocomplete="new-password"
                                            id="conferma_password"
                                            class="form-control">
                                 </div>

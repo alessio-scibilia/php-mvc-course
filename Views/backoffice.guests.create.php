@@ -75,6 +75,7 @@
                                     <?php
                                     $pwd = mt_rand(100000, 999999); ?>
                                     <input type="password" value="<?php echo $pwd; ?>" class="form-control validate-1"
+                                           autocomplete="new-password"
                                            id="password" name="password" placeholder="Password">
                                 </div>
                             </div>
@@ -82,6 +83,7 @@
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('conferma_password'); ?></label>
                                 <div class="col-sm-9">
                                     <input type="password" value="<?php echo $pwd; ?>" class="form-control validate-1"
+                                           autocomplete="new-password"
                                            id="conferma_password" placeholder="Password">
                                 </div>
                             </div>

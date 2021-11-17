@@ -64,7 +64,8 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('nuova_password'); ?></label>
                                 <div class="col-sm-9">
-                                    <input type="password" name="password" autocomplete="off"
+                                    <input type="password" name="password"
+                                           autocomplete="new-password"
                                            class="form-control validate-2"
                                            id="password_small"
                                            placeholder="!()$(òsI!">
@@ -73,7 +74,8 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('conferma_nuova_password'); ?></label>
                                 <div class="col-sm-9">
-                                    <input autocomplete="off" type="password" class="form-control validate-2"
+                                    <input type="password" class="form-control validate-2"
+                                           autocomplete="new-password"
                                            id="conferma_password_small"
                                            placeholder="!()$(òsI!">
                                 </div>

@@ -59,6 +59,7 @@
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('password'); ?></label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control validate-1" name="password" id="password"
+                                           autocomplete="new-password"
                                            placeholder="Password">
                                 </div>
                             </div>
