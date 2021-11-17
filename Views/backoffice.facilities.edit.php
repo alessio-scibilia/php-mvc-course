@@ -7,7 +7,7 @@
                 <a href="/backoffice/facilities" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_strutture'); ?>
                     /</a>
-                <h1><i class="fa fa-building"></i> <?php echo $view_model->translations->get('modifica_struttura'); ?>
+                <h1><i class="fa fa-building"></i> <?php echo $view_model->principal->nome_struttura; ?>
                 </h1>
             </div>
 

@@ -1,12 +1,13 @@
 <div class="container-fluid">
     <div class="row">
-        <form action="/backoffice/events/<?php echo $view_model->event->id; include 'Views/xdebug.querystring.first.php'; ?>" method="POST" enctype="multipart/form-data">
+        <form action="/backoffice/events/<?php echo $view_model->event->id;
+        include 'Views/xdebug.querystring.first.php'; ?>" method="POST" enctype="multipart/form-data">
 
             <div class="col-12 d-flex align-items-center justify-content-start mb15">
                 <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('indietro'); ?>
                     /</a>
-                <h1><i class="fa fa-calendar"></i> <?php echo $view_model->translations->get('modifica_evento'); ?>
+                <h1><i class="fa fa-calendar"></i> <?php echo $view_model->event->nome_evento; ?>
                 </h1>
             </div>
 
@@ -59,12 +60,14 @@
 
                                     <div id="relatedCat" class="form-group col-md-12">
                                         <?php foreach ($view_model->facility_events as &$facility_event) { ?>
-                                        <?php $id = isset($facility_event->id_struttura) ? '2-'.$facility_event->id_struttura : '1-'.$facility_event->id_hotel; ?>
+                                            <?php $id = isset($facility_event->id_struttura) ? '2-' . $facility_event->id_struttura : '1-' . $facility_event->id_hotel; ?>
                                             <a href="javascript:void()"
                                                class="tagit2 relCat relatedCat-<?php echo $id; ?>"
                                                id="<?php echo $id; ?>"
-                                               onclick="removeRelatedCat('<?php echo $id; ?>')"><?php echo $facility_event->nome; ?> <i class="fa fa-close"></i></a>
-                                            <input type="hidden" name="related_item[]" value="<?php echo $id; ?>" class="cat-<?php echo $id; ?>">
+                                               onclick="removeRelatedCat('<?php echo $id; ?>')"><?php echo $facility_event->nome; ?>
+                                                <i class="fa fa-close"></i></a>
+                                            <input type="hidden" name="related_item[]" value="<?php echo $id; ?>"
+                                                   class="cat-<?php echo $id; ?>">
                                         <?php } ?>
                                     </div>
 
@@ -73,7 +76,8 @@
                                                value="1" <?php if ($view_model->event->recupera_struttura == 1) echo 'checked="checked"'; ?>> <?php echo $view_model->translations->get('recupera_da_struttura'); ?>
                                     </div>
 
-                                    <div class="row" id="dati_struttura_evento" <?php if ($view_model->event->recupera_struttura == 1) echo 'style="display:none;"'; ?>>
+                                    <div class="row"
+                                         id="dati_struttura_evento" <?php if ($view_model->event->recupera_struttura == 1) echo 'style="display:none;"'; ?>>
                                         <div class="form-group col-md-6">
                                             <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
                                             <input type="text" id="nome_struttura" name="nome_struttura"
@@ -103,7 +107,8 @@
                                                    value="<?php echo $view_model->event->telefono; ?>">
                                         </div>
 
-                                        <?php $model = $view_model->event; include 'Views/backoffice.geolocator.php'; ?>
+                                        <?php $model = $view_model->event;
+                                        include 'Views/backoffice.geolocator.php'; ?>
                                     </div>
 
                                 </div>
@@ -116,14 +121,13 @@
 
                                 <div class="form-row">
                                     <?php
-                                        $label = 'immagine_evento';
-                                        $button_label = 'scegli_immagini';
-                                        $field_prefix = "img_evento";
-                                        $urls = empty($view_model->event->img_evento) ? array() : array($view_model->event->img_evento);
-                                        $multiple = false;
-                                        include 'Views/backoffice.images.uploader.php';
+                                    $label = 'immagine_evento';
+                                    $button_label = 'scegli_immagini';
+                                    $field_prefix = "img_evento";
+                                    $urls = empty($view_model->event->img_evento) ? array() : array($view_model->event->img_evento);
+                                    $multiple = false;
+                                    include 'Views/backoffice.images.uploader.php';
                                     ?>
-
 
 
                                     <div class="form-group col-md-12">
@@ -142,10 +146,10 @@
 
                                     <div class="form-group col-md-12">
                                         <?php
-                                            $label = 'descrizione_evento';
-                                            $field_prefix = 'descrizione_evento';
-                                            $items = $view_model->all_languages_facility_events;
-                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione_evento';
+                                        $field_prefix = 'descrizione_evento';
+                                        $items = $view_model->all_languages_facility_events;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
 
@@ -192,11 +196,11 @@
 
                                     <div id="rec-conv" class="form-group col-md-12">
                                         <?php
-                                            $label = 'descrizione_ospiti';
-                                            $field = 'testo_convenzione';
-                                            $field_prefix = 'testo_convenzione';
-                                            $items = $view_model->all_languages_facility_events;
-                                            include 'Views/backoffice.multilanguage.textbox.php';
+                                        $label = 'descrizione_ospiti';
+                                        $field = 'testo_convenzione';
+                                        $field_prefix = 'testo_convenzione';
+                                        $items = $view_model->all_languages_facility_events;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
                                 </div>

@@ -7,7 +7,10 @@
                data-params="<?php echo $view_model->translations->get('categorie'); ?>"
                data-search="<?php if (isset($search_val)) echo $search_val; ?>"><i
                         class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('lista_categorie'); ?> /</a>
-            <h1><i class="fa fa-list"></i> <?php echo $view_model->translations->get('modifica_categoria'); ?></h1>
+            <?php foreach ($view_model->category_all_languages as $category) {
+                $name = $category[1]->nome;
+            } ?>
+            <h1><i class="fa fa-list"></i> <?php echo $name; ?></h1>
         </div>
 
         <div class="col-xl-8 col-lg-12">

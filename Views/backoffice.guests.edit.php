@@ -3,7 +3,9 @@
         <div class="col-12 d-flex align-items-center justify-content-start mb15">
             <a href="/backoffice/guests" id="gobacksearch" class="open-view-action-inside back-btn"><i
                         class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('gestione_ospiti'); ?>/</a>
-            <h1><i class="fa fa-users"></i> <?php echo $view_model->translations->get('modifica_ospiti'); ?></h1>
+            <h1>
+                <i class="fa fa-users"></i> <?php echo $view_model->ospite['nome'] . ' ' . $view_model->ospite['cognome']; ?>
+            </h1>
         </div>
         <div class="col-xl-8 col-lg-12">
             <div class="card">
