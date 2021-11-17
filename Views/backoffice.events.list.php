@@ -37,7 +37,7 @@
                             <?php foreach ($view_model->events as &$event) {
                                     list($type, $identifier) = explode('-', $event->struttura_collegata);
 
-                                    if ($view_model->user->level == 0 ||
+                                    if ($view_model->user->level <= 2 ||
                                         $view_model->user->id == $event->created_by ||
                                         ($type == "1" && $view_model->user->id == $identifier) ||
                                         ($type == "2" && in_array($identifier, $view_model->facilities))) {

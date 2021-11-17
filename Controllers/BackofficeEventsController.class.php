@@ -10,6 +10,8 @@ require_once 'Middlewares/SessionManager.class.php';
 require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
+require_once 'Models/Facility.class.php';
+require_once 'Models/FacilityHotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
 require_once 'Views/HtmlView.class.php';
@@ -56,11 +58,19 @@ class BackofficeEventsController
         $rows = $this->event_repository->get_all_events();
         $events = Event::events($rows);
 
-        $rows = $user->level > 2 ? $this->facility_hotel_repository->get_facilities_by_hotel($user->id) : $this->facility_repository->get_all_facilities($id_lingua);
-        $facilities_hotel = FacilityHotel::facilities_hotels($rows);
-        $facilities = array_map(function ($fh) {
-            return $fh->id_struttura;
-        }, $facilities_hotel);
+        $facilities = array();
+        if ($user->level > 2)
+        {
+            $rows = $this->facility_hotel_repository->get_facilities_by_hotel($user->id);
+            $facilities_hotel = FacilityHotel::facilities_hotels($rows);
+            $facilities = array_map(function ($fh) { return $fh->id_struttura; }, $facilities_hotel);
+        }
+        else
+        {
+            $rows = $this->facility_repository->get_all_facilities($id_lingua);
+            $facilities_all = Facility::facilities($rows);
+            $facilities = array_map(function ($fh) { return $fh->related_id; }, $facilities_all);
+        }
 
         $view_model = new BackOfficeViewModel('backoffice.events.list', $title, $languages, $translations);
         $view_model->user = $user;
