@@ -82,6 +82,7 @@
                                 <div class="col-sm-9">
                                     <input type="password" name="password" class="form-control validate-1"
                                            id="password"
+                                           autocomplete="new-password"
                                            placeholder="Password">
                                 </div>
                             </div>
@@ -89,6 +90,7 @@
                                 <label class="col-sm-3 col-form-label"><?php echo $view_model->translations->get('password'); ?></label>
                                 <div class="col-sm-9">
                                     <input type="password" class="form-control validate-1" id="conferma_password-type-2"
+                                           autocomplete="new-password"
                                            placeholder="Password">
                                 </div>
                             </div>
