@@ -70,7 +70,8 @@ class BackofficeForgotpasswordController
                     "\r\n",
                     $restore_code
                 ));
-                MailSender::send($email, $translations->get('reset_password'), $message);
+                $to = [$email => $user['nome']];
+                MailSender::send($to, $translations->get('reset_password'), $message);
             }
             else
             {

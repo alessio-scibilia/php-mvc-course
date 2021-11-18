@@ -9,7 +9,7 @@
         <img src="/images/logo-wellcome-scuro.png" class="logo-login mb25" title=""/>
         <!-- <img src="https://picsum.photos/370/100" class="logo-login mb25" name="" title="" /> -->
 
-        <form action="/password-reset" method="POST" class="validate-it-form">
+        <form action="/backoffice/password-reset" method="POST" class="validate-it-form">
             <h1 class="title-login"><?php echo $view_model->translations->get('conferma_nuova_password'); ?></h1>
 
             <label for="email" id="labelmail"><?php echo $view_model->translations->get('email'); ?></label>
