@@ -19,7 +19,7 @@
                    id="email"
                    placeholder="mario@rossi.it">
 
-            <label for="digits-code"><?php echo $view_model->translations->get('email'); ?></label>
+            <label for="digits-code"><?php echo $view_model->translations->get('restore_code'); ?></label>
             <input type="text"
                    name="digits-code"
                    id="digits-code"
@@ -41,8 +41,9 @@
                    id="conferma_password-type-2"
                    class="form-control">
 
+            <br />
             <?php include 'Views/xdebug.form.php' ?>
-            <input type="submit" value="Login" class="form-control btn btn-primary mb15 display-ease-in">
+            <input type="submit" value="<?php echo $view_model->translations->get('conferma_nuova_password'); ?>" class="form-control btn btn-primary mb15 display-ease-in">
         </form>
     </div>
 </div>
