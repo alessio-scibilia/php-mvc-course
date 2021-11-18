@@ -123,20 +123,28 @@ class BackofficeEventsController
             $event = $this->event_repository->get_by_id($id_evento);
             $created_by = intval($event['created_by']);
 
-            if ($created_by == 0 && $user->level <= 2) {
+            if ($created_by == 0 && $user->level <= 2)
+            {
                 // rimuovo tutti i dati legati all'evento
                 $this->facility_event_repository->remove_by_event_id($id_evento);
-            } else if ($created_by == $user->id) {
+            }
+            else if ($created_by == $user->id)
+            {
                 // rimuovo i dati di (evento, hotel)
                 $this->facility_event_repository->remove_by_event_id_and_hotel_id($id_evento, $user->id);
-            } else {
+            }
+            else
+            {
                 // modifico solo la convenzione, per ciascuna lingua
-                $facility_events = $this->facility_event_repository->get_by_event_id_and_hotel_id($id_evento, $user->id);
-                foreach ($facility_events as &$facility_event) {
+                $facility_events = $this->facility_event_repository->get_related_by_event_and_hotel_without_facility($id_evento, $user->id);
+                foreach ($facility_events as &$facility_event)
+                {
                     $language = $languages->get_by_field('shortcode_lingua', $facility_event['id_lingua']);
                     $abbreviation = $language['abbreviazione'];
 
-                    $facility_event['testo_convenzione'] = isset($params['recupera_convenzione']) ? '' : $params['testo_convenzione'][$abbreviation] ?? '';
+                    $facility_event['testo_convenzione'] = $params['testo_convenzione'][$abbreviation] ?? '';
+                    $facility_event['convenzionato'] = isset($params['convenzionato']);
+
                     $this->facility_event_repository->update($facility_event);
                 }
                 return new HttpRedirectView("/backoffice/events/$id_evento/edit");
@@ -164,29 +172,54 @@ class BackofficeEventsController
 
             $this->event_repository->update($event);
 
-            foreach ($params['related_item'] as $related_item) {
+            foreach ($params['related_item'] as $related_item)
+            {
                 list($type, $id_item) = explode('-', $related_item);
-                if ($type == '1') {
+                if ($type == '1')
+                {
                     $id_hotel = $id_item;
                     $id_struttura = null;
-                } else {
+                }
+                else
+                {
                     $id_struttura = $id_item;
                     $facility_hotel = $this->facility_hotel_repository->get_by_facility_id($id_struttura);
                     $id_hotel = $facility_hotel['id_hotel'];
                 }
-                foreach ($params['descrizione_evento'] as $abbreviation => $descrizione_evento) {
-                    $language = $languages->get_by_field('abbreviazione', $abbreviation);
-                    if (!empty($language)) {
+
+                $facility_events = $id_struttura == null ?
+                    $this->facility_event_repository->get_related_by_event_and_hotel_without_facility($id_evento, $id_hotel):
+                    $this->facility_event_repository->get_related_by_event_and_hotel_and_facility($id_evento, $id_hotel, $id_struttura);
+
+                foreach ($languages->list_all() as &$language)
+                {
+                    $shortcode_lingua = $language['shortcode_lingua'];
+                    $descrizione_evento = $params['descrizione_evento'][$abbreviation] ?? '';
+                    $convenzionato = $params['convenzionato'] ?? 0;
+                    $matches = array_filter($facility_events, function ($fe) use($shortcode_lingua) { return $fe['shortcode_lingua'] == $shortcode_lingua; });
+                    if (empty($matches))
+                    {
+                        $abbreviation = $language['abbreviazione'];
                         $facility_event = array
                         (
                             'id_evento' => $id_evento,
-                            'shortcode_lingua' => $language['shortcode_lingua'],
+                            'shortcode_lingua' => $shortcode_lingua,
                             'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['testo_convenzione'][$abbreviation] ?? '',
                             'descrizione_evento' => $descrizione_evento,
                             'id_hotel' => $id_hotel,
-                            'id_struttura' => $id_struttura
+                            'id_struttura' => $id_struttura,
+                            'convenzionato' => $convenzionato
                         );
-                        $this->facility_event_repository->add($facility_event);
+                        $facility_event['id'] = $this->facility_event_repository->add($facility_event);
+                    }
+                    else
+                    {
+                        $facility_event = array_pop($matches);
+
+                        $facility_event['testo_convenzione'] = $descrizione_evento;
+                        $facility_event['convenzionato'] = $convenzionato;
+
+                        $this->facility_event_repository->update($facility_event);
                     }
                 }
             }

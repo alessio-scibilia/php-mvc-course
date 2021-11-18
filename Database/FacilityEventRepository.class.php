@@ -94,6 +94,38 @@ class FacilityEventRepository extends MySQLRepository
         return $this->query($query, $params);
     }
 
+    public function get_related_by_event_and_hotel_without_facility(int $id_evento, int $id_hotel): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT se.*, h.nome",
+            "FROM $table se",
+            "INNER JOIN hotel h ON",
+            "   h.related_id = se.id_hotel AND",
+            "   se.id_struttura IS NULL",
+            "WHERE id_evento = :id_evento",
+            "  AND se.id_hotel = :id_hotel"
+        ));
+        $params = array(":id_evento" => $id_evento, "id_hotel" => $id_hotel);
+        return $this->query($query, $params);
+    }
+
+    public function get_related_by_event_and_hotel_and_facility(int $id_evento, int $id_hotel, int $id_struttura): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT se.*, h.nome",
+            "FROM $table se",
+            "INNER JOIN hotel h ON",
+            "   h.related_id = se.id_hotel AND",
+            "   se.id_struttura = :id_struttura",
+            "WHERE id_evento = :id_evento",
+            "  AND se.id_hotel = :id_hotel"
+        ));
+        $params = array(":id_evento" => $id_evento, "id_hotel" => $id_hotel, ":id_struttura" => $id_struttura);
+        return $this->query($query, $params);
+    }
+
     public function get_related_by_event_id_and_hotel_id(int $id_evento, int $id_hotel): array
     {
         $table = $this->tableName;

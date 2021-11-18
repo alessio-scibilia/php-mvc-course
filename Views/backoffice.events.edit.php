@@ -187,11 +187,15 @@
                                         <h4><?php echo $view_model->translations->get('convenzione'); ?></h4>
                                         <hr/>
                                     </div>
-                                    <div class="col-md-12">
-                                        <input type="checkbox" <?php if ($view_model->event->recupera_convenzione == 1) echo 'checked="checked"'; ?>
-                                               class=""
-                                               id="recupera_convenzione"
-                                               name="recupera_convenzione"> <?php echo $view_model->translations->get('recupera_convenzione'); ?>
+
+                                    <div class="form-group col-md-12">
+                                        <?php
+                                        $label = 'convenzionato';
+                                        $field = 'convenzionato';
+                                        $field_prefix = 'convenzionato';
+                                        $value = $view_model->convenzionato;
+                                        include 'Views/backoffice.checkbox.php';
+                                        ?>
                                     </div>
 
                                     <div id="rec-conv" class="form-group col-md-12">
