@@ -217,10 +217,10 @@
 
                                     <div class="form-group col-md-12">
                                         <?php
-                                        $label = 'recupera_convenzione';
-                                        $field = 'recupera_convenzione';
-                                        $field_prefix = 'recupera_convenzione';
-                                        $value = $view_model->event->recupera_convenzione == "1";
+                                        $label = 'convenzionato';
+                                        $field = 'convenzionato';
+                                        $field_prefix = 'convenzionato';
+                                        $value = $view_model->convenzionato;
                                         include 'Views/backoffice.checkbox.php';
                                         ?>
                                     </div>

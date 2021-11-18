@@ -58,7 +58,11 @@ class BackofficeGuestsAddController
                 $id = $this->guest_repository->add($new_user);
                 $result = ($id === false) ? 'error' : 'success';
 
-                $link = 'https://alfiere.digital/home/index.php?strh=' . $user->related_id;
+                $protocol = ($_SERVER['HTTPS'] ?? '') === 'on' ? "https" : "http";
+                $host = $_SERVER['HTTP_HOST'];
+                $base_url = "$protocol://$host";
+                $strh = $user->related_id;
+                $link = "$base_url/home/index.php?strh=$strh";
                 $msg = "Benvenuto su Wellcome ecco le tue credenziali di accesso:" . PHP_EOL . PHP_EOL . "Link di accesso: " . $link . PHP_EOL . "Numero stanza: " . $params['numero_stanza'] . PHP_EOL . "Password: " . $params['password'] . PHP_EOL . PHP_EOL;
                 $msg .= 'Goditi il relax!';
 

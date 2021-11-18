@@ -133,4 +133,27 @@ class FacilityEventRepository extends MySQLRepository
         $stmt->execute(array(":id_evento" => $id_evento, ":id_hotel" => $id_hotel));
         return $stmt->rowCount() > 0;
     }
+
+    public function remove_by_event_id_and_hotel_id_facility_null(int $id_evento, int $id_hotel): bool
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "DELETE FROM $table WHERE id_evento = :id_evento AND id_hotel = :id_hotel AND id_struttura IS NULL";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute(array(":id_evento" => $id_evento, ":id_hotel" => $id_hotel));
+        return $stmt->rowCount() > 0;
+    }
+
+    public function get_convenzionato(int $id_evento, int $id_hotel): bool
+    {
+        $table = $this->tableName;
+        $key = $this->keyName;
+        $query = "SELECT convenzionato FROM $table WHERE id_evento = :id_evento AND id_hotel = :id_hotel AND convenzionato = 1";
+        $stmt = MySQL::$instance->prepare($query);
+        $stmt->execute(array(":id_evento" => $id_evento, ":id_hotel" => $id_hotel));
+        if ($stmt->rowCount() > 0)
+            return 1;
+        else
+            return 0;
+    }
 }

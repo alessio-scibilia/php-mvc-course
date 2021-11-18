@@ -62,6 +62,7 @@ class BackofficeEventsEditController
             $event = new Event($row);
 
             if ($user->level > 2) {
+                $convenzionato = $this->facility_event_repository->get_convenzionato($id, $user->id);
                 $rows = $this->facility_hotel_repository->get_facilities_by_hotel($user->id);
                 $related_facilities = FacilityHotel::facilities_hotels($rows);
                 $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id_and_language_id($id, $user->id, $id_lingua);
@@ -69,12 +70,14 @@ class BackofficeEventsEditController
                 $rows = $this->facility_event_repository->get_related_by_event_id_and_hotel_id($id, $user->id);
                 $all_languages_facility_events = FacilityEvent::facility_events($rows);
             } else {
+                $convenzionato = 0;
                 $rows = $this->facility_repository->get_all_facilities($id_lingua);
                 $related_facilities = Facility::facilities($rows);
                 $rows = $this->facility_event_repository->get_related_by_event_id_and_language_id($id, $id_lingua);
                 $facility_events = FacilityEvent::facility_events($rows);
                 $rows = $this->facility_event_repository->get_related_by_event_id($id);
                 $all_languages_facility_events = FacilityEvent::facility_events($rows);
+
             }
 
             //$descrizioni_evento = $this->facility_hotel_repository->get_by_event_id($id);
@@ -89,6 +92,8 @@ class BackofficeEventsEditController
             $view_model->related_facilities = $related_facilities;
             $view_model->related_hotels = $related_hotels;
             $view_model->facility_events = $facility_events;
+            $view_model->convenzionato = $convenzionato;
+
             $view_model->all_languages_facility_events = $all_languages_facility_events;
             $view_model->language = $languages->get($id_lingua);
             $view_model->menu_active_btn = 'events';

@@ -18,7 +18,7 @@
                         <div class="basic-form">
                             <div>
                                 Link di accesso per l'ospite: <a target="_blank"
-                                                                 href="https://wellcox.cluster031.hosting.ovh.net/index.php?strh=<?php echo $view_model->ospite['hotel_associato']; ?>">https://wellcox.cluster031.hosting.ovh.net/index.php?strh=<?php echo $view_model->ospite['hotel_associato']; ?></a>
+                                                                 href="https://wellcome.host/home/index.php?strh=<?php echo $view_model->ospite['hotel_associato']; ?>">https://wellcome.host/home/index.php?strh=<?php echo $view_model->ospite['hotel_associato']; ?></a>
                             </div>
                             <br/>
                             <div class="form-group row">
