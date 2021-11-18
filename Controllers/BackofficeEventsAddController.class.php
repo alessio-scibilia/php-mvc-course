@@ -126,15 +126,22 @@ class BackofficeEventsAddController
                 $language = $languages->get_by_field('abbreviazione', $abbreviation);
                 if (!empty($language))
                 {
+                    $shortcode_lingua = $language['shortcode_lingua'];
+
+                    $convenzionato = $params['convenzionato'] ?? $match['convenzionato'] ?? 0;
+                    $testo_convenzione = $params['testo_convenzione'][$abbreviation] ?? $match['testo_convenzione'] ?? '';
+
                     $facility_event = array
                     (
                         'id_evento' => $id_evento,
-                        'shortcode_lingua' => $language['shortcode_lingua'],
-                        'testo_convenzione' => isset($params['recupera_convenzione']) ? '' : $params['testo_convenzione'][$abbreviation] ?? '',
+                        'shortcode_lingua' => $shortcode_lingua,
+                        'testo_convenzione' => $testo_convenzione,
                         'descrizione_evento' => $descrizione_evento,
                         'id_hotel' => $id_hotel,
-                        'id_struttura' => $id_struttura
+                        'id_struttura' => $id_struttura,
+                        'convenzionato' => $convenzionato
                     );
+
                     $id = $this->facility_event_repository->add($facility_event);
                 }
             }

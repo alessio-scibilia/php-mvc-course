@@ -190,7 +190,7 @@ class FacilityEventRepository extends MySQLRepository
         return $stmt->rowCount() > 0;
     }
 
-    public function get_convenzionato(int $id_evento, int $id_hotel): bool
+    public function get_convenzionato(int $id_evento, int $id_hotel): int
     {
         $table = $this->tableName;
         $key = $this->keyName;
