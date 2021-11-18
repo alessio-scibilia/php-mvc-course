@@ -29,8 +29,8 @@ class Router
             }
             else
             {
-                $controls[] = $piece;
                 $param = $piece;
+                $controls[] = str_replace('-', '', $piece);
             }
         }
         if (isset($params['default']))

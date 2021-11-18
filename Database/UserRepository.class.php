@@ -34,5 +34,11 @@ class UserRepository extends MySQLRepository
         return $this->get($where, $params);
     }
 
-
+    public function get_by_email_and_digitscode(string $email, string $restore_code): array
+    {
+        $where = "email = :email AND restore_code = :restore_code";
+        $params = array(":email" => $email, ":restore_code" => $restore_code);
+        $results = $this->get($where, $params);
+        return array_pop($results);
+    }
 }
