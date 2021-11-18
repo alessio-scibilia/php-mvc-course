@@ -146,6 +146,20 @@ class FacilityEventRepository extends MySQLRepository
         return $this->query($query, $params);
     }
 
+    public function get_related_by_event_id_and_hotel_id_without_facility(int $id_evento, int $id_hotel): array
+    {
+        $table = $this->tableName;
+        $query = join("\r\n", array(
+            "SELECT *",
+            "FROM $table",
+            "WHERE id_evento = :id_evento",
+            "  AND id_hotel = :id_hotel",
+            "  AND id_struttura IS NULL",
+        ));
+        $params = array(":id_evento" => $id_evento, "id_hotel" => $id_hotel);
+        return $this->query($query, $params);
+    }
+
     public function remove_by_event_id(int $id_evento): bool
     {
         $table = $this->tableName;

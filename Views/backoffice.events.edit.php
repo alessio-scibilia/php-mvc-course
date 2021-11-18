@@ -1,23 +1,21 @@
 <div class="container-fluid">
     <div class="row">
-        <form action="/backoffice/events/<?php echo $view_model->event->id;
-        include 'Views/xdebug.querystring.first.php'; ?>" method="POST" enctype="multipart/form-data">
+        <form action="/backoffice/events/<?php echo $view_model->event->id; include 'Views/xdebug.querystring.first.php'; ?>"
+              method="POST"
+              enctype="multipart/form-data">
 
             <div class="col-12 d-flex align-items-center justify-content-start mb15">
                 <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('indietro'); ?>
                     /</a>
                 <h1><i class="fa fa-calendar"></i> <?php echo $view_model->event->nome_evento; ?>
-                </h1>
             </div>
 
             <div class="col-xl-12 col-lg-12">
                 <div class="card">
-                    <?php if ($view_model->event->created_by != $view_model->user->id && $view_model->user->level > 2) { ?>
-                        <div class="card-header">
-                            <h3><?php echo $view_model->event->nome_evento; ?></h3>
-                        </div>
-                    <?php } ?>
+                    <div class="card-header">
+                        <h3><?php echo $view_model->translations->get('modifica_evento'); ?></h3>
+                    </div>
                     <div class="card-body">
                         <?php if ($view_model->event->created_by == $view_model->user->id || $view_model->user->level <= 2) { ?>
                             <div class="basic-form">
@@ -182,6 +180,7 @@
                                     </div>
                                 </div>
 
+                                <?php if ($view_model->user->level > 2) { ?>
                                 <div class="form-row">
                                     <div class="mt20 col-md-12">
                                         <h4><?php echo $view_model->translations->get('convenzione'); ?></h4>
@@ -208,6 +207,7 @@
                                         ?>
                                     </div>
                                 </div>
+                                <?php } ?>
 
                             </div>
 
