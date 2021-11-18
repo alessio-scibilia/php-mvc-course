@@ -451,7 +451,7 @@ else
                            data-title="<?php echo $view_model->translations->get('titolo_strutture') . ' | ' . $view_model->translations->get('nome_sito'); ?>"
                            data-toggle="tab"
                            href="/backoffice/facilities">
-                            <i class="fa fa-building"></i>
+                            <i class="fa fa-map-signs"></i>
                         </a>
                     </li>
                 <?php } ?>

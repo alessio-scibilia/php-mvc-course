@@ -29,6 +29,9 @@ class Event
     /** @var int */
     public $abilitato;
 
+    /** @var int */
+    public $convenzionato;
+
     /** @var string */
     public $sito_web;
 

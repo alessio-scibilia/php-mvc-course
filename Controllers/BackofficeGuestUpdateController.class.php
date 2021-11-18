@@ -71,10 +71,14 @@ class BackofficeGuestUpdateController
 
             //mail da mandare solo se le credenziali di accesso al frontoffice sono state cambiate
             if ($cr1 || $cr2) {
-                $link = 'https://alfiere.digital/home/index.php?strh=' . $user->related_id;
+                $protocol = ($_SERVER['HTTPS'] ?? '') === 'on' ? "https" : "http";
+                $host = $_SERVER['HTTP_HOST'];
+                $base_url = "$protocol://$host";
+                $strh = $user->related_id;
+                $link = "$base_url/home/index.php?strh=$strh";
+
                 $msg = "Ciao! Le tue credenziali di accesso a Wellcome sono state cambiate:" . PHP_EOL . PHP_EOL . "Link di accesso: " . $link . PHP_EOL . "Numero stanza: " . $params['numero_stanza'] . PHP_EOL;
-                if ($cr1)
-                    $msg .= "Password: " . $params['password'];
+                $msg .= "Password: " . $params['password'];
                 $msg .= PHP_EOL . PHP_EOL . 'Goditi il relax!';
 
                 if ($result == 'success') {
