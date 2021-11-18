@@ -125,7 +125,7 @@ class BackofficeEventsController
 
             $all_facilities_event = $this->facility_event_repository->get_by_event_id($id_evento);
 
-            if ($created_by == 0 && $user->level <= 2)
+            if ($created_by == 0 || $user->level <= 2)
             {
                 // rimuovo tutti i dati legati all'evento
                 $this->facility_event_repository->remove_by_event_id($id_evento);
