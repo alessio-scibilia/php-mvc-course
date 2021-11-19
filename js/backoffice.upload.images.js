@@ -10,7 +10,7 @@ function delPreview(target) {
     });
 }
 
-$('input.custom-file-input').on("change", function () {
+function imageUploadHandler() {
     var $container = $(this).parent().parent().next();
     var $previews = $container.find(".img-form-preview");
     var n_pictures = ($previews.length) - 1;
@@ -95,4 +95,6 @@ $('input.custom-file-input').on("change", function () {
             $(".notification-message").fadeOut();
         }
     });
-});
+}
+
+$('input.custom-file-input').on("change", imageUploadHandler);
