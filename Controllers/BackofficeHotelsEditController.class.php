@@ -209,8 +209,8 @@ class BackofficeHotelsEditController
                         (
                             'hotel_associato' => $id,
                             'nome_utility' => $titolo,
-                            'indirizzo_utility' => $params['indirizzo_utility'],
-                            'telefono_utility' => $params['telefono_utility'],
+                            'indirizzo_utility' => $params['indirizzo_utility'][$i],
+                            'telefono_utility' => $params['telefono_utility'][$i],
                             'descrizione_utility' => $params['descrizione_utility'][$i][$abbreviation],
                             'immagine_utility' => $images[0], // only 1 image for services
                             'shortcode_lingua' => $language['shortcode_lingua'],

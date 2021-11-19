@@ -88,7 +88,7 @@
             <input type="hidden" name="posizione_utility[1]" value="1">
             <div class="form-row">
                 <div class="col-12">
-                    <h5><?php echo $view_model->translations->get('datu_utility'); ?></h5>
+                    <h5><?php echo $view_model->translations->get('dati_utility'); ?></h5>
                 </div>
 
                 <div class="form-group col-md-4">
@@ -106,17 +106,19 @@
 
                 <div class="form-group col-md-4">
                     <label for="telefono"><?php echo $view_model->translations->get('telefono'); ?></label>
-                    <input type="text" name="telefono_utility" class="form-control" placeholder="118">
+                    <input type="text" name="telefono_utility[1]" class="form-control"
+                           placeholder="118">
                 </div>
                 <div class="form-group col-md-4">
                     <label for="telefono"><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                    <input type="text" name="indirizzo_utility" class="form-control" placeholder="Via roma 24, Roma">
+                    <input type="text" name="indirizzo_utility[1]" class="form-control"
+                           placeholder="Via roma 24, Roma">
                 </div>
 
                 <?php
                 $label = 'immagine_utility';
                 $button_label = 'immagine_utility';
-                $field_prefix = "immagine_utility[$r]";
+                $field_prefix = "immagine_utility[1]";
                 $urls = empty($principal->immagine) ? array() : array($principal->immagine);
                 $multiple = false;
                 include 'Views/backoffice.images.uploader.php';
@@ -126,7 +128,7 @@
                     <?php
                     $label = 'descrizione_utility';
                     $field = 'descrizione_utility';
-                    $field_prefix = "descrizione_utility[$r]";
+                    $field_prefix = "descrizione_utility[1]";
                     $items = array();
                     include 'Views/backoffice.multilanguage.textbox.php';
                     ?>
