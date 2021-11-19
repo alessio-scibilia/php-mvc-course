@@ -2,11 +2,8 @@
     <input type="hidden" id="num_services"
            value="<?php if (isset($view_model->services)) echo sizeof($view_model->services); else echo 1; ?>">
     <?php
-    $r = 0;
     if (isset($view_model->services)) {
-        foreach ($view_model->services as &$service) {
-            $r++;
-            $c = $r - 1;
+        foreach ($view_model->services as $r => &$service) {
             //$group = array_values($service);
             $principal = $service[$view_model->language['shortcode_lingua']];
             ?>

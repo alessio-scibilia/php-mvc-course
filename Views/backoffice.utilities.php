@@ -7,7 +7,6 @@
         $shortcode_lingua = $view_model->language['shortcode_lingua'];
         foreach ($view_model->utilities as $r => &$utility)
         {
-            $c = $r - 1;
             //$group = array_values($service);
             $principal = $utility[$shortcode_lingua];
             ?>

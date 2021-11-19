@@ -21,32 +21,32 @@ $(window).bind("popstate", function (e) {
 jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-utility", function () {
     var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
     var num = parseInt(jQuery(num_id).val());
-    if (num > 1) {
+    if (num > 0) {
         jQuery(num_id).val(num - 1);
         var $container = jQuery(this).closest(".form-container");
         var last = parseInt($container.attr('class').split(' ').pop().split('-').pop());
         $container.remove();
 
-        for (var i = last; i <= num; i++) {
+        for (var i = last + 1; i <= num; i++) {
 
             var next_class = '.form-container.fc-' + i;
             var $target = jQuery(next_class);
             var items_prev = i - 1;
 
             $target.find("[data-target]").each(function () {
-                let name = $(this).data("target");
+                let name = $(this).attr("data-target");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
                 let replacer = `$1${items_prev}$3`;
                 let next = name.replace(regex, replacer);
-                $(this).data("target", next);
+                $(this).attr("data-target", next);
             });
 
             $target.find("[data-name]").each(function () {
-                let name = $(this).data("name");
+                let name = $(this).attr("data-name");
                 let regex = /^([^\d]+)(\d+)(.*)$/;
                 let replacer = `$1${items_prev}$3`;
                 let next = name.replace(regex, replacer);
-                $(this).data("name", next);
+                $(this).attr("data-name", next);
             });
 
             $target.find("[name]").each(function () {
@@ -91,79 +91,81 @@ jQuery(document).on("click", ".annulla-servizio,.annulla-eccellenza,.annulla-uti
 
 jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", function () {
     var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
-    var items_current = parseInt($(num_id).val());
-    var items_next = items_current + 1;
+    var items_total = parseInt($(num_id).val());
+    var items_next = items_total; // this array is zero-based!
     jQuery(num_id).val(items_next);
 
     let $container = jQuery(this).closest(".form-container");
     let $last = $container.parent().children().last();
     var form = $last.clone();
-    $last.before(form);
+    $last.after(form);
+    $last = $(form);
 
-    if (items_current > 0) {
-        // div[class^='apple-'],div[class*=' apple-']
-        $("[class^='annulla-'],[class*=' annulla-']").prop('disabled', false);
+    // div[class^='apple-'],div[class*=' apple-']
+    $("[class^='annulla-'],[class*=' annulla-']").prop('disabled', false);
 
-        $container.fadeIn();
+    $container.fadeIn();
 
-        // SI: vanno lasciati perché hanno "fc-*" che è < 4 caratteri!
-        $last.attr("class", "form-container fc-" + items_next);
+    // SI: vanno lasciati perché hanno "fc-*" che è < 4 caratteri!
+    $last.attr("class", "form-container fc-" + items_next);
 
-        $last.find("[data-target]").each(function () {
-            let name = $(this).data("target");
-            let regex = /^([^\d]+)(\d+)(.*)$/;
-            let replacer = `$1${items_next}$3`;
-            let next = name.replace(regex, replacer);
-            $(this).data("target", next);
+    // Clean all fields
+    // $last.find("[value]").val('');
+
+    $last.find("[data-target]").each(function () {
+        let name = $(this).attr("data-target");
+        let regex = /^([^\d]+)(\d+)(.*)$/;
+        let replacer = `$1${items_next}$3`;
+        let next = name.replace(regex, replacer);
+        $(this).attr("data-target", next);
+    });
+
+    $last.find("[data-name]").each(function () {
+        let name = $(this).attr("data-name");
+        let regex = /^([^\d]+)(\d+)(.*)$/;
+        let replacer = `$1${items_next}$3`;
+        let next = name.replace(regex, replacer);
+        $(this).attr("data-name", next);
+    });
+
+    $last.find("[name]").each(function () {
+        let name = $(this).attr("name");
+        let regex = /^([^\d]+)(\d+)(.*)$/;
+        let replacer = `$1${items_next}$3`;
+        let next = name.replace(regex, replacer);
+        $(this).attr("name", next);
+    });
+
+    // class and id end with /-\d+$/
+    $last.find("[id]").each(function () {
+        let id = $(this).attr("id");
+        let regex = /^(.+)(-\d+)$/;
+        let replacer = `$1-${items_next}`;
+        let next = id.replace(regex, replacer);
+        $(this).attr("id", next);
+    });
+    var $targets = $last.find("[class]").filter(function () {
+        let classes = $(this).attr("class").split(' ');
+        let regex = /^([^-]{4,}-)+\d+$/;
+        let matches = classes.filter(function (c) {
+            return c.match(regex);
         });
-
-        $last.find("[data-name]").each(function () {
-            let name = $(this).data("name");
-            let regex = /^([^\d]+)(\d+)(.*)$/;
-            let replacer = `$1${items_next}$3`;
-            let next = name.replace(regex, replacer);
-            $(this).data("name", next);
+        return matches.length > 0;
+    });
+    $targets.each(function () {
+        let classes = $(this).attr("class").split(' ');
+        let regex = /^(.+)(-\d+)$/;
+        let replacer = `$1-${items_next}`;
+        let new_classes = classes.map(function (c) {
+            return c.replace(regex, replacer);
         });
-
-        $last.find("[name]").each(function () {
-            let name = $(this).attr("name");
-            let regex = /^([^\d]+)(\d+)(.*)$/;
-            let replacer = `$1${items_next}$3`;
-            let next = name.replace(regex, replacer);
-            $(this).attr("name", next);
-        });
-
-        // class and id end with /-\d+$/
-        $last.find("[id]").each(function () {
-            let id = $(this).attr("id");
-            let regex = /^(.+)(-\d+)$/;
-            let replacer = `$1-${items_next}`;
-            let next = id.replace(regex, replacer);
-            $(this).attr("id", next);
-        });
-        var $targets = $last.find("[class]").filter(function () {
-            let classes = $(this).attr("class").split(' ');
-            let regex = /^([^-]{4,}-)+\d+$/;
-            let matches = classes.filter(function (c) {
-                return c.match(regex);
-            });
-            return matches.length > 0;
-        });
-        $targets.each(function () {
-            let classes = $(this).attr("class").split(' ');
-            let regex = /^(.+)(-\d+)$/;
-            let replacer = `$1-${items_next}`;
-            let new_classes = classes.map(function (c) {
-                return c.replace(regex, replacer);
-            });
-            let next = new_classes.join(' ');
-            $(this).attr("class", next);
-        });
+        let next = new_classes.join(' ');
+        $(this).attr("class", next);
+    });
 
 
-        var offset = $last.offset().top;
-        $('html,body').animate({scrollTop: offset}, 'slow');
-    }
+    var offset = $last.offset().top;
+    $('html,body').animate({scrollTop: offset}, 'slow');
 });
 
 
