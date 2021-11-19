@@ -100,6 +100,7 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
     var form = $last.clone();
     $last.after(form);
     $last = $(form);
+    registerMultilanguageHandler($last.find('.multilanguage-textbox-button'));
 
     // div[class^='apple-'],div[class*=' apple-']
     $("[class^='annulla-'],[class*=' annulla-']").prop('disabled', false);
