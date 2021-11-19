@@ -87,8 +87,8 @@
                                data-num="#num_utilities"
                                value="Aggiungi un'altra utility">
                     </div>
+                    <hr/>
                 </div>
-                <hr/>
             </div>
         <?php }
     } else { ?>
@@ -163,8 +163,8 @@
                            data-num="#num_utilities"
                            value="Aggiungi un'altra utility">
                 </div>
+                <hr/>
             </div>
-            <hr/>
         </div>
     <?php } ?>
 </div>
