@@ -92,8 +92,7 @@ class BackofficeHotelsEditController
      */
     public function http_post(array &$params): IView
     {
-        if (isset($params['hotels']))
-        {
+        if (isset($params['hotels'])) {
             $id = intval($params['hotels']);
             $languages = new Languages($this->language_repository->list_all());
             $hotel_fields = array
@@ -165,16 +164,13 @@ class BackofficeHotelsEditController
                 !empty($params['orario_continuato']) &&
                 !empty($params['giorno']) &&
                 !empty($params['img_servizio'])
-                )
-            {
+            ) {
                 $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-                foreach ($params['nome_servizio'] as $i => $names)
-                {
+                foreach ($params['nome_servizio'] as $i => $names) {
                     if (empty($params['img_servizio'][$i])) continue;
 
                     $images = array_values($params['img_servizio'][$i]);
-                    foreach ($names as $abbreviation => $titolo)
-                    {
+                    foreach ($names as $abbreviation => $titolo) {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                         $service = array
@@ -187,8 +183,7 @@ class BackofficeHotelsEditController
                             'shortcode_lingua' => $language['shortcode_lingua'],
                             'posizione' => $i // $params['posizione_servizio'][$i]
                         );
-                        foreach ($weekdays as $weekday)
-                        {
+                        foreach ($weekdays as $weekday) {
                             $orari = $params['giorno'][$i][$weekday];
                             $flag = $params['orario_continuato'][$i][$weekday];
                             $prefix = str_repeat('|', empty($orari) ? 0 : 1);
@@ -202,15 +197,12 @@ class BackofficeHotelsEditController
                 }
             }
 
-            if (!empty($params['nome_utility']))
-            {
+            if (!empty($params['nome_utility'])) {
                 $this->utility_repository->remove_by_hotel($id);
 
-                foreach ($params['nome_utility'] as $i => $names)
-                {
+                foreach ($params['nome_utility'] as $i => $names) {
                     $images = array_values($params['img_utility'][$i] ?? array(''));
-                    foreach ($names as $abbreviation => $titolo)
-                    {
+                    foreach ($names as $abbreviation => $titolo) {
                         $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                         $utility = array
@@ -219,6 +211,7 @@ class BackofficeHotelsEditController
                             'nome_utility' => $titolo,
                             'indirizzo_utility' => $params['indirizzo_utility'],
                             'telefono_utility' => $params['telefono_utility'],
+                            'descrizione_utility' => $params['descrizione_utility'][$i][$abbreviation],
                             'immagine_utility' => $images[0], // only 1 image for services
                             'shortcode_lingua' => $language['shortcode_lingua'],
                             'posizione' => $i //$params['posizione_utility'][$i]

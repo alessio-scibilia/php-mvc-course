@@ -105,8 +105,7 @@ class BackofficeHotelsAddController
             isset($params['nome_servizio']) &&
             isset($params['orario_continuato']) &&
             isset($params['giorno'])
-            )
-        {
+        ) {
             $multiples = array
             (
                 'descrizione',
@@ -128,12 +127,10 @@ class BackofficeHotelsAddController
             }
 
             $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-            foreach ($params['nome_servizio'] as $i => $names)
-            {
+            foreach ($params['nome_servizio'] as $i => $names) {
                 if (empty($params['img_servizio'][$i])) continue;
-                $images = array_values($params['img_servizio'][$i] );
-                foreach ($names as $abbreviation => $titolo)
-                {
+                $images = array_values($params['img_servizio'][$i]);
+                foreach ($names as $abbreviation => $titolo) {
                     $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                     $service = array
@@ -163,13 +160,10 @@ class BackofficeHotelsAddController
             $params['errors'][] = "Missing mandatory field";
         }
 
-        if (isset($params['nome_utility']) && isset($params['immagine_utility']))
-        {
-            foreach ($params['nome_utility'] as $i => $names)
-            {
+        if (isset($params['nome_utility']) && isset($params['immagine_utility'])) {
+            foreach ($params['nome_utility'] as $i => $names) {
                 $images = array_values($params['immagine_utility'][0]);
-                foreach ($names as $abbreviation => $titolo)
-                {
+                foreach ($names as $abbreviation => $titolo) {
                     $language = $languages->get_by_field('abbreviazione', $abbreviation);
 
                     $utility = array
@@ -178,9 +172,10 @@ class BackofficeHotelsAddController
                         'nome_utility' => $titolo,
                         'indirizzo_utility' => $params['indirizzo_utility'],
                         'telefono_utility' => $params['telefono_utility'],
+                        'descrizione_utility' => $params['descrizione_utility'][$i][$abbreviation],
                         'immagine_utility' => $images[0], // only 1 image for services
                         'shortcode_lingua' => $language['shortcode_lingua'],
-                        'posizione' =>  $i // TODO: does not work: $params['posizione_utility'][$i]
+                        'posizione' => $i // TODO: does not work: $params['posizione_utility'][$i]
                     );
 
                     $utility['id'] = $this->utility_repository->add($utility);

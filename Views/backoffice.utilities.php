@@ -11,7 +11,8 @@
             $principal = $utility[$view_model->language['shortcode_lingua']];
             ?>
             <div style="display: block;" class="form-container fc-<?php echo $r; ?>">
-                <input type="hidden" name="posizione_utility[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
+                <input type="hidden" name="posizione_utility[<?php echo $r; ?>]"
+                       value="<?php echo $principal->posizione; ?>">
                 <div class="form-row">
                     <div class="col-12">
                         <h5><?php echo $view_model->translations->get('numeri_utili'); ?></h5>
@@ -50,6 +51,17 @@
                     $multiple = false;
                     include 'Views/backoffice.images.uploader.php';
                     ?>
+
+                    <div class="form-group col-md-12">
+                        <?php
+                        $label = 'descrizione_utility';
+                        $field = 'descrizione_utility';
+                        $field_prefix = "descrizione_utility[$r]";
+                        $items = array_values($utility);
+                        include 'Views/backoffice.multilanguage.textbox.php';
+                        ?>
+                    </div>
+
                 </div>
 
                 <div class="form-row">
@@ -109,6 +121,16 @@
                 $multiple = false;
                 include 'Views/backoffice.images.uploader.php';
                 ?>
+
+                <div class="form-group col-md-12">
+                    <?php
+                    $label = 'descrizione_utility';
+                    $field = 'descrizione_utility';
+                    $field_prefix = "descrizione_utility[$r]";
+                    $items = array();
+                    include 'Views/backoffice.multilanguage.textbox.php';
+                    ?>
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-12">
