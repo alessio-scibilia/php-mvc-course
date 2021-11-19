@@ -88,9 +88,8 @@
                                value="Aggiungi un'altra utility">
                     </div>
                 </div>
-
+                <hr/>
             </div>
-            <hr/>
         <?php }
     } else { ?>
         <div style="display: block;" class="form-container fc-1">
@@ -165,8 +164,8 @@
                            value="Aggiungi un'altra utility">
                 </div>
             </div>
+            <hr/>
         </div>
-        <hr/>
     <?php } ?>
 </div>
 
