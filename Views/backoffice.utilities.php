@@ -5,7 +5,8 @@
     if (isset($view_model->utilities))
     {
         $shortcode_lingua = $view_model->language['shortcode_lingua'];
-        foreach ($view_model->utilities as $r => &$utility)
+        $r = 0;
+        foreach ($view_model->utilities as &$utility)
         {
             //$group = array_values($service);
             $principal = $utility[$shortcode_lingua];
@@ -18,7 +19,7 @@
                         <h5><?php echo $view_model->translations->get('numeri_utili'); ?></h5>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <?php
                             $type = 'input';
                             $label = 'nome_utility';
@@ -30,7 +31,7 @@
                             include 'Views/backoffice.multilanguage.textbox.php';
                         ?>
                     </div>
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label for="telefono-<?php echo $r; ?>"><?php echo $view_model->translations->get('telefono'); ?></label>
                         <input type="text"
                                name="telefono_utility[<?php echo $r; ?>]"
@@ -39,15 +40,17 @@
                                class="form-control"
                                placeholder="118">
                     </div>
-                    <div class="form-group col-md-4">
-                        <label for="indirizzo-<?php echo $r; ?>"><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                        <input type="text"
-                               name="indirizzo_utility[<?php echo $r; ?>]"
-                               id="indirizzo-<?php echo $r; ?>"
-                               value="<?php echo $principal->indirizzo_utility; ?>"
-                               class="form-control"
-                               placeholder="Via Roma 108, Milano (MI)">
-                    </div>
+
+                    <?php
+                        $model = (object)array
+                        (
+                            'indirizzo' => $principal->indirizzo_utility,
+                            'latitudine' => '44.363',
+                            'longitudine' => '8.044',
+                        );
+                        $field_suffix = "_utility[$r]";
+                        include 'Views/backoffice.geolocator.php';
+                    ?>
 
                     <?php
                         $label = 'immagine_utility';
@@ -89,7 +92,9 @@
                     <hr/>
                 </div>
             </div>
-        <?php }
+        <?php
+            $r++;
+        }
     } else { ?>
         <div style="display: block;" class="form-container fc-1">
             <input type="hidden" name="posizione_utility[0]" value="0">
@@ -98,7 +103,7 @@
                     <h5><?php echo $view_model->translations->get('dati_utility'); ?></h5>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <?php
                         $type = 'input';
                         $label = 'nome_utility';
@@ -111,7 +116,7 @@
                     ?>
                 </div>
 
-                <div class="form-group col-md-4">
+                <div class="form-group col-md-6">
                     <label for="telefono-0"><?php echo $view_model->translations->get('telefono'); ?></label>
                     <input type="text"
                            name="telefono_utility[0]"
@@ -119,20 +124,24 @@
                            placeholder="118"
                            id="telefono-0">
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="indirizzo-0"><?php echo $view_model->translations->get('indirizzo'); ?></label>
-                    <input type="text"
-                           name="indirizzo_utility[0]"
-                           class="form-control"
-                           placeholder="Via roma 24, Roma"
-                           id="indirizzo-0">
-                </div>
+
+                <?php
+                    $model = (object)array
+                    (
+                        'indirizzo' => '',
+                        'latitudine' => '44.363',
+                        'longitudine' => '8.044',
+                    );
+                    $field_suffix = "_utility[0]";
+                    include 'Views/backoffice.geolocator.php';
+                ?>
+
 
                 <?php
                     $label = 'immagine_utility';
                     $button_label = 'immagine_utility';
                     $field_prefix = "immagine_utility[0]";
-                    $urls = empty($principal->immagine) ? array() : array($principal->immagine);
+                    $urls = array();
                     $multiple = false;
                     include 'Views/backoffice.images.uploader.php';
                 ?>

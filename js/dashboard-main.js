@@ -103,6 +103,7 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
 
     // register handlers
     registerMultilanguageHandler($last.find('.multilanguage-textbox-button'));
+    $last.find('.map').each(bindMap);
     $last.find('input.custom-file-input').on("change", imageUploadHandler);
 
     // div[class^='apple-'],div[class*=' apple-']
