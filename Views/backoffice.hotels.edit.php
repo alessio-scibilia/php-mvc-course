@@ -123,6 +123,7 @@
                                     return !empty($img);
                                 });
                                 $multiple = true;
+                                $main_url_position = $view_model->profile->immagine_principale;
                                 include 'Views/backoffice.images.uploader.php';
                                 ?>
 
