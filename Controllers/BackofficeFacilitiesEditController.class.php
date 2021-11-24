@@ -191,7 +191,7 @@ class BackofficeFacilitiesEditController
                         }
                     }
 
-                    $facility['immagine_didascalia'] = join('|', $params['img_struttura']);
+                    $facility['immagine_didascalia'] = join('|', $params['img_struttura']) . '|';
                     $facility['descrizione'] = $params['descrizione'][$abbreviation];
                     if ($user->level > 2) {
                         $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
