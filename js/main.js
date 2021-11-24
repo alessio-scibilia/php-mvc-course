@@ -1,8 +1,8 @@
 /*
-	Questa funzione crea un set predefinito di regole per la validazione dei campi lato
-	frontend, per eseguirla basta applicare al bottone submit del form da analizzare la classe "validate-it", e un campo id="validate-#" dove
-	# corrisponde al numero del form rispetto agli altri da analizzare (es ci sono due form? il primo submit avrà id="validate-1" e il secondo "validate-2")
-	bisogna anche applicare la classe "validate-#" (uguale al nome del campo id del form), negli elementi (input,textarea ecc) da analizzare all'interno del form
+   Questa funzione crea un set predefinito di regole per la validazione dei campi lato
+   frontend, per eseguirla basta applicare al bottone submit del form da analizzare la classe "validate-it", e un campo id="validate-#" dove
+   # corrisponde al numero del form rispetto agli altri da analizzare (es ci sono due form? il primo submit avrà id="validate-1" e il secondo "validate-2")
+   bisogna anche applicare la classe "validate-#" (uguale al nome del campo id del form), negli elementi (input,textarea ecc) da analizzare all'interno del form
 */
 var using = false;
 
@@ -182,7 +182,6 @@ jQuery(".validate-it").click(function (e) {
             if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
                 error_message = "<p>- Inserire un indirizzo email valido</p>";
                 is_error = true;
-
                 jQuery("#email").after('<div class="error_message">' + error_message + '</div>');
             }
         }
@@ -192,7 +191,6 @@ jQuery(".validate-it").click(function (e) {
                 if (sito == '') {
                     error_message = "<p>- Inserire un indirizzo web valido</p>";
                     is_error = true;
-
                     jQuery("#sito").after('<div class="error_message">' + error_message + '</div>');
                 }
             }
@@ -201,13 +199,12 @@ jQuery(".validate-it").click(function (e) {
             if (nome_struttura.length < 1) {
                 error_message = "- Inserire un nome per la struttura";
                 is_error = true;
-
                 jQuery("#nome_struttura").after('<div class="error_message">' + error_message + '</div>');
             }
         }
 
         if (jQuery("#telefono").length) {
-            if (!/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(telefono)) {
+            if (telefono.length < 1) {
                 error_message = "- Inserire un numero di telefono";
                 is_error = true;
 
