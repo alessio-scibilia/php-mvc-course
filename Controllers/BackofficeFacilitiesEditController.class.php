@@ -197,7 +197,7 @@ class BackofficeFacilitiesEditController
                         $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                     }
 
-                    $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array());
+                    $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array()) . '|';
 
                     $tips = array();
                     foreach ($params['didascalia_img_didascalia'] ?? array() as $image_tips) {

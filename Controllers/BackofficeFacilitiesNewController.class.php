@@ -168,14 +168,14 @@ class BackofficeFacilitiesNewController
                 $facility[$facility_field] = $params[$post_field];
             }
 
-            $facility['immagine_didascalia'] = join('|', $params['img_struttura']);
+            $facility['immagine_didascalia'] = join('|', $params['img_struttura']) . '|';
             $facility['descrizione'] = $params['descrizione'][$abbreviation];
             if ($user->level > 2) {
                 $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
 
             }
 
-            $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array());
+            $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array()) . '|';
 
             $tips = array();
             foreach ($params['didascalia_img_didascalia'] ?? array() as $image_tips) {

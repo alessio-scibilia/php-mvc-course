@@ -179,6 +179,8 @@
                                     });
                                     $tips = false;
                                     $multiple = true;
+                                    $main_url_position = $view_model->principal->immagine_principale;
+
                                     include 'Views/backoffice.images.uploader.php';
                                     ?>
 
