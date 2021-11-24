@@ -122,6 +122,7 @@
                                 $urls = array_filter($immagini, function ($img) {
                                     return !empty($img);
                                 });
+                                array_pop($urls);
                                 $multiple = true;
                                 $main_url_position = $view_model->profile->immagine_principale;
                                 include 'Views/backoffice.images.uploader.php';

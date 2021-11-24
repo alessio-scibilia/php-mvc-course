@@ -177,10 +177,10 @@
                                     $urls = array_filter($images, function ($img) {
                                         return !empty($img);
                                     });
+
+                                    array_pop($urls);
                                     $tips = false;
                                     $multiple = true;
-                                    $main_url_position = $view_model->principal->immagine_principale;
-
                                     include 'Views/backoffice.images.uploader.php';
                                     ?>
 
@@ -347,6 +347,9 @@
                                         $field_prefix = 'img_didascalia';
                                         $urls = empty($view_model->principal->real_immagini_didascalia) ? array() : explode('|', $view_model->principal->real_immagini_didascalia);
                                         $tips = array($view_model->tips);
+
+                                        array_pop($urls);
+
                                         $multiple = true;
                                         include 'Views/backoffice.images.uploader.php';
                                         ?>
