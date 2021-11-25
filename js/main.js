@@ -297,7 +297,7 @@ jQuery(".validate-it").click(function (e) {
             },
             1500
         );
-        return false;
+        return true;
     } else {
         $(".notification-message").html("Alcuni campi non sono compilati in modo corretto");
         $(".notification-message").removeClass("nm-error");
