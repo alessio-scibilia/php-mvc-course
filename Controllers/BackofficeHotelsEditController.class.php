@@ -132,6 +132,11 @@ class BackofficeHotelsEditController
                     $hotel_translation['descrizione_ospiti'] = $params['descrizione_ospiti'][$abbreviation] ?? $hotel_translation['descrizione_ospiti'];
                 }
                 $hotel_translation['immagini_secondarie'] = join('|', $params['img_hotel']) . '|';
+
+                if (strlen($hotel_translation['immagini_secondarie']) == 1)
+                    $hotel_translation['immagini_secondarie'] = '';
+
+
                 $hotel_translation['immagine_principale'] = $params['default_image'];
                 $this->hotel_repository->update($hotel_translation);
             }
