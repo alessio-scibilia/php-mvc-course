@@ -174,13 +174,13 @@
                                     $label = 'immagini_struttura';
                                     $button_label = 'scegli_immagini';
                                     $field_prefix = "img_struttura";
-                                    $urls = array_filter($images, function ($img) {
-                                        return !empty($img);
-                                    });
-
+                                    $urls = $images;
                                     array_pop($urls);
+
                                     $tips = false;
                                     $multiple = true;
+                                    $main_url_position = $view_model->principal->immagine_principale;
+
                                     include 'Views/backoffice.images.uploader.php';
                                     ?>
 

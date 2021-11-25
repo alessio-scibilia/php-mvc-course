@@ -119,9 +119,7 @@
                                 $label = 'immagini_hotel';
                                 $button_label = 'scegli_immagini';
                                 $field_prefix = "img_hotel";
-                                $urls = array_filter($immagini, function ($img) {
-                                    return !empty($img);
-                                });
+                                $urls = $immagini;
                                 array_pop($urls);
                                 $multiple = true;
                                 $main_url_position = $view_model->profile->immagine_principale;

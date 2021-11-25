@@ -40,7 +40,7 @@ $names = array_map(function ($l) {
                         class="delete-preview"
                         onclick="delPreview(this)"><i class="fa fa-close"></i></span><img
                         class="img-form-preview-item"
-                        data-name="<?php echo $field_prefix ?>[<?php echo $i + 1; ?>]"
+                        data-name="<?php echo $field_prefix ?>[<?php echo $i; ?>]"
                         src="<?php echo $urls[$i]; ?>" height="200px">
                 <div class="default-image-cont">
                     <div class="pt20">
@@ -49,7 +49,7 @@ $names = array_map(function ($l) {
                             $i_lang = 0;
                             foreach ($abbreviations as $abbreviation) { ?>
                                 <textarea
-                                        name="didascalia_<?php echo $field_prefix ?>[<?php echo $i + 1; ?>][<?php echo $abbreviation; ?>]"
+                                        name="didascalia_<?php echo $field_prefix ?>[<?php echo $i; ?>][<?php echo $abbreviation; ?>]"
                                         placeholder="<?php echo $abbreviation; ?>"><?php echo $tips[0][$i][$abbreviation] ?? ''; ?></textarea>
                                 <?php
                                 $i_lang++;
@@ -57,10 +57,10 @@ $names = array_map(function ($l) {
                         <?php } else if ($multiple) { ?>
                             <input type="radio"
                                    id="default-image"
-                                <?php if ($main_url_position == $i + 1) echo 'checked="checked" '; ?>
+                                <?php if ($main_url_position == $i) echo 'checked="checked" '; ?>
                                    name="default_image"
                                    class="default-image"
-                                   value="<?php echo $i + 1; ?>">
+                                   value="<?php echo $i; ?>">
                             <label>Immagine principale</label>
                             <br>
                         <?php } ?>
