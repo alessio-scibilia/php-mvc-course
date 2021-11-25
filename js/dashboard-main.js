@@ -93,7 +93,7 @@ jQuery(document).on("click", ".save-servizio,.save-eccellenza,.save-utility", fu
     var num_id = jQuery(this).data("num"); // "#num_services"; "#num_utilities"; "#num_eccellenze";
     var items_total = parseInt($(num_id).val());
     var items_next = items_total; // this array is zero-based!
-    jQuery(num_id).val(items_next);
+    jQuery(num_id).val(items_next + 1);
 
     let $container = jQuery(this).closest(".form-container");
     let $last = $container.parent().children().last();

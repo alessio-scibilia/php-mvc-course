@@ -292,6 +292,12 @@ jQuery(".validate-it").click(function (e) {
 
     if (is_error == false) {
         console.log('validation PASSED', e);
+        window.setTimeout(function () {
+                e.target.form.submit()
+            },
+            1500
+        );
+        return false;
     } else {
         $(".notification-message").html("Alcuni campi non sono compilati in modo corretto");
         $(".notification-message").removeClass("nm-error");

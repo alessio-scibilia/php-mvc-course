@@ -160,7 +160,8 @@ class BackofficeFacilitiesEditController
                 'default_image' => 'immagine_principale',
             );
             $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
-            foreach ($facilities as &$facility) {
+            foreach ($facilities as &$facility)
+            {
                 $language = $languages->get_by_field('shortcode_lingua', $facility['shortcode_lingua']);
                 $abbreviation = $language['abbreviazione'];
 
@@ -231,29 +232,32 @@ class BackofficeFacilitiesEditController
                         $facility_category['id'] = $this->facility_category_repository->add($facility_category);
                     }
 
-                    // excellences
-                    $this->excellence_repository->remove_by_facility($id);
-                    foreach ($params['nome_eccellenza'] as $position => $names) {
-                        foreach ($names as $abbreviation => $name) {
-                            $language = $languages->get_by_field('abbreviazione', $abbreviation);
-                            $images = array_values($params['img_eccellenza'][$position] ?? array());
-                            $image = array_pop($images);
-                            $excellence = array
-                            (
-                                'struttura_collegata' => $id,
-                                'titolo' => $name,
-                                'testo' => $params['testo'][$position][$abbreviation] ?? '',
-                                'immagine' => $image,
-                                'shortcode_lingua' => $language['shortcode_lingua'],
-                                'abilitato' => $params['abilitato'][$position] ?? 0,
-                                'posizione' => $position
-                            );
-                            $excellence['id'] = $this->excellence_repository->add($excellence);
-                        }
+                }
+            }
+
+            if ($user->level <= 2 || $facility['created_by'] == $user->id) {
+                // excellences
+                $this->excellence_repository->remove_by_facility($id);
+                foreach ($params['nome_eccellenza'] as $position => $names) {
+                    foreach ($names as $abbreviation => $name) {
+                        $language = $languages->get_by_field('abbreviazione', $abbreviation);
+                        $images = array_values($params['img_eccellenza'][$position] ?? array());
+                        $image = array_pop($images);
+                        $excellence = array
+                        (
+                            'struttura_collegata' => $id,
+                            'titolo' => $name,
+                            'testo' => $params['testo'][$position][$abbreviation] ?? '',
+                            'immagine' => $image,
+                            'shortcode_lingua' => $language['shortcode_lingua'],
+                            'abilitato' => $params['abilitato'][$position] ?? 0,
+                            'posizione' => $position
+                        );
+                        $excellence['id'] = $this->excellence_repository->add($excellence);
                     }
                 }
-
             }
+
             if (isset($params['related_hotels']))
                 $this->update_related_items($params, $id);
 

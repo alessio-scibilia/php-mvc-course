@@ -228,7 +228,7 @@
                                         $label = 'nome_servizio';
                                         $placeholder = 'Es: Piatti giapponesi';
                                         $field = 'titolo';
-                                        $field_prefix = "nome_eccellenza[1]";
+                                        $field_prefix = "nome_eccellenza[0]";
                                         $items = $excellences;
                                         include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
@@ -237,7 +237,7 @@
                                     <?php
                                     $label = 'immagine_servizio';
                                     $button_label = 'scegli_immagine';
-                                    $field_prefix = "img_eccellenza[1]";
+                                    $field_prefix = "img_eccellenza[0]";
                                     $urls = empty($excellence->immagine) ? array() : array($excellence->immagine);
                                     $multiple = false;
                                     include 'Views/backoffice.images.uploader.php';
@@ -248,7 +248,7 @@
                                         $type = 'richtextbox';
                                         $label = 'descrizione';
                                         $field = 'testo';
-                                        $field_prefix = "testo[1]";
+                                        $field_prefix = "testo[0]";
                                         $items = $excellences;
                                         include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
@@ -260,7 +260,7 @@
                                     <div class="form-group col-md-3">
                                         <?php
                                         $label = 'abilitato';
-                                        $field = "abilitato[1]";
+                                        $field = "abilitato[0]";
                                         $value = $excellence->abilitato;
                                         include 'Views/backoffice.checkbox.php';
                                         ?>
