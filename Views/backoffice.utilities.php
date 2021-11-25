@@ -45,8 +45,8 @@
                         $model = (object)array
                         (
                             'indirizzo' => $principal->indirizzo_utility,
-                            'latitudine' => '44.363',
-                            'longitudine' => '8.044',
+                            'latitudine' => $principal->latitudine_utility ?? '44.363',
+                            'longitudine' => $principal->longitudine_utility ?? '8.044',
                         );
                         $field_suffix = "_utility[$r]";
                         include 'Views/backoffice.geolocator.php';

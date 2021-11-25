@@ -214,6 +214,8 @@ class BackofficeHotelsEditController
                             'descrizione_utility' => $params['descrizione_utility'][$i][$abbreviation],
                             'immagine_utility' => $images[0], // only 1 image for services
                             'shortcode_lingua' => $language['shortcode_lingua'],
+                            'latitudine_utility' => $params['latitudine_utility'][$i],
+                            'longitudine_utility' => $params['longitudine_utility'][$i],
                             'posizione' => $i //$params['posizione_utility'][$i]
                         );
 
