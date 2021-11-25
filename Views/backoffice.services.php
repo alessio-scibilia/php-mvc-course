@@ -3,7 +3,8 @@
            value="<?php if (isset($view_model->services)) echo sizeof($view_model->services); else echo 1; ?>">
     <?php
     if (isset($view_model->services)) {
-        foreach ($view_model->services as $r => &$service) {
+        $r = 0;
+        foreach ($view_model->services as &$service) {
             //$group = array_values($service);
             $principal = $service[$view_model->language['shortcode_lingua']];
             ?>
@@ -90,7 +91,9 @@
 
                 </div>
             </div>
-        <?php }
+        <?php
+            $r++;
+        }
     } else { ?>
         <div style="display: block;" class="form-container fc-1">
             <input type="hidden" name="posizione_servizio[1]" value="1">
