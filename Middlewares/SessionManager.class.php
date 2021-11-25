@@ -88,8 +88,8 @@ class SessionManager
         else
         {
             $key = self::COOKIE_NAME;
-            //$header = "Set-Cookie: $key=$value; Max-Age=$lifetime; Domain=$host; Path=/; Secure; HttpOnly; SameSite=Lax";
-            $header = "Set-Cookie: $key=$value; Max-Age=0; Domain=$host; Path=/";
+            //$header = "Set-Cookie: $key=; Max-Age=$lifetime; Domain=$host; Path=/; Secure; HttpOnly; SameSite=Lax";
+            $header = "Set-Cookie: $key=; Max-Age=0; Domain=$host; Path=/";
             header($header, true);
         }
     }
