@@ -185,10 +185,10 @@ class BackofficeFacilitiesEditController
                             continue;
 
                         $facility[$facility_field] = $params[$facility_field];
+                    }
 
-                        foreach ($facility_fields_remap as $post_field => $facility_field) {
-                            $facility[$facility_field] = $params[$post_field];
-                        }
+                    foreach ($facility_fields_remap as $post_field => $facility_field) {
+                        $facility[$facility_field] = $params[$post_field] ?? '';
                     }
 
                     $facility['immagine_didascalia'] = join('|', $params['img_struttura']) . '|';

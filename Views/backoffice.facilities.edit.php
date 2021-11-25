@@ -257,7 +257,8 @@
                                        id="num_eccellenze"
                                        value="<?php echo count($view_model->related_excellences); ?>">
                                 <?php
-                                foreach ($view_model->related_excellences as $r => $excellences) {
+                                $r = 0;
+                                foreach ($view_model->related_excellences as $excellences) {
                                     $excellence = $excellences[$view_model->language['shortcode_lingua']];
                                     ?>
                                     <div class="form-container fc-<?php echo $r; ?>"
@@ -325,7 +326,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                <?php } ?>
+                                <?php
+                                    $r++;
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
