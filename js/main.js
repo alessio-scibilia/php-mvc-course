@@ -69,7 +69,7 @@ jQuery(".validate-it").click(function (e) {
     if (jQuery("#nome_struttura").length)
         var nome_struttura = jQuery("#nome_struttura").val();
 
-    if (jQuery("#nome_evento").length) {
+    /* if (jQuery("#nome_evento").length) {
         var nome_evento = jQuery("#nome_evento").val();
         if (nome_evento.length < 1) {
             error_message = "- Inserire un nome per l'evento";
@@ -77,7 +77,7 @@ jQuery(".validate-it").click(function (e) {
 
             jQuery("#nome_evento").after('<div class="error_message">' + error_message + '</div>');
         }
-    }
+    } */
 
     if (jQuery("#email").length)
         var email = jQuery("#email").val();
