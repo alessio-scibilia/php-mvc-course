@@ -176,29 +176,12 @@
 
 
     jQuery(".lang-selector").change(function () {
-    var value = jQuery(this).val();
-    var abbreviazione = jQuery(this).text();
-    var search_val = false;
-    if (jQuery(".dataTables_filter").children().children())
-    search_val = jQuery(".dataTables_filter").children().children().val();
-    jQuery(".notification-message").fadeOut();
-    var action = jQuery(this).attr("data-action");
-    var params = jQuery(this).val();
-    if (params == "false") params = "";
-    var title = jQuery(this).attr("data-title");
-    if (params != "")
-    window.history.pushState("object or string", title, "/backoffice/" + action + "/" + params);
-    else
-    window.history.pushState("object or string", title, "/backoffice/" + action);
-    $(document).prop("title", title);
+    var value = $(this).val();
+    var url = window.location.href;
+    url = url.split('?')[0];
+    url += '?shortcode_lingua='+value;
 
-    var val = false;
-    if (jQuery("#gobacksearch").length) {
-    var val = jQuery("#gobacksearch").attr("data-search");
-}
-
-    openViewParseURL(action, false, search_val, val);
-
+    window.location.href = url;
 });
 
 

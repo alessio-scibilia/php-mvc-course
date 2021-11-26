@@ -15,13 +15,13 @@
                                 data-action="<?php echo $view_model->translations->get('link_traduzioni'); ?>"
                                 data-title="tepds">
                             <?php
-                            $lingua_selezionata = $view_model->languages->get_selected();
+                            $lingua_selezionata = $view_model->lang_selected;
                             $lingueAll = $view_model->languages->list_all();
                             for ($i = 0; $i < sizeof($lingueAll); $i++) {
-                                if ($lingua_selezionata->id == $lingueAll[$i]['shortcode_lingua'])
-                                    echo '<option value="' . $lingueAll[$i]['abbreviazione'] . '" selected="selected">' . $lingueAll[$i]['nome_lingua'] . '</option>';
+                                if ($lingua_selezionata == $lingueAll[$i]['shortcode_lingua'])
+                                    echo '<option value="' . $lingueAll[$i]['shortcode_lingua'] . '" selected="selected">' . $lingueAll[$i]['nome_lingua'] . '</option>';
                                 else
-                                    echo '<option value="' . $lingueAll[$i]['abbreviazione'] . '">' . $lingueAll[$i]['nome_lingua'] . '</option>';
+                                    echo '<option value="' . $lingueAll[$i]['shortcode_lingua'] . '">' . $lingueAll[$i]['nome_lingua'] . '</option>';
                             } ?>
                         </select>
                     </div>
@@ -37,8 +37,7 @@
                             </tr>
                             </thead>
                             <tbody>
-
-                            <?php foreach ($view_model->translations->items as $item) { ?>
+                            <?php foreach ($view_model->translations_to_view->items as $item) { ?>
                                 <tr<?php if (Translations::reserved($item['etichetta'])) echo ' style="background-color:#ff6e6e !important;color:#fff;border-radius:3px;"' ?>>
                                     <td>
                                         <div class="key-translation-<?php echo $item['etichetta']; ?>"><?php echo $item['etichetta']; ?></div>
@@ -59,7 +58,6 @@
                                     </td>
                                 </tr>
                             <?php } ?>
-
                             </tbody>
                             <tfoot>
                             <tr>

@@ -32,10 +32,20 @@ class BackofficeTranslationsController
 
         $translations = new Translations($this->translation_repository->list_by_language($id_lingua));
 
+        if (!isset($params['shortcode_lingua'])) {
+            $translations_to_view = new Translations($this->translation_repository->list_by_language($id_lingua));
+            $lang_selected = $id_lingua;
+        } else {
+            $translations_to_view = new Translations($this->translation_repository->list_by_language($params['shortcode_lingua']));
+            $lang_selected = $params['shortcode_lingua'];
+        }
+
         $title = $translations->get('titolo_traduzioni') . ' | ' . $translations->get('nome_sito');
 
         $view_model = new BackOfficeViewModel('backoffice.translations.list', $title, $languages, $translations);
         $view_model->user = $user;
+        $view_model->lang_selected = $lang_selected;
+        $view_model->translations_to_view = $translations_to_view;
         $view_model->errors = $params['errors'] ?? array();
         $view_model->menu_active_btn = 'translations';
 
@@ -50,24 +60,19 @@ class BackofficeTranslationsController
         }
 
         $mandatories = array('translations', 'valore');
-        foreach ($mandatories as $mandatory)
-        {
-            if (!isset($params[$mandatory]))
-            {
+        foreach ($mandatories as $mandatory) {
+            if (!isset($params[$mandatory])) {
                 $params['errors'][] = "Missing mandatory param '$mandatory'";
             }
         }
 
-        if (empty($params['errors']))
-        {
+        if (empty($params['errors'])) {
             $id = intval($params['translations']);
             $row = $this->translation_repository->get_by_id($id);
-            if (empty($row))
-            {
+            $this->lang_selected = $row->shortcode_lingua;
+            if (empty($row)) {
                 $params['errors'][] = "Missing translation whose id = $id";
-            }
-            else
-            {
+            } else {
                 $row['valore'] = $params['valore'];
                 $this->translation_repository->update($row);
             }
