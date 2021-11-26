@@ -72,12 +72,15 @@
                                 <?php } ?>
                                 <?php if ($view_model->user->level <= 2 || $view_model->principal->created_by == $view_model->user->id) { ?>
                                     <div class="form-group col-md-6">
-                                        <label><?php echo $view_model->translations->get('nome_struttura'); ?></label>
-                                        <input value="<?php echo $view_model->principal->nome_struttura; ?>"
-                                               name="nome_struttura"
-                                               type="text"
-                                               class="form-control validate-1"
-                                               placeholder="London Hotel">
+                                        <?php
+                                        $type = 'input';
+                                        $label = 'nome_struttura';
+                                        $field = 'nome_struttura';
+                                        $field_prefix = 'nome_struttura';
+                                        $placeholder = 'London Hotel';
+                                        $items = $view_model->facilities;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                        ?>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -189,6 +192,7 @@
 
                                     <div class="form-group col-md-12">
                                         <?php
+                                        $type = 'richtextbox';
                                         $label = 'descrizione';
                                         $field = 'descrizione';
                                         $field_prefix = 'descrizione';
@@ -233,6 +237,7 @@
                                         </div>
                                         <div class="form-group col-md-12">
                                             <?php
+                                            $type = 'richtextbox';
                                             $label = 'descrizione_benefit';
                                             $field = 'descrizione_benefit';
                                             $field_prefix = 'descrizione_benefit';

@@ -79,7 +79,6 @@ class BackofficeFacilitiesNewController
         $principal->venerdi = '0|||||';
         $principal->sabato = '0|||||';
         $principal->domenica = '0|||||';
-        $principal->nome_struttura = '';
         $principal->telefono = '';
         $principal->tipo_viaggio = 2; // car
         $principal->sito_web = '';
@@ -126,7 +125,6 @@ class BackofficeFacilitiesNewController
 
         $facility_fields = array
         (
-            'nome_struttura',
             'email',
             'sito_web',
             'telefono',
@@ -142,6 +140,11 @@ class BackofficeFacilitiesNewController
             'indirizzo' => 'indirizzo_struttura',
             'default_image' => 'immagine_principale',
         );
+        $facility_defaults = array
+        (
+            'indirizzo' => '',
+            'default_image' => 0,
+        );
         $weekdays = array('lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica');
         $first = true;
         $facility = array();
@@ -151,7 +154,6 @@ class BackofficeFacilitiesNewController
             $abbreviation = $language['abbreviazione'];
             $facility['shortcode_lingua'] = $language['shortcode_lingua'];
             $facility['created_by'] = $created_by;
-
 
             foreach ($facility_fields as $facility_field) {
                 if ($facility_field == 'convenzionato' && $user->level < 3)
@@ -165,17 +167,19 @@ class BackofficeFacilitiesNewController
                 $facility[$facility_field] = $params[$facility_field];
             }
             foreach ($facility_fields_remap as $post_field => $facility_field) {
-                $facility[$facility_field] = $params[$post_field];
+                $facility[$facility_field] = $params[$post_field] ?? $facility_defaults[$post_field];
             }
 
             $facility['immagine_didascalia'] = join('|', $params['img_struttura']) . '|';
-            $facility['descrizione'] = $params['descrizione'][$abbreviation];
+            $facility['descrizione'] = $params['descrizione'][$abbreviation] ?? '';
+            $facility['nome_struttura'] = $params['nome_struttura'][$abbreviation] ?? '';
+
             if ($user->level > 2) {
                 $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
-
             }
 
-            $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array()) . '|';
+            $img_didascalia = $params['img_didascalia'] ?? array();
+            $facility['real_immagini_didascalia'] = join('|', $img_didascalia) . (empty($img_didascalia) ? '' : '|');
 
             $tips = array();
             foreach ($params['didascalia_img_didascalia'] ?? array() as $image_tips) {
@@ -220,7 +224,6 @@ class BackofficeFacilitiesNewController
                 );
                 $facility_hotel['id'] = $this->facility_hotel_repository->add($facility_hotel);
             }
-
 
             // facility categories
             $this->facility_category_repository->remove_by_facility($id);

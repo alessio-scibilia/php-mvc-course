@@ -143,7 +143,6 @@ class BackofficeFacilitiesEditController
             $facilities = $this->facility_repository->get_facility_all_langs($id);
             $facility_fields = array
             (
-                'nome_struttura',
                 'email',
                 'sito_web',
                 'telefono',
@@ -193,12 +192,15 @@ class BackofficeFacilitiesEditController
                     }
 
                     $facility['immagine_didascalia'] = join('|', $params['img_struttura']) . '|';
-                    $facility['descrizione'] = $params['descrizione'][$abbreviation];
+                    $facility['descrizione'] = $params['descrizione'][$abbreviation] ?? '';
+                    $facility['nome_struttura'] = $params['nome_struttura'][$abbreviation] ?? '';
+
                     if ($user->level > 2) {
                         $facility['descrizione_benefit'] = $params['descrizione_benefit'][$abbreviation];
                     }
 
-                    $facility['real_immagini_didascalia'] = join('|', $params['img_didascalia'] ?? array()) . '|';
+                    $img_didascalia = $params['img_didascalia'] ?? array();
+                    $facility['real_immagini_didascalia'] = join('|', $img_didascalia) . (empty($img_didascalia) ? '' : '|');
 
                     if (strlen($facility['real_immagini_didascalia']) == 1)
                         $facility['real_immagini_didascalia'] = '';
