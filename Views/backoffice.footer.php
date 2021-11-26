@@ -23,7 +23,7 @@
 <!-- Svganimation scripts -->
 <script src="/vendor/svganimation/vivus.min.js"></script>
 <script src="/vendor/svganimation/svg.animation.js"></script>
-<script src="/js/dashboard-main.js"></script>
+<script src="/js/dashboard-main.js?v=<?php echo $v; ?>"></script>
 <script src="/js/bootstrap-select.js"></script>
 
 <script
