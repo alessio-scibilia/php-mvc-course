@@ -72,7 +72,8 @@ class BackofficeFacilitiesEditController
             $id = intval($params['facilities']);
             $rows = $this->facility_repository->get_facility_all_langs($id);
             $facilities = Facility::facilities($rows);
-            $principal = $facilities[0];
+            $current_language_facilities = array_filter($facilities, function ($facility) use ($language) { return $facility->shortcode_lingua == $language['shortcode_lingua']; });
+            $principal = array_pop($current_language_facilities);
 
             // compute tips from backward-compatibility format
             $temp_tips = empty($principal->real_path_immagini_didascalia) ? array() : explode('&&', $principal->real_path_immagini_didascalia);
