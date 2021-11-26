@@ -11,6 +11,7 @@ require_once 'Models/Languages.class.php';
 require_once 'Models/Translations.class.php';
 require_once 'Models/User.class.php';
 require_once 'Models/Facility.class.php';
+require_once 'Models/FacilityEvent.class.php';
 require_once 'Models/FacilityHotel.class.php';
 require_once 'ViewModels/BackOfficeViewModel.class.php';
 require_once 'Views/HttpRedirectView.class.php';
@@ -41,7 +42,6 @@ class BackofficeEventsController
 
     public function http_get(array &$params): IView
     {
-
         $languages = new Languages($this->language_repository->list_all());
         $id_lingua = SessionManager::get_lang();
         $languages->select($id_lingua);
@@ -57,6 +57,16 @@ class BackofficeEventsController
 
         $rows = $this->event_repository->get_all_events();
         $events = Event::events($rows);
+
+        $rows = $this->facility_event_repository->get_by_language($language['shortcode_lingua']);
+        $facility_events = FacilityEvent::facility_events($rows);
+
+        foreach ($events as &$event)
+        {
+            $matches = array_filter($facility_events, function ($fe) use($event) { return $fe->id_evento == $event->id; });
+            $match = array_pop($matches);
+            $event->nome_evento = $match->nome_evento ?? '';
+        }
 
         $facilities = array();
         if ($user->level > 2)

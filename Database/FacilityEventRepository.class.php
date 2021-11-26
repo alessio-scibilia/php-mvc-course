@@ -8,6 +8,13 @@ class FacilityEventRepository extends MySQLRepository
         parent::__construct('strutture_eventi', 'id');
     }
 
+    public function get_by_language(int $shortcode_lingua)
+    {
+        $where = "shortcode_lingua = :shortcode_lingua";
+        $params = array(":shortcode_lingua" => $shortcode_lingua);
+        return $this->get($where, $params);
+    }
+
     public function get_by_event_id(int $id_evento): array
     {
         $where = "id_evento = :id_evento";
