@@ -60,7 +60,7 @@ class BackofficeFacilitiesCategoryUpdateController
                 $language = $languages->get_by_field('shortcode_lingua', $cat_translation['shortcode_lingua']);
                 if (!empty($language)) {
                     $abbreviation = $language['abbreviazione'];
-                    $cat_translation['immagine'] = $params['immagine'][1];
+                    $cat_translation['immagine'] = $params['immagine'][0];
                     $cat_translation['nome'] = $params['nome'][$abbreviation] ?? $cat_translation['nome'];
                 }
 
