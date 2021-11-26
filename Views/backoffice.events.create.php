@@ -108,14 +108,16 @@
                                 include 'Views/backoffice.images.uploader.php';
                                 ?>
 
-
                                 <div class="form-group col-md-12">
-                                    <label><?php echo $view_model->translations->get('nome_evento'); ?></label>
-                                    <input type="text" name="nome_evento" id="nome_evento"
-                                           class="form-control validate-1"
-                                           placeholder="London Festival">
+                                    <?php
+                                    $type = 'input';
+                                    $label = 'nome_evento';
+                                    $field_prefix = 'nome_evento';
+                                    $placeholder = 'London Festival';
+                                    $items = array();
+                                    include 'Views/backoffice.multilanguage.textbox.php';
+                                    ?>
                                 </div>
-
 
                                 <div class="mt20 col-md-12">
                                     <h4><?php echo $view_model->translations->get('descrizione_evento'); ?></h4>
@@ -124,6 +126,7 @@
 
                                 <div class="form-group col-md-12">
                                     <?php
+                                    $type = 'richtextbox';
                                     $label = 'descrizione_evento';
                                     $field_prefix = 'descrizione_evento';
                                     $items = array();

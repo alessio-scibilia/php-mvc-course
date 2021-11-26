@@ -98,7 +98,6 @@ class BackofficeEventsController
             $event_fields = array
             (
                 'img_evento',
-                'nome_evento',
                 'data_inizio_evento',
                 'data_fine_evento',
                 'ora_inizio_evento',
@@ -158,17 +157,17 @@ class BackofficeEventsController
                 switch ($field) {
                     case 'abilitato':
                     case 'recupera_struttura':
-                        $event[$field] = intval($params[$field]);
+                        $event[$field] = intval($params[$field] ?? 0);
                         break;
 
                     case 'img_evento':
-                        $images = array_values($params[$field]);
+                        $images = array_values($params[$field] ?? array());
                         $image = array_pop($images);
                         $event[$field] = $image;
                         break;
 
                     default:
-                        $event[$field] = $params[$field];
+                        $event[$field] = $params[$field] ?? '';
                         break;
                 }
             }
@@ -204,6 +203,7 @@ class BackofficeEventsController
                     $match = array_pop($matches);
 
                     $convenzionato = $params['convenzionato'] ?? $match['convenzionato'] ?? 0;
+                    $nome_evento = $params['nome_evento'][$abbreviation] ?? $match['nome_evento'] ?? '';
                     $descrizione_evento = $params['descrizione_evento'][$abbreviation] ?? $match['descrizione_evento'] ?? '';
                     $testo_convenzione = $params['testo_convenzione'][$abbreviation] ?? $match['testo_convenzione'] ?? '';
 
@@ -212,6 +212,7 @@ class BackofficeEventsController
                         'id_evento' => $id_evento,
                         'shortcode_lingua' => $shortcode_lingua,
                         'testo_convenzione' => $testo_convenzione,
+                        'nome_evento' => $nome_evento,
                         'descrizione_evento' => $descrizione_evento,
                         'id_hotel' => $id_hotel,
                         'id_struttura' => $id_struttura,

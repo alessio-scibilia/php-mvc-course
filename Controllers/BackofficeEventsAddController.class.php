@@ -46,7 +46,6 @@ class BackofficeEventsAddController
         $event_fields = array
         (
             'img_evento',
-            'nome_evento',
             'data_inizio_evento',
             'data_fine_evento',
             'ora_inizio_evento',
@@ -82,25 +81,25 @@ class BackofficeEventsAddController
             switch ($field)
             {
                 case 'abilitato':
-                    $event[$field] = intval($params[$field]);
+                    $event[$field] = intval($params[$field] ?? 0);
                     break;
 
                 case 'img_evento':
-                    $images = array_values($params[$field]);
+                    $images = array_values($params[$field] ?? array());
                     $image = array_pop($images);
                     $event[$field] = $image;
                     break;
 
                 case 'recupera_struttura':
-                    $event[$field] = intval($params[$field]);
+                    $event[$field] = intval($params[$field] ?? 0);
                     break;
 
                 case 'recupera_convenzione':
-                    $event[$field] = intval($params[$field]);
+                    $event[$field] = intval($params[$field] ?? 0);
                     break;
 
                 default:
-                    $event[$field] = $params[$field];
+                    $event[$field] = $params[$field] ?? '';
                     break;
             }
         }
@@ -130,12 +129,14 @@ class BackofficeEventsAddController
 
                     $convenzionato = $params['convenzionato'] ?? $match['convenzionato'] ?? 0;
                     $testo_convenzione = $params['testo_convenzione'][$abbreviation] ?? $match['testo_convenzione'] ?? '';
+                    $nome_evento = $params['nome_evento'][$abbreviation] ?? $match['nome_evento'] ?? '';
 
                     $facility_event = array
                     (
                         'id_evento' => $id_evento,
                         'shortcode_lingua' => $shortcode_lingua,
                         'testo_convenzione' => $testo_convenzione,
+                        'nome_evento' => $nome_evento,
                         'descrizione_evento' => $descrizione_evento,
                         'id_hotel' => $id_hotel,
                         'id_struttura' => $id_struttura,

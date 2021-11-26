@@ -8,7 +8,7 @@
                 <a href="/backoffice/events" id="gobacksearch" class="open-view-action-inside back-btn"><i
                             class="fa fa-angle-left"></i> <?php echo $view_model->translations->get('indietro'); ?>
                     /</a>
-                <h1><i class="fa fa-calendar"></i> <?php echo $view_model->event->nome_evento; ?>
+                <h1><i class="fa fa-calendar"></i> <?php echo $view_model->current_language_facility_event->nome_evento; ?>
             </div>
 
             <div class="col-xl-12 col-lg-12">
@@ -129,11 +129,15 @@
 
 
                                     <div class="form-group col-md-12">
-                                        <label><?php echo $view_model->translations->get('nome_evento'); ?></label>
-                                        <input type="text" name="nome_evento" id="nome_evento"
-                                               class="form-control validate-1"
-                                               placeholder="London Festival"
-                                               value="<?php echo $view_model->event->nome_evento; ?>">
+                                        <?php
+                                        $type = 'input';
+                                        $label = 'nome_evento';
+                                        $field = 'nome_evento';
+                                        $field_prefix = 'nome_evento';
+                                        $placeholder = 'London Festival';
+                                        $items = $view_model->all_languages_facility_events;
+                                        include 'Views/backoffice.multilanguage.textbox.php';
+                                        ?>
                                     </div>
 
 
@@ -144,7 +148,9 @@
 
                                     <div class="form-group col-md-12">
                                         <?php
+                                        $type = 'richtextbox';
                                         $label = 'descrizione_evento';
+                                        $field = 'descrizione_evento';
                                         $field_prefix = 'descrizione_evento';
                                         $items = $view_model->all_languages_facility_events;
                                         include 'Views/backoffice.multilanguage.textbox.php';

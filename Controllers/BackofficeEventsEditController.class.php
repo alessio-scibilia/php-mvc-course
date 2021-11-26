@@ -79,12 +79,13 @@ class BackofficeEventsEditController
                 $all_languages_facility_events = FacilityEvent::facility_events($rows);
             }
 
-            //$descrizioni_evento = $this->facility_hotel_repository->get_by_event_id($id);
-
             $rows = $this->hotel_repository->get_hotels_list_by_user_level($user->level, $user->id, $id_lingua);
             $related_hotels = Hotel::hotels($rows);
 
-            //'d92fgov02dm2jf493fspamwi2d0za201',
+            $language = $languages->get_selected();
+            $current_language_facility_events = array_filter($all_languages_facility_events, function($fe) use($language) { return $fe->shortcode_lingua == $language['shortcode_lingua']; });
+            $current_language_facility_event = array_pop($current_language_facility_events);
+
             $view_model = new BackOfficeViewModel('backoffice.events.edit', $title, $languages, $translations);
             $view_model->user = $user;
             $view_model->event = $event;
@@ -94,7 +95,8 @@ class BackofficeEventsEditController
             $view_model->convenzionato = $convenzionato;
 
             $view_model->all_languages_facility_events = $all_languages_facility_events;
-            $view_model->language = $languages->get($id_lingua);
+            $view_model->language = $language;
+            $view_model->current_language_facility_event = $current_language_facility_event;
             $view_model->menu_active_btn = 'events';
 
             return new HtmlView($view_model);
