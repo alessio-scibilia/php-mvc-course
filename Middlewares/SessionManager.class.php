@@ -9,19 +9,19 @@ class SessionManager
     public static function start()
     {
         session_start();
-        if (empty($_SESSION['lang'])) {
-            $_SESSION['lang'] = Languages::IT;
+        if (empty($_SESSION['language'])) {
+            $_SESSION['language'] = Languages::IT;
         }
     }
 
     public static function set_lang(int $id_lingua)
     {
-        $_SESSION['lang'] = $id_lingua;
+        $_SESSION['language'] = $id_lingua;
     }
 
     public static function get_lang(): int
     {
-        return $_SESSION['lang'] ?? Languages::IT;
+        return $_SESSION['language'] ?? Languages::IT;
     }
 
     public static function set_user(User $user)

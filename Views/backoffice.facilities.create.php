@@ -120,28 +120,31 @@
                                     </div>
                                 <?php } ?>
 
-                                <?php $model = $view_model->principal;
-                                include 'Views/backoffice.geolocator.php'; ?>
+                                <?php
+                                    $model = $view_model->principal;
+                                    include 'Views/backoffice.geolocator.php';
+                                    $tipo_viaggio = $view_model->principal->tipo_viaggio ?? 2;
+                                ?>
 
                                 <div class="form-group col-md-4">
                                     <label><?php echo $view_model->translations->get('tipo_viaggio'); ?></label>
                                     <div class="route-container">
                                         <div class="route-div"><input
-                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 1) echo 'checked="checked"'; ?>
+                                                    type="radio" <?php if ($tipo_viaggio == 1) echo 'checked="checked"'; ?>
                                                     name="tipo_viaggio" class="tipo_viaggio" value="1">
                                             <img src="/images/walking.svg" class="svg-route"/>
                                             <span for="tipo_viaggio"
                                                   class="route-span">A piedi</span>
                                         </div>
                                         <div class="route-div"><input
-                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 2) echo 'checked="checked"'; ?>
+                                                    type="radio" <?php if ($tipo_viaggio == 2) echo 'checked="checked"'; ?>
                                                     name="tipo_viaggio" class="tipo_viaggio" value="2">
                                             <img src="/images/car.svg" class="svg-route"/>
                                             <span for="tipo_viaggio"
                                                   class="route-span">In auto</span>
                                         </div>
                                         <div class="route-div"><input
-                                                    type="radio" <?php if ($view_model->principal->tipo_viaggio == 3) echo 'checked="checked"'; ?>
+                                                    type="radio" <?php if ($tipo_viaggio == 3) echo 'checked="checked"'; ?>
                                                     name="tipo_viaggio" class="tipo_viaggio" value="3">
                                             <img src="/images/mezzi.svg" class="svg-route"/>
                                             <span for="tipo_viaggio"

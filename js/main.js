@@ -120,7 +120,6 @@ jQuery(".validate-it").click(function (e) {
     }
 
     if (jQuery("#nome").length) {
-        var nome = jQuery("#nome").val();
         if (nome == "" || nome == undefined) {
             error_message = "- Inserire un nome";
             is_error = true;
@@ -179,7 +178,7 @@ jQuery(".validate-it").click(function (e) {
     if (recupera == 0) {
         //Validazione email, se non passata mettere is_error = true
         if (jQuery("#email").length) {
-            if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
+            if (email.length > 0 && !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
                 error_message = "<p>- Inserire un indirizzo email valido</p>";
                 is_error = true;
                 jQuery("#email").after('<div class="error_message">' + error_message + '</div>');
@@ -187,14 +186,13 @@ jQuery(".validate-it").click(function (e) {
         }
 
         if (jQuery("#sito").length) {
-            if (!/^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/.test(sito)) {
-                if (sito == '') {
-                    error_message = "<p>- Inserire un indirizzo web valido</p>";
-                    is_error = true;
-                    jQuery("#sito").after('<div class="error_message">' + error_message + '</div>');
-                }
+            if (sito !== '' && !/^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/.test(sito)) {
+                error_message = "<p>- Inserire un indirizzo web valido</p>";
+                is_error = true;
+                jQuery("#sito").after('<div class="error_message">' + error_message + '</div>');
             }
         }
+
         if (jQuery("#nome_struttura").length) {
             if (nome_struttura.length < 1) {
                 error_message = "- Inserire un nome per la struttura";
@@ -204,7 +202,7 @@ jQuery(".validate-it").click(function (e) {
         }
 
         if (jQuery("#telefono").length) {
-            if (telefono.length < 1) {
+            if (telefono.length < 0) {
                 error_message = "- Inserire un numero di telefono";
                 is_error = true;
 
@@ -292,11 +290,6 @@ jQuery(".validate-it").click(function (e) {
 
     if (is_error == false) {
         console.log('validation PASSED', e);
-        window.setTimeout(function () {
-                e.target.form.submit()
-            },
-            1500
-        );
         return true;
     } else {
         $(".notification-message").html("Alcuni campi non sono compilati in modo corretto");

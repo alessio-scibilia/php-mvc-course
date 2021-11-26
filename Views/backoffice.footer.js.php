@@ -19,3 +19,4 @@
 <script src="/js/backoffice.upload.images.js"></script>
 <script src="/js/geolocator.js"></script>
 <script src="/js/multilanguage.textbox.js"></script>
+<script src="/js/summernote.events.js"></script>
