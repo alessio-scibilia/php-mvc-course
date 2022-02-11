@@ -131,18 +131,6 @@
                                     <?php } ?>
 
                                     <?php
-                                    if ($view_model->user->level > 2) { ?>
-                                        <div class="form-group col-md-12">
-                                            <?php
-                                            $label = 'convenzionato';
-                                            $field = 'convenzionato';
-                                            $value = $view_model->principal->convenzionato;
-                                            include 'Views/backoffice.checkbox.php';
-                                            ?>
-                                        </div>
-                                    <?php } ?>
-
-                                    <?php
                                         $model = $view_model->principal;
                                         include 'Views/backoffice.geolocator.php';
                                         $tipo_viaggio = $view_model->principal->tipo_viaggio ?? 2;
@@ -225,7 +213,7 @@
                                     </div>
                                 <?php } ?>
                                 <?php
-                                if ($view_model->user->level > 2 && $view_model->principal->created_by != $view_model->user->level) { ?>
+                                if ($view_model->user->level > 2 && $view_model->principal->created_by != $view_model->user->id) { ?>
                                     <?php if ($view_model->user->level > 2) { ?>
                                         <div class="form-group col-md-12">
                                             <?php
@@ -269,12 +257,16 @@
                                 foreach ($view_model->related_excellences as $excellences) {
                                     $excellence = $excellences[$view_model->language['shortcode_lingua']];
                                     ?>
-                                    <div class="form-container fc-<?php echo $r; ?>"
-                                         id="fc-excellence-<?php echo $r; ?>">
+                                    <div class="form-container fc-<?php echo $r; ?> utc utc-<?php echo $r;?>"
+                                         id="fc-excellence-<?php echo $r; ?>" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                        <div class="form-draggable" id="fd-<?php echo $r;?>">
                                         <div class="form-row">
-
-                                            <div class="col-12">
+                                            <div class="col-11">
                                                 <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
+                                            </div>
+                                             <div class="col-1 text-right">
+                                                <a href="javascript:void();" class="open-close-utc" id="open-utc-<?php echo $r;?>"><i class="lni lni-frame-expand"></i></a>
+                                                <a href="javascript:void();" class="startdrag-utc"  id="draggable-<?php echo $r;?>" draggable="true" ondragstart="drag(event)"><i class="lni lni-pointer"></i></a>
                                             </div>
 
                                             <div class="form-group col-md-12">
@@ -288,7 +280,7 @@
                                                 include 'Views/backoffice.multilanguage.textbox.php';
                                                 ?>
                                             </div>
-
+                                            <div class="stopsee">
                                             <?php
                                             $label = 'immagine_servizio';
                                             $button_label = 'scegli_immagine';
@@ -308,10 +300,11 @@
                                                 include 'Views/backoffice.multilanguage.textbox.php';
                                                 ?>
                                             </div>
+                                            </div>
 
                                         </div>
 
-                                        <div class="form-row">
+                                        <div class="form-row stopsee">
                                             <div class="form-group col-md-3">
                                                 <?php
                                                 $label = 'abilitato';
@@ -333,6 +326,7 @@
                                                        value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
                                 <?php
                                     $r++;

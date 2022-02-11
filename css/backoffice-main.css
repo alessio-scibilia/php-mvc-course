@@ -332,7 +332,9 @@ img.svg-route {
 }
 
 
-@media (max-width 767px) {
+
+
+@media (max-width: 767px) {
     .box-login {
         max-width: 100% !important;
     }
@@ -344,4 +346,33 @@ img.svg-route {
 
 .note-toolbar.panel-heading {
     background-color: rgb(235, 238, 246) !important;
+}
+
+.utc, .atc {
+    border: 1px solid #bebebe;
+    padding: 15px;
+    border-radius: 4px;
+    max-height: 130px;
+    overflow: hidden;
+    margin-bottom: 19px;
+    background: #eaeaea;
+    cursor:pointer;
+    transition: 0.2s ease-out;
+}
+
+.utc:hover, .atc:hover {
+    background: white;
+}
+
+.utc-active, .atc-active {
+    transition: 0.2s ease-out;
+    background: #fff !important;
+    max-height: 100%;
+}
+.stopsee {
+    display: none !important;
+}
+.dblock-see {
+    display: block !important;
+    width: 100%;
 }

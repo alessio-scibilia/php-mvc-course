@@ -2,6 +2,7 @@ jQuery(document).ready(function() {
     $(".summernote").summernote({
         height: 190,
         minHeight: null,
+        disableDragAndDrop:true,
         maxHeight: null,
         focus: !1
     }), $(".inline-editor").summernote({

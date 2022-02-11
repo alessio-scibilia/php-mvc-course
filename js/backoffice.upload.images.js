@@ -5,6 +5,7 @@ function delPreview(target) {
         .prev()
         .find('input.custom-file-input');
     $input.prop('disabled', false);
+    $input.val(null);
     $target.hide(function () {
         $target.remove();
     });

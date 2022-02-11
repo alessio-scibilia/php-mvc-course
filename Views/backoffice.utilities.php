@@ -11,12 +11,17 @@
             //$group = array_values($service);
             $principal = $utility[$shortcode_lingua];
             ?>
-            <div style="display: block;" class="form-container fc-<?php echo $r; ?>">
+            <div style="display: block;" class="form-container utc fc-<?php echo $r; ?> utc-<?php echo $r; ?>" id="drags-<?php echo $r;?>" ondrop="drop(event)" ondragover="allowDrop(event)">
+               <div class="form-draggable" id="draggable-<?php echo $r;?>" draggable="true" ondragstart="drag(event)">
+
                 <input type="hidden" name="posizione_utility[<?php echo $r; ?>]"
                        value="<?php echo $r; ?>">
                 <div class="form-row">
-                    <div class="col-12">
+                    <div class="col-11">
                         <h5><?php echo $view_model->translations->get('numeri_utili'); ?></h5>
+                    </div>
+                    <div class="col-1 text-right">
+                        <a href="javascript:void();" class="open-close-utc" id="open--utc-<?php echo $r;?>"><i class="lni lni-frame-expand"></i></a>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -40,7 +45,7 @@
                                class="form-control"
                                placeholder="118">
                     </div>
-
+                    <div class="stopsee">
                     <?php
                         $model = (object)array
                         (
@@ -71,10 +76,11 @@
                             include 'Views/backoffice.multilanguage.textbox.php';
                         ?>
                     </div>
+                    </div>
 
                 </div>
 
-                <div class="form-row">
+                <div class="form-row stopsee">
                     <div class="my-2 mr-4">
                         <input type="button"
                                class="btn btn-danger annulla-utility"
@@ -91,16 +97,21 @@
                     </div>
                     <hr/>
                 </div>
+               </div>
             </div>
         <?php
             $r++;
         }
     } else { ?>
-        <div style="display: block;" class="form-container fc-1">
+        <div style="display: block;" class="form-container utc fc-0 utc-0"  id="drags-0" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <div class="form-draggable" id="draggable-0" draggable="true" ondragstart="drag(event)">
             <input type="hidden" name="posizione_utility[0]" value="0">
             <div class="form-row">
-                <div class="col-12">
+                <div class="col-11">
                     <h5><?php echo $view_model->translations->get('dati_utility'); ?></h5>
+                </div>
+                <div class="col-1 text-right">
+                    <a href="javascript:void();" class="open-close-utc" id="open-utc-0"><i class="lni lni-frame-expand"></i></a>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -124,7 +135,7 @@
                            placeholder="118"
                            id="telefono-0">
                 </div>
-
+                <div class="stopsee">
                 <?php
                     $model = (object)array
                     (
@@ -155,8 +166,9 @@
                         include 'Views/backoffice.multilanguage.textbox.php';
                     ?>
                 </div>
+                </div>
             </div>
-            <div class="form-row">
+            <div class="form-row stopsee">
                 <div class="my-2 mr-4">
                     <input type="button"
                            class="btn btn-danger annulla-utility"
@@ -172,6 +184,7 @@
                            value="Aggiungi un'altra utility">
                 </div>
                 <hr/>
+            </div>
             </div>
         </div>
     <?php } ?>

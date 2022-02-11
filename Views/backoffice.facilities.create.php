@@ -49,7 +49,9 @@
                                     <div id="relatedCat" class="form-group col-md-6">
                                     </div>
 
-                                <?php } ?>
+                                <?php } else {
+                                    echo '<input type="hidden" name="related_hotels[]" value="'.$view_model->user->id.'">';
+                                }?>
 
                                 <div class="form-group col-md-6">
                                     <?php
@@ -112,7 +114,8 @@
                                 <?php } ?>
 
                                 <?php
-                                if ($view_model->user->level > 2) { ?>
+                                if ($view_model->user->level > 2) {
+                                    /*?>
                                     <div class="form-group col-md-12">
                                         <?php
                                         $label = 'convenzionato';
@@ -121,7 +124,9 @@
                                         include 'Views/backoffice.checkbox.php';
                                         ?>
                                     </div>
-                                <?php } ?>
+                                <?php */
+                                echo '<input type="hidden" name="convenzionato" value="1">';
+                                } ?>
 
                                 <?php
                                     $model = $view_model->principal;
@@ -223,11 +228,15 @@
                             }, $view_model->languages->list_all());
                             $excellence = $excellences[0];
                             ?>
-                            <div class="form-container fc-1">
+                            <div class="form-container utc fc-0 utc-0" id="fc-excellence-0" ondrop="drop(event)" ondragover="allowDrop(event)">
+                                <div class="form-draggable" id="draggable-0" draggable="true" ondragstart="drag(event)">
                                 <div class="form-row">
 
-                                    <div class="col-12">
+                                    <div class="col-11">
                                         <h5><?php echo $view_model->translations->get('dati_eccellenza'); ?></h5>
+                                    </div>
+                                    <div class="col-1 text-right">
+                                        <a href="javascript:void();" class="open-close-utc" id="open-utc-0"><i class="lni lni-frame-expand"></i></a>
                                     </div>
 
                                     <div class="form-group col-md-12">
@@ -241,7 +250,7 @@
                                         include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
-
+                                    <div class="stopsee">
                                     <?php
                                     $label = 'immagine_servizio';
                                     $button_label = 'scegli_immagine';
@@ -261,10 +270,11 @@
                                         include 'Views/backoffice.multilanguage.textbox.php';
                                         ?>
                                     </div>
+                                    </div>
 
                                 </div>
 
-                                <div class="form-row">
+                                <div class="form-row stopsee">
                                     <div class="form-group col-md-3">
                                         <?php
                                         $label = 'abilitato';
@@ -286,6 +296,7 @@
                                                value="<?php echo $view_model->translations->get('aggiungi_eccellenza'); ?>">
                                     </div>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

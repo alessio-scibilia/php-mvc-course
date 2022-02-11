@@ -625,7 +625,15 @@ a.link-cat-item {
     font-size: 13px;
     font-family: Main;
 }
-
+.utc {
+    border: 1px solid #bebebe;
+    padding: 15px;
+    border-radius: 4px;
+    max-height: 130px;
+    overflow: hidden;
+    margin-bottom: 19px;
+    background: #eaeaea;
+}
 .prop-right:last-of-type {
     align-items: center;
     padding-bottom: 20px;
