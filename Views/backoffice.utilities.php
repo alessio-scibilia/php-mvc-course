@@ -12,7 +12,7 @@
             $principal = $utility[$shortcode_lingua];
             ?>
             <div style="display: block;" class="form-container utc fc-<?php echo $r; ?> utc-<?php echo $r; ?>" id="drags-<?php echo $r;?>" ondrop="drop(event)" ondragover="allowDrop(event)">
-               <div class="form-draggable" id="draggable-<?php echo $r;?>" draggable="true" ondragstart="drag(event)">
+               <div class="form-draggable" id="fd-<?php echo $r;?>" draggable="true" ondragstart="drag(event)">
 
                 <input type="hidden" name="posizione_utility[<?php echo $r; ?>]"
                        value="<?php echo $r; ?>">
@@ -22,6 +22,8 @@
                     </div>
                     <div class="col-1 text-right">
                         <a href="javascript:void();" class="open-close-utc" id="open--utc-<?php echo $r;?>"><i class="lni lni-frame-expand"></i></a>
+                        <a href="javascript:void();" class="startdrag-utc"  id="draggable-<?php echo $r;?>" draggable="true" ondragstart="drag(event)"><i class="lni lni-pointer"></i></a>
+
                     </div>
 
                     <div class="form-group col-md-6">
@@ -104,7 +106,7 @@
         }
     } else { ?>
         <div style="display: block;" class="form-container utc fc-0 utc-0"  id="drags-0" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <div class="form-draggable" id="draggable-0" draggable="true" ondragstart="drag(event)">
+            <div class="form-draggable" id="fd-0" draggable="true" ondragstart="drag(event)">
             <input type="hidden" name="posizione_utility[0]" value="0">
             <div class="form-row">
                 <div class="col-11">
@@ -112,6 +114,7 @@
                 </div>
                 <div class="col-1 text-right">
                     <a href="javascript:void();" class="open-close-utc" id="open-utc-0"><i class="lni lni-frame-expand"></i></a>
+                    <a href="javascript:void();" class="startdrag-utc"  id="draggable-0" draggable="true" ondragstart="drag(event)"><i class="lni lni-pointer"></i></a>
                 </div>
 
                 <div class="form-group col-md-6">

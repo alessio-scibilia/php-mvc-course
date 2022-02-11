@@ -331,12 +331,10 @@ function drop(ev) {
 
   id_parent = ev.target.closest(".utc").id;
   ev.target = $("#"+id_parent).children();
-alert(ev.target.id);
   var data = ev.dataTransfer.getData("text");
 
   //prelevo la posizione del tile selezionato
   var selected_index =  $("#"+data).closest(".utc").children().attr('id').split(' ').pop();
-  alert(selected_index);
   selected_index = selected_index.substr(selected_index.indexOf("-") + 1);
 
   //inserisco il tile selezionato nella posizione di destinazione
@@ -346,7 +344,6 @@ alert(ev.target.id);
   //recupero il nuovo indice del tile selezionato
   var new_index_full = $("#"+data).closest(".utc").children().attr('id').split(' ').pop();
   new_index = new_index_full.substr(new_index_full.indexOf("-") + 1);
-  alert(new_index)
 
   //registro il vecchio contenuto del div di destinazione
   var old = $("#draggable-"+new_index);
@@ -404,6 +401,10 @@ alert(ev.target.id);
         }
 
         if($(this).hasClass("form-draggable")) {
+          $(this).attr("id",'fd-'+i);
+        }
+        
+        if($(this).hasClass("startdrag-utc")) {
           $(this).attr("id",'draggable-'+i);
         }
       });
@@ -470,7 +471,10 @@ alert(ev.target.id);
         }
 
         if($(this).hasClass("form-draggable")) {
-          $(this).attr("id",'draggable-'+i);
+          $(this).attr("id",'fd-'+i);
+        }
+        if($(this).hasClass("startdrag-utc")) {
+          $(this).attr("id",'draggable--'+i);
         }
       });
       i++;
@@ -523,12 +527,13 @@ function allowDropatc(ev) {
 }
 
 function dragatc(ev) {
-   if(!$('#'+ev.target.id).parent().hasClass("atc-active")) {
+    if(!$('#'+ev.target.id).parent().parent().parent().hasClass("atc-active") && $('#'+ev.target.id).hasClass('startdrag-atc')) {
          $(".atc-active").find(".stopsee").each(function () {
                 $(this).removeClass("dblock-see");
             });
+         var id = $('#'+ev.target.id).parent().parent().parent().attr("id");
         //$(".utc-active").removeClass("utc-active");
-        ev.dataTransfer.setData("text", ev.target.id);
+        ev.dataTransfer.setData("text", id);
     }
 }
 
@@ -537,6 +542,8 @@ function dropatc(ev) {
   $(this).find(".stopsee").each(function () {
           $(this).removeClass("dblock-see");
       });
+  id_parent = ev.target.closest(".atc").id;
+  ev.target = $("#"+id_parent).children();
   var data = ev.dataTransfer.getData("text");
 
   //prelevo la posizione del tile selezionato
@@ -608,6 +615,9 @@ function dropatc(ev) {
         }
 
         if($(this).hasClass("form-draggableatc")) {
+          $(this).attr("id",'fdatc-'+i);
+        }
+        if($(this).hasClass("startdrag-atc")) {
           $(this).attr("id",'draggableatc-'+i);
         }
       });
@@ -676,6 +686,9 @@ function dropatc(ev) {
         }
 
         if($(this).hasClass("form-draggableatc")) {
+          $(this).attr("id",'fdatc-'+i);
+        }
+        if($(this).hasClass("startdrag-atc")) {
           $(this).attr("id",'draggableatc-'+i);
         }
       });

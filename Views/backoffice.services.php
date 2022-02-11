@@ -9,7 +9,7 @@
             $principal = $service[$view_model->language['shortcode_lingua']];
             ?>
             <div style="display: block;" class="form-container fc-<?php echo $r; ?> atc atc-<?php echo $r;?>"  id="dragsatc-<?php echo $r;?>" ondrop="dropatc(event)" ondragover="allowDropatc(event)">
-                <div class="form-draggableatc" id="draggableatc-<?php echo $r;?>" draggable="true" ondragstart="dragatc(event)">
+                <div class="form-draggableatc" id="fdatc-<?php echo $r;?>" draggable="true" ondragstart="dragatc(event)">
                 <input type="hidden" name="posizione_servizio[<?php echo $r; ?>]" value="<?php echo $principal->posizione; ?>">
                 <div class="form-row">
                     <div class="col-11">
@@ -17,6 +17,7 @@
                     </div>
                     <div class="col-1 text-right">
                         <a href="javascript:void();" class="open-close-atc" id="open-atc-<?php echo $r;?>"><i class="lni lni-frame-expand"></i></a>
+                        <a href="javascript:void();" class="startdrag-atc"  id="draggableatc-<?php echo $r;?>" draggable="true" ondragstart="drag(event)"><i class="lni lni-pointer"></i></a>
                     </div>
 
                     <div class="form-group col-md-6">
@@ -102,7 +103,7 @@
         }
     } else { ?>
         <div style="display: block;" class="form-container fc-0 atc atc-0" id="dragsatc-0" ondrop="dropatc(event)" ondragover="allowDropatc(event)">
-            <div class="form-draggableatc" id="draggableatc-0" draggable="true" ondragstart="dragatc(event)">
+            <div class="form-draggableatc" id="fdatc-0" draggable="true" ondragstart="dragatc(event)">
             <input type="hidden" name="posizione_servizio[0]" value="0">
             <div class="form-row">
                 <div class="col-11">
@@ -110,6 +111,7 @@
                 </div>
                 <div class="col-1 text-right">
                     <a href="javascript:void();" class="open-close-atc" id="open-atc-0"><i class="lni lni-frame-expand"></i></a>
+                    <a href="javascript:void();" class="startdrag-utc"  id="draggableatc-0" draggable="true" ondragstart="drag(event)"><i class="lni lni-pointer"></i></a>
                 </div>
                 <div class="form-group col-md-6">
                     <?php

@@ -229,7 +229,7 @@
                             $excellence = $excellences[0];
                             ?>
                             <div class="form-container utc fc-0 utc-0" id="fc-excellence-0" ondrop="drop(event)" ondragover="allowDrop(event)">
-                                <div class="form-draggable" id="draggable-0" draggable="true" ondragstart="drag(event)">
+                                <div class="form-draggable" id="fd-0" >
                                 <div class="form-row">
 
                                     <div class="col-11">
@@ -237,6 +237,7 @@
                                     </div>
                                     <div class="col-1 text-right">
                                         <a href="javascript:void();" class="open-close-utc" id="open-utc-0"><i class="lni lni-frame-expand"></i></a>
+                                                <a href="javascript:void();" class="startdrag-utc"  id="draggable-0" draggable="true" ondragstart="drag(event)"><i class="lni lni-pointer"></i></a>
                                     </div>
 
                                     <div class="form-group col-md-12">
